@@ -1,0 +1,3900 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d2" for="node" attr.name="title" attr.type="string" />
+  <key id="d1" for="node" attr.name="color" attr.type="string" />
+  <key id="d0" for="node" attr.name="type" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="artículo:0">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Scale Efficient Training for Large Datasets</data>
+    </node>
+    <node id="qing zhou">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="junyu gao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="qi wang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:1">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">HoloGest: Decoupled Diffusion and Motion Priors for Generating Holisticly Expressive Co-speech Gestures</data>
+    </node>
+    <node id="yongkang cheng">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shaoli huang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:2">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">SMPR: A structure-enhanced multimodal drug-disease prediction model for drug repositioning and cold start</data>
+    </node>
+    <node id="xin dong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="rui miao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="suyan zhang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shuaibing jia">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="leifeng zhang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yong liang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jianhua zhang" />
+    <node id="yi zhun zhu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:3">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">An Online Integrated Development Environment for Automated Programming Assessment Systems</data>
+    </node>
+    <node id="eduard frankford">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="daniel crazzolara">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="michael vierhauser">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="niklas meißner">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="stephan krusche">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ruth breu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:4">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Movement Sequencing: A Novel Approach to Quantifying the Building Blocks of Human Gait</data>
+    </node>
+    <node id="alexandra g hammerberg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="samuel k grunblatt" />
+    <node id="patricia a kramer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:5">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Causal Emergence 2.0: Quantifying emergent complexity</data>
+    </node>
+    <node id="erik hoel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:6">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">VeriLeaky: Navigating IP Protection vs Utility in Fine-Tuning for LLM-Driven Verilog Coding</data>
+    </node>
+    <node id="zeng wang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="minghao shao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="mohammed nabeel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="prithwish basu roy">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="likhitha mankali">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jitendra bhandari">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ramesh karri">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ozgur sinanoglu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="muhammad shafique">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="johann knechtel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:7">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Timing the Match: A Deep Reinforcement Learning Approach for Ride-Hailing and Ride-Pooling Services</data>
+    </node>
+    <node id="yiman bao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jie gao" />
+    <node id="jinke he">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="frans a oliehoek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="oded cats">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:8">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Reward Adaptation Via Q-Manipulation</data>
+    </node>
+    <node id="kevin vora">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yu zhang" />
+    <node id="artículo:9">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">RainScaleGAN: a Conditional Generative Adversarial Network for Rainfall Downscaling</data>
+    </node>
+    <node id="marcello iotti">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="paolo davini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jost von hardenberg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="giuseppe zappa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:10">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">RAPFI: DistillingEfficientNeuralNetworkfortheGameofGomoku</data>
+    </node>
+    <node id="zhanggen jin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="haobin duan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zhiyang hang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:11">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Triad: Empowering LMM-based Anomaly Detection with Vision Expert-guided Visual Tokenizer and Manufacturing Process</data>
+    </node>
+    <node id="yuanze li" />
+    <node id="shihao yuan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="haolin wang" />
+    <node id="qizhang li" />
+    <node id="ming liu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chen xu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="guangming shi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="wangmeng zuo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:12">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">HybridGen: VLM-Guided Hybrid Planning for Scalable Data Generation of Imitation Learning</data>
+    </node>
+    <node id="wensheng wang" />
+    <node id="ning tan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:13">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">A Comprehensive Survey on Multi-Agent Cooperative Decision-Making: Scenarios, Approaches, Challenges and Perspectives</data>
+    </node>
+    <node id="weiqiang jin" />
+    <node id="hongyang du" />
+    <node id="biao zhao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="xingwu tian">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="bohang shi" />
+    <node id="guang yang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:14">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Full-body NFC: body-scale near-field sensor networks with machine-knittable meandered e-textiles</data>
+    </node>
+    <node id="ryo takahashi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="changyo han" />
+    <node id="wakako yukita">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="john s. ho">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="takuya sasatani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="akihito noda">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="tomoyuki yokota">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="takao someya">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yoshihiro kawahara">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:15">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Don’t Judge Before You CLIP: A Unified Approach for Perceptual Tasks</data>
+    </node>
+    <node id="amit zalcher">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="navve wasserman">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="roman beliy">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="oliver heinimann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="michal irani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:16">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">High-entropy Advantage in Neural Networks’ Generalizability</data>
+    </node>
+    <node id="entao yang" />
+    <node id="xiaotian zhang" />
+    <node id="yue shang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ge zhang" />
+    <node id="artículo:17">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">UniHOPE: A Unified Approach for Hand-Only and Hand-Object Pose Estimation</data>
+    </node>
+    <node id="yinqiao wang" />
+    <node id="hao xu" />
+    <node id="pheng-ann heng">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chi-wing fu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:18">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">From Few-Shot Optimal Control to Few-Shot Learning</data>
+    </node>
+    <node id="roman chertovskih">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nikolay pogodaev">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="maxim staritsyn">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. pedro aguiar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:19">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Edit Transfer: Learning Image Editing via Vision In-Context Relations</data>
+    </node>
+    <node id="lan chen" />
+    <node id="qi mao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yuchao gu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="mike zheng shou">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:20">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Federated Mixture-of-Expert for Non-Overlapped Cross-Domain Sequential Recommendation</data>
+    </node>
+    <node id="yu liu" />
+    <node id="hanbin jiang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="lei zhu" />
+    <node id="yuqi mao" />
+    <node id="jiangxia cao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shuchao pang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:21">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Investigating the Effect of CPT in Lateral Spreading Prediction Using Explainable AI</data>
+    </node>
+    <node id="cheng-hsi hsiao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ellen m rathje" />
+    <node id="krishna kumar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:22">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images</data>
+    </node>
+    <node id="tianhao wu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chuanxia zheng" />
+    <node id="frank guan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="andrea vedaldi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="tat-jen cham">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:23">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">ϕ-Decoding: Adaptive Foresight Sampling for Balanced Inference-Time Exploration and Exploitation</data>
+    </node>
+    <node id="fangzhi xu" />
+    <node id="hang yan" />
+    <node id="chang ma" />
+    <node id="haiteng zhao" />
+    <node id="jun liu" />
+    <node id="qika lin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zhiyong wu" />
+    <node id="artículo:24">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">MetaScale: Test-Time Scaling with Evolving Meta-Thoughts</data>
+    </node>
+    <node id="qin liu" />
+    <node id="wenxuan zhou" />
+    <node id="nan xu" />
+    <node id="james y huang" />
+    <node id="fei wang" />
+    <node id="sheng zhang" />
+    <node id="hoifung poon">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="muhao chen" />
+    <node id="artículo:25">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">LAPLACE-NET: LEARNING DYNAMICAL SYSTEMS WITH EXTERNAL FORCING</data>
+    </node>
+    <node id="bernd zimmering">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="cecília coelho">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="vaibhav gupta">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="maria maleshkova">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="oliver niggemann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:26">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Exploring the Potential of Bilevel Optimization for Calibrating Neural Networks</data>
+    </node>
+    <node id="gabriele sanguin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="arjun pakrashi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="marco viola">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="francesco rinaldi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:27">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Uncovering Utility Functions from Observed Outcomes</data>
+    </node>
+    <node id="marta grze´skiewicz">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:28">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">MAME: MULTIDIMENSIONAL ADAPTIVE METAMER EXPLORATION WITH HUMAN PERCEPTUAL FEEDBACK</data>
+    </node>
+    <node id="mina kamao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="hayato ono">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ayumu yamashita">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kaoru amano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="masataka sawayama">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:29">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Valid Text-to-SQL Generation with Unification-based DeepStochLog</data>
+    </node>
+    <node id="ying jiao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="luc de raedt">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="giuseppe marra">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:30">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">PERC: a suite of software tools for the curation of cryoEM data with application to simulation, modelling and machine learning</data>
+    </node>
+    <node id="beatriz costa-gomesa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="joel greer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nikolai juraschkoa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="james parkhurst">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jola mirecka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="marjan familia">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="camila rangel-smith">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="oliver strickson">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="alan lowe">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="mark basham">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="tom burnley">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:31">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">FLEX: A Framework for Learning Robot-Agnostic Force-based Skills Involving Sustained Contact Object Manipulation</data>
+    </node>
+    <node id="shijie fang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="wenchang gao" />
+    <node id="shivam goel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="christopher thierauf">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="matthias scheutz">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jivko sinapov">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:32">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Clustering is back: Reaching state-of-the-art LiDAR instance segmentation without training</data>
+    </node>
+    <node id="corentin sautier">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="gilles puy">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="alexandre boulch">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="renaud marlet">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="vincent lepetit">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:33">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Computation Mechanism Behind LLM Position Generalization</data>
+    </node>
+    <node id="chi han" />
+    <node id="heng ji" />
+    <node id="artículo:34">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Detection of RS Oph with LST-1 and modelling of its HE/VHE gamma-ray emission</data>
+    </node>
+    <node id="k. abe">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. abe" />
+    <node id="a. abhishek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. acero">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. aguasca-cabot">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. agudo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. alispach">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="n. alvarez crespo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. ambrosino">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. a. antonelli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. aramo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. arbet-engels">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. arcaro">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. asano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. aubert">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. baktash">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. balbo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. bamba">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. baquero larriva">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="u. barres de almeida">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. a. barrio" />
+    <node id="l. barrios jiménez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. batkovic">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. baxter">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. becerra gonzález">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. bernardini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. bernete">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. berti">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. bezshyiko">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. bhattacharjee">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. bigongiari">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. bissaldi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="o. blanch">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. bonnoli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. bordas">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. borkowski">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. brunelli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. bulgarelli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. bunse">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. burelli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. burmistrov">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. buscemi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. cardillo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. caroff">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. carosi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. s. carrasco" />
+    <node id="f. cassol">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="n. castrejón">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. cerasole">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. ceribella">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. chai">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. cheng" />
+    <node id="a. chiavassa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. chikawa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. chon">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. chytka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. m. cicciari">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. cifuentes">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. l. contreras">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. cortina">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. costantini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. da vela" />
+    <node id="m. dalchenko">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. dazzi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. de angelis" />
+    <node id="m. de bony de lavergne" />
+    <node id="b. de lotto" />
+    <node id="r. de menezes" />
+    <node id="r. del burgo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. del peral" />
+    <node id="c. delgado">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. delgado mengual" />
+    <node id="d. della volpe">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. dellaiera">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. di piano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. di pierro" />
+    <node id="r. di tria" />
+    <node id="l. di venere" />
+    <node id="c. díaz">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. m. dominik" />
+    <node id="d. dominis prester">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. donini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. dore">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. dorner">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. doro">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. eisenberger">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. elsässer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. emery">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. escudero">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. fallah ramazani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. ferrarotto">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. fiasson">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. foffano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. freixas coromina">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. fröse">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. fukazawa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. garcia lópez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. gasbarra">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. gasparrini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. geyer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. giesbrecht paiva">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="n. giglietto">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. giordano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. gliwny">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="n. godinovic">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. grau">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. green">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. green" />
+    <node id="s. gunji">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. günther">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. hackfeld">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. hadasch">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. hahn">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. hassan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. hayashi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. heckmann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. heller">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. herrera llorente">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. hirotani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. hoffmann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. horns">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. houles">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. hrabovsky">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. hrupec">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. hui">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. iarlori">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. imazawa">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. inada">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. inome">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. inoue">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. ioka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. iori">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. iuliano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. jahanvi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. jimenez martinez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. jimenez quiles" />
+    <node id="j. jurysek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. kagaya">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="o. kalashev">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. karas">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. katagiri">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. kataoka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. kerszberg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. kobayashi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. kohri">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. kong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. kubo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. kushida">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="b. lacave">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. lainez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. lamanna">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. lamastra">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. lemoigne">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. linhoff">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. longo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. lópez-coto">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. lópez-moya">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. lópez-oramas">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. loporchio">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. lorini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. lozano bahilo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. luciani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. l. luque-escamilla" />
+    <node id="p. majumdar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. makariev">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. mallamaci">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. mandat">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. manganaro">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. manicò">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. mannheim">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. marchesi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. mariotti">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. marquez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. marsella">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. martí">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="o. martinez" />
+    <node id="g. martínez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. martínez" />
+    <node id="a. mas-aguilar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. maurin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. mazin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. méndez-gallego">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. menon">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. mestre guillen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. micanovic">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. miceli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. miener">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. m. miranda" />
+    <node id="r. mirzoyan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. mizuno">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. molero gonzalez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. molina">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. montaruli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. moralejo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. morcuende">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. morselli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. moya">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. muraishi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. nagataki">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. nakamori">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. neronov">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. nickel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. nieto castaño">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. nievas rosillo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. nikolic">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. nishijima">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. noda" />
+    <node id="d. nosek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. novotny">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. nozaki">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. ohishi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. ohtani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. oka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. okumura">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. orito">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. otero-santos">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. ottanelli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. owen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. palatiello">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. paneque">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. r. pantaleo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. paoletti">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. m. paredes" />
+    <node id="m. pech">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. pecimotika">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. peresano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. pfeifle">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. pietropaolo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. pihet">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. pirola">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. plard">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. podobnik">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. pons">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. prandini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. prouza">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. rainò">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. rando">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="w. rhode">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. ribó">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. righi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. rizi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. rodriguez fernandez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. d. rodríguez frías">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. romano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. ruina">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="e. ruiz-velasco">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. saito">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. sakurai">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. a. sanchez" />
+    <node id="h. sano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. šaric´">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. sato">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. g. saturni">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. savchenko">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. schiavone">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="b. schleicher">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. schmuckermaier">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. l. schubert" />
+    <node id="f. schussler">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. schweizer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. seglar arroyo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. siegert">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. simongini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. sitarek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. sliusar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. stamerra">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. striškovic´">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. strzys">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. suda">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. sunny">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. tajima">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="h. takahashi" />
+    <node id="m. takahashi" />
+    <node id="j. takata">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. takeishi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. h. t. tam">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. j. tanaka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. tateishi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. tavernier">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. temnikov">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. terada">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="k. terauchi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. terzic">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. teshima">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. tluczykont">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. toennis">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="f. tokanai">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="d. f. torres">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. travnicek">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. tutone">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. vacula">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. van scherpenberg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="m. vázquez acosta">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. ventura">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="s. vercellone">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. verna">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. viale">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="a. vigliano">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="c. f. vigorito" />
+    <node id="e. visentin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. vitale">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="v. voitsekhovskyi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="g. voutsinas">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="i. vovk">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. vuillaume">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. walter">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="l. wan" />
+    <node id="m. will">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="j. wójtowicz">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. yamamoto">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="r. yamazaki">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="y. yao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="p. k. h. yeung">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. yoshida">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="t. yoshikoshi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="w. zhang" />
+    <node id="n. zywucka">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:35">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">From Zero to Detail: Deconstructing Ultra-High-Definition Image Restoration from Progressive Spectral Perspective</data>
+    </node>
+    <node id="chen zhao" />
+    <node id="zhizhou chen" />
+    <node id="yunzhe xu" />
+    <node id="enxuan gu" />
+    <node id="jian li" />
+    <node id="zili yi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="qian wang" />
+    <node id="jian yang" />
+    <node id="ying tai">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:36">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Dense Policy: Bidirectional Autoregressive Learning of Actions</data>
+    </node>
+    <node id="yue su" />
+    <node id="xinyu zhan" />
+    <node id="hongjie fang" />
+    <node id="han xue">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="hao-shu fang" />
+    <node id="yong-lu li" />
+    <node id="cewu lu" />
+    <node id="lixin yang" />
+    <node id="artículo:37">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Beyond Propagation of Chaos: A Stochastic Algorithm for Mean Field Optimization</data>
+    </node>
+    <node id="chandan tankala">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="dheeraj m. nagaraj" />
+    <node id="anant raj">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:38">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Beyond RGB: Adaptive Parallel Processing for RAW Object Detection</data>
+    </node>
+    <node id="shani gamrian">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="hila barel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="feiran li" />
+    <node id="masakazu yoshimura">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="daisuke iso">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:39">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Language-guided Open-world Video Anomaly Detection</data>
+    </node>
+    <node id="zihao liu" />
+    <node id="xiaoyu wu" />
+    <node id="jianqin wu" />
+    <node id="xuxu wang" />
+    <node id="linlin yang" />
+    <node id="artículo:40">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Continuous-time Data-driven Barrier Certificate Synthesis</data>
+    </node>
+    <node id="luke rickard">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="alessandro abate">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kostas margellos">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:41">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Channel Estimation for Pinching-Antenna Systems (PASS)</data>
+    </node>
+    <node id="jian xiao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ji wang" />
+    <node id="yuanwei liu" />
+    <node id="artículo:42">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">GC-Fed: Gradient Centralized Federated Learning with Partial Client Participation</data>
+    </node>
+    <node id="jungwon seo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ferhat ozgur catak">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chunming rong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kibeom hong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="minhoe kim">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:43">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">EFFICIENT IMITATION UNDER MISSPECIFICATION</data>
+    </node>
+    <node id="nicolas espinosa-dice">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sanjiban choudhury">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="wen sun" />
+    <node id="gokul swamy">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:44">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">MicroVQA: A Multimodal Reasoning Benchmark for Microscopy-Based Scientific Research</data>
+    </node>
+    <node id="james burgess">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jeffrey j nirschl" />
+    <node id="laura bravo-sa´nchez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="alejandro lozano" />
+    <node id="sanket rajan gupte">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jesus g galaz-montoya" />
+    <node id="yuhui zhang" />
+    <node id="yuchang su" />
+    <node id="disha bhowmik">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zachary coman">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sarina m hasan" />
+    <node id="alexandra johannesson">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="william d leineweber" />
+    <node id="malvika g nair" />
+    <node id="ridhi yarlagadda">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="connor zuraski">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="wah chiu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sarah cohen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jan n hansen" />
+    <node id="manuel d leonetti" />
+    <node id="chad liu" />
+    <node id="emma lundberg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="serena yeung-levy">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:45">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">ENHANCINGZERO-SHOTLEARNINGINMEDICALIMAGING:INTEGRATINGCLIP WITHADVANCEDTECHNIQUESFORIMPROVEDCHESTX-RAYANALYSIS</data>
+    </node>
+    <node id="prakhar bhardwaj">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sheethal bhat" />
+    <node id="andreas maier">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:46">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">OLÉ - Online Learning Emulation in Cosmology</data>
+    </node>
+    <node id="sven günther" />
+    <node id="lennart balkenhol">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="christian fidler">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ali rida khalife">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="julien lesgourgues">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="markus r mosbech" />
+    <node id="ravi kumar sharma" />
+    <node id="artículo:47">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning Across Pseudo-Mismatch</data>
+    </node>
+    <node id="yijie liu" />
+    <node id="xinyi shang" />
+    <node id="yiqun zhang" />
+    <node id="yang lu" />
+    <node id="chen gong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jing-hao xue" />
+    <node id="hanzi wang" />
+    <node id="artículo:48">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">TimeZero: Temporal Video Grounding with Reasoning-Guided LVLM</data>
+    </node>
+    <node id="ye wang" />
+    <node id="boshen xu" />
+    <node id="zihao yue">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zihan xiao" />
+    <node id="ziheng wang" />
+    <node id="liang zhang" />
+    <node id="dingyi yang" />
+    <node id="wenxuan wang" />
+    <node id="qin jin" />
+    <node id="artículo:49">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">The Power of Amortization on Scheduling with Explorable Uncertainty</data>
+    </node>
+    <node id="alison hsiang-hsuan liu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="fu-hong liu" />
+    <node id="prudence w.h. wong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="xiao-ou zhang" />
+    <node id="artículo:50">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">SYNCDIFF: Diffusion-based Talking Head Synthesis with Bottlenecked Temporal Visual Prior for Improved Synchronization</data>
+    </node>
+    <node id="xulin fan" />
+    <node id="heting gao" />
+    <node id="ziyi chen" />
+    <node id="peng chang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="mei han" />
+    <node id="mark hasegawa-johnson">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:51">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Agents Play Thousands of 3D Video Games</data>
+    </node>
+    <node id="zhongwen xu" />
+    <node id="xianliang wang" />
+    <node id="siyi li" />
+    <node id="tao yu" />
+    <node id="liang wang" />
+    <node id="qiang fu" />
+    <node id="wei yang" />
+    <node id="artículo:52">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Artificial Spacetimes for Reactive Control of Resource-Limited Robots</data>
+    </node>
+    <node id="william h reinhardt" />
+    <node id="marc z miskin" />
+    <node id="artículo:53">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Graph Generative Models Evaluation with Masked Autoencoder</data>
+    </node>
+    <node id="chengen wang" />
+    <node id="murat kantarcioglu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:54">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">GFSNetwork: Differentiable Feature Selection via Gumbel-Sigmoid Relaxation</data>
+    </node>
+    <node id="witold wydmański">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="marek śmieja">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:55">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Reliable and Efficient Amortized Model-based Evaluation</data>
+    </node>
+    <node id="sang truong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yuheng tu" />
+    <node id="percy liang" />
+    <node id="bo li" />
+    <node id="sanmi koyejo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:56">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Strain Problems got you in a Twist? Try StrainRelief: A Quantum-Accurate Tool for Ligand Strain Calculations</data>
+    </node>
+    <node id="ewan r s wallace" />
+    <node id="nathan c frey" />
+    <node id="joshua a rackers" />
+    <node id="artículo:57">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">A representational framework for learning and encoding structurally enriched trajectories in complex agent environments</data>
+    </node>
+    <node id="corina ca˘ta˘ra˘u-cotutiu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="esther mondrago´n">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="eduardo alonso">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:58">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference</data>
+    </node>
+    <node id="maximilian beck">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="korbinian po¨ppel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="phillip lippe">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="richard kurle">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="patrick m blies" />
+    <node id="gu¨nter klambauer">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sebastian bo¨ck">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sepp hochreiter">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:59">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Fed-Joint: Joint Modeling of Nonlinear Degradation Signals and Failure Events for Remaining Useful Life Prediction using Federated Learning</data>
+    </node>
+    <node id="cheoljoon jeong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="xubo yue" />
+    <node id="seokhyun chung">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:60">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Integrating AI for Human-Centric Breast Cancer Diagnostics: A Multi-Scale and Multi-View Swin Transformer Framework</data>
+    </node>
+    <node id="farnoush bayatmakou">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="reza taleei">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="milad amir toutounchian">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="arash mohammadi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:61">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Actively learning equilibria in Nash games with misleading information</data>
+    </node>
+    <node id="barbara franci">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="filippo fabiani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="alberto bemporad">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:62">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">DLPO : Towards a Robust, Efficient, and Generalizable Prompt Optimization Framework from a Deep-Learning Perspective</data>
+    </node>
+    <node id="dengyun peng">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yuhang zhou" />
+    <node id="qiguang chen" />
+    <node id="jinhao liu" />
+    <node id="jingjing chen" />
+    <node id="li bo qin" />
+    <node id="artículo:63">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Code-Driven Inductive Synthesis: Enhancing Reasoning Abilities of Large Language Models with Sequences</data>
+    </node>
+    <node id="kedi chen" />
+    <node id="zhikai lei">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="fan zhang" />
+    <node id="yinqi zhang" />
+    <node id="qin chen" />
+    <node id="jie zhou" />
+    <node id="liang he" />
+    <node id="qipeng guo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kai chen" />
+    <node id="wei zhang" />
+    <node id="artículo:64">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Parameter-free structure-texture image decomposition by unrolling</data>
+    </node>
+    <node id="laura girometti">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jean-françois aujol">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="antoine guennec">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yann traonmilin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:65">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">SuperBPE: Space Travel for Language Models</data>
+    </node>
+    <node id="alisa liu" />
+    <node id="jonathan hayase">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="valentin hofmann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sewoong oh" />
+    <node id="noah a smith" />
+    <node id="yejin choi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:66">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Deep Learning Advancements in Anomaly Detection: A Comprehensive Survey</data>
+    </node>
+    <node id="haoqi huang" />
+    <node id="ping wang" />
+    <node id="jianhua pei">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jiacheng wang" />
+    <node id="shahen alexanian">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="dusit niyato">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:67">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">A (1 + ϵ)-Approximation for Ultrametric Embedding in Subquadratic Time</data>
+    </node>
+    <node id="gabriel bathie">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="guillaume lagarde">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:68">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">OSLO-IC: On-the-Sphere Learned Omnidirectional Image Compression with Attention Modules and Spatial Context</data>
+    </node>
+    <node id="paul wawerek-lo´pez">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="navid mahmoudian bidgoli">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="pascal frossard">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="andre´ kaup">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="thomas maugey">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:69">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">PRODIF: PROTECTING DOMAIN-INVARIANT FEATURES TO SECURE PRE-TRAINED MODELS AGAINST EXTRACTION</data>
+    </node>
+    <node id="tong zhou" />
+    <node id="shijin duan" />
+    <node id="gaowen liu" />
+    <node id="charles fleming">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ramana rao kompella">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shaolei ren">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="xiaolin xu" />
+    <node id="artículo:70">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">PAUSE: Low-Latency and Privacy-Aware Active User Selection for Federated Learning</data>
+    </node>
+    <node id="ori peleg">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="natalie lang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="stefano rini">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nir shlezinger">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kobi cohen" />
+    <node id="artículo:71">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Zero-Knowledge Proof-Based Consensus for Blockchain-Secured Federated Learning</data>
+    </node>
+    <node id="tianxing fu" />
+    <node id="jia hu" />
+    <node id="geyong min">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zi wang" />
+    <node id="artículo:72">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">MIXPINN: Mixed-Material Simulations by Physics-Informed Neural Network</data>
+    </node>
+    <node id="xintian yuan" />
+    <node id="yunke ao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="boqi chen" />
+    <node id="philipp fu¨rnstahl">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:73">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Artificial Intelligence-Driven Prognostic Classification of COVID-19 Using Chest X-rays: A Deep Learning Approach</data>
+    </node>
+    <node id="alfred simbun">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="suresh kumar" />
+    <node id="artículo:74">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">LearnMate : Enhancing Online Education with LLM-Powered Personalized Learning Plans and Support</data>
+    </node>
+    <node id="xinyu jessica wang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="christine p lee" />
+    <node id="bilge mutlu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:75">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">U2AD: Uncertainty-based Unsupervised Anomaly Detection Framework for Detecting T2 Hyperintensity in MRI Spinal Cord</data>
+    </node>
+    <node id="qi zhang" />
+    <node id="xiuyuan chen" />
+    <node id="ziyi he" />
+    <node id="kun wang" />
+    <node id="lianming wu" />
+    <node id="hongxing shen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jianqi sun" />
+    <node id="artículo:76">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Local-Global Learning of Interpretable Control Policies: The Interface between MPC and Reinforcement Learning</data>
+    </node>
+    <node id="thomas banker">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nathan p lawrence" />
+    <node id="ali mesbah">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:77">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Humanoid Policy ∼ Human Policy</data>
+    </node>
+    <node id="ri-zhao qiu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shiqi yang" />
+    <node id="xuxin cheng" />
+    <node id="chaitanya chawla">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jialong li" />
+    <node id="tairan he" />
+    <node id="ge yan" />
+    <node id="lars paulsen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ge yang" />
+    <node id="sha yi" />
+    <node id="guanya shi" />
+    <node id="xiaolong wang" />
+    <node id="artículo:78">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">The deep multi-FBSDE method: a robust deep learning method for coupled FBSDEs</data>
+    </node>
+    <node id="kristoffer andersson">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="adam andersson" />
+    <node id="cornelis w oosterlee" />
+    <node id="artículo:79">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Patient-specific radiomic feature selection with reconstructed healthy persona of knee MR images</data>
+    </node>
+    <node id="yaxi chen" />
+    <node id="simin ni" />
+    <node id="aleksandra ivanova">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="shaheer u saeed">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="rikin hargunani">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jie huang" />
+    <node id="chaozong liu" />
+    <node id="yipeng hu" />
+    <node id="artículo:80">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Measuring In-Context Computation Complexity via Hidden State Prediction</data>
+    </node>
+    <node id="vincent herrmann">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ro´bert csorda´s">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ju¨rgen schmidhuber">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:81">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Highly Efficient Direct Analytics on Semantic-aware Time Series Data Compression</data>
+    </node>
+    <node id="guoyou sun" />
+    <node id="panagiotis karras">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:82">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs</data>
+    </node>
+    <node id="erik daxberger">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nina wenzel">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="david griffiths">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="haiming gang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="justin lazarow">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="gefen kohavi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="kai kang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="marcin eichner">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yinfei yang" />
+    <node id="afshin dehghan">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="peter grasch">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:83">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Unified Autoregressive Visual Generation and Understanding with Continuous Tokens</data>
+    </node>
+    <node id="lijie fan" />
+    <node id="luming tang">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="siyang qin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="tianhong li" />
+    <node id="xuan yang" />
+    <node id="siyuan qiao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="andreas steiner">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chen sun" />
+    <node id="yuanzhen li" />
+    <node id="tao zhu" />
+    <node id="michael rubinstein">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="michalis raptis">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="deqing sun" />
+    <node id="radu soricut">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:84">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Deep Belief Markov Models for POMDP Inference</data>
+    </node>
+    <node id="giacomo arcieri">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="konstantinos g. papakonstantinou" />
+    <node id="daniel straub">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="eleni chatzi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:85">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Cream of the Crop: Harvesting Rich, Scalable and Transferable Multi-Modal Data for Instruction Fine-Tuning</data>
+    </node>
+    <node id="mengyao lyu">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="yan li" />
+    <node id="huasong zhong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="wenhao yang" />
+    <node id="hui chen" />
+    <node id="jungong han" />
+    <node id="guiguang ding">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="zhenheng yang" />
+    <node id="artículo:86">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">LLM-Match: An Open-Sourced Patient Matching Model Based on Large Language Models and Retrieval-Augmented Generation</data>
+    </node>
+    <node id="xiaodi li" />
+    <node id="shaika chowdhury">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="chung il wi">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="maria vassilaki">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="ken liu" />
+    <node id="terence t sio" />
+    <node id="owen garrick">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="young j juhn" />
+    <node id="james r cerhan" />
+    <node id="cui tao">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nansu zong">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:87">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">On Local Posterior Structure in Deep Ensembles</data>
+    </node>
+    <node id="mikkel jordahn">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="jonas vestergaard jensen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="mikkel n. schmidt">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="michael riis andersen">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:88">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Follow-the-Regularized-Leader with Adversarial Constraints</data>
+    </node>
+    <node id="ricardo n. ferreira" />
+    <node id="cláudia soares">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:89">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Securing Virtual Reality Experiences: Unveiling and Tackling Cybersickness Attacks with Explainable AI</data>
+    </node>
+    <node id="ripan kumar kundu" />
+    <node id="matthew denton">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="genova mongalo">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="prasad calyam">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="khaza anuarul hoque">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:90">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Do You Understand Epistemic Uncertainty? Think Again! Rigorous Frequentist Epistemic Uncertainty Estimation in Regression</data>
+    </node>
+    <node id="enrico foglia">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="benjamin bobbia">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="nikita durasov">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="michael bauerheim">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="pascal fua">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="stephane moreau">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="thierry jardin">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:91">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Gradient Extrapolation for Debiased Representation Learning</data>
+    </node>
+    <node id="ihab asaad">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="maha shadaydeh">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="joachim denzler">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:92">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">A General Adaptive Dual-level Weighting Mechanism for Remote Sensing Pansharpening</data>
+    </node>
+    <node id="haorui chen" />
+    <node id="jiaxuan ren" />
+    <node id="siran peng" />
+    <node id="liangjian deng">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:93">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Mitigating Visual Forgetting via Take-along Visual Conditioning for Multi-modal Long CoT Reasoning</data>
+    </node>
+    <node id="hai-long sun" />
+    <node id="zhun sun" />
+    <node id="houwen peng" />
+    <node id="han-jia ye" />
+    <node id="artículo:94">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Neural network-based Godunov corrections for approximate Riemann solvers using bi-fidelity learning</data>
+    </node>
+    <node id="akshay thakur">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="matthew j zahra" />
+    <node id="artículo:95">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">Synthetic Spectroscopy for White Dwarf Classification: Addressing Label Uncertainty and Class Imbalance</data>
+    </node>
+    <node id="olivier vincent">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="pierre bergeron">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="patrick dufour">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="artículo:96">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">A mathematical model for a universal digital quantum computer with an application to the Grover-Rudolph algorithm</data>
+    </node>
+    <node id="antonio falcó">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="daniela falco–pomares">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="hermann g matthies" />
+    <node id="artículo:97">
+      <data key="d0">article</data>
+      <data key="d1">lightgreen</data>
+      <data key="d2">AugMapNet: Improving Spatial Latent Structure via BEV Grid Augmentation for Enhanced Vectorized Online HD Map Construction</data>
+    </node>
+    <node id="thomas monninger">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="md zafar anwar">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="stanislaw antol">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="steffen staab">
+      <data key="d0">author</data>
+      <data key="d1">lightblue</data>
+    </node>
+    <node id="sihao ding" />
+    <edge source="artículo:0" target="qing zhou" />
+    <edge source="artículo:0" target="junyu gao" />
+    <edge source="artículo:0" target="qi wang" />
+    <edge source="artículo:1" target="yongkang cheng" />
+    <edge source="artículo:1" target="shaoli huang" />
+    <edge source="artículo:2" target="xin dong" />
+    <edge source="artículo:2" target="rui miao" />
+    <edge source="artículo:2" target="suyan zhang" />
+    <edge source="artículo:2" target="shuaibing jia" />
+    <edge source="artículo:2" target="leifeng zhang" />
+    <edge source="artículo:2" target="yong liang" />
+    <edge source="artículo:2" target="jianhua zhang" />
+    <edge source="artículo:2" target="yi zhun zhu" />
+    <edge source="artículo:3" target="eduard frankford" />
+    <edge source="artículo:3" target="daniel crazzolara" />
+    <edge source="artículo:3" target="michael vierhauser" />
+    <edge source="artículo:3" target="niklas meißner" />
+    <edge source="artículo:3" target="stephan krusche" />
+    <edge source="artículo:3" target="ruth breu" />
+    <edge source="artículo:4" target="alexandra g hammerberg" />
+    <edge source="artículo:4" target="samuel k grunblatt" />
+    <edge source="artículo:4" target="patricia a kramer" />
+    <edge source="artículo:5" target="erik hoel" />
+    <edge source="artículo:6" target="zeng wang" />
+    <edge source="artículo:6" target="minghao shao" />
+    <edge source="artículo:6" target="mohammed nabeel" />
+    <edge source="artículo:6" target="prithwish basu roy" />
+    <edge source="artículo:6" target="likhitha mankali" />
+    <edge source="artículo:6" target="jitendra bhandari" />
+    <edge source="artículo:6" target="ramesh karri" />
+    <edge source="artículo:6" target="ozgur sinanoglu" />
+    <edge source="artículo:6" target="muhammad shafique" />
+    <edge source="artículo:6" target="johann knechtel" />
+    <edge source="artículo:7" target="yiman bao" />
+    <edge source="artículo:7" target="jie gao" />
+    <edge source="artículo:7" target="jinke he" />
+    <edge source="artículo:7" target="frans a oliehoek" />
+    <edge source="artículo:7" target="oded cats" />
+    <edge source="artículo:8" target="kevin vora" />
+    <edge source="artículo:8" target="yu zhang" />
+    <edge source="yu zhang" target="artículo:20" />
+    <edge source="artículo:9" target="marcello iotti" />
+    <edge source="artículo:9" target="paolo davini" />
+    <edge source="artículo:9" target="jost von hardenberg" />
+    <edge source="artículo:9" target="giuseppe zappa" />
+    <edge source="artículo:10" target="zhanggen jin" />
+    <edge source="artículo:10" target="haobin duan" />
+    <edge source="artículo:10" target="zhiyang hang" />
+    <edge source="artículo:11" target="yuanze li" />
+    <edge source="artículo:11" target="shihao yuan" />
+    <edge source="artículo:11" target="haolin wang" />
+    <edge source="artículo:11" target="qizhang li" />
+    <edge source="artículo:11" target="ming liu" />
+    <edge source="artículo:11" target="chen xu" />
+    <edge source="artículo:11" target="guangming shi" />
+    <edge source="artículo:11" target="wangmeng zuo" />
+    <edge source="artículo:12" target="wensheng wang" />
+    <edge source="artículo:12" target="ning tan" />
+    <edge source="artículo:13" target="weiqiang jin" />
+    <edge source="artículo:13" target="hongyang du" />
+    <edge source="artículo:13" target="biao zhao" />
+    <edge source="artículo:13" target="xingwu tian" />
+    <edge source="artículo:13" target="bohang shi" />
+    <edge source="artículo:13" target="guang yang" />
+    <edge source="artículo:14" target="ryo takahashi" />
+    <edge source="artículo:14" target="changyo han" />
+    <edge source="artículo:14" target="wakako yukita" />
+    <edge source="artículo:14" target="john s. ho" />
+    <edge source="artículo:14" target="takuya sasatani" />
+    <edge source="artículo:14" target="akihito noda" />
+    <edge source="artículo:14" target="tomoyuki yokota" />
+    <edge source="artículo:14" target="takao someya" />
+    <edge source="artículo:14" target="yoshihiro kawahara" />
+    <edge source="artículo:15" target="amit zalcher" />
+    <edge source="artículo:15" target="navve wasserman" />
+    <edge source="artículo:15" target="roman beliy" />
+    <edge source="artículo:15" target="oliver heinimann" />
+    <edge source="artículo:15" target="michal irani" />
+    <edge source="artículo:16" target="entao yang" />
+    <edge source="artículo:16" target="xiaotian zhang" />
+    <edge source="artículo:16" target="yue shang" />
+    <edge source="artículo:16" target="ge zhang" />
+    <edge source="artículo:17" target="yinqiao wang" />
+    <edge source="artículo:17" target="hao xu" />
+    <edge source="artículo:17" target="pheng-ann heng" />
+    <edge source="artículo:17" target="chi-wing fu" />
+    <edge source="artículo:18" target="roman chertovskih" />
+    <edge source="artículo:18" target="nikolay pogodaev" />
+    <edge source="artículo:18" target="maxim staritsyn" />
+    <edge source="artículo:18" target="a. pedro aguiar" />
+    <edge source="artículo:19" target="lan chen" />
+    <edge source="artículo:19" target="qi mao" />
+    <edge source="artículo:19" target="yuchao gu" />
+    <edge source="artículo:19" target="mike zheng shou" />
+    <edge source="artículo:20" target="yu liu" />
+    <edge source="artículo:20" target="hanbin jiang" />
+    <edge source="artículo:20" target="lei zhu" />
+    <edge source="artículo:20" target="yuqi mao" />
+    <edge source="artículo:20" target="jiangxia cao" />
+    <edge source="artículo:20" target="shuchao pang" />
+    <edge source="artículo:21" target="cheng-hsi hsiao" />
+    <edge source="artículo:21" target="ellen m rathje" />
+    <edge source="artículo:21" target="krishna kumar" />
+    <edge source="artículo:22" target="tianhao wu" />
+    <edge source="artículo:22" target="chuanxia zheng" />
+    <edge source="artículo:22" target="frank guan" />
+    <edge source="artículo:22" target="andrea vedaldi" />
+    <edge source="artículo:22" target="tat-jen cham" />
+    <edge source="artículo:23" target="fangzhi xu" />
+    <edge source="artículo:23" target="hang yan" />
+    <edge source="artículo:23" target="chang ma" />
+    <edge source="artículo:23" target="haiteng zhao" />
+    <edge source="artículo:23" target="jun liu" />
+    <edge source="artículo:23" target="qika lin" />
+    <edge source="artículo:23" target="zhiyong wu" />
+    <edge source="artículo:24" target="qin liu" />
+    <edge source="artículo:24" target="wenxuan zhou" />
+    <edge source="artículo:24" target="nan xu" />
+    <edge source="artículo:24" target="james y huang" />
+    <edge source="artículo:24" target="fei wang" />
+    <edge source="artículo:24" target="sheng zhang" />
+    <edge source="artículo:24" target="hoifung poon" />
+    <edge source="artículo:24" target="muhao chen" />
+    <edge source="artículo:25" target="bernd zimmering" />
+    <edge source="artículo:25" target="cecília coelho" />
+    <edge source="artículo:25" target="vaibhav gupta" />
+    <edge source="artículo:25" target="maria maleshkova" />
+    <edge source="artículo:25" target="oliver niggemann" />
+    <edge source="artículo:26" target="gabriele sanguin" />
+    <edge source="artículo:26" target="arjun pakrashi" />
+    <edge source="artículo:26" target="marco viola" />
+    <edge source="artículo:26" target="francesco rinaldi" />
+    <edge source="artículo:27" target="marta grze´skiewicz" />
+    <edge source="artículo:28" target="mina kamao" />
+    <edge source="artículo:28" target="hayato ono" />
+    <edge source="artículo:28" target="ayumu yamashita" />
+    <edge source="artículo:28" target="kaoru amano" />
+    <edge source="artículo:28" target="masataka sawayama" />
+    <edge source="artículo:29" target="ying jiao" />
+    <edge source="artículo:29" target="luc de raedt" />
+    <edge source="artículo:29" target="giuseppe marra" />
+    <edge source="artículo:30" target="beatriz costa-gomesa" />
+    <edge source="artículo:30" target="joel greer" />
+    <edge source="artículo:30" target="nikolai juraschkoa" />
+    <edge source="artículo:30" target="james parkhurst" />
+    <edge source="artículo:30" target="jola mirecka" />
+    <edge source="artículo:30" target="marjan familia" />
+    <edge source="artículo:30" target="camila rangel-smith" />
+    <edge source="artículo:30" target="oliver strickson" />
+    <edge source="artículo:30" target="alan lowe" />
+    <edge source="artículo:30" target="mark basham" />
+    <edge source="artículo:30" target="tom burnley" />
+    <edge source="artículo:31" target="shijie fang" />
+    <edge source="artículo:31" target="wenchang gao" />
+    <edge source="artículo:31" target="shivam goel" />
+    <edge source="artículo:31" target="christopher thierauf" />
+    <edge source="artículo:31" target="matthias scheutz" />
+    <edge source="artículo:31" target="jivko sinapov" />
+    <edge source="artículo:32" target="corentin sautier" />
+    <edge source="artículo:32" target="gilles puy" />
+    <edge source="artículo:32" target="alexandre boulch" />
+    <edge source="artículo:32" target="renaud marlet" />
+    <edge source="artículo:32" target="vincent lepetit" />
+    <edge source="artículo:33" target="chi han" />
+    <edge source="artículo:33" target="heng ji" />
+    <edge source="artículo:34" target="k. abe" />
+    <edge source="artículo:34" target="s. abe" />
+    <edge source="artículo:34" target="a. abhishek" />
+    <edge source="artículo:34" target="f. acero" />
+    <edge source="artículo:34" target="a. aguasca-cabot" />
+    <edge source="artículo:34" target="i. agudo" />
+    <edge source="artículo:34" target="c. alispach" />
+    <edge source="artículo:34" target="n. alvarez crespo" />
+    <edge source="artículo:34" target="d. ambrosino" />
+    <edge source="artículo:34" target="l. a. antonelli" />
+    <edge source="artículo:34" target="c. aramo" />
+    <edge source="artículo:34" target="a. arbet-engels" />
+    <edge source="artículo:34" target="c. arcaro" />
+    <edge source="artículo:34" target="k. asano" />
+    <edge source="artículo:34" target="p. aubert" />
+    <edge source="artículo:34" target="a. baktash" />
+    <edge source="artículo:34" target="m. balbo" />
+    <edge source="artículo:34" target="a. bamba" />
+    <edge source="artículo:34" target="a. baquero larriva" />
+    <edge source="artículo:34" target="u. barres de almeida" />
+    <edge source="artículo:34" target="j. a. barrio" />
+    <edge source="artículo:34" target="l. barrios jiménez" />
+    <edge source="artículo:34" target="i. batkovic" />
+    <edge source="artículo:34" target="j. baxter" />
+    <edge source="artículo:34" target="j. becerra gonzález" />
+    <edge source="artículo:34" target="e. bernardini" />
+    <edge source="artículo:34" target="j. bernete" />
+    <edge source="artículo:34" target="a. berti" />
+    <edge source="artículo:34" target="i. bezshyiko" />
+    <edge source="artículo:34" target="p. bhattacharjee" />
+    <edge source="artículo:34" target="c. bigongiari" />
+    <edge source="artículo:34" target="e. bissaldi" />
+    <edge source="artículo:34" target="o. blanch" />
+    <edge source="artículo:34" target="g. bonnoli" />
+    <edge source="artículo:34" target="p. bordas" />
+    <edge source="artículo:34" target="g. borkowski" />
+    <edge source="artículo:34" target="g. brunelli" />
+    <edge source="artículo:34" target="a. bulgarelli" />
+    <edge source="artículo:34" target="m. bunse" />
+    <edge source="artículo:34" target="i. burelli" />
+    <edge source="artículo:34" target="l. burmistrov" />
+    <edge source="artículo:34" target="m. buscemi" />
+    <edge source="artículo:34" target="m. cardillo" />
+    <edge source="artículo:34" target="s. caroff" />
+    <edge source="artículo:34" target="a. carosi" />
+    <edge source="artículo:34" target="m. s. carrasco" />
+    <edge source="artículo:34" target="f. cassol" />
+    <edge source="artículo:34" target="n. castrejón" />
+    <edge source="artículo:34" target="d. cerasole" />
+    <edge source="artículo:34" target="g. ceribella" />
+    <edge source="artículo:34" target="y. chai" />
+    <edge source="artículo:34" target="k. cheng" />
+    <edge source="artículo:34" target="a. chiavassa" />
+    <edge source="artículo:34" target="m. chikawa" />
+    <edge source="artículo:34" target="g. chon" />
+    <edge source="artículo:34" target="l. chytka" />
+    <edge source="artículo:34" target="g. m. cicciari" />
+    <edge source="artículo:34" target="a. cifuentes" />
+    <edge source="artículo:34" target="j. l. contreras" />
+    <edge source="artículo:34" target="j. cortina" />
+    <edge source="artículo:34" target="h. costantini" />
+    <edge source="artículo:34" target="p. da vela" />
+    <edge source="artículo:34" target="m. dalchenko" />
+    <edge source="artículo:34" target="f. dazzi" />
+    <edge source="artículo:34" target="a. de angelis" />
+    <edge source="artículo:34" target="m. de bony de lavergne" />
+    <edge source="artículo:34" target="b. de lotto" />
+    <edge source="artículo:34" target="r. de menezes" />
+    <edge source="artículo:34" target="r. del burgo" />
+    <edge source="artículo:34" target="l. del peral" />
+    <edge source="artículo:34" target="c. delgado" />
+    <edge source="artículo:34" target="j. delgado mengual" />
+    <edge source="artículo:34" target="d. della volpe" />
+    <edge source="artículo:34" target="m. dellaiera" />
+    <edge source="artículo:34" target="a. di piano" />
+    <edge source="artículo:34" target="f. di pierro" />
+    <edge source="artículo:34" target="r. di tria" />
+    <edge source="artículo:34" target="l. di venere" />
+    <edge source="artículo:34" target="c. díaz" />
+    <edge source="artículo:34" target="r. m. dominik" />
+    <edge source="artículo:34" target="d. dominis prester" />
+    <edge source="artículo:34" target="a. donini" />
+    <edge source="artículo:34" target="d. dore" />
+    <edge source="artículo:34" target="d. dorner" />
+    <edge source="artículo:34" target="m. doro" />
+    <edge source="artículo:34" target="l. eisenberger" />
+    <edge source="artículo:34" target="d. elsässer" />
+    <edge source="artículo:34" target="g. emery" />
+    <edge source="artículo:34" target="j. escudero" />
+    <edge source="artículo:34" target="v. fallah ramazani" />
+    <edge source="artículo:34" target="f. ferrarotto" />
+    <edge source="artículo:34" target="a. fiasson" />
+    <edge source="artículo:34" target="l. foffano" />
+    <edge source="artículo:34" target="l. freixas coromina" />
+    <edge source="artículo:34" target="s. fröse" />
+    <edge source="artículo:34" target="y. fukazawa" />
+    <edge source="artículo:34" target="r. garcia lópez" />
+    <edge source="artículo:34" target="c. gasbarra" />
+    <edge source="artículo:34" target="d. gasparrini" />
+    <edge source="artículo:34" target="d. geyer" />
+    <edge source="artículo:34" target="j. giesbrecht paiva" />
+    <edge source="artículo:34" target="n. giglietto" />
+    <edge source="artículo:34" target="f. giordano" />
+    <edge source="artículo:34" target="p. gliwny" />
+    <edge source="artículo:34" target="n. godinovic" />
+    <edge source="artículo:34" target="r. grau" />
+    <edge source="artículo:34" target="d. green" />
+    <edge source="artículo:34" target="j. green" />
+    <edge source="artículo:34" target="s. gunji" />
+    <edge source="artículo:34" target="p. günther" />
+    <edge source="artículo:34" target="j. hackfeld" />
+    <edge source="artículo:34" target="d. hadasch" />
+    <edge source="artículo:34" target="a. hahn" />
+    <edge source="artículo:34" target="t. hassan" />
+    <edge source="artículo:34" target="k. hayashi" />
+    <edge source="artículo:34" target="l. heckmann" />
+    <edge source="artículo:34" target="m. heller" />
+    <edge source="artículo:34" target="j. herrera llorente" />
+    <edge source="artículo:34" target="k. hirotani" />
+    <edge source="artículo:34" target="d. hoffmann" />
+    <edge source="artículo:34" target="d. horns" />
+    <edge source="artículo:34" target="j. houles" />
+    <edge source="artículo:34" target="m. hrabovsky" />
+    <edge source="artículo:34" target="d. hrupec" />
+    <edge source="artículo:34" target="d. hui" />
+    <edge source="artículo:34" target="m. iarlori" />
+    <edge source="artículo:34" target="r. imazawa" />
+    <edge source="artículo:34" target="t. inada" />
+    <edge source="artículo:34" target="y. inome" />
+    <edge source="artículo:34" target="s. inoue" />
+    <edge source="artículo:34" target="k. ioka" />
+    <edge source="artículo:34" target="m. iori" />
+    <edge source="artículo:34" target="a. iuliano" />
+    <edge source="artículo:34" target="j. jahanvi" />
+    <edge source="artículo:34" target="i. jimenez martinez" />
+    <edge source="artículo:34" target="j. jimenez quiles" />
+    <edge source="artículo:34" target="j. jurysek" />
+    <edge source="artículo:34" target="m. kagaya" />
+    <edge source="artículo:34" target="o. kalashev" />
+    <edge source="artículo:34" target="v. karas" />
+    <edge source="artículo:34" target="h. katagiri" />
+    <edge source="artículo:34" target="j. kataoka" />
+    <edge source="artículo:34" target="d. kerszberg" />
+    <edge source="artículo:34" target="y. kobayashi" />
+    <edge source="artículo:34" target="k. kohri" />
+    <edge source="artículo:34" target="a. kong" />
+    <edge source="artículo:34" target="h. kubo" />
+    <edge source="artículo:34" target="j. kushida" />
+    <edge source="artículo:34" target="b. lacave" />
+    <edge source="artículo:34" target="m. lainez" />
+    <edge source="artículo:34" target="g. lamanna" />
+    <edge source="artículo:34" target="a. lamastra" />
+    <edge source="artículo:34" target="l. lemoigne" />
+    <edge source="artículo:34" target="m. linhoff" />
+    <edge source="artículo:34" target="f. longo" />
+    <edge source="artículo:34" target="r. lópez-coto" />
+    <edge source="artículo:34" target="m. lópez-moya" />
+    <edge source="artículo:34" target="a. lópez-oramas" />
+    <edge source="artículo:34" target="s. loporchio" />
+    <edge source="artículo:34" target="a. lorini" />
+    <edge source="artículo:34" target="j. lozano bahilo" />
+    <edge source="artículo:34" target="h. luciani" />
+    <edge source="artículo:34" target="p. l. luque-escamilla" />
+    <edge source="artículo:34" target="p. majumdar" />
+    <edge source="artículo:34" target="m. makariev" />
+    <edge source="artículo:34" target="m. mallamaci" />
+    <edge source="artículo:34" target="d. mandat" />
+    <edge source="artículo:34" target="m. manganaro" />
+    <edge source="artículo:34" target="g. manicò" />
+    <edge source="artículo:34" target="k. mannheim" />
+    <edge source="artículo:34" target="s. marchesi" />
+    <edge source="artículo:34" target="m. mariotti" />
+    <edge source="artículo:34" target="p. marquez" />
+    <edge source="artículo:34" target="g. marsella" />
+    <edge source="artículo:34" target="j. martí" />
+    <edge source="artículo:34" target="o. martinez" />
+    <edge source="artículo:34" target="g. martínez" />
+    <edge source="artículo:34" target="m. martínez" />
+    <edge source="artículo:34" target="a. mas-aguilar" />
+    <edge source="artículo:34" target="g. maurin" />
+    <edge source="artículo:34" target="d. mazin" />
+    <edge source="artículo:34" target="j. méndez-gallego" />
+    <edge source="artículo:34" target="s. menon" />
+    <edge source="artículo:34" target="e. mestre guillen" />
+    <edge source="artículo:34" target="s. micanovic" />
+    <edge source="artículo:34" target="d. miceli" />
+    <edge source="artículo:34" target="t. miener" />
+    <edge source="artículo:34" target="j. m. miranda" />
+    <edge source="artículo:34" target="r. mirzoyan" />
+    <edge source="artículo:34" target="t. mizuno" />
+    <edge source="artículo:34" target="m. molero gonzalez" />
+    <edge source="artículo:34" target="e. molina" />
+    <edge source="artículo:34" target="t. montaruli" />
+    <edge source="artículo:34" target="a. moralejo" />
+    <edge source="artículo:34" target="d. morcuende" />
+    <edge source="artículo:34" target="a. morselli" />
+    <edge source="artículo:34" target="v. moya" />
+    <edge source="artículo:34" target="h. muraishi" />
+    <edge source="artículo:34" target="s. nagataki" />
+    <edge source="artículo:34" target="t. nakamori" />
+    <edge source="artículo:34" target="a. neronov" />
+    <edge source="artículo:34" target="l. nickel" />
+    <edge source="artículo:34" target="d. nieto castaño" />
+    <edge source="artículo:34" target="m. nievas rosillo" />
+    <edge source="artículo:34" target="l. nikolic" />
+    <edge source="artículo:34" target="k. nishijima" />
+    <edge source="artículo:34" target="k. noda" />
+    <edge source="artículo:34" target="d. nosek" />
+    <edge source="artículo:34" target="v. novotny" />
+    <edge source="artículo:34" target="s. nozaki" />
+    <edge source="artículo:34" target="m. ohishi" />
+    <edge source="artículo:34" target="y. ohtani" />
+    <edge source="artículo:34" target="t. oka" />
+    <edge source="artículo:34" target="a. okumura" />
+    <edge source="artículo:34" target="r. orito" />
+    <edge source="artículo:34" target="j. otero-santos" />
+    <edge source="artículo:34" target="p. ottanelli" />
+    <edge source="artículo:34" target="e. owen" />
+    <edge source="artículo:34" target="m. palatiello" />
+    <edge source="artículo:34" target="d. paneque" />
+    <edge source="artículo:34" target="f. r. pantaleo" />
+    <edge source="artículo:34" target="r. paoletti" />
+    <edge source="artículo:34" target="j. m. paredes" />
+    <edge source="artículo:34" target="m. pech" />
+    <edge source="artículo:34" target="m. pecimotika" />
+    <edge source="artículo:34" target="m. peresano" />
+    <edge source="artículo:34" target="f. pfeifle" />
+    <edge source="artículo:34" target="e. pietropaolo" />
+    <edge source="artículo:34" target="m. pihet" />
+    <edge source="artículo:34" target="g. pirola" />
+    <edge source="artículo:34" target="c. plard" />
+    <edge source="artículo:34" target="f. podobnik" />
+    <edge source="artículo:34" target="e. pons" />
+    <edge source="artículo:34" target="e. prandini" />
+    <edge source="artículo:34" target="m. prouza" />
+    <edge source="artículo:34" target="s. rainò" />
+    <edge source="artículo:34" target="r. rando" />
+    <edge source="artículo:34" target="w. rhode" />
+    <edge source="artículo:34" target="m. ribó" />
+    <edge source="artículo:34" target="c. righi" />
+    <edge source="artículo:34" target="v. rizi" />
+    <edge source="artículo:34" target="g. rodriguez fernandez" />
+    <edge source="artículo:34" target="m. d. rodríguez frías" />
+    <edge source="artículo:34" target="p. romano" />
+    <edge source="artículo:34" target="a. ruina" />
+    <edge source="artículo:34" target="e. ruiz-velasco" />
+    <edge source="artículo:34" target="t. saito" />
+    <edge source="artículo:34" target="s. sakurai" />
+    <edge source="artículo:34" target="d. a. sanchez" />
+    <edge source="artículo:34" target="h. sano" />
+    <edge source="artículo:34" target="t. šaric´" />
+    <edge source="artículo:34" target="y. sato" />
+    <edge source="artículo:34" target="f. g. saturni" />
+    <edge source="artículo:34" target="v. savchenko" />
+    <edge source="artículo:34" target="f. schiavone" />
+    <edge source="artículo:34" target="b. schleicher" />
+    <edge source="artículo:34" target="f. schmuckermaier" />
+    <edge source="artículo:34" target="j. l. schubert" />
+    <edge source="artículo:34" target="f. schussler" />
+    <edge source="artículo:34" target="t. schweizer" />
+    <edge source="artículo:34" target="m. seglar arroyo" />
+    <edge source="artículo:34" target="t. siegert" />
+    <edge source="artículo:34" target="a. simongini" />
+    <edge source="artículo:34" target="j. sitarek" />
+    <edge source="artículo:34" target="v. sliusar" />
+    <edge source="artículo:34" target="a. stamerra" />
+    <edge source="artículo:34" target="j. striškovic´" />
+    <edge source="artículo:34" target="m. strzys" />
+    <edge source="artículo:34" target="y. suda" />
+    <edge source="artículo:34" target="a. sunny" />
+    <edge source="artículo:34" target="h. tajima" />
+    <edge source="artículo:34" target="h. takahashi" />
+    <edge source="artículo:34" target="m. takahashi" />
+    <edge source="artículo:34" target="j. takata" />
+    <edge source="artículo:34" target="r. takeishi" />
+    <edge source="artículo:34" target="p. h. t. tam" />
+    <edge source="artículo:34" target="s. j. tanaka" />
+    <edge source="artículo:34" target="d. tateishi" />
+    <edge source="artículo:34" target="t. tavernier" />
+    <edge source="artículo:34" target="p. temnikov" />
+    <edge source="artículo:34" target="y. terada" />
+    <edge source="artículo:34" target="k. terauchi" />
+    <edge source="artículo:34" target="t. terzic" />
+    <edge source="artículo:34" target="m. teshima" />
+    <edge source="artículo:34" target="m. tluczykont" />
+    <edge source="artículo:34" target="c. toennis" />
+    <edge source="artículo:34" target="f. tokanai" />
+    <edge source="artículo:34" target="d. f. torres" />
+    <edge source="artículo:34" target="p. travnicek" />
+    <edge source="artículo:34" target="a. tutone" />
+    <edge source="artículo:34" target="m. vacula" />
+    <edge source="artículo:34" target="j. van scherpenberg" />
+    <edge source="artículo:34" target="m. vázquez acosta" />
+    <edge source="artículo:34" target="s. ventura" />
+    <edge source="artículo:34" target="s. vercellone" />
+    <edge source="artículo:34" target="g. verna" />
+    <edge source="artículo:34" target="i. viale" />
+    <edge source="artículo:34" target="a. vigliano" />
+    <edge source="artículo:34" target="c. f. vigorito" />
+    <edge source="artículo:34" target="e. visentin" />
+    <edge source="artículo:34" target="v. vitale" />
+    <edge source="artículo:34" target="v. voitsekhovskyi" />
+    <edge source="artículo:34" target="g. voutsinas" />
+    <edge source="artículo:34" target="i. vovk" />
+    <edge source="artículo:34" target="t. vuillaume" />
+    <edge source="artículo:34" target="r. walter" />
+    <edge source="artículo:34" target="l. wan" />
+    <edge source="artículo:34" target="m. will" />
+    <edge source="artículo:34" target="j. wójtowicz" />
+    <edge source="artículo:34" target="t. yamamoto" />
+    <edge source="artículo:34" target="r. yamazaki" />
+    <edge source="artículo:34" target="y. yao" />
+    <edge source="artículo:34" target="p. k. h. yeung" />
+    <edge source="artículo:34" target="t. yoshida" />
+    <edge source="artículo:34" target="t. yoshikoshi" />
+    <edge source="artículo:34" target="w. zhang" />
+    <edge source="artículo:34" target="n. zywucka" />
+    <edge source="artículo:35" target="chen zhao" />
+    <edge source="artículo:35" target="zhizhou chen" />
+    <edge source="artículo:35" target="yunzhe xu" />
+    <edge source="artículo:35" target="enxuan gu" />
+    <edge source="artículo:35" target="jian li" />
+    <edge source="artículo:35" target="zili yi" />
+    <edge source="artículo:35" target="qian wang" />
+    <edge source="artículo:35" target="jian yang" />
+    <edge source="artículo:35" target="ying tai" />
+    <edge source="artículo:36" target="yue su" />
+    <edge source="artículo:36" target="xinyu zhan" />
+    <edge source="artículo:36" target="hongjie fang" />
+    <edge source="artículo:36" target="han xue" />
+    <edge source="artículo:36" target="hao-shu fang" />
+    <edge source="artículo:36" target="yong-lu li" />
+    <edge source="artículo:36" target="cewu lu" />
+    <edge source="artículo:36" target="lixin yang" />
+    <edge source="artículo:37" target="chandan tankala" />
+    <edge source="artículo:37" target="dheeraj m. nagaraj" />
+    <edge source="artículo:37" target="anant raj" />
+    <edge source="artículo:38" target="shani gamrian" />
+    <edge source="artículo:38" target="hila barel" />
+    <edge source="artículo:38" target="feiran li" />
+    <edge source="artículo:38" target="masakazu yoshimura" />
+    <edge source="artículo:38" target="daisuke iso" />
+    <edge source="artículo:39" target="zihao liu" />
+    <edge source="artículo:39" target="xiaoyu wu" />
+    <edge source="artículo:39" target="jianqin wu" />
+    <edge source="artículo:39" target="xuxu wang" />
+    <edge source="artículo:39" target="linlin yang" />
+    <edge source="artículo:40" target="luke rickard" />
+    <edge source="artículo:40" target="alessandro abate" />
+    <edge source="artículo:40" target="kostas margellos" />
+    <edge source="artículo:41" target="jian xiao" />
+    <edge source="artículo:41" target="ji wang" />
+    <edge source="artículo:41" target="yuanwei liu" />
+    <edge source="artículo:42" target="jungwon seo" />
+    <edge source="artículo:42" target="ferhat ozgur catak" />
+    <edge source="artículo:42" target="chunming rong" />
+    <edge source="artículo:42" target="kibeom hong" />
+    <edge source="artículo:42" target="minhoe kim" />
+    <edge source="artículo:43" target="nicolas espinosa-dice" />
+    <edge source="artículo:43" target="sanjiban choudhury" />
+    <edge source="artículo:43" target="wen sun" />
+    <edge source="artículo:43" target="gokul swamy" />
+    <edge source="artículo:44" target="james burgess" />
+    <edge source="artículo:44" target="jeffrey j nirschl" />
+    <edge source="artículo:44" target="laura bravo-sa´nchez" />
+    <edge source="artículo:44" target="alejandro lozano" />
+    <edge source="artículo:44" target="sanket rajan gupte" />
+    <edge source="artículo:44" target="jesus g galaz-montoya" />
+    <edge source="artículo:44" target="yuhui zhang" />
+    <edge source="artículo:44" target="yuchang su" />
+    <edge source="artículo:44" target="disha bhowmik" />
+    <edge source="artículo:44" target="zachary coman" />
+    <edge source="artículo:44" target="sarina m hasan" />
+    <edge source="artículo:44" target="alexandra johannesson" />
+    <edge source="artículo:44" target="william d leineweber" />
+    <edge source="artículo:44" target="malvika g nair" />
+    <edge source="artículo:44" target="ridhi yarlagadda" />
+    <edge source="artículo:44" target="connor zuraski" />
+    <edge source="artículo:44" target="wah chiu" />
+    <edge source="artículo:44" target="sarah cohen" />
+    <edge source="artículo:44" target="jan n hansen" />
+    <edge source="artículo:44" target="manuel d leonetti" />
+    <edge source="artículo:44" target="chad liu" />
+    <edge source="artículo:44" target="emma lundberg" />
+    <edge source="artículo:44" target="serena yeung-levy" />
+    <edge source="artículo:45" target="prakhar bhardwaj" />
+    <edge source="artículo:45" target="sheethal bhat" />
+    <edge source="artículo:45" target="andreas maier" />
+    <edge source="artículo:46" target="sven günther" />
+    <edge source="artículo:46" target="lennart balkenhol" />
+    <edge source="artículo:46" target="christian fidler" />
+    <edge source="artículo:46" target="ali rida khalife" />
+    <edge source="artículo:46" target="julien lesgourgues" />
+    <edge source="artículo:46" target="markus r mosbech" />
+    <edge source="artículo:46" target="ravi kumar sharma" />
+    <edge source="artículo:47" target="yijie liu" />
+    <edge source="artículo:47" target="xinyi shang" />
+    <edge source="artículo:47" target="yiqun zhang" />
+    <edge source="artículo:47" target="yang lu" />
+    <edge source="artículo:47" target="chen gong" />
+    <edge source="artículo:47" target="jing-hao xue" />
+    <edge source="artículo:47" target="hanzi wang" />
+    <edge source="artículo:48" target="ye wang" />
+    <edge source="artículo:48" target="boshen xu" />
+    <edge source="artículo:48" target="zihao yue" />
+    <edge source="artículo:48" target="zihan xiao" />
+    <edge source="artículo:48" target="ziheng wang" />
+    <edge source="artículo:48" target="liang zhang" />
+    <edge source="artículo:48" target="dingyi yang" />
+    <edge source="artículo:48" target="wenxuan wang" />
+    <edge source="artículo:48" target="qin jin" />
+    <edge source="artículo:49" target="alison hsiang-hsuan liu" />
+    <edge source="artículo:49" target="fu-hong liu" />
+    <edge source="artículo:49" target="prudence w.h. wong" />
+    <edge source="artículo:49" target="xiao-ou zhang" />
+    <edge source="artículo:50" target="xulin fan" />
+    <edge source="artículo:50" target="heting gao" />
+    <edge source="artículo:50" target="ziyi chen" />
+    <edge source="artículo:50" target="peng chang" />
+    <edge source="artículo:50" target="mei han" />
+    <edge source="artículo:50" target="mark hasegawa-johnson" />
+    <edge source="artículo:51" target="zhongwen xu" />
+    <edge source="artículo:51" target="xianliang wang" />
+    <edge source="artículo:51" target="siyi li" />
+    <edge source="artículo:51" target="tao yu" />
+    <edge source="artículo:51" target="liang wang" />
+    <edge source="artículo:51" target="qiang fu" />
+    <edge source="artículo:51" target="wei yang" />
+    <edge source="artículo:52" target="william h reinhardt" />
+    <edge source="artículo:52" target="marc z miskin" />
+    <edge source="artículo:53" target="chengen wang" />
+    <edge source="artículo:53" target="murat kantarcioglu" />
+    <edge source="artículo:54" target="witold wydmański" />
+    <edge source="artículo:54" target="marek śmieja" />
+    <edge source="artículo:55" target="sang truong" />
+    <edge source="artículo:55" target="yuheng tu" />
+    <edge source="artículo:55" target="percy liang" />
+    <edge source="artículo:55" target="bo li" />
+    <edge source="artículo:55" target="sanmi koyejo" />
+    <edge source="artículo:56" target="ewan r s wallace" />
+    <edge source="artículo:56" target="nathan c frey" />
+    <edge source="artículo:56" target="joshua a rackers" />
+    <edge source="artículo:57" target="corina ca˘ta˘ra˘u-cotutiu" />
+    <edge source="artículo:57" target="esther mondrago´n" />
+    <edge source="artículo:57" target="eduardo alonso" />
+    <edge source="artículo:58" target="maximilian beck" />
+    <edge source="artículo:58" target="korbinian po¨ppel" />
+    <edge source="artículo:58" target="phillip lippe" />
+    <edge source="artículo:58" target="richard kurle" />
+    <edge source="artículo:58" target="patrick m blies" />
+    <edge source="artículo:58" target="gu¨nter klambauer" />
+    <edge source="artículo:58" target="sebastian bo¨ck" />
+    <edge source="artículo:58" target="sepp hochreiter" />
+    <edge source="artículo:59" target="cheoljoon jeong" />
+    <edge source="artículo:59" target="xubo yue" />
+    <edge source="artículo:59" target="seokhyun chung" />
+    <edge source="artículo:60" target="farnoush bayatmakou" />
+    <edge source="artículo:60" target="reza taleei" />
+    <edge source="artículo:60" target="milad amir toutounchian" />
+    <edge source="artículo:60" target="arash mohammadi" />
+    <edge source="artículo:61" target="barbara franci" />
+    <edge source="artículo:61" target="filippo fabiani" />
+    <edge source="artículo:61" target="alberto bemporad" />
+    <edge source="artículo:62" target="dengyun peng" />
+    <edge source="artículo:62" target="yuhang zhou" />
+    <edge source="artículo:62" target="qiguang chen" />
+    <edge source="artículo:62" target="jinhao liu" />
+    <edge source="artículo:62" target="jingjing chen" />
+    <edge source="artículo:62" target="li bo qin" />
+    <edge source="artículo:63" target="kedi chen" />
+    <edge source="artículo:63" target="zhikai lei" />
+    <edge source="artículo:63" target="fan zhang" />
+    <edge source="artículo:63" target="yinqi zhang" />
+    <edge source="artículo:63" target="qin chen" />
+    <edge source="artículo:63" target="jie zhou" />
+    <edge source="artículo:63" target="liang he" />
+    <edge source="artículo:63" target="qipeng guo" />
+    <edge source="artículo:63" target="kai chen" />
+    <edge source="artículo:63" target="wei zhang" />
+    <edge source="artículo:64" target="laura girometti" />
+    <edge source="artículo:64" target="jean-françois aujol" />
+    <edge source="artículo:64" target="antoine guennec" />
+    <edge source="artículo:64" target="yann traonmilin" />
+    <edge source="artículo:65" target="alisa liu" />
+    <edge source="artículo:65" target="jonathan hayase" />
+    <edge source="artículo:65" target="valentin hofmann" />
+    <edge source="artículo:65" target="sewoong oh" />
+    <edge source="artículo:65" target="noah a smith" />
+    <edge source="artículo:65" target="yejin choi" />
+    <edge source="artículo:66" target="haoqi huang" />
+    <edge source="artículo:66" target="ping wang" />
+    <edge source="artículo:66" target="jianhua pei" />
+    <edge source="artículo:66" target="jiacheng wang" />
+    <edge source="artículo:66" target="shahen alexanian" />
+    <edge source="artículo:66" target="dusit niyato" />
+    <edge source="artículo:67" target="gabriel bathie" />
+    <edge source="artículo:67" target="guillaume lagarde" />
+    <edge source="artículo:68" target="paul wawerek-lo´pez" />
+    <edge source="artículo:68" target="navid mahmoudian bidgoli" />
+    <edge source="artículo:68" target="pascal frossard" />
+    <edge source="artículo:68" target="andre´ kaup" />
+    <edge source="artículo:68" target="thomas maugey" />
+    <edge source="artículo:69" target="tong zhou" />
+    <edge source="artículo:69" target="shijin duan" />
+    <edge source="artículo:69" target="gaowen liu" />
+    <edge source="artículo:69" target="charles fleming" />
+    <edge source="artículo:69" target="ramana rao kompella" />
+    <edge source="artículo:69" target="shaolei ren" />
+    <edge source="artículo:69" target="xiaolin xu" />
+    <edge source="artículo:70" target="ori peleg" />
+    <edge source="artículo:70" target="natalie lang" />
+    <edge source="artículo:70" target="stefano rini" />
+    <edge source="artículo:70" target="nir shlezinger" />
+    <edge source="artículo:70" target="kobi cohen" />
+    <edge source="artículo:71" target="tianxing fu" />
+    <edge source="artículo:71" target="jia hu" />
+    <edge source="artículo:71" target="geyong min" />
+    <edge source="artículo:71" target="zi wang" />
+    <edge source="artículo:72" target="xintian yuan" />
+    <edge source="artículo:72" target="yunke ao" />
+    <edge source="artículo:72" target="boqi chen" />
+    <edge source="artículo:72" target="philipp fu¨rnstahl" />
+    <edge source="artículo:73" target="alfred simbun" />
+    <edge source="artículo:73" target="suresh kumar" />
+    <edge source="artículo:74" target="xinyu jessica wang" />
+    <edge source="artículo:74" target="christine p lee" />
+    <edge source="artículo:74" target="bilge mutlu" />
+    <edge source="artículo:75" target="qi zhang" />
+    <edge source="artículo:75" target="xiuyuan chen" />
+    <edge source="artículo:75" target="ziyi he" />
+    <edge source="artículo:75" target="kun wang" />
+    <edge source="artículo:75" target="lianming wu" />
+    <edge source="artículo:75" target="hongxing shen" />
+    <edge source="artículo:75" target="jianqi sun" />
+    <edge source="qi zhang" target="artículo:81" />
+    <edge source="artículo:76" target="thomas banker" />
+    <edge source="artículo:76" target="nathan p lawrence" />
+    <edge source="artículo:76" target="ali mesbah" />
+    <edge source="artículo:77" target="ri-zhao qiu" />
+    <edge source="artículo:77" target="shiqi yang" />
+    <edge source="artículo:77" target="xuxin cheng" />
+    <edge source="artículo:77" target="chaitanya chawla" />
+    <edge source="artículo:77" target="jialong li" />
+    <edge source="artículo:77" target="tairan he" />
+    <edge source="artículo:77" target="ge yan" />
+    <edge source="artículo:77" target="lars paulsen" />
+    <edge source="artículo:77" target="ge yang" />
+    <edge source="artículo:77" target="sha yi" />
+    <edge source="artículo:77" target="guanya shi" />
+    <edge source="artículo:77" target="xiaolong wang" />
+    <edge source="artículo:78" target="kristoffer andersson" />
+    <edge source="artículo:78" target="adam andersson" />
+    <edge source="artículo:78" target="cornelis w oosterlee" />
+    <edge source="artículo:79" target="yaxi chen" />
+    <edge source="artículo:79" target="simin ni" />
+    <edge source="artículo:79" target="aleksandra ivanova" />
+    <edge source="artículo:79" target="shaheer u saeed" />
+    <edge source="artículo:79" target="rikin hargunani" />
+    <edge source="artículo:79" target="jie huang" />
+    <edge source="artículo:79" target="chaozong liu" />
+    <edge source="artículo:79" target="yipeng hu" />
+    <edge source="jie huang" target="artículo:92" />
+    <edge source="artículo:80" target="vincent herrmann" />
+    <edge source="artículo:80" target="ro´bert csorda´s" />
+    <edge source="artículo:80" target="ju¨rgen schmidhuber" />
+    <edge source="artículo:81" target="guoyou sun" />
+    <edge source="artículo:81" target="panagiotis karras" />
+    <edge source="artículo:82" target="erik daxberger" />
+    <edge source="artículo:82" target="nina wenzel" />
+    <edge source="artículo:82" target="david griffiths" />
+    <edge source="artículo:82" target="haiming gang" />
+    <edge source="artículo:82" target="justin lazarow" />
+    <edge source="artículo:82" target="gefen kohavi" />
+    <edge source="artículo:82" target="kai kang" />
+    <edge source="artículo:82" target="marcin eichner" />
+    <edge source="artículo:82" target="yinfei yang" />
+    <edge source="artículo:82" target="afshin dehghan" />
+    <edge source="artículo:82" target="peter grasch" />
+    <edge source="artículo:83" target="lijie fan" />
+    <edge source="artículo:83" target="luming tang" />
+    <edge source="artículo:83" target="siyang qin" />
+    <edge source="artículo:83" target="tianhong li" />
+    <edge source="artículo:83" target="xuan yang" />
+    <edge source="artículo:83" target="siyuan qiao" />
+    <edge source="artículo:83" target="andreas steiner" />
+    <edge source="artículo:83" target="chen sun" />
+    <edge source="artículo:83" target="yuanzhen li" />
+    <edge source="artículo:83" target="tao zhu" />
+    <edge source="artículo:83" target="michael rubinstein" />
+    <edge source="artículo:83" target="michalis raptis" />
+    <edge source="artículo:83" target="deqing sun" />
+    <edge source="artículo:83" target="radu soricut" />
+    <edge source="artículo:84" target="giacomo arcieri" />
+    <edge source="artículo:84" target="konstantinos g. papakonstantinou" />
+    <edge source="artículo:84" target="daniel straub" />
+    <edge source="artículo:84" target="eleni chatzi" />
+    <edge source="artículo:85" target="mengyao lyu" />
+    <edge source="artículo:85" target="yan li" />
+    <edge source="artículo:85" target="huasong zhong" />
+    <edge source="artículo:85" target="wenhao yang" />
+    <edge source="artículo:85" target="hui chen" />
+    <edge source="artículo:85" target="jungong han" />
+    <edge source="artículo:85" target="guiguang ding" />
+    <edge source="artículo:85" target="zhenheng yang" />
+    <edge source="artículo:86" target="xiaodi li" />
+    <edge source="artículo:86" target="shaika chowdhury" />
+    <edge source="artículo:86" target="chung il wi" />
+    <edge source="artículo:86" target="maria vassilaki" />
+    <edge source="artículo:86" target="ken liu" />
+    <edge source="artículo:86" target="terence t sio" />
+    <edge source="artículo:86" target="owen garrick" />
+    <edge source="artículo:86" target="young j juhn" />
+    <edge source="artículo:86" target="james r cerhan" />
+    <edge source="artículo:86" target="cui tao" />
+    <edge source="artículo:86" target="nansu zong" />
+    <edge source="artículo:87" target="mikkel jordahn" />
+    <edge source="artículo:87" target="jonas vestergaard jensen" />
+    <edge source="artículo:87" target="mikkel n. schmidt" />
+    <edge source="artículo:87" target="michael riis andersen" />
+    <edge source="artículo:88" target="ricardo n. ferreira" />
+    <edge source="artículo:88" target="cláudia soares" />
+    <edge source="artículo:89" target="ripan kumar kundu" />
+    <edge source="artículo:89" target="matthew denton" />
+    <edge source="artículo:89" target="genova mongalo" />
+    <edge source="artículo:89" target="prasad calyam" />
+    <edge source="artículo:89" target="khaza anuarul hoque" />
+    <edge source="artículo:90" target="enrico foglia" />
+    <edge source="artículo:90" target="benjamin bobbia" />
+    <edge source="artículo:90" target="nikita durasov" />
+    <edge source="artículo:90" target="michael bauerheim" />
+    <edge source="artículo:90" target="pascal fua" />
+    <edge source="artículo:90" target="stephane moreau" />
+    <edge source="artículo:90" target="thierry jardin" />
+    <edge source="artículo:91" target="ihab asaad" />
+    <edge source="artículo:91" target="maha shadaydeh" />
+    <edge source="artículo:91" target="joachim denzler" />
+    <edge source="artículo:92" target="haorui chen" />
+    <edge source="artículo:92" target="jiaxuan ren" />
+    <edge source="artículo:92" target="siran peng" />
+    <edge source="artículo:92" target="liangjian deng" />
+    <edge source="artículo:93" target="hai-long sun" />
+    <edge source="artículo:93" target="zhun sun" />
+    <edge source="artículo:93" target="houwen peng" />
+    <edge source="artículo:93" target="han-jia ye" />
+    <edge source="artículo:94" target="akshay thakur" />
+    <edge source="artículo:94" target="matthew j zahra" />
+    <edge source="artículo:95" target="olivier vincent" />
+    <edge source="artículo:95" target="pierre bergeron" />
+    <edge source="artículo:95" target="patrick dufour" />
+    <edge source="artículo:96" target="antonio falcó" />
+    <edge source="artículo:96" target="daniela falco–pomares" />
+    <edge source="artículo:96" target="hermann g matthies" />
+    <edge source="artículo:97" target="thomas monninger" />
+    <edge source="artículo:97" target="md zafar anwar" />
+    <edge source="artículo:97" target="stanislaw antol" />
+    <edge source="artículo:97" target="steffen staab" />
+    <edge source="artículo:97" target="sihao ding" />
+  </graph>
+</graphml>
