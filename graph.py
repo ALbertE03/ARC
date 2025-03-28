@@ -48,14 +48,15 @@ class Article:
         return response.text
 
     def split_name(self, full_name):
-        parts = full_name.split()
-        if len(parts) == 1:
-            return parts[0], []
+
+        if "." in full_name:
+            name_part, last_part = full_name.split(".", 1)
+            name_part = name_part.strip()
+            last_names = last_part.strip().split()
+            return name_part, last_names
         else:
-            return (
-                parts[0],
-                parts[1:],
-            )
+            print(full_name)
+            return "", full_name.split()
 
     def find_author_match(self, first_name, last_names):
         if not last_names:
@@ -108,7 +109,7 @@ class Article:
                 prompt += f"\nArtículo {idx + 1}:\n{text}\n"
 
             prompt += "\nDevuelve el título y los autores en este formato para cada artículo:\n"
-            prompt += "Artículo <número>:\nTítulo: <título del artículo>\nAutores: <lista de autores separados por coma,al final de los nombre pon pon un punto y un espacio y los apellidos separados por espacios, en caso de un autor tener dos nombres poner el punto despues del segundo nombre>Ejemplo:Artículo 1- Título: Machine Learning Approaches to Climate Modeling\n -Autores: John A. Smith, María. García López, Chen. Wei"
+            prompt += "Artículo <número>:\nTítulo: <título del artículo>\nAutores: <lista de autores separados por coma,al final de los nombre pon un punto y un espacio y los apellidos separados por espacios, en caso de un autor tener dos nombres poner el punto despues del segundo nombre>Ejemplo:Artículo 1- Título: Machine Learning Approaches to Climate Modeling\n -Autores: John A. Smith, María. García López, Chen. Wei, IMPORTANTE: Para los apellidos que contengan 'de', 'la', 'del', etc.,deben unirse con la siguiente palabra para formar un solo apellido.Ejemplo: 'De la Caridad' -> 'Delacaridad', 'Van der Waals' -> 'Vanderwaals'"
 
             response = self.extract_data_with_api(prompt).strip()
             print(f"Título y autores extraídos:\n{response}")
