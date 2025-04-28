@@ -174,11 +174,11 @@ class Article:
         return G
 
     def main(self):
-        if not os.path.exists("grafo.graphml"):
+        if not os.path.exists("graph/graph.graphml"):
             G = self.process_pdfs_in_batch()
-            nx.write_graphml(G, "grafo.graphml")
+            nx.write_graphml(G, "graph/graph.graphml")
 
-        G = nx.read_graphml("grafo.graphml")
+        G = nx.read_graphml("graph/graph.graphml")
         net = Network(
             notebook=True,
             height="100%",
@@ -218,7 +218,7 @@ class Article:
         """
         )
 
-        net.show("grafo.html")
+        net.show("visu/graph.html")
 
 
 if __name__ == "__main__":
