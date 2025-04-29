@@ -1,5 +1,4 @@
 import networkx as nx
-import matplotlib.pyplot as plt
 from pyvis.network import Network
 import os
 from itertools import combinations
@@ -97,7 +96,7 @@ if __name__ == "__main__":
         author_graph = create_author_author_graph(
             article_author_graph_path, output_path
         )
-    author_graph = nx.read_graphml("author_author_graph.graphml")
+    author_graph = nx.read_graphml("graph/author_author_graph.graphml")
     print(
         f"Created author-author graph with {author_graph.number_of_nodes()} nodes and {author_graph.number_of_edges()} edges"
     )
