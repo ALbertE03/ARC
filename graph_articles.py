@@ -1,7 +1,6 @@
 import networkx as nx
 from pyvis.network import Network
 import os
-from itertools import combinations
 
 
 def create_article_article_graph(article_author_graph_path, output_path):
@@ -19,7 +18,7 @@ def create_article_article_graph(article_author_graph_path, output_path):
 
     aricle_authors = {}
     for article in article_nodes:
-        aricle_authors[article] = list(G.predecessors(article))
+        aricle_authors[article] = list(G.neighbors(article))
 
     for i in aricle_authors:
         for j in aricle_authors:
@@ -35,7 +34,6 @@ def create_article_article_graph(article_author_graph_path, output_path):
 
 
 def visualize_graph(G, output_path="graph_visualization.html"):
-    """Visualize the graph using PyVis."""
     net = Network(
         notebook=True,
         height="100%",

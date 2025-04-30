@@ -21,7 +21,7 @@ def create_author_author_graph(article_author_graph_path, output_path):
         n for n, attrs in G.nodes(data=True) if attrs.get("type") == "article"
     ]
     for article in article_nodes:
-        authors = list(G.predecessors(article))
+        authors = list(G.neighbors(article))
 
         for a1, a2 in combinations(authors, 2):
             if not author_graph.has_edge(a1, a2):
@@ -82,8 +82,7 @@ def visualize_graph(G, output_path="visu/graph_author_author.html"):
         }
         """
     )
-
-    net.show("visu/graph_author_article.html")
+    net.show("visu/graph_author_author.html")
 
     print(f"Interactive graph saved to {output_path}")
 
@@ -97,9 +96,9 @@ if __name__ == "__main__":
             article_author_graph_path, output_path
         )
     author_graph = nx.read_graphml("graph/author_author_graph.graphml")
+
+    visualize_graph(author_graph)
     print(
         f"Created author-author graph with {author_graph.number_of_nodes()} nodes and {author_graph.number_of_edges()} edges"
     )
     print(f"Graph saved to {output_path}")
-
-    visualize_graph(author_graph)
