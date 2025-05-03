@@ -1,0 +1,4 @@
+MATCH path = (author:Author)-[:AUTHORED]->(work:Work)<-[:AUTHORED]-(coauthors:Author)
+WHERE author.name CONTAINS 'Nombre del Autor'
+RETURN path
+
