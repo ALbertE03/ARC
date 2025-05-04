@@ -5,18 +5,34 @@ from tqdm import tqdm
 from collections import defaultdict
 import itertools
 import unidecode
+import matplotlib.pyplot as plt
 
 
 def normalize_name(name):
-    """Normaliza nombres removiendo acentos, guiones y espacios extras"""
+    """Normaliza nombres para comparación exacta"""
     if not isinstance(name, str):
         return ""
     name = unidecode.unidecode(name.lower().replace("-", " ").replace(".", " ").strip())
-    return " ".join(name.split())
+    return name
+
+
+def is_same_person(name1, name2):
+    """Comparación para determinar si dos nombres son la misma persona"""
+    if normalize_name(name1) == normalize_name(name2):
+        return True
+
+    name1_parts = normalize_name(name1).split()
+    name2_parts = normalize_name(name2).split()
+
+    if any(len(part) == 1 for part in name1_parts + name2_parts):
+        if len(name1_parts) > 1 and len(name2_parts) > 1:
+            return name1_parts[-1] == name2_parts[-1]
+
+    return False
 
 
 def consolidate_large_dataset(authors_data):
-    print("\nCargando y preparando datos...")
+    print("\Preparando datos...", flush=True)
     df = pd.DataFrame.from_dict(authors_data, orient="index")
 
     for col in ["works_count", "cited_by_count"]:
@@ -25,8 +41,7 @@ def consolidate_large_dataset(authors_data):
         df[col] = pd.to_numeric(df[col], downcast="integer")
 
     df["all_names"] = df.apply(
-        lambda x: [normalize_name(x["display_name"])]
-        + [normalize_name(n) for n in x.get("display_name_alternatives", [])],
+        lambda x: [x["display_name"]] + x.get("display_name_alternatives", []),
         axis=1,
     )
 
@@ -45,7 +60,7 @@ def consolidate_large_dataset(authors_data):
             orcid_index[row["orcid"]].append(author_id)
 
         for name in row["all_names"]:
-            name_index[name].append(author_id)
+            name_index[normalize_name(name)].append(author_id)
 
     def connect_group(items, reason):
         for i, j in itertools.combinations(items, 2):
@@ -60,13 +75,26 @@ def consolidate_large_dataset(authors_data):
     print("\nConectando autores con nombres similares...")
     seen_pairs = set()
 
-    for name, group in tqdm(name_index.items(), desc="Nombres"):
+    for norm_name, group in tqdm(name_index.items(), desc="Nombres"):
         if len(group) > 1:
             for i, j in itertools.combinations(group, 2):
                 if (i, j) not in seen_pairs:
-                    G.add_edge(i, j, reason="name_match")
-                    seen_pairs.add((i, j))
-                    seen_pairs.add((j, i))
+                    i_names = df.loc[i, "all_names"]
+                    j_names = df.loc[j, "all_names"]
+
+                    match_found = False
+                    for name_i in i_names:
+                        for name_j in j_names:
+                            if is_same_person(name_i, name_j):
+                                match_found = True
+                                break
+                        if match_found:
+                            break
+
+                    if match_found:
+                        G.add_edge(i, j, reason="name_match")
+                        seen_pairs.add((i, j))
+                        seen_pairs.add((j, i))
 
     print("\nIdentificando grupos de autores únicos...")
     components = list(nx.connected_components(G))
@@ -82,7 +110,6 @@ def consolidate_large_dataset(authors_data):
         combined["alias_ids"] = [x for x in component_list if x != main_author]
 
         all_names = set()
-        main_name = df.loc[main_author, "display_name"]
         if isinstance(combined.get("display_name_alternatives"), list):
             all_names.update(combined["display_name_alternatives"])
 
@@ -102,8 +129,8 @@ def consolidate_large_dataset(authors_data):
     return consolidated, G
 
 
-def find_author_improved(name, consolidated_data):
-    """Busca autores considerando variaciones de nombres con guiones y acentos"""
+def find_author_exact(name, consolidated_data):
+    """Búsqueda exacta considerando todas las variantes del nombre"""
     normalized_search = normalize_name(name)
 
     for author_id, author_data in consolidated_data.items():
@@ -114,28 +141,14 @@ def find_author_improved(name, consolidated_data):
             if normalized_search == normalize_name(alt_name):
                 return author_data
 
-    for author_id, author_data in consolidated_data.items():
-        main_normalized = normalize_name(author_data["display_name"])
-        if normalized_search in main_normalized or main_normalized in normalized_search:
-            return author_data
-
-        for alt_name in author_data.get("display_name_alternatives", []):
-            alt_normalized = normalize_name(alt_name)
-            if (
-                normalized_search in alt_normalized
-                or alt_normalized in normalized_search
-            ):
-                return author_data
-
     return None
 
 
-print("Cargando datos...")
+print("Cargando datos de autores...")
 with open("data/openalex_authors_complete.json", "r") as f:
     data_authors = json.load(f)
 
-
-print("\nIniciando consolidación optimizada...")
+print("\nIniciando consolidación optimizada...", flush=True)
 consolidated_authors, author_graph = consolidate_large_dataset(data_authors)
 
 print(f"\nResumen:")
@@ -143,11 +156,9 @@ print(f"- Autores originales: {len(data_authors):,}")
 print(f"- Autores consolidados: {len(consolidated_authors):,}")
 print(f"- Reducción: {(1 - len(consolidated_authors)/len(data_authors))*100:.1f}%")
 
-print("\nBuscando autores específicos:")
 
-
-def show_author_info(name, consolidated_data):
-    author = find_author_improved(name, consolidated_data)
+def show_author_info_exact(name, consolidated_data):
+    author = find_author_exact(name, consolidated_data)
     if author:
         print(f"\n{name}:")
         print(f"Nombre principal: {author['display_name']}")
@@ -158,21 +169,48 @@ def show_author_info(name, consolidated_data):
             print("Nombres alternativos:", author["display_name_alternatives"])
     else:
         print(f"\nNo se encontró a {name} en los datos consolidados")
-        normalized_search = normalize_name(name)
-        print("¿Quizás buscabas alguno de estos?")
-        matches = []
-        for author_id, author_data in consolidated_data.items():
-            main_normalized = normalize_name(author_data["display_name"])
-            if (
-                normalized_search.split()[0] in main_normalized
-                or normalized_search.split()[-1] in main_normalized
-            ):
-                matches.append(author_data["display_name"])
-            if len(matches) >= 5:
-                break
-        for match in matches:
-            print(f"- {match}")
 
 
-show_author_info("Suilán Estévez-Velarde", consolidated_authors)
-show_author_info("Alejandro Piad Morffis", consolidated_authors)
+"""show_author_info_exact("Suilán Estevez Velarde", consolidated_authors)
+show_author_info_exact("yudivian almeida cruz", consolidated_authors)
+show_author_info_exact("wilfredo morales", consolidated_authors)
+show_author_info_exact("idania urrutia romani", consolidated_authors)
+show_author_info_exact("Wilfredo Martín Casapía Morales", consolidated_authors)
+"""
+
+print("\nCargando datos de articulos...", flush=True)
+with open("data/openalex_data.json", "r") as f:
+    data_work = json.load(f)
+
+G = nx.Graph()
+for work in tqdm(data_work, desc="Añadienndo articulos"):
+    work_id = work.get("id", " ").split("/")[-1]
+    G.add_node(
+        work_id, **{k: v for (k, v) in work.items() if k != "id"}, type_node="Work"
+    )
+
+for author_id, author_data in tqdm(
+    consolidated_authors.items(), desc="Añadienndo Autores"
+):
+    G.add_node(author_id, **author_data, type_node="Author")
+
+for work in tqdm(data_work, desc="Añadienndo enlaces"):
+    work_id = work.get("id", "").split("/")[-1]
+    if work_id not in G:
+        continue
+
+    for authorship in work.get("authorships", []):
+        author_id = authorship.get("author", {}).get("id", "").split("/")[-1]
+
+        if author_id in consolidated_authors:
+            G.add_edge(author_id, work_id, type="authored")
+        else:
+            for consolidated_id, data in consolidated_authors.items():
+                if author_id in data.get("alias_ids", []):
+                    G.add_edge(consolidated_id, work_id, type="authored")
+                    break
+
+print(f"- Total nodos: {G.number_of_nodes()}")
+print(f"- Total aristas: {G.number_of_edges()}")
+print(f"- Autores: {len(consolidated_authors)}")
+print(f"- Articulos: {len(data_work)}")
