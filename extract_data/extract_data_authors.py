@@ -34,23 +34,23 @@ class AuthorDataFetcher:
         self.new_authors_added = 0
 
     def load_existing_data(self):
-        """Carga los datos existentes del archivo JSON si existe"""
+        """Load existing data from JSON file if it exists"""
         if os.path.exists(OUTPUT_FILE):
             with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
                 try:
                     data = json.load(f)
-                    logger.info(f"Cargados {len(data)} autores existentes del archivo")
+                    logger.info(f"Loaded {len(data)} existing authors from file")
                     return data
                 except json.JSONDecodeError:
                     logger.warning(
-                        "El archivo existe pero no es un JSON válido, creando uno nuevo"
+                        "File exists but is not valid JSON, creating a new one"
                     )
                     return {}
         return {}
 
     def fetch_author(self, author_id):
-        """Obtiene los datos completos de un autor desde la API"""
-        # Verificar si el autor ya existe
+        """Gets complete author data from the API"""
+        # Check if author already exists
         if author_id in self.author_data:
             with self.lock:
                 self.processed_count += 1
@@ -70,17 +70,17 @@ class AuthorDataFetcher:
                     self.log_progress()
                 return data
             else:
-                logger.warning(f"Error {response.status_code} para autor {author_id}")
+                logger.warning(f"Error {response.status_code} for author {author_id}")
                 with self.lock:
                     self.failed_requests += 1
         except Exception as e:
-            logger.error(f"Excepción al obtener autor {author_id}: {str(e)}")
+            logger.error(f"Exception while fetching author {author_id}: {str(e)}")
             with self.lock:
                 self.failed_requests += 1
         return None
 
     def log_progress(self):
-        """Muestra el progreso actual"""
+        """Displays current progress"""
         elapsed = time.time() - self.start_time
         processed = self.processed_count
         remaining = self.total_authors - processed
@@ -91,23 +91,23 @@ class AuthorDataFetcher:
             eta = 0
 
         logger.info(
-            f"Procesados: {processed}/{self.total_authors} "
+            f"Processed: {processed}/{self.total_authors} "
             f"({processed/self.total_authors:.1%}) | "
-            f"Nuevos: {self.new_authors_added} | "
-            f"Fallidos: {self.failed_requests} | "
+            f"New: {self.new_authors_added} | "
+            f"Failed: {self.failed_requests} | "
             f"ETA: {eta:.1f}s"
         )
 
     def save_to_file(self):
-        """Guarda los datos en un archivo JSON"""
+        """Saves data to a JSON file"""
         os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             json.dump(self.author_data, f, indent=2, ensure_ascii=False)
-        logger.info(f"Datos guardados en {OUTPUT_FILE}")
+        logger.info(f"Data saved to {OUTPUT_FILE}")
 
 
 class Worker(Thread):
-    """Hilo worker para procesar autores"""
+    """Worker thread to process authors"""
 
     def __init__(self, queue, fetcher):
         Thread.__init__(self)
@@ -120,13 +120,13 @@ class Worker(Thread):
             try:
                 self.fetcher.fetch_author(author_id)
             except Exception as e:
-                logger.error(f"Error en worker para {author_id}: {str(e)}")
+                logger.error(f"Error in worker for {author_id}: {str(e)}")
             finally:
                 self.queue.task_done()
 
 
 def get_unique_authors(input_file):
-    """Obtiene autores únicos desde el archivo de datos"""
+    """Gets unique authors from the data file"""
     with open(input_file, "r") as f:
         data = json.load(f)
 
@@ -137,16 +137,16 @@ def get_unique_authors(input_file):
             if author_id:
                 authors.add(author_id.split("/")[-1])
 
-    logger.info(f"Encontrados {len(authors)} autores únicos")
+    logger.info(f"Found {len(authors)} unique authors")
     return authors
 
 
 def main():
-    logger.info("Iniciando extracción de datos de autores")
+    logger.info("Starting author data extraction")
 
     input_file = "data/openalex_data.json"
     if not os.path.exists(input_file):
-        logger.error(f"Archivo de entrada no encontrado: {input_file}")
+        logger.error(f"Input file not found: {input_file}")
         return
 
     unique_authors = get_unique_authors(input_file)
@@ -158,10 +158,10 @@ def main():
     ]
     fetcher.total_authors = len(authors_to_process)
 
-    logger.info(f"Autores nuevos a procesar: {len(authors_to_process)}")
+    logger.info(f"New authors to process: {len(authors_to_process)}")
 
     if not authors_to_process:
-        logger.info("No hay autores nuevos para procesar")
+        logger.info("No new authors to process")
         return
 
     queue = Queue()
@@ -177,10 +177,10 @@ def main():
 
     fetcher.save_to_file()
 
-    logger.info("Proceso completado!")
-    logger.info(f"Autores procesados: {fetcher.processed_count}")
-    logger.info(f"Nuevos autores agregados: {fetcher.new_authors_added}")
-    logger.info(f"Requests fallidos: {fetcher.failed_requests}")
+    logger.info("Process completed!")
+    logger.info(f"Authors processed: {fetcher.processed_count}")
+    logger.info(f"New authors added: {fetcher.new_authors_added}")
+    logger.info(f"Failed requests: {fetcher.failed_requests}")
 
 
 if __name__ == "__main__":

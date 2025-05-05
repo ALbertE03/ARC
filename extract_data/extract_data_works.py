@@ -19,13 +19,13 @@ try:
     with open(JSON_PATH, "r", encoding="utf-8") as f:
         existing_data = json.load(f)
     existing_ids = {work["id"].split("/")[-1] for work in existing_data}
-    print(f"🔍 {len(existing_data)} registros cargados previamente")
+    print(f"🔍 {len(existing_data)} records loaded previously")
 except FileNotFoundError:
     existing_data = []
     existing_ids = set()
-    print("🆕 Creando nuevo archivo JSON")
+    print("🆕 Creating new JSON file")
 
-# Variables compartidas
+# Shared variables
 json_lock = threading.Lock()
 progress_lock = threading.Lock()
 total_processed = 0
@@ -41,7 +41,7 @@ def save_data():
         with open(JSON_PATH, "w", encoding="utf-8") as f:
             json.dump(existing_data, f, indent=4, ensure_ascii=False)
         new_data_buffer = []
-        print(f"💾 Datos guardados. Total actual: {len(existing_data)} registros")
+        print(f"💾 Data saved. Current total: {len(existing_data)} records")
 
 
 def check_save_point(progress):
@@ -76,10 +76,10 @@ def worker(queue):
                 progress = total_processed / total_to_process
                 elapsed = time.time() - start_time
                 print(
-                    f"✅ [{threading.current_thread().name}] {id} procesado | "
-                    f"Progreso: {total_processed}/{total_to_process} "
+                    f"✅ [{threading.current_thread().name}] {id} processed | "
+                    f"Progress: {total_processed}/{total_to_process} "
                     f"({progress*100:.1f}%) | "
-                    f"Tiempo: {elapsed:.2f}s"
+                    f"Time: {elapsed:.2f}s"
                 )
 
                 check_save_point(progress)
@@ -87,13 +87,13 @@ def worker(queue):
         except requests.exceptions.RequestException as e:
             with progress_lock:
                 print(
-                    f"❌ [{threading.current_thread().name}] Error con {id}: {str(e)}"
+                    f"❌ [{threading.current_thread().name}] Error with {id}: {str(e)}"
                 )
                 queue.put(id)
         except Exception as e:
             with progress_lock:
                 print(
-                    f"⚠️ [{threading.current_thread().name}] Error inesperado con {id}: {str(e)}"
+                    f"⚠️ [{threading.current_thread().name}] Unexpected error with {id}: {str(e)}"
                 )
 
         processing_time = time.time() - start_time
@@ -110,7 +110,7 @@ for _, row in df.iterrows():
         queue.put(id)
 
 total_to_process = queue.qsize()
-print(f"🚀 Iniciando descarga de {total_to_process} nuevos registros")
+print(f"🚀 Starting download of {total_to_process} new records")
 
 
 threads = []
@@ -129,19 +129,19 @@ try:
             processed = total_processed
             progress = processed / total_to_process
             print(
-                f"\n📊 Progreso actual: {processed}/{total_to_process} "
+                f"\n📊 Current progress: {processed}/{total_to_process} "
                 f"({progress*100:.1f}%) | "
-                f"Restantes: {remaining} | "
-                f"Hilos activos: {sum(1 for t in threads if t.is_alive())}\n"
+                f"Remaining: {remaining} | "
+                f"Active threads: {sum(1 for t in threads if t.is_alive())}\n"
             )
             check_save_point(progress)
 
 except KeyboardInterrupt:
-    print("\n🛑 Interrupción recibida, guardando datos recolectados...")
+    print("\n🛑 Interruption received, saving collected data...")
     save_data()
 
 
 queue.join()
 save_data()
-print(f"\n🎉 ¡Proceso completado! JSON actualizado en '{JSON_PATH}'")
-print(f"📂 Total de registros: {len(existing_data)}")
+print(f"\n🎉 Process completed! JSON updated at '{JSON_PATH}'")
+print(f"📂 Total records: {len(existing_data)}")

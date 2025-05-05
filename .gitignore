@@ -5,3 +5,4 @@ scraping/
 __pycache__/
 .DS_Store
 a.py
+**.log
