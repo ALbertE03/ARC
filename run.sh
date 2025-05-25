@@ -90,4 +90,4 @@ echo "Data processed and ready to use."
 
 echo ""
 echo "For more information, check the README.md file"
-python streamlit run main.py
+streamlit run main.py

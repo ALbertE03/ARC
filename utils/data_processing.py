@@ -19,11 +19,24 @@ def load_data(authors_file: str, works_file: str) -> Tuple[Dict, Dict]:
         Tuple containing authors data and works data dictionaries
     """
     logger.info("Loading data...")
+    
+    # Load authors data
+    logger.info("📚 Loading authors data...")
     with open(authors_file, "r", encoding="utf-8") as f:
         authors_data = json.load(f)
 
+    # Load works data  
+    logger.info("📄 Loading works data...")
     with open(works_file, "r", encoding="utf-8") as f:
-        works_data = json.load(f)
+        works_list = json.load(f)
+    
+    # Convert works list to dictionary for consistent access
+    logger.info("🔄 Converting works to dictionary format...")
+    works_data = {}
+    for work in tqdm(works_list, desc="Processing works"):
+        work_id = work.get("id", "").split("/")[-1]
+        if work_id:
+            works_data[work_id] = work
 
     logger.info(
         f"✅ Data loaded: {len(authors_data)} authors, {len(works_data)} articles"
@@ -40,13 +53,16 @@ def build_author_work_map(works_data: Dict) -> Dict[str, List[str]]:
     Returns:
         Dictionary mapping author IDs to lists of work IDs
     """
+    logger.info("🔗 Building author-work mapping...")
     author_work_map = defaultdict(list)
-    for work in works_data:
-        work_id = work.get("id", "").split("/")[-1]
+    
+    for work_id, work in tqdm(works_data.items(), desc="Building author-work map"):
         for authorship in work.get("authorships", []):
             author_id = authorship.get("author", {}).get("id", "").split("/")[-1]
             if author_id:
                 author_work_map[author_id].append(work_id)
+    
+    logger.info(f"✅ Author-work map built: {len(author_work_map)} authors mapped")
     return author_work_map
 
 

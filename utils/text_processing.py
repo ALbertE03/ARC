@@ -12,5 +12,8 @@ def normalize_name(name: str) -> str:
     """
     if not isinstance(name, str):
         return ""
-    name = unidecode.unidecode(name.lower().replace("-", " ").replace(".", " ").strip())
-    return " ".join(name.split())
+
+    name_with_hyphens = unidecode.unidecode(name.lower().replace(".", " ").strip())
+    name_with_hyphens = " ".join(name_with_hyphens.split())
+
+    return name_with_hyphens

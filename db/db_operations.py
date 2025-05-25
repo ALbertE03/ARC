@@ -2,7 +2,7 @@ import json
 import logging
 import networkx as nx
 from tqdm import tqdm
-from typing import Dict, List, Tuple, Set
+from typing import Dict, List, Tuple
 from collections import defaultdict
 
 from db.db_connection import Neo4jConnection
