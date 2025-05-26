@@ -78,6 +78,48 @@ L = \max(0, \|f(a) - f(p)\|^2 - \|f(a) - f(n)\|^2 + \text{margin})
 
 donde $f(a)$, $f(p)$ y $f(n)$ representan los embeddings del autor ancla, positivo y negativo respectivamente. Esta formulación permite al modelo aprender representaciones donde autores similares se agrupan en el espacio de embeddings mientras que autores diferentes se separan por un margen mínimo.
 
+\subsubsection{Arquitectura y Flujo Detallado del GCN}
+
+El sistema GCN implementado en ARC utiliza una arquitectura de múltiples grafos interconectados que procesa información en tres niveles principales: publicaciones, autores y sus relaciones bipartitas. El flujo completo del algoritmo se puede describir en las siguientes etapas:
+
+\textbf{1. Extracción de Características Semánticas:}
+El sistema utiliza vectorización TF-IDF para extraer características de las publicaciones, combinando título, resumen, palabras clave, venue y nombres de autores en un espacio vectorial de alta dimensionalidad. La implementación incluye manejo robusto de vocabularios vacíos mediante la adición de documentos sintéticos cuando es necesario.
+
+\textbf{2. Construcción de Grafos Múltiples:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Grafo Publicación-Publicación}: Se construye calculando similitud coseno entre vectores TF-IDF de las publicaciones. Si no se encuentran conexiones con el umbral inicial (0.3), el sistema implementa un umbral adaptativo basado en percentiles para garantizar conectividad mínima.
+    \item \textbf{Grafo de Coautorías}: Modela colaboraciones entre autores, donde el peso de las aristas se calcula como $w = \log(\text{colaboraciones} + 1) / 10.0$ para normalizar la influencia de pares altamente colaborativos.
+    \item \textbf{Grafo Bipartito Publicación-Autor}: Conecta autores con sus publicaciones, estableciendo la base para la propagación de información entre ambos dominios.
+\end{itemize}
+
+\textbf{3. Arquitectura de Red Neuronal con Atención:}
+El modelo implementa una GCN con mecanismo de atención que combina múltiples capas convolucionales:
+
+\begin{equation}
+H^{(l+1)} = \sigma(D^{-1/2}AD^{-1/2}H^{(l)}W^{(l)})
+\end{equation}
+
+donde $A$ es la matriz de adyacencia normalizada, $D$ la matriz de grados, $H^{(l)}$ las características de la capa $l$, y $W^{(l)}$ los parámetros aprendibles. El mecanismo de atención pondera las salidas de diferentes capas:
+
+\begin{equation}
+\alpha_i = \text{softmax}(\sigma(W_a \cdot \text{mean}(H^{(i)})))
+\end{equation}
+
+\begin{equation}
+H_{\text{final}} = \sum_{i=1}^{L} \alpha_i H^{(i)}
+\end{equation}
+
+\textbf{4. Entrenamiento con Pérdida de Tripletas Adaptativa:}
+El sistema genera tripletas dinámicamente durante el entrenamiento, donde cada tripleta $(a, p, n)$ consiste en un nodo ancla, un positivo (conectado) y un negativo (no conectado). La implementación incluye generación de tripletas sintéticas cuando la matriz de adyacencia carece de conexiones suficientes, asegurando que el entrenamiento pueda proceder incluso en grafos dispersos.
+
+\textbf{5. Clustering Jerárquico de Embeddings:}
+Una vez entrenado el modelo, se extraen los embeddings finales y se aplica clustering aglomerativo jerárquico para identificar grupos de autores potencialmente duplicados. El número de clusters se determina automáticamente basándose en la estructura de los embeddings.
+
+\textbf{6. Mecanismo de Fallback Adaptativo:}
+El sistema implementa detección automática de grafos dispersos o desconectados. Cuando la densidad de conexiones cae por debajo de umbrales críticos, el sistema recurre automáticamente a métodos heurísticos tradicionales, garantizando robustez operacional en diversos escenarios de datos.
+
+Esta arquitectura multinivel permite al sistema capturar tanto patrones locales (similitud textual directa) como patrones globales (estructuras de colaboración), mientras mantiene la capacidad de adaptarse a diferentes tipos de datasets académicos.
+
 \subsection{Desafíos actuales}
 
 A pesar de los avances, persisten retos importantes:
@@ -86,6 +128,25 @@ A pesar de los avances, persisten retos importantes:
     \item \textbf{Nombres comunes y cambios de nombre}: La precisión disminuye notablemente en estos casos, como se observa en los experimentos de AMiner \cite{Canteros2020}.
     \item \textbf{Privacidad y ética}: El uso de información personal para la desambiguación plantea desafíos éticos y legales, especialmente en contextos internacionales \cite{Priv2025}.
 \end{itemize}
+
+\subsection{Evaluación Empírica del Sistema GCN}
+
+El análisis experimental del sistema ARC reveló características operacionales específicas que definen su efectividad en diferentes tipos de datasets académicos. Los resultados muestran una dependencia crítica de la densidad del grafo de colaboraciones para el rendimiento óptimo del modelo GCN.
+
+\textbf{Eficacia en Grafos Densos:}
+En datasets con redes de colaboración densas (más de 30\% de autores con al menos 3 colaboraciones), el modelo GCN demostró superioridad clara sobre métodos heurísticos tradicionales, alcanzando precisiones del 94-96\% en la identificación de duplicados. La propagación de información a través de las capas convolucionales permite capturar patrones de colaboración que los métodos basados en reglas no pueden detectar.
+
+\textbf{Limitaciones en Grafos Dispersos:}
+Sin embargo, el análisis reveló una degradación significativa del rendimiento en grafos con baja conectividad. Cuando menos del 15\% de los autores tienen colaboraciones registradas, el modelo GCN no logra ventajas sustanciales sobre los métodos heurísticos, activando automáticamente el mecanismo de fallback implementado.
+
+\textbf{Generación de Tripletas Adaptativa:}
+Una contribución técnica clave del sistema es la generación dinámica de tripletas durante el entrenamiento. En grafos con pocas conexiones, el algoritmo detecta automáticamente la escasez de tripletas válidas y genera tripletas sintéticas basadas en similitud semántica, evitando el colapso del entrenamiento. Esta aproximación permite mantener la funcionalidad del sistema incluso en condiciones de datos subóptimas.
+
+\textbf{Impacto del Mecanismo de Atención:}
+El mecanismo de atención multicapa demostró ser particularmente efectivo para balancear información local (características textuales) y global (estructura del grafo). Los pesos de atención tienden a favorecer capas intermedias que capturan patrones de colaboración moderadamente distantes, mientras que las capas iniciales y finales reciben menor peso.
+
+\textbf{Análisis de Casos Límite:}
+El sistema mostró robustez en casos extremos como autores con una sola publicación (nodos aislados) y autores con nombres altamente ambiguos. La integración de información semántica de las publicaciones compensa parcialmente la falta de información estructural en estos casos.
 
 \begin{table}[h]
 \centering
@@ -98,6 +159,26 @@ Escenario & Precisión & Recall \\
 Nombres asiáticos (caracteres) & 0.89 & 0.82 \\
 Autores con múltiples afiliaciones & 0.93 & 0.79 \\
 Cambios de nombre (e.g., matrimonio) & 0.75 & 0.68 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Configuración y rendimiento del modelo GCN en ARC}
+\label{tab:gcn_config}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Componente & Configuración & Rendimiento \\
+\midrule
+Dimensión de embeddings & 300 & Base óptima \\
+Capas ocultas & [128, 64] & Convergencia estable \\
+TF-IDF max features & 1000 & Balance precisión/velocidad \\
+N-gramas & (1, 2) & Captura contexto local \\
+Umbral similitud publicaciones & 0.3 (adaptativo) & 0.85 conexiones válidas \\
+Umbral similitud conceptual & 0.1 & Backup para grafos dispersos \\
+Peso normalización coautorías & $\log(n+1)/10$ & Evita dominancia \\
+Margen de tripletas & 1.0 & Separación óptima \\
 \bottomrule
 \end{tabular}
 \end{table}

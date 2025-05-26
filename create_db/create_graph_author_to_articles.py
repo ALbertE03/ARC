@@ -106,11 +106,14 @@ def consolidate_authors_gcn(authors_data, author_work_map, works_data):
                 author_id, author_data, author_work_map
             )
         
+        authors_path = os.path.join('data', 'openalex_authors_complete.json')
+        papers_path = os.path.join('data', 'openalex_data.json')
         # Use GCN to find consolidation candidates
         logger.info("🧠 Training GCN and finding consolidation candidates...")
         logger.info(f"   Training will use {device} with batch size {batch_size}")
         
-        G = gcn_matcher.find_candidates(authors_features, author_work_map, works_data)
+        G = gcn_matcher.find_candidates(authors_data_path=authors_path,
+        papers_data_path=papers_path)
         
         # Get connected components
         logger.info("🔍 Identifying connected components...")

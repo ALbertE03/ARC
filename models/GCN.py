@@ -5,11 +5,9 @@ import numpy as np
 import networkx as nx
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import AgglomerativeClustering
-from rapidfuzz import fuzz
 import logging
 from tqdm import tqdm
 from collections import defaultdict
-import itertools
 
 logger = logging.getLogger(__name__)
 
@@ -161,6 +159,144 @@ class GCNAuthorMatcher:
         self.author_gcn = None
         
         logger.info("🧠 GCN Author Matcher initialized")
+        
+    def preprocess_data(self, author_file_path, papers_file_path):
+        """
+        Preprocess both author and paper data.
+        
+        Args:
+            author_file_path: Path to the JSON file containing author data
+            papers_file_path: Path to the JSON file containing paper data
+            
+        Returns:
+            A tuple of (papers_data, authors_features, author_work_map)
+        """
+        import json
+        
+        logger.info("📚 Loading data from JSON files...")
+        
+        # Load authors data
+        try:
+            with open(author_file_path, 'r', encoding='utf-8') as f:
+                authors_data = json.load(f)
+            logger.info(f"✅ Loaded {len(authors_data)} authors from {author_file_path}")
+        except Exception as e:
+            logger.error(f"⚠️ Failed to load authors file: {e}")
+            authors_data = {}
+        
+        # Load papers data
+        try:
+            with open(papers_file_path, 'r', encoding='utf-8') as f:
+                papers_raw = json.load(f)
+                
+                # Convert list to dictionary with IDs if necessary
+                if isinstance(papers_raw, list):
+                    papers_data = {}
+                    for paper in papers_raw:
+                        paper_id = paper.get('id', '') or paper.get('paper_id', '') or f"paper_{len(papers_data)}"
+                        papers_data[paper_id] = paper
+                else:
+                    papers_data = papers_raw
+                    
+            logger.info(f"✅ Loaded {len(papers_data)} papers from {papers_file_path}")
+        except Exception as e:
+            logger.error(f"⚠️ Failed to load papers file: {e}")
+            papers_data = {}
+            
+        # Create author features dictionary with normalized IDs
+        authors_features = {}
+        normalized_id_map = {}
+        
+        for author_id, author_data in authors_data.items():
+            # Normalize author ID format 
+            # Store both the full URL format and the short ID format
+            if author_id.startswith('https://'):
+                short_id = author_id.split('/')[-1]
+            else:
+                short_id = author_id
+                if not author_id.startswith('A'):
+                    author_id = f"https://openalex.org/{author_id}"
+            
+            normalized_id_map[author_id] = short_id
+            normalized_id_map[short_id] = short_id
+            
+            # Extract relevant features for each author
+            features = {
+                'name': author_data.get('display_name', ''),
+                'orcid': author_data.get('orcid', ''),
+                'institution': self._extract_institution_name(author_data),
+                'concepts': self._extract_concepts(author_data),
+                'paper_count': len(author_data.get('works', [])),
+                'citations': author_data.get('cited_by_count', 0)
+            }
+            
+            # Store features for both ID formats to maximize matching chance
+            authors_features[short_id] = features
+            if short_id != author_id:
+                authors_features[author_id] = features
+            
+        # Create author to work mapping with normalized IDs
+        author_work_map = {}
+        for author_id, author_data in authors_data.items():
+            short_id = normalized_id_map.get(author_id, author_id)
+            author_work_map[short_id] = set(author_data.get('works', []))
+            
+        logger.info(f"🔄 Normalized {len(normalized_id_map)} author IDs for consistent matching")
+            
+        # Ensure papers have the right format and author connections
+        enhanced_papers = {}
+        for paper_id, paper_data in papers_data.items():
+            # Make sure each paper has an authors list with proper format
+            enhanced_paper = dict(paper_data)
+            
+            # Process the authors list to ensure it's in the expected format with IDs
+            authors_list = []
+            for author in paper_data.get('authorships', []):
+                if isinstance(author, dict):
+                    # Check for the OpenAlex format where author is under 'author' key
+                    if 'author' in author and isinstance(author['author'], dict):
+                        author_id = author['author'].get('id', '')
+                        # Keep the full ID format but note it for consistency checking
+                        author_info = {
+                            'id': author_id,
+                            'name': author['author'].get('display_name', ''),
+                            'orcid': author['author'].get('orcid', '')
+                        }
+                        authors_list.append(author_info)
+                    # Check for direct id in the author dict
+                    elif 'id' in author:
+                        authors_list.append(author)
+                    # If no ID but has a name, create a synthetic ID
+                    elif 'name' in author and author['name']:
+                        author_info = {
+                            'id': f"synthetic_{hash(author['name']) % 10000000}",
+                            'name': author['name'],
+                            'orcid': author.get('orcid', '')
+                        }
+                        authors_list.append(author_info)
+            
+            # Update the paper with proper authors list
+            enhanced_paper['authors'] = authors_list
+            enhanced_papers[paper_id] = enhanced_paper
+            
+        logger.info(f"🔄 Processed {len(enhanced_papers)} papers with author connections")
+        return enhanced_papers, authors_features, author_work_map
+        
+    def _extract_institution_name(self, author_data):
+        """Extract the main institution name from author data."""
+        if 'last_known_institution' in author_data and author_data['last_known_institution']:
+            if isinstance(author_data['last_known_institution'], dict):
+                return author_data['last_known_institution'].get('display_name', '')
+        return ''
+    
+    def _extract_concepts(self, author_data):
+        """Extract concepts from author data."""
+        concepts = []
+        if 'x_concepts' in author_data and isinstance(author_data['x_concepts'], list):
+            for concept in author_data['x_concepts']:
+                if isinstance(concept, dict) and 'display_name' in concept:
+                    concepts.append(concept['display_name'])
+        return concepts
 
     def extract_paper_features(self, papers_data, author_work_map):
         """Extract features for papers using TF-IDF."""
@@ -330,8 +466,12 @@ class GCNAuthorMatcher:
         
         # Use tqdm for papers processing
         for paper_id, paper_data in tqdm(papers_data.items(), desc="Processing papers for coauthors"):
-            authors = [author.get('id', '') for author in paper_data.get('authors', [])]
-            authors = [a for a in authors if a]  # Remove empty IDs
+            authors = []
+            for author in paper_data.get('authors', []):
+                if isinstance(author, dict):
+                    author_id = author.get('id', '')
+                    if author_id:
+                        authors.append(author_id)
             
             all_authors.update(authors)
             papers_processed += 1
@@ -376,10 +516,13 @@ class GCNAuthorMatcher:
                 # Get papers by this author and extract concepts
                 for paper_id, paper_data in papers_data.items():
                     for author in paper_data.get('authors', []):
-                        if author.get('id', '') == author_id:
-                            # Add paper concepts
-                            for concept in paper_data.get('concepts', []):
-                                concepts.add(concept.get('display_name', '').lower())
+                        if isinstance(author, dict):
+                            # Check if this is the current author
+                            if author.get('id', '') == author_id:
+                                # Add paper concepts
+                                for concept in paper_data.get('concepts', []):
+                                    if isinstance(concept, dict):
+                                        concepts.add(concept.get('display_name', '').lower())
                 author_concepts[author_id] = concepts
             
             # Create connections based on shared concepts
@@ -426,11 +569,12 @@ class GCNAuthorMatcher:
             paper_idx = paper_to_idx[paper_id]
             
             for author in paper_data.get('authors', []):
-                author_id = author.get('id', '')
-                if author_id and author_id in author_to_idx:
-                    author_idx = author_to_idx[author_id]
-                    adj_matrix[paper_idx, author_idx] = 1.0
-                    relationships_added += 1
+                if isinstance(author, dict):
+                    author_id = author.get('id', '')
+                    if author_id and author_id in author_to_idx:
+                        author_idx = author_to_idx[author_id]
+                        adj_matrix[paper_idx, author_idx] = 1.0
+                        relationships_added += 1
         
         logger.info(f"   Added {relationships_added} paper-author relationships")
         return adj_matrix
@@ -599,9 +743,27 @@ class GCNAuthorMatcher:
         
         return gcn
 
-    def find_candidates(self, authors_features, author_work_map, papers_data):
-        """Find consolidation candidates using GCN approach."""
+    def find_candidates(self, authors_data_path=None, papers_data_path=None, authors_features=None, author_work_map=None, papers_data=None):
+        """
+        Find consolidation candidates using GCN approach.
+        
+        Args:
+            authors_data_path: Path to the JSON file containing author data
+            papers_data_path: Path to the JSON file containing paper data
+            authors_features: Optional pre-loaded author features
+            author_work_map: Optional pre-loaded author work map
+            papers_data: Optional pre-loaded papers data
+        """
         logger.info("🧠 Starting GCN-based author consolidation...")
+        
+        # Load and preprocess data if paths are provided
+        if authors_data_path and papers_data_path:
+            papers_data, authors_features, author_work_map = self.preprocess_data(
+                authors_data_path, papers_data_path
+            )
+            
+        if not authors_features or not papers_data:
+            raise ValueError("Must provide either data paths or pre-loaded data")
         
         # Extract paper features
         paper_features, paper_ids = self.extract_paper_features(papers_data, author_work_map)
@@ -643,11 +805,12 @@ class GCNAuthorMatcher:
         logger.info("🔍 Clustering papers using hierarchical clustering...")
         paper_embeddings_np = paper_embeddings.cpu().numpy()
         
-        # Use agglomerative clustering
+        # Use agglomerative clustering with optimized parameters
+        # Lower distance threshold to create more granular clusters (helps with finding connections)
         clustering = AgglomerativeClustering(
             n_clusters=None,
-            distance_threshold=1.5,
-            linkage='ward'
+            distance_threshold=1.0,  # Reduced from 1.5 to create more precise clusters
+            linkage='average'  # Changed from 'ward' to 'average' for better cluster separation
         )
         
         paper_clusters = clustering.fit_predict(paper_embeddings_np)
@@ -666,29 +829,183 @@ class GCNAuthorMatcher:
         
         # Group authors by their paper clusters
         cluster_to_authors = defaultdict(set)
+        author_to_clusters = defaultdict(set)
+        
+        # Track author ID normalization for debugging
+        author_id_map = {}
+        authors_missing = 0
+        authors_matched = 0
         
         logger.info("🔗 Mapping paper clusters to authors...")
         for paper_id, cluster_id in tqdm(paper_to_cluster.items(), desc="Mapping clusters to authors"):
             paper_data = papers_data.get(paper_id, {})
             for author in paper_data.get('authors', []):
-                author_id = author.get('id', '')
-                if author_id in authors_features:
-                    cluster_to_authors[cluster_id].add(author_id)
+                if isinstance(author, dict):
+                    # Handle different ID formats (full URL or just the ID part)
+                    author_id_full = author.get('id', '')
+                    author_id_short = author_id_full.split('/')[-1] if '/' in author_id_full else author_id_full
+                    
+                    # Try different ID formats to match with authors_features
+                    found = False
+                    for aid in [author_id_full, author_id_short, f"A{author_id_short}"]:
+                        if aid and aid in authors_features:
+                            cluster_to_authors[cluster_id].add(aid)
+                            author_to_clusters[aid].add(cluster_id)
+                            author_id_map[author_id_full] = aid
+                            authors_matched += 1
+                            found = True
+                            break
+                    
+                    if not found:
+                        authors_missing += 1
         
         # Create edges within clusters
         edges_added = 0
         logger.info("✨ Creating edges within clusters...")
-        for cluster_id, author_set in tqdm(cluster_to_authors.items(), desc="Creating cluster edges"):
+        
+        # Method 1: Connect authors within the same cluster
+        for cluster_id, author_set in tqdm(cluster_to_authors.items(), desc="Creating direct cluster edges"):
+            if len(author_set) <= 1:  # Skip clusters with only one author
+                continue
+                
             author_list = list(author_set)
             for i, author1 in enumerate(author_list):
                 for author2 in author_list[i+1:]:
                     if not G.has_edge(author1, author2):
                         G.add_edge(author1, author2, 
-                                 reason="gcn_clustering", 
-                                 confidence=0.8)
+                                 reason="gcn_direct_clustering", 
+                                 confidence=0.85)
                         edges_added += 1
         
+        # Method 2: Connect authors who share multiple clusters (stronger relationship)
+        logger.info("🔍 Finding authors with shared cluster patterns...")
+        authors_processed = set()
+        
+        for author_id, clusters in tqdm(author_to_clusters.items(), desc="Finding shared cluster patterns"):
+            if len(clusters) < 1:  # Skip authors with no clusters (relaxed from < 2)
+                continue
+                
+            authors_processed.add(author_id)
+            
+            # Find authors who share multiple clusters with this author
+            for other_author, other_clusters in author_to_clusters.items():
+                if other_author in authors_processed or other_author == author_id:
+                    continue  # Skip already processed pairs and self-comparisons
+                    
+                shared_clusters = clusters.intersection(other_clusters)
+                if len(shared_clusters) >= 1:  # Relaxed from >= 2 to >= 1 to find more connections
+                    if not G.has_edge(author_id, other_author):
+                        # Scale confidence based on number of shared clusters
+                        confidence = min(0.9, 0.7 + 0.05 * len(shared_clusters))
+                        G.add_edge(author_id, other_author,
+                                 reason="gcn_shared_clusters",
+                                 confidence=confidence)  # Higher confidence with more shared clusters
+                        edges_added += 1
+        
+        # Method 3: Connect authors who've collaborated on papers
+        logger.info("📚 Finding direct paper collaborations...")
+        paper_author_pairs = defaultdict(set)
+        
+        # First build a mapping of papers to their authors
+        for paper_id, paper_data in tqdm(papers_data.items(), desc="Mapping papers to authors"):
+            for author in paper_data.get('authors', []):
+                if isinstance(author, dict):
+                    author_id = author.get('id', '')
+                    # Try to find this author in authors_features using various ID formats
+                    for aid in [author_id, author_id.split('/')[-1] if '/' in author_id else author_id]:
+                        if aid in authors_features:
+                            paper_author_pairs[paper_id].add(aid)
+                            break
+        
+        # Now connect authors who collaborated on papers
+        coauthor_edges = 0
+        for paper_id, authors in tqdm(paper_author_pairs.items(), desc="Finding coauthors"):
+            if len(authors) > 1:
+                # Create edges between all coauthors
+                authors_list = list(authors)
+                for i, author1 in enumerate(authors_list):
+                    for author2 in authors_list[i+1:]:
+                        if not G.has_edge(author1, author2):
+                            G.add_edge(author1, author2,
+                                     reason="gcn_coauthorship",
+                                     confidence=0.85)
+                            edges_added += 1
+                            coauthor_edges += 1
+                            
+        logger.info(f"   • Added {coauthor_edges} coauthor connections")
+        
+        # Calculate additional metrics for better insights
+        clusters_with_multiple_authors = sum(1 for authors in cluster_to_authors.values() if len(authors) > 1)
+        authors_with_multiple_clusters = sum(1 for clusters in author_to_clusters.values() if len(clusters) > 1)
+        
+        # Last resort: if no connections were found, use embedding similarity directly
+        if edges_added == 0 and authors_features:
+            logger.info("⚠️ No connections found through standard methods, attempting direct embedding similarity...")
+            # Get author embeddings
+            author_ids_list = list(authors_features.keys())
+            
+            if len(author_embeddings) >= len(author_ids_list):
+                # Calculate pairwise cosine similarities between author embeddings
+                author_embeddings_np = author_embeddings.cpu().numpy()
+                from sklearn.metrics.pairwise import cosine_similarity
+                
+                # Limit to a manageable subset if too many authors
+                max_authors = min(1000, len(author_ids_list))
+                if len(author_ids_list) > max_authors:
+                    logger.info(f"⚠️ Too many authors ({len(author_ids_list)}), limiting to {max_authors}")
+                    author_ids_list = author_ids_list[:max_authors]
+                    author_embeddings_np = author_embeddings_np[:max_authors]
+                
+                similarities = cosine_similarity(author_embeddings_np)
+                
+                # Add edges for highly similar authors
+                similarity_threshold = 0.75
+                fallback_edges = 0
+                
+                for i in range(len(author_ids_list)):
+                    for j in range(i+1, len(author_ids_list)):
+                        if similarities[i, j] > similarity_threshold:
+                            author1 = author_ids_list[i]
+                            author2 = author_ids_list[j]
+                            if author1 in authors_features and author2 in authors_features:
+                                if not G.has_edge(author1, author2):
+                                    G.add_edge(author1, author2,
+                                            reason="gcn_embedding_similarity",
+                                            confidence=similarities[i, j])
+                                    edges_added += 1
+                                    fallback_edges += 1
+                
+                logger.info(f"   • Added {fallback_edges} edges based on embedding similarity")
+        
         logger.info(f"✅ GCN consolidation completed: {edges_added} connections found")
+        logger.info(f"   • Paper clusters: {len(set(paper_clusters))}")
+        logger.info(f"   • Clusters with multiple authors: {clusters_with_multiple_authors}")
+        logger.info(f"   • Authors in multiple clusters: {authors_with_multiple_clusters}")
+        
+        # Log mapping stats
+        logger.info(f"   • Author mapping: {authors_matched} matches, {authors_missing} missing")
+        logger.info(f"   • Author IDs mapped: {len(author_id_map)} unique author IDs")
+            
+        # If no edges were found, log a warning with potential reasons
+        if edges_added == 0:
+            logger.warning("⚠️ No author connections were established. Possible reasons:")
+            logger.warning("   1. Not enough common papers between authors")
+            logger.warning("   2. Paper clustering did not group related papers correctly")
+            logger.warning("   3. Author data might be sparse or disconnected")
+            logger.warning(f"   4. Author ID mismatches: {authors_missing} authors in papers not found in authors_features")
+            
+            # Check clustering metrics
+            if len(set(paper_clusters)) < 3:
+                logger.warning("   ⚠️ Very few paper clusters created. Check clustering parameters.")
+                
+            # Check if any clusters have multiple authors
+            if clusters_with_multiple_authors == 0:
+                logger.warning("   ⚠️ No clusters with multiple authors found. Check author-paper relationships.")
+            
+            # Check if authors were mapped to clusters
+            if sum(len(authors) for authors in cluster_to_authors.values()) == 0:
+                logger.warning("   ⚠️ No authors were mapped to paper clusters. Check author-paper relationships.")
+        
         return G
 
 
