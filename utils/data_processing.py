@@ -826,3 +826,85 @@ def print_relationship_stats(
             
     except Exception as e:
         logger.error(f"Error in print_relationship_stats: {e}")
+
+
+def load_sample_data(file_path: str, sample_size: int = None) -> Dict:
+    """
+    Load sample data for testing and benchmarking.
+    
+    Args:
+        file_path: Path to the data file
+        sample_size: Optional limit on number of authors to load
+        
+    Returns:
+        Dictionary with sampled data
+    """
+    logger.info(f"📁 Loading sample data from: {file_path}")
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        authors = data.get('authors', {})
+        works = data.get('works', {})
+        
+        # Sample data if requested
+        if sample_size and len(authors) > sample_size:
+            logger.info(f"🎯 Sampling {sample_size} authors from {len(authors)} total")
+            author_ids = list(authors.keys())[:sample_size]
+            authors = {aid: authors[aid] for aid in author_ids}
+        
+        logger.info(f"✅ Loaded {len(authors)} authors")
+        
+        return {
+            'authors': authors,
+            'works': works
+        }
+        
+    except Exception as e:
+        logger.error(f"❌ Error loading sample data: {e}")
+        return {'authors': {}, 'works': {}}
+
+
+def create_test_dataset(authors_data: Dict, works_data: Dict, 
+                       target_size: int = 1000) -> Dict:
+    """
+    Create a test dataset with specific characteristics for benchmarking.
+    
+    Args:
+        authors_data: Full authors data
+        works_data: Full works data
+        target_size: Target number of authors
+        
+    Returns:
+        Test dataset with authors and works
+    """
+    logger.info(f"🔧 Creating test dataset with {target_size} authors")
+    
+    # Select diverse authors for testing
+    selected_authors = {}
+    author_ids = list(authors_data.keys())
+    
+    # Try to get a diverse sample
+    step = max(1, len(author_ids) // target_size)
+    for i in range(0, min(len(author_ids), target_size * step), step):
+        if len(selected_authors) >= target_size:
+            break
+        author_id = author_ids[i]
+        selected_authors[author_id] = authors_data[author_id]
+    
+    # Filter works to only include those by selected authors
+    selected_works = {}
+    for work_id, work_data in works_data.items():
+        for authorship in work_data.get('authorships', []):
+            author_id = authorship.get('author', {}).get('id', '').split('/')[-1]
+            if author_id in selected_authors:
+                selected_works[work_id] = work_data
+                break
+    
+    logger.info(f"✅ Created test dataset: {len(selected_authors)} authors, {len(selected_works)} works")
+    
+    return {
+        'authors': selected_authors,
+        'works': selected_works
+    }

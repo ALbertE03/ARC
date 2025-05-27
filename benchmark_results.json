@@ -1,0 +1,34 @@
+{
+  "enhanced": {
+    "processing_time": 0.07793116569519043,
+    "edges_found": 2,
+    "authors_per_second": 6415.918401062206,
+    "metrics": {
+      "total_authors": 500,
+      "total_comparisons": 17,
+      "total_edges": 2,
+      "processing_time": 0.07690191268920898,
+      "memory_usage_mb": 0.0,
+      "exact_matches": 2,
+      "fuzzy_matches": 2,
+      "orcid_matches": 0,
+      "institution_matches": 0,
+      "work_overlap_matches": 0,
+      "precision_estimate": 0.0,
+      "recall_estimate": 0.0,
+      "f1_score_estimate": 0.0,
+      "comparisons_per_second": 221.0608215780499,
+      "authors_per_second": 6501.788869942645
+    }
+  },
+  "baseline": {
+    "processing_time": 17.66916561126709,
+    "edges_found": 5,
+    "authors_per_second": 28.297884065400645
+  },
+  "comparison": {
+    "speedup_factor": 226.7278495534881,
+    "edge_ratio": 0.4,
+    "time_improvement_pct": 99.5589425816152
+  }
+}

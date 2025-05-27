@@ -37,7 +37,7 @@ class Neo4jConnection:
 
     def execute_query(self, query, params=None, return_data=True):
         """
-        Execute a Cypher query against the Neo4j database
+        Execute a Cypher query against the Neo4j database with enhanced error handling
 
         Args:
             query (str): The Cypher query to execute
@@ -47,20 +47,40 @@ class Neo4jConnection:
         Returns:
             list or None: Query results if return_data is True, None otherwise
         """
+        if not query or not isinstance(query, str):
+            raise ValueError("Query must be a non-empty string")
+            
         if not self.driver:
             self.connect()
 
-        try:
-            with self.driver.session() as session:
-                if return_data:
-                    result = session.run(query, params or {})
-                    return [record.data() for record in result]
+        max_retries = 3
+        retry_count = 0
+        
+        while retry_count < max_retries:
+            try:
+                with self.driver.session() as session:
+                    if return_data:
+                        result = session.run(query, params or {})
+                        return [record.data() for record in result]
+                    else:
+                        session.run(query, params or {})
+                        return None
+                        
+            except Exception as e:
+                retry_count += 1
+                error_msg = f"Error executing query (attempt {retry_count}/{max_retries}): {e}"
+                
+                if retry_count < max_retries:
+                    print(f"{error_msg} - Retrying...")
+                    # Reconnect before retrying
+                    try:
+                        self.close()
+                        self.connect()
+                    except:
+                        pass
                 else:
-                    session.run(query, params or {})
-                    return None
-        except Exception as e:
-            print(f"Error executing query: {e}")
-            raise
+                    print(f"{error_msg} - Max retries reached")
+                    raise e
 
     def query_to_dataframe(self, query, params=None):
         """
