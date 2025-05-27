@@ -12,10 +12,26 @@ Usage:
 Options:
     --matcher {traditional,enhanced}  Choose matcher type (default: enhanced)
     --benchmark                       Run benchmark comparison
-    --threshold FLOAT                 Similarity threshold (default: 0.85)
+    --threshold FLOAT                 Similarity threshold (default: 0.95)
     --limit INT                      Limit number of authors for testing
     --export-results                 Export detailed results and metrics
     --skip-neo4j                     Skip Neo4j database insertion
+    --exhaustive                     Use exhaustive N×N comparison (default: True)
+    --no-exhaustive                  Disable exhaustive mode, use batch-optimized approach (faster)
+    --hyphen-aware                   Enable enhanced hyphen-aware matching (default: True)
+
+Examples:
+    # Basic enhanced matching (exhaustive by default)
+    python create_graph_author_to_articles.py
+    
+    # Fast batch-optimized approach
+    python create_graph_author_to_articles.py --no-exhaustive
+    
+    # Exhaustive comparison with custom threshold
+    python create_graph_author_to_articles.py --threshold 0.95
+    
+    # Test with limited dataset
+    python create_graph_author_to_articles.py --limit 1000 --benchmark
 """
 
 import os
@@ -55,7 +71,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.85, limit=None):
+def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.95, limit=None, 
+                               exhaustive_comparison=True, hyphen_aware_matching=True):
     """Enhanced consolidation method using the new EnhancedAuthorMatcher."""
     logger.info("\n🚀 Starting Enhanced Author Consolidation")
     logger.info("=" * 70)
@@ -73,7 +90,9 @@ def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.85, 
         batch_size=1000,
         use_semantic_similarity=True,
         use_phonetic_matching=True,
-        enable_caching=True
+        enable_caching=True,
+        exhaustive_comparison=exhaustive_comparison,
+        hyphen_aware_matching=hyphen_aware_matching
     )
     
     # Extract enhanced features
@@ -112,7 +131,7 @@ def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.85, 
     return consolidated, G, matcher
 
 
-def benchmark_matchers(authors_data, author_work_map, threshold=0.85, limit=1000):
+def benchmark_matchers(authors_data, author_work_map, threshold=0.95, limit=1000):
     """Benchmark different matcher implementations for performance comparison."""
     logger.info("\n📊 BENCHMARK MODE: Comparing Traditional vs Enhanced Matchers")
     logger.info("=" * 80)
@@ -172,7 +191,9 @@ def benchmark_matchers(authors_data, author_work_map, threshold=0.85, limit=1000
             batch_size=1000,
             use_semantic_similarity=True,
             use_phonetic_matching=True,
-            enable_caching=True
+            enable_caching=True,
+            exhaustive_comparison=False,  # Use batch optimization for benchmarks
+            hyphen_aware_matching=True
         )
         
         # Extract features
@@ -235,76 +256,7 @@ def benchmark_matchers(authors_data, author_work_map, threshold=0.85, limit=1000
     logger.info(f"📊 Benchmark results saved to: {benchmark_file}")
     
     return benchmark_results
-    logger.info("\n🏁 Starting Matcher Benchmark Comparison")
-    logger.info("=" * 70)
     
-    # Prepare features for both matchers
-    logger.info("📝 Preparing author features for benchmarking...")
-    
-    # Traditional matcher features
-    traditional_matcher = SmartAuthorMatcher(similarity_threshold=0.90)
-    traditional_features = {}
-    for author_id, author_data in tqdm(authors_data.items(), desc="Traditional features"):
-        traditional_features[author_id] = traditional_matcher.extract_features(
-            author_id, author_data, author_work_map
-        )
-    
-    # Enhanced matcher features
-    enhanced_matcher = EnhancedAuthorMatcher(
-        similarity_threshold=0.85,
-        use_semantic_similarity=True,
-        use_phonetic_matching=True
-    )
-    enhanced_features = {}
-    for author_id, author_data in tqdm(authors_data.items(), desc="Enhanced features"):
-        enhanced_features[author_id] = enhanced_matcher.extract_features_enhanced(
-            author_id, author_data, author_work_map
-        )
-    
-    logger.info("🔄 Running benchmarks...")
-    
-    # Run enhanced matcher with benchmarking
-    benchmark_results = enhanced_matcher.benchmark_against_baseline(
-        enhanced_features, author_work_map, traditional_matcher
-    )
-    
-    # Display results
-    logger.info("\n📊 BENCHMARK RESULTS")
-    logger.info("=" * 50)
-    
-    enhanced_results = benchmark_results.get('enhanced', {})
-    baseline_results = benchmark_results.get('baseline', {})
-    comparison = benchmark_results.get('comparison', {})
-    
-    logger.info(f"🚀 Enhanced Matcher:")
-    logger.info(f"   ⏱️  Time: {enhanced_results.get('processing_time', 0):.2f} seconds")
-    logger.info(f"   🔗 Edges: {enhanced_results.get('edges_found', 0):,}")
-    logger.info(f"   ⚡ Speed: {enhanced_results.get('authors_per_second', 0):.1f} authors/sec")
-    
-    if baseline_results:
-        logger.info(f"\n🔍 Traditional Matcher:")
-        logger.info(f"   ⏱️  Time: {baseline_results.get('processing_time', 0):.2f} seconds")
-        logger.info(f"   🔗 Edges: {baseline_results.get('edges_found', 0):,}")
-        logger.info(f"   ⚡ Speed: {baseline_results.get('authors_per_second', 0):.1f} authors/sec")
-        
-        if comparison:
-            logger.info(f"\n📈 Performance Improvement:")
-            logger.info(f"   🚀 Speedup: {comparison.get('speedup_factor', 0):.2f}x faster")
-            logger.info(f"   🔗 Edge ratio: {comparison.get('edge_ratio', 0):.2f}x more matches")
-            logger.info(f"   ⏱️  Time saved: {comparison.get('time_improvement_pct', 0):.1f}%")
-    
-    # Export benchmark results
-    benchmark_file = "matcher_benchmark_results.json"
-    try:
-        import json
-        with open(benchmark_file, 'w', encoding='utf-8') as f:
-            json.dump(benchmark_results, f, indent=2, ensure_ascii=False)
-        logger.info(f"📊 Benchmark results exported to: {benchmark_file}")
-    except Exception as e:
-        logger.error(f"❌ Failed to export benchmark results: {e}")
-    
-    return benchmark_results
-
 
 def consolidate_authors_traditional(authors_data, author_work_map):
     """Traditional consolidation method using SmartAuthorMatcher."""
@@ -435,7 +387,8 @@ def consolidate_authors_sampled(authors_data, author_work_map):
 
 
 def consolidate_authors_main(authors_data, author_work_map, works_data=None, use_enhanced=True, 
-                           run_benchmark=False, threshold=0.85, limit=None):
+                           run_benchmark=False, threshold=0.85, limit=None, 
+                           exhaustive_comparison=True, hyphen_aware_matching=True):
     """
     Main consolidation function with enhanced matcher as the primary method.
     
@@ -461,7 +414,13 @@ def consolidate_authors_main(authors_data, author_work_map, works_data=None, use
     # Choose method based on parameters and dataset size
     if use_enhanced:
         logger.info("🚀 Using Enhanced Author Matcher (Primary Method)")
-        return consolidate_authors_enhanced(authors_data, author_work_map, threshold=threshold, limit=limit)
+        return consolidate_authors_enhanced(
+            authors_data, author_work_map, 
+            threshold=threshold, 
+            limit=limit,
+            exhaustive_comparison=exhaustive_comparison,
+            hyphen_aware_matching=hyphen_aware_matching
+        )
     elif total_authors > 25000:
         logger.info("🔍 Using sampled approach for large dataset")
         return consolidate_authors_sampled(authors_data, author_work_map)
@@ -493,14 +452,20 @@ Examples:
                        help='Choose matcher type (default: enhanced)')
     parser.add_argument('--benchmark', action='store_true',
                        help='Run benchmark comparison between matchers')
-    parser.add_argument('--threshold', type=float, default=0.85,
-                       help='Similarity threshold for matching (default: 0.85)')
+    parser.add_argument('--threshold', type=float, default=0.95,
+                       help='Similarity threshold for matching (default: 0.95)')
     parser.add_argument('--limit', type=int,
                        help='Limit number of authors for testing')
     parser.add_argument('--export-results', action='store_true',
                        help='Export detailed results and metrics')
     parser.add_argument('--skip-neo4j', action='store_true',
                        help='Skip Neo4j database insertion')
+    parser.add_argument('--exhaustive', action='store_true',
+                       help='Use exhaustive N×N comparison (slower but more accurate, default: True)')
+    parser.add_argument('--no-exhaustive', action='store_true',
+                       help='Disable exhaustive comparison, use batch-optimized approach (faster)')
+    parser.add_argument('--hyphen-aware', action='store_true',
+                       help='Enable enhanced hyphen-aware matching for author names')
     
     # Handle case where script is called directly (no args)
     try:
@@ -510,11 +475,24 @@ Examples:
         class DefaultArgs:
             matcher = 'enhanced'
             benchmark = False
-            threshold = 0.85
+            threshold = 0.95
             limit = None
             export_results = False
             skip_neo4j = False
+            exhaustive = True
+            no_exhaustive = False
+            hyphen_aware = True
         args = DefaultArgs()
+    
+    # Determine exhaustive mode based on flags
+    # Default is True, but --no-exhaustive overrides this
+    if hasattr(args, 'no_exhaustive') and args.no_exhaustive:
+        exhaustive_mode = False
+    elif hasattr(args, 'exhaustive') and args.exhaustive:
+        exhaustive_mode = True
+    else:
+        # Default behavior - use exhaustive mode
+        exhaustive_mode = True
     
     use_enhanced = (args.matcher == 'enhanced')
     
@@ -571,13 +549,28 @@ Examples:
         # Perform consolidation with enhanced system
         method_name = "Enhanced" if use_enhanced else "Traditional"
         logger.info(f"🎯 Selected approach: {method_name} (Threshold: {args.threshold})")
+        
+        # Log configuration details for enhanced matcher
+        if use_enhanced:
+            config_details = []
+            if exhaustive_mode:
+                config_details.append("Exhaustive N×N comparison")
+            else:
+                config_details.append("Batch-optimized comparison")
+            
+            if args.hyphen_aware:
+                config_details.append("Hyphen-aware matching")
+            
+            logger.info(f"⚙️ Enhanced matcher configuration: {', '.join(config_details)}")
             
         consolidation_result = consolidate_authors_main(
             authors_data, author_work_map, works_data, 
             use_enhanced=use_enhanced, 
             run_benchmark=args.benchmark,
             threshold=args.threshold,
-            limit=args.limit
+            limit=args.limit,
+            exhaustive_comparison=exhaustive_mode,
+            hyphen_aware_matching=args.hyphen_aware
         )
         
         # Handle different return formats

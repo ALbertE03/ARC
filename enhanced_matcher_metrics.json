@@ -1,17 +1,17 @@
 {
   "total_authors": 30199,
-  "total_comparisons": 839,
-  "total_edges": 900,
-  "processing_time": 4.594571828842163,
+  "total_comparisons": 455974701,
+  "total_edges": 9818,
+  "processing_time": 13199.07700920105,
   "memory_usage_mb": 0.0,
-  "exact_matches": 911,
-  "fuzzy_matches": 57,
+  "exact_matches": 9818,
+  "fuzzy_matches": 0,
   "orcid_matches": 0,
   "institution_matches": 0,
   "work_overlap_matches": 0,
   "precision_estimate": 0.0,
   "recall_estimate": 0.0,
   "f1_score_estimate": 0.0,
-  "comparisons_per_second": 182.60678715113892,
-  "authors_per_second": 6572.756096754761
+  "comparisons_per_second": 34545.95353009464,
+  "authors_per_second": 2.2879630127885715
 }

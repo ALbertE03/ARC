@@ -25,6 +25,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import re
+import spacy
+from spacy.lang.en.stop_words import STOP_WORDS
 
 logger = logging.getLogger(__name__)
 
@@ -72,20 +74,24 @@ class EnhancedAuthorMatcher:
     """
 
     def __init__(self, 
-                 similarity_threshold: float = 0.90,
+                 similarity_threshold: float = 0.95,  # Reduced from 0.90 to be more inclusive
                  batch_size: int = 1000,
                  use_semantic_similarity: bool = True,
                  use_phonetic_matching: bool = True,
-                 enable_caching: bool = True):
+                 enable_caching: bool = True,
+                 exhaustive_comparison: bool = True,  # Changed: Enable N×N comparison by default
+                 hyphen_aware_matching: bool = True):  # New: Enhanced hyphen handling
         """
         Initialize the enhanced author matcher.
         
         Args:
-            similarity_threshold: Minimum similarity score for matching
+            similarity_threshold: Minimum similarity score for matching (default: 0.75)
             batch_size: Size of batches for processing
             use_semantic_similarity: Enable TF-IDF based semantic matching
             use_phonetic_matching: Enable phonetic matching algorithms
             enable_caching: Enable caching of computed similarities
+            exhaustive_comparison: If True, compare all pairs (N×N), slower but more complete
+            hyphen_aware_matching: Enhanced matching for names with hyphens and variations
         """
         logger.info("🚀 Initializing Enhanced Author Matcher...")
         
@@ -94,6 +100,8 @@ class EnhancedAuthorMatcher:
         self.use_semantic_similarity = use_semantic_similarity
         self.use_phonetic_matching = use_phonetic_matching
         self.enable_caching = enable_caching
+        self.exhaustive_comparison = exhaustive_comparison
+        self.hyphen_aware_matching = hyphen_aware_matching
         
         # Initialize vectorizers for semantic similarity
         if self.use_semantic_similarity:
@@ -117,6 +125,9 @@ class EnhancedAuthorMatcher:
         self.similarity_cache = {} if enable_caching else None
         self.name_normalization_cache = {} if enable_caching else None
         
+        # Initialize spaCy and phonetic components
+        self._init_nlp_components()
+        
         # Performance tracking
         self.metrics = PerformanceMetrics()
         self.start_time = None
@@ -130,36 +141,41 @@ class EnhancedAuthorMatcher:
         logger.info(f"   Phonetic matching: {use_phonetic_matching}")
         logger.info(f"   Caching enabled: {enable_caching}")
         logger.info(f"   Similarity threshold: {similarity_threshold}")
+        logger.info(f"   Exhaustive comparison: {exhaustive_comparison}")
+        logger.info(f"   Hyphen-aware matching: {hyphen_aware_matching}")
 
+    def _init_nlp_components(self):
+        """Initialize spaCy NLP components for advanced phonetic processing."""
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+            logger.info("✅ spaCy English model loaded successfully")
+        except OSError:
+            logger.warning("⚠️  spaCy English model not found, falling back to basic patterns")
+            self.nlp = None
+    
     def _init_phonetic_patterns(self):
         """Initialize phonetic matching patterns for better name matching."""
-        # Common phonetic substitutions
+        # Enhanced phonetic substitutions with more comprehensive coverage
         self.phonetic_substitutions = {
-            'ph': 'f',
-            'gh': 'f',
-            'ck': 'k',
-            'qu': 'kw',
-            'x': 'ks',
-            'z': 's',
-            'c': 'k',  # in many cases
+            'ph': 'f', 'gh': 'f', 'ck': 'k', 'qu': 'kw', 'x': 'ks', 'z': 's',
+            'c': 'k',  # Context-dependent, but common
+            'th': 't', 'sh': 's', 'ch': 's',  # Common sound simplifications
+            'sch': 's', 'tch': 't',  # German/Dutch influences
+            'tion': 'sion', 'sion': 'sion',  # Suffix normalization
         }
         
-        # Vowel simplification patterns
+        # Enhanced vowel simplification patterns
         self.vowel_patterns = {
-            'ae': 'e',
-            'ai': 'e',
-            'ay': 'e',
-            'ea': 'e',
-            'ee': 'e',
-            'ei': 'e',
-            'ey': 'e',
-            'ie': 'e',
-            'oe': 'e',
-            'oo': 'u',
-            'ou': 'u',
-            'ow': 'u',
-            'ue': 'u',
-            'ui': 'u',
+            'ae': 'e', 'ai': 'e', 'ay': 'e', 'ea': 'e', 'ee': 'e', 'ei': 'e',
+            'ey': 'e', 'ie': 'e', 'oe': 'e', 'oo': 'u', 'ou': 'u', 'ow': 'u',
+            'ue': 'u', 'ui': 'u', 'au': 'o', 'aw': 'o', 'eu': 'u', 'ew': 'u'
+        }
+        
+        # Common international name variations
+        self.international_patterns = {
+            'josé': 'jose', 'maría': 'maria', 'joão': 'joao', 'josé': 'jose',
+            'müller': 'muller', 'françois': 'francois', 'björn': 'bjorn',
+            'josé-antonio': 'jose-antonio', 'jean-claude': 'jean-claude'
         }
 
     def normalize_name_advanced(self, name: str) -> str:
@@ -211,9 +227,43 @@ class EnhancedAuthorMatcher:
         
         return normalized
 
+    def _normalize_hyphens(self, name: str) -> str:
+        """Enhanced hyphen normalization for better matching."""
+        if not name:
+            return ""
+        
+        # Standardize different types of dashes to regular hyphens
+        name = re.sub(r'[–—−]', '-', name)
+        
+        # Normalize spaces around hyphens: "María - José" -> "maría-josé"
+        name = re.sub(r'\s*-\s*', '-', name)
+        
+        # Remove multiple consecutive hyphens
+        name = re.sub(r'-+', '-', name)
+        
+        # Remove leading/trailing hyphens
+        name = name.strip('-')
+        
+        return name
+    
+    def _apply_phonetic_normalization(self, name: str) -> str:
+        """Apply phonetic normalizations for better matching."""
+        if not name:
+            return ""
+        
+        # Apply phonetic substitutions
+        for pattern, replacement in self.phonetic_substitutions.items():
+            name = name.replace(pattern, replacement)
+        
+        # Apply vowel simplifications
+        for pattern, replacement in self.vowel_patterns.items():
+            name = name.replace(pattern, replacement)
+        
+        return name
+    
     def phonetic_similarity(self, name1: str, name2: str) -> float:
         """
-        Calculate phonetic similarity between names.
+        Enhanced phonetic similarity using spaCy NLP features.
         
         Args:
             name1, name2: Names to compare
@@ -224,27 +274,197 @@ class EnhancedAuthorMatcher:
         if not self.use_phonetic_matching or not name1 or not name2:
             return 0.0
         
+        # Use spaCy-enhanced phonetic processing if available
+        if self.nlp:
+            return self._spacy_phonetic_similarity(name1, name2)
+        else:
+            # Fallback to enhanced pattern-based approach
+            return self._pattern_phonetic_similarity(name1, name2)
+    
+    def _spacy_phonetic_similarity(self, name1: str, name2: str) -> float:
+        """spaCy-enhanced phonetic similarity with linguistic analysis."""
+        try:
+            # Process names with spaCy
+            doc1 = self.nlp(name1.lower())
+            doc2 = self.nlp(name2.lower())
+            
+            # Extract linguistic features
+            tokens1 = [token.lemma_ for token in doc1 if token.is_alpha]
+            tokens2 = [token.lemma_ for token in doc2 if token.is_alpha]
+            
+            # Apply phonetic transformations to lemmatized tokens
+            phon_tokens1 = []
+            phon_tokens2 = []
+            
+            for token in tokens1:
+                phon_token = self._apply_enhanced_phonetic_transform(token)
+                phon_tokens1.append(phon_token)
+            
+            for token in tokens2:
+                phon_token = self._apply_enhanced_phonetic_transform(token)
+                phon_tokens2.append(phon_token)
+            
+            # Reconstruct phonetic names
+            phon_name1 = ' '.join(phon_tokens1)
+            phon_name2 = ' '.join(phon_tokens2)
+            
+            # Calculate multiple similarity scores
+            similarities = []
+            
+            # 1. Token-level similarity (considering word order)
+            similarities.append(fuzz.ratio(phon_name1, phon_name2) / 100.0)
+            
+            # 2. Token set similarity (ignoring order)
+            similarities.append(fuzz.token_set_ratio(phon_name1, phon_name2) / 100.0)
+            
+            # 3. Character-level similarity on concatenated phonetic tokens
+            concat1 = ''.join(phon_tokens1)
+            concat2 = ''.join(phon_tokens2)
+            similarities.append(fuzz.ratio(concat1, concat2) / 100.0)
+            
+            # 4. Soundex-like similarity (first letter + phonetic core)
+            if phon_tokens1 and phon_tokens2:
+                core1 = phon_tokens1[0][0] + ''.join(phon_tokens1)[1:] if phon_tokens1[0] else ''
+                core2 = phon_tokens2[0][0] + ''.join(phon_tokens2)[1:] if phon_tokens2[0] else ''
+                if core1 and core2:
+                    similarities.append(fuzz.ratio(core1, core2) / 100.0)
+            
+            # 5. International name pattern matching
+            intl_sim = self._international_name_similarity(name1, name2)
+            if intl_sim > 0:
+                similarities.append(intl_sim)
+            
+            # Return weighted average with emphasis on best matches
+            if similarities:
+                # Weight the highest similarities more heavily
+                similarities.sort(reverse=True)
+                if len(similarities) >= 3:
+                    # Weighted: 50% best, 30% second best, 20% third best
+                    return (0.5 * similarities[0] + 
+                           0.3 * similarities[1] + 
+                           0.2 * similarities[2])
+                elif len(similarities) == 2:
+                    return 0.7 * similarities[0] + 0.3 * similarities[1]
+                else:
+                    return similarities[0]
+            
+            return 0.0
+            
+        except Exception as e:
+            logger.warning(f"spaCy phonetic similarity failed: {e}, falling back to patterns")
+            return self._pattern_phonetic_similarity(name1, name2)
+    
+    def _pattern_phonetic_similarity(self, name1: str, name2: str) -> float:
+        """Enhanced pattern-based phonetic similarity (fallback)."""
         def phonetic_transform(name):
-            """Transform name to phonetic representation."""
+            """Enhanced phonetic transformation."""
             name = name.lower()
+            
+            # Apply international patterns first
+            for pattern, replacement in self.international_patterns.items():
+                name = name.replace(pattern, replacement)
             
             # Apply phonetic substitutions
             for pattern, replacement in self.phonetic_substitutions.items():
                 name = name.replace(pattern, replacement)
             
-            # Simplify vowel patterns
+            # Apply vowel simplifications
             for pattern, replacement in self.vowel_patterns.items():
                 name = name.replace(pattern, replacement)
             
             # Remove consecutive duplicate letters
             name = re.sub(r'(.)\1+', r'\1', name)
             
+            # Remove silent letters at the end
+            name = re.sub(r'[aeiouy]+$', '', name)
+            
             return name
         
         phon1 = phonetic_transform(name1)
         phon2 = phonetic_transform(name2)
         
-        return fuzz.ratio(phon1, phon2) / 100.0
+        # Multiple similarity measurements
+        ratio_sim = fuzz.ratio(phon1, phon2) / 100.0
+        token_sim = fuzz.token_set_ratio(phon1, phon2) / 100.0
+        
+        # Check international name patterns
+        intl_sim = self._international_name_similarity(name1, name2)
+        
+        # Return best similarity
+        return max(ratio_sim, token_sim, intl_sim)
+    
+    def _apply_enhanced_phonetic_transform(self, token: str) -> str:
+        """Apply enhanced phonetic transformation to a single token."""
+        if not token:
+            return ""
+        
+        # Start with the token
+        phon = token.lower()
+        
+        # Apply international patterns first
+        for pattern, replacement in self.international_patterns.items():
+            phon = phon.replace(pattern, replacement)
+        
+        # Apply phonetic substitutions
+        for pattern, replacement in self.phonetic_substitutions.items():
+            phon = phon.replace(pattern, replacement)
+        
+        # Apply vowel simplifications
+        for pattern, replacement in self.vowel_patterns.items():
+            phon = phon.replace(pattern, replacement)
+        
+        # Remove consecutive duplicate letters
+        phon = re.sub(r'(.)\1+', r'\1', phon)
+        
+        # Keep first letter, reduce vowels in the middle
+        if len(phon) > 1:
+            first_char = phon[0]
+            rest = phon[1:]
+            # Simplify vowel clusters in the middle
+            rest = re.sub(r'[aeiouy]+', 'a', rest)
+            phon = first_char + rest
+        
+        return phon
+    
+    def _international_name_similarity(self, name1: str, name2: str) -> float:
+        """Check for international name variations."""
+        name1_lower = name1.lower()
+        name2_lower = name2.lower()
+        
+        # Direct international pattern match
+        for pattern, normalized in self.international_patterns.items():
+            if pattern in name1_lower and normalized in name2_lower:
+                return 0.95
+            if pattern in name2_lower and normalized in name1_lower:
+                return 0.95
+        
+        # Common substitutions for accented characters
+        accent_map = {
+            'á': 'a', 'à': 'a', 'â': 'a', 'ä': 'a', 'ã': 'a',
+            'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+            'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
+            'ó': 'o', 'ò': 'o', 'ô': 'o', 'ö': 'o', 'õ': 'o',
+            'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
+            'ñ': 'n', 'ç': 'c', 'ß': 'ss'
+        }
+        
+        # Remove accents and compare
+        deaccent1 = name1_lower
+        deaccent2 = name2_lower
+        
+        for accented, plain in accent_map.items():
+            deaccent1 = deaccent1.replace(accented, plain)
+            deaccent2 = deaccent2.replace(accented, plain)
+        
+        if deaccent1 == deaccent2 and deaccent1 != name1_lower:
+            return 0.90
+        
+        # Partial accent similarity
+        accent_sim = fuzz.ratio(deaccent1, deaccent2) / 100.0
+        if accent_sim > 0.85 and (deaccent1 != name1_lower or deaccent2 != name2_lower):
+            return accent_sim * 0.9  # Slight penalty for accent differences
+        
+        return 0.0
 
     def semantic_similarity(self, names: List[str]) -> np.ndarray:
         """
@@ -307,14 +527,39 @@ class EnhancedAuthorMatcher:
         
         similarities = {}
         
-        # 1. Exact name matching
+        # 1. Exact name matching (including enhanced equivalence)
         similarities['exact_match'] = 1.0 if name1 == name2 else 0.0
+        if not similarities['exact_match'] and self.hyphen_aware_matching:
+            similarities['exact_match'] = 1.0 if self.are_names_equivalent_enhanced(name1, name2) else 0.0
         
         # 2. Fuzzy string similarities
         similarities['fuzzy_ratio'] = fuzz.ratio(name1, name2) / 100.0
         similarities['token_sort'] = fuzz.token_sort_ratio(name1, name2) / 100.0
         similarities['token_set'] = fuzz.token_set_ratio(name1, name2) / 100.0
         similarities['partial_ratio'] = fuzz.partial_ratio(name1, name2) / 100.0
+        
+        # 2b. Enhanced hyphen-aware comparisons
+        if self.hyphen_aware_matching:
+            # Compare with hyphens removed/added
+            name1_no_hyphens = name1.replace('-', ' ')
+            name2_no_hyphens = name2.replace('-', ' ')
+            name1_with_hyphens = name1.replace(' ', '-')
+            name2_with_hyphens = name2.replace(' ', '-')
+            
+            similarities['hyphen_removed'] = max(
+                fuzz.ratio(name1_no_hyphens, name2) / 100.0,
+                fuzz.ratio(name1, name2_no_hyphens) / 100.0,
+                fuzz.ratio(name1_no_hyphens, name2_no_hyphens) / 100.0
+            )
+            
+            similarities['hyphen_added'] = max(
+                fuzz.ratio(name1_with_hyphens, name2) / 100.0,
+                fuzz.ratio(name1, name2_with_hyphens) / 100.0,
+                fuzz.ratio(name1_with_hyphens, name2_with_hyphens) / 100.0
+            )
+        else:
+            similarities['hyphen_removed'] = 0.0
+            similarities['hyphen_added'] = 0.0
         
         # 3. Phonetic similarity
         if self.use_phonetic_matching:
@@ -363,15 +608,17 @@ class EnhancedAuthorMatcher:
         
         # Calculate weighted overall similarity
         weights = {
-            'exact_match': 0.3,
-            'fuzzy_ratio': 0.2,
-            'token_sort': 0.15,
-            'token_set': 0.1,
-            'partial_ratio': 0.05,
-            'phonetic': 0.1 if self.use_phonetic_matching else 0.0,
+            'exact_match': 0.25,
+            'fuzzy_ratio': 0.15,
+            'token_sort': 0.12,
+            'token_set': 0.08,
+            'partial_ratio': 0.04,
+            'hyphen_removed': 0.08 if self.hyphen_aware_matching else 0.0,
+            'hyphen_added': 0.06 if self.hyphen_aware_matching else 0.0,
+            'phonetic': 0.08 if self.use_phonetic_matching else 0.0,
             'word_overlap': 0.05,
             'initials': 0.03,
-            'alt_names': 0.02
+            'alt_names': 0.06
         }
         
         # Normalize weights
@@ -447,18 +694,33 @@ class EnhancedAuthorMatcher:
         # 8. Decision logic with multiple evidence sources
         confidence = overall_sim
         
-        # High similarity threshold
-        if overall_sim >= 0.95:
+        # High similarity threshold - REDUCED for more inclusive
+        if overall_sim >= 0.85:  # Reduced from 0.95
             self.metrics.fuzzy_matches += 1
             return True, f"high_similarity_{overall_sim:.3f}", confidence
         
-        # Medium-high similarity with supporting evidence
-        if overall_sim >= 0.85:
+        # Medium-high similarity with supporting evidence - REDUCED thresholds
+        if overall_sim >= 0.75:  # Reduced from 0.85
             if works_evidence:
                 return True, f"shared_works_good_similarity_{overall_sim:.3f}", min(0.9, confidence + 0.05)
             
             if institution_evidence:
                 return True, f"same_institution_good_similarity_{overall_sim:.3f}", min(0.9, confidence + 0.03)
+        
+        # Medium similarity with strong supporting evidence - REDUCED thresholds
+        if overall_sim >= 0.65:  # Reduced from 0.75
+            evidence_count = sum([works_evidence, institution_evidence, same_country])
+            if evidence_count >= 2:
+                return True, f"multiple_evidence_medium_similarity_{overall_sim:.3f}", min(0.85, confidence + 0.05)
+        
+        # Special case: Very high hyphen similarity (for names like María-José vs Maria Jose)
+        if self.hyphen_aware_matching and overall_sim >= 0.60:
+            hyphen_sim = max(
+                sim_breakdown.get('hyphen_removed', 0.0),
+                sim_breakdown.get('hyphen_added', 0.0)
+            )
+            if hyphen_sim >= 0.90:
+                return True, f"hyphen_variation_match_{hyphen_sim:.3f}", min(0.88, confidence + 0.03)
         
         # Medium similarity with strong supporting evidence
         if overall_sim >= 0.75:
@@ -593,7 +855,89 @@ class EnhancedAuthorMatcher:
         Returns:
             NetworkX graph with consolidation candidates
         """
-        logger.info("🔍 Starting optimized author candidate finding...")
+        if self.exhaustive_comparison:
+            logger.info("🔍 Starting EXHAUSTIVE N×N author candidate finding...")
+            return self._find_candidates_exhaustive(authors_features, author_work_map)
+        else:
+            logger.info("🔍 Starting optimized author candidate finding...")
+            return self._find_candidates_batch_optimized(authors_features, author_work_map)
+    
+    def _find_candidates_exhaustive(self, authors_features: Dict, author_work_map: Dict) -> nx.Graph:
+        """
+        Exhaustive N×N comparison - more thorough but slower.
+        This ensures no potential matches are missed due to batch boundaries.
+        """
+        logger.info("⚠️  Using exhaustive comparison mode - this will be slower but more complete")
+        self.start_time = time.time()
+        
+        # Initialize metrics
+        self.metrics.total_authors = len(authors_features)
+        
+        # Create graph
+        G = nx.Graph()
+        
+        # Add all authors as nodes
+        for author_id, features in authors_features.items():
+            G.add_node(author_id, **features)
+        
+        author_ids = list(authors_features.keys())
+        total_pairs = len(author_ids) * (len(author_ids) - 1) // 2
+        
+        logger.info(f"   Will compare {total_pairs:,} pairs exhaustively")
+        
+        edges_added = 0
+        comparisons_made = 0
+        
+        # Compare all pairs
+        for i, author_id1 in enumerate(tqdm(author_ids, desc="Exhaustive comparison")):
+            for j in range(i + 1, len(author_ids)):
+                author_id2 = author_ids[j]
+                
+                author1 = authors_features[author_id1]
+                author2 = authors_features[author_id2]
+                
+                # Calculate works overlap
+                works1 = set(author_work_map.get(author_id1, []))
+                works2 = set(author_work_map.get(author_id2, []))
+                common_works = works1.intersection(works2)
+                
+                # Quick pre-filtering based on name similarity
+                name1 = author1.get('normalized_name', '')
+                name2 = author2.get('normalized_name', '')
+                
+                if name1 and name2:
+                    quick_sim = fuzz.ratio(name1, name2) / 100.0
+                    
+                    # Only do detailed analysis if there's some potential
+                    if quick_sim >= 0.6:  # Lower threshold for exhaustive mode
+                        should_merge, reason, confidence = self.should_consolidate_enhanced(
+                            author1, author2, common_works
+                        )
+                        
+                        if should_merge:
+                            G.add_edge(author_id1, author_id2, reason=reason, confidence=confidence)
+                            edges_added += 1
+                
+                comparisons_made += 1
+                self.metrics.total_comparisons = comparisons_made
+        
+        # Update metrics
+        self.metrics.total_edges = G.number_of_edges()
+        self.metrics.processing_time = time.time() - self.start_time
+        
+        if self.metrics.processing_time > 0:
+            self.metrics.authors_per_second = self.metrics.total_authors / self.metrics.processing_time
+            self.metrics.comparisons_per_second = self.metrics.total_comparisons / self.metrics.processing_time
+        
+        logger.info(f"✅ Exhaustive comparison completed: {edges_added} matches found")
+        self._log_performance_summary()
+        
+        return G
+    
+    def _find_candidates_batch_optimized(self, authors_features: Dict, author_work_map: Dict) -> nx.Graph:
+        """
+        Original batch-optimized approach for large datasets.
+        """
         self.start_time = time.time()
         
         # Initialize metrics
@@ -727,7 +1071,7 @@ class EnhancedAuthorMatcher:
             matches = process.extract(name1, name_list, scorer=fuzz.ratio, limit=None)
             
             for match_name, score, idx in matches:
-                if score >= 75:  # Pre-filter with lower threshold
+                if score >= 60:  # Reduced threshold for more inclusive matching
                     aid2 = remaining_names[idx][0]
                     
                     # Detailed analysis for high-scoring pairs
@@ -822,7 +1166,7 @@ class EnhancedAuthorMatcher:
                 start_time = time.time()
                 baseline_graph = baseline_matcher.find_candidates(authors_features, author_work_map)
                 baseline_time = time.time() - start_time
-                baseline_edges = baseline_graph.number_of_edges()
+                baseline_edges = baseline_graph.number_of_edges();
                 
                 results['baseline'] = {
                     'processing_time': baseline_time,
@@ -848,3 +1192,50 @@ class EnhancedAuthorMatcher:
                 results['baseline_error'] = str(e)
         
         return results
+    
+    def are_names_equivalent_enhanced(self, name1: str, name2: str) -> bool:
+        """
+        Enhanced name equivalence check with hyphen awareness.
+        
+        Args:
+            name1, name2: Names to compare
+            
+        Returns:
+            True if names are considered equivalent
+        """
+        if not name1 or not name2:
+            return False
+        
+        # Normalize both names
+        norm1 = self.normalize_name_advanced(name1)
+        norm2 = self.normalize_name_advanced(name2)
+        
+        # Direct exact match
+        if norm1 == norm2:
+            return True
+        
+        # If hyphen-aware matching is enabled, check additional variations
+        if self.hyphen_aware_matching:
+            # Normalize hyphens specifically
+            hyphen_norm1 = self._normalize_hyphens(norm1)
+            hyphen_norm2 = self._normalize_hyphens(norm2)
+            
+            # Check hyphen-normalized versions
+            if hyphen_norm1 == hyphen_norm2:
+                return True
+            
+            # Check with hyphens removed entirely
+            no_hyphen1 = hyphen_norm1.replace('-', ' ').replace('  ', ' ').strip()
+            no_hyphen2 = hyphen_norm2.replace('-', ' ').replace('  ', ' ').strip()
+            
+            if no_hyphen1 == no_hyphen2:
+                return True
+        
+        # Apply phonetic normalization and check
+        phon1 = self._apply_phonetic_normalization(norm1)
+        phon2 = self._apply_phonetic_normalization(norm2)
+        
+        if phon1 == phon2:
+            return True
+        
+        return False
