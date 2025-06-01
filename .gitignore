@@ -6,3 +6,10 @@ __pycache__/
 .DS_Store
 a.py
 **.log
+lib/
+# Ignore Python bytecode files
+*.pyc
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+# Ignore virtual environment directories
+venv/   

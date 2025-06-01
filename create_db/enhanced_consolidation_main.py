@@ -448,7 +448,7 @@ def main():
         
         if matcher and hasattr(matcher, 'metrics'):
             logger.info(f"   • Performance: {matcher.metrics.authors_per_second:.1f} authors/sec")
-            logger.info(f"   • Match breakdown: exact={matcher.metrics.exact_matches}, fuzzy={matcher.metrics.fuzzy_matches}, orcid={matcher.metrics.orcid_matches}")
+            logger.info(f"   • Match breakdown: exact={matcher.metrics.exact_matches}, alt={matcher.metrics.alt_matches}, orcid={matcher.metrics.orcid_matches}")
         
         if args.benchmark:
             logger.info("   • Benchmark results saved to main_consolidation_benchmark.json")
@@ -461,7 +461,7 @@ def main():
         if use_enhanced and matcher and hasattr(matcher, 'metrics'):
             if matcher.metrics.authors_per_second > 1000:
                 logger.info("   ✅ Excellent performance - suitable for large-scale processing")
-            if matcher.metrics.exact_matches / (matcher.metrics.exact_matches + matcher.metrics.fuzzy_matches) > 0.7:
+            if matcher.metrics.exact_matches / (matcher.metrics.exact_matches + matcher.metrics.alt_matches) > 0.7:
                 logger.info("   ✅ High-confidence matches dominate - good data quality")
         
         if reduction_percentage > 20:

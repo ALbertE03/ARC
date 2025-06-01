@@ -1,186 +1,485 @@
 #!/usr/bin/env python
 """
-Enhanced Author Matcher with Performance Metrics and Improved Algorithms
-========================================================================
+Enhanced Author Matcher - SIMPLIFIED for Name-Only Comparison
+============================================================
 
-This module provides an advanced author matching system with:
-- Multiple similarity algorithms
-- Performance benchmarking and metrics
-- Optimized processing strategies
-- Comprehensive evaluation tools
+This module provides a simplified author matching system with:
+- Only exact name and alternative name comparison
+- Multiprocessing support for N×N exhaustive comparison
+- Logging of consolidated authors
 """
 
 import networkx as nx
 import logging
-import itertools
 import time
-import json
-import hashlib
-from collections import defaultdict, Counter
-from dataclasses import dataclass, asdict
-from typing import Dict, List, Tuple, Set, Optional, Any
+import multiprocessing as mp
+from collections import defaultdict
+from dataclasses import dataclass
+from typing import Dict, Tuple, Optional, Any
 from tqdm import tqdm
-from rapidfuzz import fuzz, process
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
 import re
-import spacy
-from spacy.lang.en.stop_words import STOP_WORDS
+from unidecode import unidecode
+import pickle
+from functools import partial
 
 logger = logging.getLogger(__name__)
 
+# Global variable to store authors_features for workers (reduces data transfer)
+_global_authors_features = None
+
+def init_worker(authors_features):
+    """Initialize worker process with shared data."""
+    global _global_authors_features
+    _global_authors_features = authors_features
+
+
+
+def compare_author_chunk(chunk_data):
+    """
+    OPTIMIZED: Compare a chunk of author pairs for multiprocessing.
+    Pre-extracts data to avoid repeated dictionary lookups.
+    
+    Args:
+        chunk_data: Tuple containing (chunk_pairs, authors_features)
+        
+    Returns:
+        List of tuples (author_id1, author_id2, reason, confidence)
+    """
+    chunk_pairs, authors_features = chunk_data
+    results = []
+    
+    # Pre-extract all needed data to avoid repeated dictionary access
+    author_data = {}
+    for author_id1, author_id2 in chunk_pairs:
+        if author_id1 not in author_data:
+            author1 = authors_features[author_id1]
+            author_data[author_id1] = (
+                author1.get('normalized_name', ''),
+                author1.get('alt_names', []),
+                author1.get('orcid', '').strip(),
+                author1.get('is_cuban', False)
+            )
+        
+        if author_id2 not in author_data:
+            author2 = authors_features[author_id2]
+            author_data[author_id2] = (
+                author2.get('normalized_name', ''),
+                author2.get('alt_names', []),
+                author2.get('orcid', '').strip(),
+                author2.get('is_cuban', False)
+            )
+    
+    # Fast comparison with pre-extracted data
+    for author_id1, author_id2 in chunk_pairs:
+        name1, alt_names1, orcid1, is_cuban1 = author_data[author_id1]
+        name2, alt_names2, orcid2, is_cuban2 = author_data[author_id2]
+        
+        # Fast ORCID check first - both authors are already Cuban
+        if orcid1 and orcid2 and orcid1 == orcid2:
+            results.append((author_id1, author_id2, "identical_orcid", 1.0))
+            continue
+        
+        # Fast exact name match
+        if name1 and name2 and name1 == name2:
+            results.append((author_id1, author_id2, 'exact_name_match', 1.0))
+            continue
+        
+        # Alternative names checks (only if no exact match)
+        match_found = False
+        
+        # Check main name vs alt names
+        if name1 and name1 in alt_names2:
+            results.append((author_id1, author_id2, 'name_alt_match', 0.95))
+            continue
+        
+        if name2 and name2 in alt_names1:
+            results.append((author_id1, author_id2, 'alt_name_match', 0.95))
+            continue
+        
+        # Check alt names intersection (using set intersection for speed)
+        if alt_names1 and alt_names2:
+            alt_set1 = set(alt_names1)
+            alt_set2 = set(alt_names2)
+            if alt_set1 & alt_set2:  # Fast set intersection
+                results.append((author_id1, author_id2, 'alt_alt_match', 0.90))
+    
+    return results
+
+
+def compare_author_chunk_optimized(chunk_pairs):
+    """
+    ULTRA-OPTIMIZED: Compare a chunk using global data to reduce IPC overhead.
+    Uses tuple unpacking and minimal function calls for maximum speed.
+    """
+    global _global_authors_features
+    results = []
+    
+    # Pre-extract and cache all data with minimal dictionary access
+    cache = {}
+    
+    # Batch extract data for better memory locality
+    for author_id1, author_id2 in chunk_pairs:
+        if author_id1 not in cache:
+            author1 = _global_authors_features[author_id1]
+            name = author1.get('normalized_name', '')
+            alt_names = author1.get('alt_names', [])
+            orcid = author1.get('orcid', '').strip()
+            is_cuban = author1.get('is_cuban', False)
+            # Store as tuple with pre-computed set for alt names
+            cache[author_id1] = (name, frozenset(alt_names) if alt_names else frozenset(), orcid, is_cuban)
+        
+        if author_id2 not in cache:
+            author2 = _global_authors_features[author_id2]
+            name = author2.get('normalized_name', '')
+            alt_names = author2.get('alt_names', [])
+            orcid = author2.get('orcid', '').strip()
+            is_cuban = author2.get('is_cuban', False)
+            cache[author_id2] = (name, frozenset(alt_names) if alt_names else frozenset(), orcid, is_cuban)
+    
+    # Ultra-fast comparison with minimal allocations
+    for author_id1, author_id2 in chunk_pairs:
+        name1, alt_set1, orcid1, is_cuban1 = cache[author_id1]
+        name2, alt_set2, orcid2, is_cuban2 = cache[author_id2]
+        
+        # ORCID check (fastest, most definitive) - both authors are already Cuban
+        if orcid1 and orcid2:
+            if orcid1 == orcid2:
+                results.append((author_id1, author_id2, "identical_orcid", 1.0))
+                continue
+        
+        # Exact name match (second fastest)
+        if name1 and name2:
+            if name1 == name2:
+                results.append((author_id1, author_id2, 'exact_name_match', 1.0))
+                continue
+        
+        # Alternative names (ONLY name-in-alt, NO alias-to-alias)
+        if alt_set1 or alt_set2:
+            # Main name in alt names
+            if name1 and alt_set2 and name1 in alt_set2:
+                results.append((author_id1, author_id2, 'name_alt_match', 0.95))
+                continue
+                
+            if name2 and alt_set1 and name2 in alt_set1:
+                results.append((author_id1, author_id2, 'alt_name_match', 0.95))
+                continue
+            
+            # NO alias-to-alias intersection - REMOVED
+    
+    return results
+
+
+def compare_author_chunk_ultra_optimized(chunk_pairs):
+    """
+    ULTRA-OPTIMIZED: Vectorized comparison with CPU cache optimizations.
+    Uses pre-computed lookups and vectorized operations for maximum speed.
+    """
+    global _global_authors_features
+    
+    if not chunk_pairs:
+        return []
+    
+    results = []
+    
+    # Step 1: Bulk extract all unique author IDs and their data
+    unique_authors = set()
+    for author_id1, author_id2 in chunk_pairs:
+        unique_authors.add(author_id1)
+        unique_authors.add(author_id2)
+    
+    # Step 2: Batch extract and preprocess all data once
+    author_cache = {}
+    for author_id in unique_authors:
+        author = _global_authors_features[author_id]
+        name = author.get('normalized_name', '')
+        alt_names = author.get('alt_names', [])
+        orcid = author.get('orcid', '').strip()
+        is_cuban = author.get('is_cuban', False)
+        
+        # Pre-compute hash for faster comparisons
+        alt_set = frozenset(alt_names) if alt_names else frozenset()
+        
+        author_cache[author_id] = {
+            'name': name,
+            'alt_set': alt_set,
+            'orcid': orcid,
+            'is_cuban': is_cuban,
+            'name_hash': hash(name) if name else None,
+            'has_orcid': bool(orcid),
+            'has_name': bool(name),
+            'has_alts': bool(alt_set)
+        }
+    
+    # Step 3: Ultra-fast comparison with early exits and vectorized checks
+    for author_id1, author_id2 in chunk_pairs:
+        a1 = author_cache[author_id1]
+        a2 = author_cache[author_id2]
+        
+        # Super-fast ORCID check with pre-computed flags (both authors are already Cuban)
+        if a1['has_orcid'] and a2['has_orcid']:
+            if a1['orcid'] == a2['orcid']:
+                results.append((author_id1, author_id2, "identical_orcid", 1.0))
+                continue
+        
+        # Fast name comparison using pre-computed hashes
+        if a1['has_name'] and a2['has_name']:
+            if a1['name_hash'] == a2['name_hash'] and a1['name'] == a2['name']:
+                results.append((author_id1, author_id2, 'exact_name_match', 1.0))
+                continue
+        
+        # Alternative names with pre-computed flags
+        if a1['has_alts'] or a2['has_alts']:
+            # Name in alt names
+            if a1['has_name'] and a2['has_alts'] and a1['name'] in a2['alt_set']:
+                results.append((author_id1, author_id2, 'name_alt_match', 0.95))
+                continue
+                
+            if a2['has_name'] and a1['has_alts'] and a2['name'] in a1['alt_set']:
+                results.append((author_id1, author_id2, 'alt_name_match', 0.95))
+                continue
+            
+            # NO alias-to-alias intersection - REMOVED
+    
+    return results
+
+
+def compare_author_chunk_mega_optimized(chunk_pairs):
+    """
+    MEGA-OPTIMIZED: Maximum performance comparison with all optimizations applied.
+    Uses CPU-cache friendly operations, minimal allocations, and vectorized logic.
+    """
+    global _global_authors_features
+    
+    if not chunk_pairs:
+        return []
+    
+    results = []
+    
+    # Step 1: Extract unique author IDs with minimal overhead
+    authors_in_chunk = set()
+    for pair in chunk_pairs:
+        authors_in_chunk.update(pair)
+    
+    # Step 2: Bulk extract and optimize all data in one pass
+    cache = {}
+    for author_id in authors_in_chunk:
+        author = _global_authors_features[author_id]
+        
+        # Direct extraction with minimal function calls
+        name = author.get('normalized_name', '')
+        alt_names = author.get('alt_names', [])
+        orcid = author.get('orcid', '')
+        is_cuban = author.get('is_cuban', False)
+        
+        # Pre-compute all boolean flags and optimizations
+        has_name = bool(name)
+        has_orcid = bool(orcid)
+        alt_set = frozenset(alt_names) if alt_names else None
+        has_alts = bool(alt_set)
+        
+        cache[author_id] = (
+            name,           # 0
+            alt_set,        # 1
+            orcid,          # 2
+            has_name,       # 3
+            has_orcid,      # 4
+            has_alts,       # 5
+            is_cuban        # 6
+        )
+    
+    # Step 3: Ultra-fast comparison with optimized tuple unpacking
+    for author_id1, author_id2 in chunk_pairs:
+        a1 = cache[author_id1]
+        a2 = cache[author_id2]
+        
+        # Fastest path: ORCID comparison (most definitive) - both authors are already Cuban
+        if a1[4] and a2[4]:  # both have ORCIDs
+            if a1[2] == a2[2]:  # ORCID match
+                results.append((author_id1, author_id2, "identical_orcid", 1.0))
+                continue
+        
+        # Second fastest: exact name match
+        if a1[3] and a2[3]:  # both have names
+            if a1[0] == a2[0]:  # name match
+                results.append((author_id1, author_id2, 'exact_name_match', 1.0))
+                continue
+        
+        # Alternative names (only name-in-alt, NO alias-to-alias)
+        if a1[5] or a2[5]:  # at least one has alt names
+            # Name of author1 in alt names of author2
+            if a1[3] and a2[5] and a1[0] in a2[1]:
+                results.append((author_id1, author_id2, 'name_alt_match', 0.95))
+                continue
+                
+            # Name of author2 in alt names of author1
+            if a2[3] and a1[5] and a2[0] in a1[1]:
+                results.append((author_id1, author_id2, 'alt_name_match', 0.95))
+                continue
+            
+            # NO alias-to-alias intersection - REMOVED
+    
+    return results
+
+
+def compare_names_only(author1: Dict, author2: Dict) -> Tuple[bool, str, float]:
+    """
+    Compare two authors ONLY based on:
+    1. Exact normalized name match
+    2. Name of one author in aliases of the other
+    NOTHING ELSE.
+    
+    Args:
+        author1, author2: Author feature dictionaries
+        
+    Returns:
+        (should_merge, reason, confidence)
+    """
+    # 1. Check ORCID matching first - highest confidence
+    orcid1 = author1.get('orcid', '').strip()
+    orcid2 = author2.get('orcid', '').strip()
+    
+    if orcid1 and orcid2 and orcid1 == orcid2:
+        return True, "identical_orcid", 1.0
+    
+    name1 = author1.get('normalized_name', '')
+    name2 = author2.get('normalized_name', '')
+    
+    # 2. ONLY compare if normalized names are exactly equal
+    if name1 and name2 and name1 == name2:
+        return True, 'exact_name_match', 1.0
+    
+    # 3. ONLY check if name of one is in aliases of the other (NO alias-to-alias comparison)
+    alt_names1 = author1.get('alt_names', [])
+    alt_names2 = author2.get('alt_names', [])
+    
+    # Check if main name of author1 matches any alt name of author2
+    if name1:
+        for alt2 in alt_names2:
+            if name1 == alt2:
+                return True, 'name_alt_match', 0.95
+    
+    # Check if main name of author2 matches any alt name of author1
+    if name2:
+        for alt1 in alt_names1:
+            if name2 == alt1:
+                return True, 'alt_name_match', 0.95
+    
+    # NO OTHER COMPARISONS - No alias-to-alias matching
+    # No match found - consider different
+    return False, 'different', 0.0
+
+
+def create_author_pairs_chunks(author_ids, chunk_size):
+    """
+    ULTRA-OPTIMIZED: Create chunks of author pairs for multiprocessing.
+    Uses more efficient pair generation with vectorized operations.
+    
+    Args:
+        author_ids: List of author IDs
+        chunk_size: Size of each chunk
+        
+    Returns:
+        Generator of author pair chunks
+    """
+    n = len(author_ids)
+    pairs = []
+    
+    # Optimized pair generation - process in batches for better CPU cache utilization
+    for i in range(n):
+        author_id1 = author_ids[i]
+        
+        # Batch process the remaining authors for better memory locality
+        remaining_authors = author_ids[i + 1:]
+        for author_id2 in remaining_authors:
+            pairs.append((author_id1, author_id2))
+            
+            # Yield larger chunks to reduce overhead
+            if len(pairs) >= chunk_size:
+                yield pairs
+                pairs = []  # Reset for next chunk
+    
+    # Yield any remaining pairs
+    if pairs:
+        yield pairs
+
 
 @dataclass
-class PerformanceMetrics:
-    """Data class to store performance metrics."""
+class SimpleMetrics:
+    """Simple metrics for performance tracking."""
     total_authors: int = 0
     total_comparisons: int = 0
     total_edges: int = 0
     processing_time: float = 0.0
-    memory_usage_mb: float = 0.0
-    
-    # Algorithm-specific metrics
     exact_matches: int = 0
-    fuzzy_matches: int = 0
+    alt_matches: int = 0
     orcid_matches: int = 0
-    institution_matches: int = 0
-    work_overlap_matches: int = 0
-    
-    # Quality metrics
-    precision_estimate: float = 0.0
-    recall_estimate: float = 0.0
-    f1_score_estimate: float = 0.0
-    
-    # Processing efficiency
-    comparisons_per_second: float = 0.0
     authors_per_second: float = 0.0
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary for easy serialization."""
-        return asdict(self)
+    comparisons_per_second: float = 0.0
 
 
 class EnhancedAuthorMatcher:
     """
-    Enhanced Author Matcher with advanced algorithms and comprehensive metrics.
+    Simplified Author Matcher - Only name and alternative name comparison.
     
     Features:
-    - Multiple similarity algorithms (fuzzy, semantic, phonetic)
-    - Performance monitoring and benchmarking
-    - Optimized batch processing
-    - Comprehensive evaluation metrics
-    - Memory-efficient processing for large datasets
+    - Exact name matching
+    - Alternative name matching
+    - ORCID matching
+    - Multiprocessing support for N×N comparison
+    - Consolidation logging
     """
 
     def __init__(self, 
-                 similarity_threshold: float = 0.95,  # Reduced from 0.90 to be more inclusive
                  batch_size: int = 1000,
-                 use_semantic_similarity: bool = True,
-                 use_phonetic_matching: bool = True,
-                 enable_caching: bool = True,
-                 exhaustive_comparison: bool = True,  # Changed: Enable N×N comparison by default
-                 hyphen_aware_matching: bool = True):  # New: Enhanced hyphen handling
+                 use_multiprocessing: bool = True,
+                 num_processes: Optional[int] = None):
         """
-        Initialize the enhanced author matcher.
+        Initialize the simplified author matcher.
         
         Args:
-            similarity_threshold: Minimum similarity score for matching (default: 0.75)
             batch_size: Size of batches for processing
-            use_semantic_similarity: Enable TF-IDF based semantic matching
-            use_phonetic_matching: Enable phonetic matching algorithms
-            enable_caching: Enable caching of computed similarities
-            exhaustive_comparison: If True, compare all pairs (N×N), slower but more complete
-            hyphen_aware_matching: Enhanced matching for names with hyphens and variations
+            use_multiprocessing: Enable multiprocessing
+            num_processes: Number of processes to use (auto-detect if None)
         """
-        logger.info("🚀 Initializing Enhanced Author Matcher...")
+        logger.info("🚀 Initializing Simplified Author Matcher...")
         
-        self.similarity_threshold = similarity_threshold
         self.batch_size = batch_size
-        self.use_semantic_similarity = use_semantic_similarity
-        self.use_phonetic_matching = use_phonetic_matching
-        self.enable_caching = enable_caching
-        self.exhaustive_comparison = exhaustive_comparison
-        self.hyphen_aware_matching = hyphen_aware_matching
+        self.use_multiprocessing = use_multiprocessing
         
-        # Initialize vectorizers for semantic similarity
-        if self.use_semantic_similarity:
-            self.char_vectorizer = TfidfVectorizer(
-                analyzer="char_wb", 
-                ngram_range=(2, 4), 
-                min_df=1, 
-                max_df=0.8,
-                max_features=5000
-            )
-            
-            self.word_vectorizer = TfidfVectorizer(
-                analyzer="word", 
-                ngram_range=(1, 2), 
-                min_df=1, 
-                max_df=0.8,
-                max_features=5000
-            )
+        # Configure multiprocessing
+        if num_processes is None:
+            self.num_processes = max(1, mp.cpu_count() - 1)
+        else:
+            self.num_processes = max(1, num_processes)
         
-        # Caching systems
-        self.similarity_cache = {} if enable_caching else None
-        self.name_normalization_cache = {} if enable_caching else None
+        logger.info(f"   Multiprocessing: {'Enabled' if self.use_multiprocessing else 'Disabled'}")
+        if self.use_multiprocessing:
+            logger.info(f"   Number of processes: {self.num_processes}")
         
-        # Initialize spaCy and phonetic components
-        self._init_nlp_components()
+        # OPTIMIZED: Larger chunk size for better performance
+        # Increase chunk size significantly to reduce overhead
+        if self.use_multiprocessing:
+            # Aim for ~20-50 chunks total across all processes for better CPU utilization
+            target_chunks = min(50, max(20, self.num_processes * 5))
+            # MEGA-LARGE chunks to minimize IPC overhead and maximize CPU utilization
+            self.mp_chunk_size = max(20000, batch_size * 20)  # Ultra-large chunks for maximum speed
+        else:
+            self.mp_chunk_size = batch_size
         
         # Performance tracking
-        self.metrics = PerformanceMetrics()
+        self.metrics = SimpleMetrics()
         self.start_time = None
         
-        # Phonetic matching patterns
-        if self.use_phonetic_matching:
-            self._init_phonetic_patterns()
+        # Track consolidations for logging
+        self.consolidations = []
         
-        logger.info("✅ Enhanced Author Matcher initialized successfully")
-        logger.info(f"   Semantic similarity: {use_semantic_similarity}")
-        logger.info(f"   Phonetic matching: {use_phonetic_matching}")
-        logger.info(f"   Caching enabled: {enable_caching}")
-        logger.info(f"   Similarity threshold: {similarity_threshold}")
-        logger.info(f"   Exhaustive comparison: {exhaustive_comparison}")
-        logger.info(f"   Hyphen-aware matching: {hyphen_aware_matching}")
-
-    def _init_nlp_components(self):
-        """Initialize spaCy NLP components for advanced phonetic processing."""
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-            logger.info("✅ spaCy English model loaded successfully")
-        except OSError:
-            logger.warning("⚠️  spaCy English model not found, falling back to basic patterns")
-            self.nlp = None
-    
-    def _init_phonetic_patterns(self):
-        """Initialize phonetic matching patterns for better name matching."""
-        # Enhanced phonetic substitutions with more comprehensive coverage
-        self.phonetic_substitutions = {
-            'ph': 'f', 'gh': 'f', 'ck': 'k', 'qu': 'kw', 'x': 'ks', 'z': 's',
-            'c': 'k',  # Context-dependent, but common
-            'th': 't', 'sh': 's', 'ch': 's',  # Common sound simplifications
-            'sch': 's', 'tch': 't',  # German/Dutch influences
-            'tion': 'sion', 'sion': 'sion',  # Suffix normalization
-        }
-        
-        # Enhanced vowel simplification patterns
-        self.vowel_patterns = {
-            'ae': 'e', 'ai': 'e', 'ay': 'e', 'ea': 'e', 'ee': 'e', 'ei': 'e',
-            'ey': 'e', 'ie': 'e', 'oe': 'e', 'oo': 'u', 'ou': 'u', 'ow': 'u',
-            'ue': 'u', 'ui': 'u', 'au': 'o', 'aw': 'o', 'eu': 'u', 'ew': 'u'
-        }
-        
-        # Common international name variations
-        self.international_patterns = {
-            'josé': 'jose', 'maría': 'maria', 'joão': 'joao', 'josé': 'jose',
-            'müller': 'muller', 'françois': 'francois', 'björn': 'bjorn',
-            'josé-antonio': 'jose-antonio', 'jean-claude': 'jean-claude'
-        }
+        logger.info("✅ Simplified Author Matcher initialized successfully")
+        logger.info("   Mode: Name and alias comparison ONLY")
 
     def normalize_name_advanced(self, name: str) -> str:
         """
-        Advanced name normalization with caching and multiple strategies.
+        Simple name normalization with accent removal.
+        IMPROVED: Added validation to prevent over-normalization that causes false positives.
         
         Args:
             name: Raw name string
@@ -191,12 +490,11 @@ class EnhancedAuthorMatcher:
         if not name:
             return ""
         
-        # Check cache first
-        if self.enable_caching and name in self.name_normalization_cache:
-            return self.name_normalization_cache[name]
+        # SECURITY: Store original for length validation
+        original_name = name.strip()
         
-        # Advanced normalization pipeline
-        normalized = name.lower().strip()
+        # Remove accents and tildes using unidecode
+        normalized = unidecode(name).lower().strip()
         
         # Remove common prefixes and suffixes
         prefixes = ['dr.', 'prof.', 'mr.', 'mrs.', 'ms.', 'phd', 'md']
@@ -209,8 +507,8 @@ class EnhancedAuthorMatcher:
             # Remove punctuation except hyphens
             word = re.sub(r'[^\w\s\-]', '', word)
             
-            # Skip prefixes and suffixes
-            if word not in prefixes and word not in suffixes:
+            # SECURITY: Skip prefixes and suffixes but keep minimum name length
+            if word not in prefixes and word not in suffixes and len(word) > 1:
                 cleaned_words.append(word)
         
         normalized = ' '.join(cleaned_words)
@@ -220,520 +518,11 @@ class EnhancedAuthorMatcher:
         
         # Remove extra whitespace
         normalized = re.sub(r'\s+', ' ', normalized).strip()
-        
-        # Cache result
-        if self.enable_caching:
-            self.name_normalization_cache[name] = normalized
-        
         return normalized
-
-    def _normalize_hyphens(self, name: str) -> str:
-        """Enhanced hyphen normalization for better matching."""
-        if not name:
-            return ""
-        
-        # Standardize different types of dashes to regular hyphens
-        name = re.sub(r'[–—−]', '-', name)
-        
-        # Normalize spaces around hyphens: "María - José" -> "maría-josé"
-        name = re.sub(r'\s*-\s*', '-', name)
-        
-        # Remove multiple consecutive hyphens
-        name = re.sub(r'-+', '-', name)
-        
-        # Remove leading/trailing hyphens
-        name = name.strip('-')
-        
-        return name
-    
-    def _apply_phonetic_normalization(self, name: str) -> str:
-        """Apply phonetic normalizations for better matching."""
-        if not name:
-            return ""
-        
-        # Apply phonetic substitutions
-        for pattern, replacement in self.phonetic_substitutions.items():
-            name = name.replace(pattern, replacement)
-        
-        # Apply vowel simplifications
-        for pattern, replacement in self.vowel_patterns.items():
-            name = name.replace(pattern, replacement)
-        
-        return name
-    
-    def phonetic_similarity(self, name1: str, name2: str) -> float:
-        """
-        Enhanced phonetic similarity using spaCy NLP features.
-        
-        Args:
-            name1, name2: Names to compare
-            
-        Returns:
-            Phonetic similarity score (0.0 to 1.0)
-        """
-        if not self.use_phonetic_matching or not name1 or not name2:
-            return 0.0
-        
-        # Use spaCy-enhanced phonetic processing if available
-        if self.nlp:
-            return self._spacy_phonetic_similarity(name1, name2)
-        else:
-            # Fallback to enhanced pattern-based approach
-            return self._pattern_phonetic_similarity(name1, name2)
-    
-    def _spacy_phonetic_similarity(self, name1: str, name2: str) -> float:
-        """spaCy-enhanced phonetic similarity with linguistic analysis."""
-        try:
-            # Process names with spaCy
-            doc1 = self.nlp(name1.lower())
-            doc2 = self.nlp(name2.lower())
-            
-            # Extract linguistic features
-            tokens1 = [token.lemma_ for token in doc1 if token.is_alpha]
-            tokens2 = [token.lemma_ for token in doc2 if token.is_alpha]
-            
-            # Apply phonetic transformations to lemmatized tokens
-            phon_tokens1 = []
-            phon_tokens2 = []
-            
-            for token in tokens1:
-                phon_token = self._apply_enhanced_phonetic_transform(token)
-                phon_tokens1.append(phon_token)
-            
-            for token in tokens2:
-                phon_token = self._apply_enhanced_phonetic_transform(token)
-                phon_tokens2.append(phon_token)
-            
-            # Reconstruct phonetic names
-            phon_name1 = ' '.join(phon_tokens1)
-            phon_name2 = ' '.join(phon_tokens2)
-            
-            # Calculate multiple similarity scores
-            similarities = []
-            
-            # 1. Token-level similarity (considering word order)
-            similarities.append(fuzz.ratio(phon_name1, phon_name2) / 100.0)
-            
-            # 2. Token set similarity (ignoring order)
-            similarities.append(fuzz.token_set_ratio(phon_name1, phon_name2) / 100.0)
-            
-            # 3. Character-level similarity on concatenated phonetic tokens
-            concat1 = ''.join(phon_tokens1)
-            concat2 = ''.join(phon_tokens2)
-            similarities.append(fuzz.ratio(concat1, concat2) / 100.0)
-            
-            # 4. Soundex-like similarity (first letter + phonetic core)
-            if phon_tokens1 and phon_tokens2:
-                core1 = phon_tokens1[0][0] + ''.join(phon_tokens1)[1:] if phon_tokens1[0] else ''
-                core2 = phon_tokens2[0][0] + ''.join(phon_tokens2)[1:] if phon_tokens2[0] else ''
-                if core1 and core2:
-                    similarities.append(fuzz.ratio(core1, core2) / 100.0)
-            
-            # 5. International name pattern matching
-            intl_sim = self._international_name_similarity(name1, name2)
-            if intl_sim > 0:
-                similarities.append(intl_sim)
-            
-            # Return weighted average with emphasis on best matches
-            if similarities:
-                # Weight the highest similarities more heavily
-                similarities.sort(reverse=True)
-                if len(similarities) >= 3:
-                    # Weighted: 50% best, 30% second best, 20% third best
-                    return (0.5 * similarities[0] + 
-                           0.3 * similarities[1] + 
-                           0.2 * similarities[2])
-                elif len(similarities) == 2:
-                    return 0.7 * similarities[0] + 0.3 * similarities[1]
-                else:
-                    return similarities[0]
-            
-            return 0.0
-            
-        except Exception as e:
-            logger.warning(f"spaCy phonetic similarity failed: {e}, falling back to patterns")
-            return self._pattern_phonetic_similarity(name1, name2)
-    
-    def _pattern_phonetic_similarity(self, name1: str, name2: str) -> float:
-        """Enhanced pattern-based phonetic similarity (fallback)."""
-        def phonetic_transform(name):
-            """Enhanced phonetic transformation."""
-            name = name.lower()
-            
-            # Apply international patterns first
-            for pattern, replacement in self.international_patterns.items():
-                name = name.replace(pattern, replacement)
-            
-            # Apply phonetic substitutions
-            for pattern, replacement in self.phonetic_substitutions.items():
-                name = name.replace(pattern, replacement)
-            
-            # Apply vowel simplifications
-            for pattern, replacement in self.vowel_patterns.items():
-                name = name.replace(pattern, replacement)
-            
-            # Remove consecutive duplicate letters
-            name = re.sub(r'(.)\1+', r'\1', name)
-            
-            # Remove silent letters at the end
-            name = re.sub(r'[aeiouy]+$', '', name)
-            
-            return name
-        
-        phon1 = phonetic_transform(name1)
-        phon2 = phonetic_transform(name2)
-        
-        # Multiple similarity measurements
-        ratio_sim = fuzz.ratio(phon1, phon2) / 100.0
-        token_sim = fuzz.token_set_ratio(phon1, phon2) / 100.0
-        
-        # Check international name patterns
-        intl_sim = self._international_name_similarity(name1, name2)
-        
-        # Return best similarity
-        return max(ratio_sim, token_sim, intl_sim)
-    
-    def _apply_enhanced_phonetic_transform(self, token: str) -> str:
-        """Apply enhanced phonetic transformation to a single token."""
-        if not token:
-            return ""
-        
-        # Start with the token
-        phon = token.lower()
-        
-        # Apply international patterns first
-        for pattern, replacement in self.international_patterns.items():
-            phon = phon.replace(pattern, replacement)
-        
-        # Apply phonetic substitutions
-        for pattern, replacement in self.phonetic_substitutions.items():
-            phon = phon.replace(pattern, replacement)
-        
-        # Apply vowel simplifications
-        for pattern, replacement in self.vowel_patterns.items():
-            phon = phon.replace(pattern, replacement)
-        
-        # Remove consecutive duplicate letters
-        phon = re.sub(r'(.)\1+', r'\1', phon)
-        
-        # Keep first letter, reduce vowels in the middle
-        if len(phon) > 1:
-            first_char = phon[0]
-            rest = phon[1:]
-            # Simplify vowel clusters in the middle
-            rest = re.sub(r'[aeiouy]+', 'a', rest)
-            phon = first_char + rest
-        
-        return phon
-    
-    def _international_name_similarity(self, name1: str, name2: str) -> float:
-        """Check for international name variations."""
-        name1_lower = name1.lower()
-        name2_lower = name2.lower()
-        
-        # Direct international pattern match
-        for pattern, normalized in self.international_patterns.items():
-            if pattern in name1_lower and normalized in name2_lower:
-                return 0.95
-            if pattern in name2_lower and normalized in name1_lower:
-                return 0.95
-        
-        # Common substitutions for accented characters
-        accent_map = {
-            'á': 'a', 'à': 'a', 'â': 'a', 'ä': 'a', 'ã': 'a',
-            'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
-            'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
-            'ó': 'o', 'ò': 'o', 'ô': 'o', 'ö': 'o', 'õ': 'o',
-            'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
-            'ñ': 'n', 'ç': 'c', 'ß': 'ss'
-        }
-        
-        # Remove accents and compare
-        deaccent1 = name1_lower
-        deaccent2 = name2_lower
-        
-        for accented, plain in accent_map.items():
-            deaccent1 = deaccent1.replace(accented, plain)
-            deaccent2 = deaccent2.replace(accented, plain)
-        
-        if deaccent1 == deaccent2 and deaccent1 != name1_lower:
-            return 0.90
-        
-        # Partial accent similarity
-        accent_sim = fuzz.ratio(deaccent1, deaccent2) / 100.0
-        if accent_sim > 0.85 and (deaccent1 != name1_lower or deaccent2 != name2_lower):
-            return accent_sim * 0.9  # Slight penalty for accent differences
-        
-        return 0.0
-
-    def semantic_similarity(self, names: List[str]) -> np.ndarray:
-        """
-        Calculate semantic similarity matrix for a list of names.
-        
-        Args:
-            names: List of names to compare
-            
-        Returns:
-            Similarity matrix
-        """
-        if not self.use_semantic_similarity or len(names) < 2:
-            return np.zeros((len(names), len(names)))
-        
-        try:
-            # Character-level similarity
-            char_vectors = self.char_vectorizer.fit_transform(names)
-            char_similarity = cosine_similarity(char_vectors)
-            
-            # Word-level similarity
-            word_vectors = self.word_vectorizer.fit_transform(names)
-            word_similarity = cosine_similarity(word_vectors)
-            
-            # Combine similarities with weights
-            combined_similarity = 0.6 * char_similarity + 0.4 * word_similarity
-            
-            return combined_similarity
-            
-        except Exception as e:
-            logger.warning(f"Semantic similarity calculation failed: {e}")
-            return np.zeros((len(names), len(names)))
-
-    def calculate_comprehensive_similarity(self, author1: Dict, author2: Dict) -> Tuple[float, Dict[str, float]]:
-        """
-        Calculate comprehensive similarity between two authors using multiple algorithms.
-        
-        Args:
-            author1, author2: Author feature dictionaries
-            
-        Returns:
-            Overall similarity score and detailed breakdown
-        """
-        # Generate cache key
-        cache_key = None
-        if self.enable_caching:
-            key_str = f"{author1['id']}_{author2['id']}"
-            cache_key = hashlib.md5(key_str.encode()).hexdigest()
-            
-            if cache_key in self.similarity_cache:
-                return self.similarity_cache[cache_key]
-        
-        name1 = author1.get('normalized_name', '')
-        name2 = author2.get('normalized_name', '')
-        
-        if not name1 or not name2:
-            result = (0.0, {})
-            if cache_key:
-                self.similarity_cache[cache_key] = result
-            return result
-        
-        similarities = {}
-        
-        # 1. Exact name matching (including enhanced equivalence)
-        similarities['exact_match'] = 1.0 if name1 == name2 else 0.0
-        if not similarities['exact_match'] and self.hyphen_aware_matching:
-            similarities['exact_match'] = 1.0 if self.are_names_equivalent_enhanced(name1, name2) else 0.0
-        
-        # 2. Fuzzy string similarities
-        similarities['fuzzy_ratio'] = fuzz.ratio(name1, name2) / 100.0
-        similarities['token_sort'] = fuzz.token_sort_ratio(name1, name2) / 100.0
-        similarities['token_set'] = fuzz.token_set_ratio(name1, name2) / 100.0
-        similarities['partial_ratio'] = fuzz.partial_ratio(name1, name2) / 100.0
-        
-        # 2b. Enhanced hyphen-aware comparisons
-        if self.hyphen_aware_matching:
-            # Compare with hyphens removed/added
-            name1_no_hyphens = name1.replace('-', ' ')
-            name2_no_hyphens = name2.replace('-', ' ')
-            name1_with_hyphens = name1.replace(' ', '-')
-            name2_with_hyphens = name2.replace(' ', '-')
-            
-            similarities['hyphen_removed'] = max(
-                fuzz.ratio(name1_no_hyphens, name2) / 100.0,
-                fuzz.ratio(name1, name2_no_hyphens) / 100.0,
-                fuzz.ratio(name1_no_hyphens, name2_no_hyphens) / 100.0
-            )
-            
-            similarities['hyphen_added'] = max(
-                fuzz.ratio(name1_with_hyphens, name2) / 100.0,
-                fuzz.ratio(name1, name2_with_hyphens) / 100.0,
-                fuzz.ratio(name1_with_hyphens, name2_with_hyphens) / 100.0
-            )
-        else:
-            similarities['hyphen_removed'] = 0.0
-            similarities['hyphen_added'] = 0.0
-        
-        # 3. Phonetic similarity
-        if self.use_phonetic_matching:
-            similarities['phonetic'] = self.phonetic_similarity(name1, name2)
-        
-        # 4. Word overlap similarity
-        words1 = set(name1.split())
-        words2 = set(name2.split())
-        if words1 and words2:
-            common_words = words1.intersection(words2)
-            similarities['word_overlap'] = len(common_words) / max(len(words1), len(words2))
-        else:
-            similarities['word_overlap'] = 0.0
-        
-        # 5. Initial similarity
-        initials1 = ''.join(word[0] for word in words1 if word)
-        initials2 = ''.join(word[0] for word in words2 if word)
-        if initials1 and initials2:
-            similarities['initials'] = fuzz.ratio(initials1, initials2) / 100.0
-        else:
-            similarities['initials'] = 0.0
-        
-        # 6. Alternative names similarity
-        alt_names1 = author1.get('alt_names', [])
-        alt_names2 = author2.get('alt_names', [])
-        
-        max_alt_sim = 0.0
-        for alt1 in alt_names1:
-            for alt2 in alt_names2:
-                if alt1 and alt2:
-                    alt_sim = fuzz.ratio(alt1, alt2) / 100.0
-                    max_alt_sim = max(max_alt_sim, alt_sim)
-        
-        # Also check main name vs alt names
-        for alt1 in alt_names1:
-            if alt1:
-                alt_sim = fuzz.ratio(alt1, name2) / 100.0
-                max_alt_sim = max(max_alt_sim, alt_sim)
-        
-        for alt2 in alt_names2:
-            if alt2:
-                alt_sim = fuzz.ratio(name1, alt2) / 100.0
-                max_alt_sim = max(max_alt_sim, alt_sim)
-        
-        similarities['alt_names'] = max_alt_sim
-        
-        # Calculate weighted overall similarity
-        weights = {
-            'exact_match': 0.25,
-            'fuzzy_ratio': 0.15,
-            'token_sort': 0.12,
-            'token_set': 0.08,
-            'partial_ratio': 0.04,
-            'hyphen_removed': 0.08 if self.hyphen_aware_matching else 0.0,
-            'hyphen_added': 0.06 if self.hyphen_aware_matching else 0.0,
-            'phonetic': 0.08 if self.use_phonetic_matching else 0.0,
-            'word_overlap': 0.05,
-            'initials': 0.03,
-            'alt_names': 0.06
-        }
-        
-        # Normalize weights
-        total_weight = sum(weights.values())
-        if total_weight > 0:
-            weights = {k: v/total_weight for k, v in weights.items()}
-        
-        overall_similarity = sum(similarities.get(k, 0.0) * w for k, w in weights.items())
-        
-        result = (overall_similarity, similarities)
-        
-        # Cache result
-        if cache_key:
-            self.similarity_cache[cache_key] = result
-        
-        return result
-
-    def should_consolidate_enhanced(self, author1: Dict, author2: Dict, common_works: Set) -> Tuple[bool, str, float]:
-        """
-        Enhanced consolidation decision with comprehensive analysis.
-        
-        Args:
-            author1, author2: Author feature dictionaries
-            common_works: Set of common work IDs
-            
-        Returns:
-            (should_merge, reason, confidence)
-        """
-        # 1. ORCID matching - highest confidence
-        orcid1 = author1.get('orcid', '').strip()
-        orcid2 = author2.get('orcid', '').strip()
-        
-        if orcid1 and orcid2 and orcid1 == orcid2:
-            self.metrics.orcid_matches += 1
-            return True, "identical_orcid", 1.0
-        
-        # 2. Calculate comprehensive similarity
-        overall_sim, sim_breakdown = self.calculate_comprehensive_similarity(author1, author2)
-        
-        # 3. Exact name match
-        if sim_breakdown.get('exact_match', 0.0) == 1.0:
-            self.metrics.exact_matches += 1
-            return True, "identical_normalized_name", 0.98
-        
-        # 4. High alternative name similarity
-        if sim_breakdown.get('alt_names', 0.0) >= 0.95:
-            self.metrics.exact_matches += 1
-            return True, "identical_alt_name", 0.95
-        
-        # 5. Shared works analysis
-        works_evidence = False
-        if common_works:
-            # Strong evidence if they share works and have reasonable name similarity
-            if overall_sim >= 0.7:
-                self.metrics.work_overlap_matches += 1
-                works_evidence = True
-        
-        # 6. Institution overlap analysis
-        inst1 = set(author1.get('institution_ids', []))
-        inst2 = set(author2.get('institution_ids', []))
-        common_institutions = inst1.intersection(inst2)
-        
-        institution_evidence = False
-        if common_institutions and overall_sim >= 0.8:
-            self.metrics.institution_matches += 1
-            institution_evidence = True
-        
-        # 7. Geographic evidence
-        countries1 = set(author1.get('countries', []))
-        countries2 = set(author2.get('countries', []))
-        same_country = bool(countries1.intersection(countries2))
-        
-        # 8. Decision logic with multiple evidence sources
-        confidence = overall_sim
-        
-        # High similarity threshold - REDUCED for more inclusive
-        if overall_sim >= 0.85:  # Reduced from 0.95
-            self.metrics.fuzzy_matches += 1
-            return True, f"high_similarity_{overall_sim:.3f}", confidence
-        
-        # Medium-high similarity with supporting evidence - REDUCED thresholds
-        if overall_sim >= 0.75:  # Reduced from 0.85
-            if works_evidence:
-                return True, f"shared_works_good_similarity_{overall_sim:.3f}", min(0.9, confidence + 0.05)
-            
-            if institution_evidence:
-                return True, f"same_institution_good_similarity_{overall_sim:.3f}", min(0.9, confidence + 0.03)
-        
-        # Medium similarity with strong supporting evidence - REDUCED thresholds
-        if overall_sim >= 0.65:  # Reduced from 0.75
-            evidence_count = sum([works_evidence, institution_evidence, same_country])
-            if evidence_count >= 2:
-                return True, f"multiple_evidence_medium_similarity_{overall_sim:.3f}", min(0.85, confidence + 0.05)
-        
-        # Special case: Very high hyphen similarity (for names like María-José vs Maria Jose)
-        if self.hyphen_aware_matching and overall_sim >= 0.60:
-            hyphen_sim = max(
-                sim_breakdown.get('hyphen_removed', 0.0),
-                sim_breakdown.get('hyphen_added', 0.0)
-            )
-            if hyphen_sim >= 0.90:
-                return True, f"hyphen_variation_match_{hyphen_sim:.3f}", min(0.88, confidence + 0.03)
-        
-        # Medium similarity with strong supporting evidence
-        if overall_sim >= 0.75:
-            evidence_count = sum([works_evidence, institution_evidence, same_country])
-            if evidence_count >= 2:
-                return True, f"multiple_evidence_medium_similarity_{overall_sim:.3f}", min(0.85, confidence + 0.05)
-        
-        # Conservative approach - don't merge if not confident
-        return False, f"insufficient_confidence_{overall_sim:.3f}", confidence
 
     def extract_features_enhanced(self, author_id: str, author_data: Dict, author_work_map: Dict) -> Dict:
         """
-        Extract enhanced features for an author with better processing.
+        Extract simplified features for an author.
         
         Args:
             author_id: Author identifier
@@ -741,7 +530,7 @@ class EnhancedAuthorMatcher:
             author_work_map: Mapping of author to works
             
         Returns:
-            Enhanced feature dictionary
+            Simplified feature dictionary
         """
         # Basic name processing
         name = author_data.get("display_name", "").strip()
@@ -758,95 +547,26 @@ class EnhancedAuthorMatcher:
         # Remove duplicates while preserving order
         alt_names = list(dict.fromkeys(alt_names))
         
-        # Work information
-        works = author_work_map.get(author_id, [])
-        
-        # Affiliation processing with temporal information
-        affiliations = []
-        institution_ids = set()
-        countries = set()
-        
-        for affil in author_data.get("affiliations", []):
-            institution = affil.get("institution", {})
-            if institution:
-                institution_id = institution.get("id", "").split("/")[-1]
-                institution_name = institution.get("display_name", "")
-                country_code = institution.get("country_code", "")
-                
-                if institution_id:
-                    institution_ids.add(institution_id)
-                if country_code:
-                    countries.add(country_code)
-                
-                affiliations.append({
-                    "institution_id": institution_id,
-                    "institution_name": institution_name,
-                    "country_code": country_code,
-                    "years": affil.get("years", []),
-                })
-        
-        # Additional country information
-        for country in author_data.get("countries", []):
-            if country:
-                countries.add(country)
-        
-        # Identifiers
+        # ORCID
         orcid = author_data.get("ids", {}).get("orcid", "").strip()
         
-        # Name analysis
-        initials = ""
-        if normalized_name:
-            words = normalized_name.split()
-            initials = "".join(word[0] for word in words if word and word[0].isalpha())
-        
-        # Research topics
-        topics = []
-        topic_ids = set()
-        for topic in author_data.get("topics", []):
-            topic_id = topic.get("id", "").split("/")[-1]
-            topic_name = topic.get("display_name", "")
-            if topic_id and topic_name:
-                topics.append({"id": topic_id, "name": topic_name})
-                topic_ids.add(topic_id)
-        
-        # Concepts
-        concepts = []
-        for concept in author_data.get("x_concepts", []):
-            if concept.get("display_name"):
-                concepts.append(concept["display_name"])
+        # Nationality determination - check for Cuban affiliations
+        is_cuban = self._is_cuban_author(author_data)
         
         return {
             "id": author_id,
             "name": name,
             "normalized_name": normalized_name,
             "alt_names": alt_names,
-            "initials": initials,
-            "works_count": len(works),
-            "cited_by_count": author_data.get("cited_by_count", 0),
-            "works": works,
             "orcid": orcid,
-            "affiliations": affiliations,
-            "institution_ids": list(institution_ids),
-            "countries": list(countries),
-            "topics": topics,
-            "topic_ids": list(topic_ids),
-            "concepts": concepts,
-            "h_index": author_data.get("summary_stats", {}).get("h_index", 0),
-            "last_known_institutions": [
-                inst.get("display_name", "")
-                for inst in author_data.get("last_known_institutions", [])
-                if inst.get("display_name")
-            ],
-            # Quality indicators
-            "has_orcid": bool(orcid),
-            "has_affiliations": bool(affiliations),
-            "name_quality": len(normalized_name.split()) if normalized_name else 0,
-            "alt_names_count": len(alt_names),
+            "works_count": len(author_work_map.get(author_id, [])),
+            "cited_by_count": author_data.get("cited_by_count", 0),
+            "is_cuban": is_cuban
         }
 
     def find_candidates_optimized(self, authors_features: Dict, author_work_map: Dict) -> nx.Graph:
         """
-        Optimized candidate finding with performance monitoring.
+        Find consolidation candidates using exhaustive N×N comparison.
         
         Args:
             authors_features: Dictionary of author features
@@ -855,19 +575,19 @@ class EnhancedAuthorMatcher:
         Returns:
             NetworkX graph with consolidation candidates
         """
-        if self.exhaustive_comparison:
-            logger.info("🔍 Starting EXHAUSTIVE N×N author candidate finding...")
-            return self._find_candidates_exhaustive(authors_features, author_work_map)
+        logger.info("🔍 Starting EXHAUSTIVE N×N author candidate finding...")
+        logger.info("   Only comparing EXACT names and ALTERNATIVE names")
+        
+        if self.use_multiprocessing:
+            return self._find_candidates_multiprocessing(authors_features)
         else:
-            logger.info("🔍 Starting optimized author candidate finding...")
-            return self._find_candidates_batch_optimized(authors_features, author_work_map)
-    
-    def _find_candidates_exhaustive(self, authors_features: Dict, author_work_map: Dict) -> nx.Graph:
+            return self._find_candidates_sequential(authors_features)
+
+    def _find_candidates_multiprocessing(self, authors_features: Dict) -> nx.Graph:
         """
-        Exhaustive N×N comparison - more thorough but slower.
-        This ensures no potential matches are missed due to batch boundaries.
+        Exhaustive N×N comparison using multiprocessing.
+        CUBAN FILTER: Only compare Cuban authors.
         """
-        logger.info("⚠️  Using exhaustive comparison mode - this will be slower but more complete")
         self.start_time = time.time()
         
         # Initialize metrics
@@ -876,52 +596,100 @@ class EnhancedAuthorMatcher:
         # Create graph
         G = nx.Graph()
         
-        # Add all authors as nodes
-        for author_id, features in authors_features.items():
-            G.add_node(author_id, **features)
+        # Add all authors as nodes with progress bar
+        print("📊 Adding authors as nodes...")
+        for author_id, features in tqdm(authors_features.items(), desc="Adding nodes", unit="authors"):
+            if features.get('is_cuban', False):
+                G.add_node(author_id, **features)
         
-        author_ids = list(authors_features.keys())
+        # CUBAN NATIONALITY FILTER: Only include Cuban authors for comparison
+        print("🇨🇺 Filtering for Cuban authors...")
+        cuban_author_ids = []
+        total_authors = len(authors_features)
+        
+        for author_id, features in tqdm(authors_features.items(), desc="Filtering Cuban authors", unit="authors"):
+            if features.get('is_cuban', False):
+                cuban_author_ids.append(author_id)
+        
+        logger.info(f"   Found {len(cuban_author_ids)} Cuban authors out of {total_authors} total authors")
+        
+        if len(cuban_author_ids) == 0:
+            logger.warning("   No Cuban authors found - returning empty graph")
+            return G
+        
+        # Use only Cuban authors for comparison
+        author_ids = cuban_author_ids
         total_pairs = len(author_ids) * (len(author_ids) - 1) // 2
         
-        logger.info(f"   Will compare {total_pairs:,} pairs exhaustively")
+        logger.info(f"   Will compare {total_pairs:,} pairs using {self.num_processes} processes")
+        logger.info(f"   Chunk size: {self.mp_chunk_size:,} pairs per chunk")
         
         edges_added = 0
-        comparisons_made = 0
         
-        # Compare all pairs
-        for i, author_id1 in enumerate(tqdm(author_ids, desc="Exhaustive comparison")):
-            for j in range(i + 1, len(author_ids)):
-                author_id2 = author_ids[j]
-                
-                author1 = authors_features[author_id1]
-                author2 = authors_features[author_id2]
-                
-                # Calculate works overlap
-                works1 = set(author_work_map.get(author_id1, []))
-                works2 = set(author_work_map.get(author_id2, []))
-                common_works = works1.intersection(works2)
-                
-                # Quick pre-filtering based on name similarity
-                name1 = author1.get('normalized_name', '')
-                name2 = author2.get('normalized_name', '')
-                
-                if name1 and name2:
-                    quick_sim = fuzz.ratio(name1, name2) / 100.0
-                    
-                    # Only do detailed analysis if there's some potential
-                    if quick_sim >= 0.6:  # Lower threshold for exhaustive mode
-                        should_merge, reason, confidence = self.should_consolidate_enhanced(
-                            author1, author2, common_works
-                        )
-                        
-                        if should_merge:
-                            G.add_edge(author_id1, author_id2, reason=reason, confidence=confidence)
-                            edges_added += 1
-                
-                comparisons_made += 1
-                self.metrics.total_comparisons = comparisons_made
+        # Create chunks of author pairs with progress bar
+        print("🔄 Creating comparison chunks...")
+        pair_chunks = list(tqdm(
+            create_author_pairs_chunks(author_ids, self.mp_chunk_size),
+            desc="Creating chunks",
+            unit="chunks"
+        ))
         
-        # Update metrics
+        logger.info(f"   Created {len(pair_chunks)} chunks for processing")
+        
+        # OPTIMIZED: Process chunks using multiprocessing with reduced overhead
+        try:
+            with mp.Pool(processes=self.num_processes, initializer=init_worker, initargs=(authors_features,)) as pool:
+                # Use imap for progress tracking with enhanced description
+                print(f"⚡ Processing {len(pair_chunks)} chunks with {self.num_processes} processes...")
+                results = list(tqdm(
+                    pool.imap(compare_author_chunk_mega_optimized, 
+                             pair_chunks,
+                             chunksize=1),  # Process one chunk at a time for better load balancing
+                    total=len(pair_chunks),
+                    desc=f"MP comparison ({self.num_processes}P)",
+                    unit="chunks",
+                    bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]"
+                ))
+                
+                # Collect results and add edges with progress bar
+                print("🔗 Collecting results and adding edges...")
+                total_matches = sum(len(chunk_results) for chunk_results in results)
+                
+                # OPTIMIZED: Batch consolidation logging to reduce overhead
+                consolidations_batch = []
+                
+                with tqdm(total=total_matches, desc="Adding edges", unit="matches") as pbar:
+                    for chunk_results in results:
+                        for author_id1, author_id2, reason, confidence in chunk_results:
+                            if not G.has_edge(author_id1, author_id2):
+                                G.add_edge(author_id1, author_id2, reason=reason, confidence=confidence)
+                                edges_added += 1
+                                
+                                # Batch consolidation info for later logging (reduces overhead)
+                                consolidations_batch.append((author_id1, author_id2, reason, confidence))
+                                
+                                # Update type-specific metrics
+                                if reason == 'identical_orcid':
+                                    self.metrics.orcid_matches += 1
+                                elif reason == 'exact_name_match':
+                                    self.metrics.exact_matches += 1
+                                else:
+                                    self.metrics.alt_matches += 1
+                                
+                                pbar.update(1)
+                
+                # Process consolidation logging in batch (much faster)
+                print("📝 Processing consolidation logs...")
+                for author_id1, author_id2, reason, confidence in tqdm(consolidations_batch, desc="Logging consolidations", unit="logs"):
+                    self._log_consolidation(author_id1, author_id2, reason, confidence, authors_features)
+        
+        except Exception as e:
+            logger.error(f"Multiprocessing failed: {e}. Falling back to sequential processing.")
+            return self._find_candidates_sequential(authors_features)
+        
+        # Update metrics with progress indication
+        print("📈 Finalizing metrics and summary...")
+        self.metrics.total_comparisons = total_pairs
         self.metrics.total_edges = G.number_of_edges()
         self.metrics.processing_time = time.time() - self.start_time
         
@@ -929,14 +697,18 @@ class EnhancedAuthorMatcher:
             self.metrics.authors_per_second = self.metrics.total_authors / self.metrics.processing_time
             self.metrics.comparisons_per_second = self.metrics.total_comparisons / self.metrics.processing_time
         
-        logger.info(f"✅ Exhaustive comparison completed: {edges_added} matches found")
-        self._log_performance_summary()
+        logger.info(f"✅ Multiprocessing comparison completed: {edges_added} matches found")
+        logger.info(f"   ORCID matches: {self.metrics.orcid_matches}")
+        logger.info(f"   Exact name matches: {self.metrics.exact_matches}")
+        logger.info(f"   Alternative name matches: {self.metrics.alt_matches}")
+        logger.info(f"⚡ Speed: {self.metrics.comparisons_per_second:,.0f} comparisons/second")
         
         return G
-    
-    def _find_candidates_batch_optimized(self, authors_features: Dict, author_work_map: Dict) -> nx.Graph:
+
+    def _find_candidates_sequential(self, authors_features: Dict) -> nx.Graph:
         """
-        Original batch-optimized approach for large datasets.
+        Sequential N×N comparison (fallback method).
+        CUBAN FILTER: Only compare Cuban authors.
         """
         self.start_time = time.time()
         
@@ -946,51 +718,68 @@ class EnhancedAuthorMatcher:
         # Create graph
         G = nx.Graph()
         
-        # Add all authors as nodes
-        for author_id, features in authors_features.items():
+        # Add all authors as nodes with progress bar
+        print("📊 Adding authors as nodes...")
+        for author_id, features in tqdm(authors_features.items(), desc="Adding nodes", unit="authors"):
             G.add_node(author_id, **features)
         
-        # Strategy 1: Exact name grouping for quick wins
-        logger.info("📝 Step 1: Finding exact name matches...")
-        exact_matches = self._find_exact_matches(authors_features)
+        # CUBAN NATIONALITY FILTER: Only include Cuban authors for comparison
+        print("🇨🇺 Filtering for Cuban authors...")
+        cuban_author_ids = []
+        total_authors = len(authors_features)
+        
+        for author_id, features in tqdm(authors_features.items(), desc="Filtering Cuban authors", unit="authors"):
+            if features.get('is_cuban', False):
+                cuban_author_ids.append(author_id)
+        
+        logger.info(f"   Found {len(cuban_author_ids)} Cuban authors out of {total_authors} total authors")
+        
+        if len(cuban_author_ids) == 0:
+            logger.warning("   No Cuban authors found - returning empty graph")
+            return G
+        
+        # Use only Cuban authors for comparison
+        author_ids = cuban_author_ids
+        total_pairs = len(author_ids) * (len(author_ids) - 1) // 2
+        
+        logger.info(f"   Will compare {total_pairs:,} pairs sequentially")
         
         edges_added = 0
-        for group in exact_matches.values():
-            if len(group) > 1:
-                for i, a1 in enumerate(group):
-                    for a2 in group[i+1:]:
-                        if not G.has_edge(a1, a2):
-                            G.add_edge(a1, a2, reason="exact_name_match", confidence=0.98)
-                            edges_added += 1
-                            self.metrics.exact_matches += 1
         
-        logger.info(f"   Found {edges_added} exact name matches")
+        # Create comparison pairs list for progress tracking
+        print("🔍 Performing sequential comparison...")
+        comparison_pairs = []
+        for i in range(len(author_ids)):
+            for j in range(i + 1, len(author_ids)):
+                comparison_pairs.append((author_ids[i], author_ids[j]))
         
-        # Strategy 2: ORCID matching
-        logger.info("🆔 Step 2: Finding ORCID matches...")
-        orcid_edges = self._find_orcid_matches(authors_features)
+        # Process each pair with detailed progress tracking
+        for author_id1, author_id2 in tqdm(comparison_pairs, desc="Sequential N×N comparison", unit="pairs"):
+            author1 = authors_features[author_id1]
+            author2 = authors_features[author_id2]
+            
+            # Only check names and alternative names (both authors are already Cuban)
+            should_merge, reason, confidence = compare_names_only(author1, author2)
+            
+            if should_merge:
+                if not G.has_edge(author_id1, author_id2):
+                    G.add_edge(author_id1, author_id2, reason=reason, confidence=confidence)
+                    edges_added += 1
+                    
+                    # Track consolidation for logging
+                    self._log_consolidation(author_id1, author_id2, reason, confidence, authors_features)
+                    
+                    # Update type-specific metrics
+                    if reason == 'identical_orcid':
+                        self.metrics.orcid_matches += 1
+                    elif reason == 'exact_name_match':
+                        self.metrics.exact_matches += 1
+                    else:
+                        self.metrics.alt_matches += 1
         
-        for a1, a2 in orcid_edges:
-            if not G.has_edge(a1, a2):
-                G.add_edge(a1, a2, reason="identical_orcid", confidence=1.0)
-                edges_added += 1
-                self.metrics.orcid_matches += 1
-        
-        logger.info(f"   Found {len(orcid_edges)} ORCID matches")
-        
-        # Strategy 3: High-similarity fuzzy matching
-        logger.info("🔍 Step 3: Finding high-similarity fuzzy matches...")
-        fuzzy_edges = self._find_fuzzy_matches(authors_features, author_work_map)
-        
-        for a1, a2, reason, confidence in fuzzy_edges:
-            if not G.has_edge(a1, a2):
-                G.add_edge(a1, a2, reason=reason, confidence=confidence)
-                edges_added += 1
-                self.metrics.fuzzy_matches += 1
-        
-        logger.info(f"   Found {len(fuzzy_edges)} fuzzy matches")
-        
-        # Update metrics
+        # Update metrics with progress indication
+        print("📈 Finalizing metrics and summary...")
+        self.metrics.total_comparisons = total_pairs
         self.metrics.total_edges = G.number_of_edges()
         self.metrics.processing_time = time.time() - self.start_time
         
@@ -998,244 +787,117 @@ class EnhancedAuthorMatcher:
             self.metrics.authors_per_second = self.metrics.total_authors / self.metrics.processing_time
             self.metrics.comparisons_per_second = self.metrics.total_comparisons / self.metrics.processing_time
         
-        self._log_performance_summary()
+        logger.info(f"✅ Sequential comparison completed: {edges_added} matches found")
+        logger.info(f"   ORCID matches: {self.metrics.orcid_matches}")
+        logger.info(f"   Exact name matches: {self.metrics.exact_matches}")
+        logger.info(f"   Alternative name matches: {self.metrics.alt_matches}")
+        logger.info(f"⚡ Speed: {self.metrics.comparisons_per_second:,.0f} comparisons/second")
         
         return G
 
-    def _find_exact_matches(self, authors_features: Dict) -> Dict[str, List[str]]:
-        """Find authors with exactly matching normalized names."""
-        name_groups = defaultdict(list)
-        
-        for author_id, features in authors_features.items():
-            normalized_name = features.get('normalized_name', '').strip()
-            if normalized_name and len(normalized_name) > 2:  # Avoid very short names
-                name_groups[normalized_name].append(author_id)
-        
-        # Only return groups with multiple authors
-        return {name: authors for name, authors in name_groups.items() if len(authors) > 1}
-
-    def _find_orcid_matches(self, authors_features: Dict) -> List[Tuple[str, str]]:
-        """Find authors with matching ORCID identifiers."""
-        orcid_groups = defaultdict(list)
-        edges = []
-        
-        for author_id, features in authors_features.items():
-            orcid = features.get('orcid', '').strip()
-            if orcid:
-                orcid_groups[orcid].append(author_id)
-        
-        for orcid, authors in orcid_groups.items():
-            if len(authors) > 1:
-                for i, a1 in enumerate(authors):
-                    for a2 in authors[i+1:]:
-                        edges.append((a1, a2))
-        
-        return edges
-
-    def _find_fuzzy_matches(self, authors_features: Dict, author_work_map: Dict) -> List[Tuple[str, str, str, float]]:
-        """Find authors with high fuzzy similarity scores."""
-        edges = []
-        author_ids = list(authors_features.keys())
-        
-        # Use rapid fuzzy matching for initial filtering
-        names = [(aid, authors_features[aid].get('normalized_name', '')) for aid in author_ids]
-        names = [(aid, name) for aid, name in names if name and len(name) > 2]
-        
-        logger.info(f"   Processing {len(names)} authors for fuzzy matching...")
-        
-        # Process in batches for memory efficiency
-        batch_size = min(self.batch_size, 500)  # Limit batch size for fuzzy matching
-        
-        for i in tqdm(range(0, len(names), batch_size), desc="Fuzzy matching batches"):
-            batch = names[i:i + batch_size]
-            batch_edges = self._process_fuzzy_batch(batch, authors_features, author_work_map)
-            edges.extend(batch_edges)
-        
-        return edges
-
-    def _process_fuzzy_batch(self, batch: List[Tuple[str, str]], 
-                           authors_features: Dict, 
-                           author_work_map: Dict) -> List[Tuple[str, str, str, float]]:
-        """Process a batch of authors for fuzzy matching."""
-        edges = []
-        
-        for i, (aid1, name1) in enumerate(batch):
-            # Use rapidfuzz.process for efficient similarity search
-            remaining_names = [(aid2, name2) for aid2, name2 in batch[i+1:]]
-            
-            if not remaining_names:
-                continue
-            
-            # Get potential matches with rapidfuzz
-            name_list = [name for _, name in remaining_names]
-            matches = process.extract(name1, name_list, scorer=fuzz.ratio, limit=None)
-            
-            for match_name, score, idx in matches:
-                if score >= 60:  # Reduced threshold for more inclusive matching
-                    aid2 = remaining_names[idx][0]
-                    
-                    # Detailed analysis for high-scoring pairs
-                    author1 = authors_features[aid1]
-                    author2 = authors_features[aid2]
-                    
-                    works1 = set(author_work_map.get(aid1, []))
-                    works2 = set(author_work_map.get(aid2, []))
-                    common_works = works1.intersection(works2)
-                    
-                    should_merge, reason, confidence = self.should_consolidate_enhanced(
-                        author1, author2, common_works
-                    )
-                    
-                    if should_merge:
-                        edges.append((aid1, aid2, reason, confidence))
-                    
-                    self.metrics.total_comparisons += 1
-        
-        return edges
-
-    def _log_performance_summary(self):
-        """Log comprehensive performance summary."""
-        logger.info("\n📊 PERFORMANCE METRICS SUMMARY")
-        logger.info("=" * 50)
-        logger.info(f"📈 Dataset: {self.metrics.total_authors:,} authors")
-        logger.info(f"🔗 Edges found: {self.metrics.total_edges:,}")
-        logger.info(f"⏱️  Processing time: {self.metrics.processing_time:.2f} seconds")
-        logger.info(f"⚡ Performance: {self.metrics.authors_per_second:.1f} authors/sec")
-        
-        if self.metrics.total_comparisons > 0:
-            logger.info(f"🔍 Comparisons: {self.metrics.total_comparisons:,}")
-            logger.info(f"📊 Comparison rate: {self.metrics.comparisons_per_second:.1f}/sec")
-        
-        logger.info(f"\n🎯 MATCH BREAKDOWN:")
-        logger.info(f"   • Exact matches: {self.metrics.exact_matches}")
-        logger.info(f"   • ORCID matches: {self.metrics.orcid_matches}")
-        logger.info(f"   • Fuzzy matches: {self.metrics.fuzzy_matches}")
-        logger.info(f"   • Institution matches: {self.metrics.institution_matches}")
-        logger.info(f"   • Work overlap matches: {self.metrics.work_overlap_matches}")
-        
-        # Estimate quality metrics
-        if self.metrics.total_authors > 0:
-            consolidation_rate = self.metrics.total_edges / self.metrics.total_authors
-            logger.info(f"\n📈 QUALITY ESTIMATES:")
-            logger.info(f"   • Consolidation rate: {consolidation_rate:.3f}")
-            logger.info(f"   • Avg edges per author: {consolidation_rate:.3f}")
-
-    def export_metrics(self, filepath: str):
-        """Export performance metrics to JSON file."""
-        try:
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(self.metrics.to_dict(), f, indent=2, ensure_ascii=False)
-            logger.info(f"📊 Metrics exported to: {filepath}")
-        except Exception as e:
-            logger.error(f"❌ Failed to export metrics: {e}")
-
-    def benchmark_against_baseline(self, authors_features: Dict, author_work_map: Dict, 
-                                 baseline_matcher=None) -> Dict[str, Any]:
+    def _log_consolidation(self, author_id1: str, author_id2: str, reason: str, confidence: float, authors_features: Dict):
         """
-        Benchmark enhanced matcher against baseline implementation.
+        Log a consolidation match.
         
         Args:
+            author_id1, author_id2: Author IDs being consolidated
+            reason: Reason for consolidation
+            confidence: Confidence score
             authors_features: Author features dictionary
-            author_work_map: Author work mapping
-            baseline_matcher: Baseline matcher instance (optional)
-            
-        Returns:
-            Comparison results
         """
-        logger.info("🏁 Starting benchmark comparison...")
+        author1 = authors_features[author_id1]
+        author2 = authors_features[author_id2]
         
-        # Enhanced matcher results
-        start_time = time.time()
-        enhanced_graph = self.find_candidates_optimized(authors_features, author_work_map)
-        enhanced_time = time.time() - start_time
-        enhanced_edges = enhanced_graph.number_of_edges()
+        name1 = author1.get('name', 'Unknown')
+        name2 = author2.get('name', 'Unknown')
         
-        results = {
-            'enhanced': {
-                'processing_time': enhanced_time,
-                'edges_found': enhanced_edges,
-                'authors_per_second': len(authors_features) / enhanced_time if enhanced_time > 0 else 0,
-                'metrics': self.metrics.to_dict()
-            }
+        consolidation_info = {
+            'author_id1': author_id1,
+            'author_id2': author_id2,
+            'name1': name1,
+            'name2': name2,
+            'reason': reason,
+            'confidence': confidence,
+            'timestamp': time.time()
         }
         
-        # Baseline comparison if provided
-        if baseline_matcher:
-            logger.info("🔄 Running baseline matcher for comparison...")
-            try:
-                start_time = time.time()
-                baseline_graph = baseline_matcher.find_candidates(authors_features, author_work_map)
-                baseline_time = time.time() - start_time
-                baseline_edges = baseline_graph.number_of_edges();
-                
-                results['baseline'] = {
-                    'processing_time': baseline_time,
-                    'edges_found': baseline_edges,
-                    'authors_per_second': len(authors_features) / baseline_time if baseline_time > 0 else 0
-                }
-                
-                # Performance comparison
-                speedup = baseline_time / enhanced_time if enhanced_time > 0 else float('inf')
-                edge_ratio = enhanced_edges / baseline_edges if baseline_edges > 0 else float('inf')
-                
-                results['comparison'] = {
-                    'speedup_factor': speedup,
-                    'edge_ratio': edge_ratio,
-                    'time_improvement_pct': ((baseline_time - enhanced_time) / baseline_time * 100) if baseline_time > 0 else 0
-                }
-                
-                logger.info(f"⚡ Enhanced matcher is {speedup:.2f}x faster")
-                logger.info(f"🔗 Enhanced matcher found {edge_ratio:.2f}x more edges")
-                
-            except Exception as e:
-                logger.error(f"❌ Baseline comparison failed: {e}")
-                results['baseline_error'] = str(e)
+        self.consolidations.append(consolidation_info)
         
-        return results
-    
-    def are_names_equivalent_enhanced(self, name1: str, name2: str) -> bool:
+        # Log the consolidation
+        logger.info(f"🔗 CONSOLIDATION: '{name1}' ↔ '{name2}' | Reason: {reason} | Confidence: {confidence:.2f}")
+
+    def get_consolidation_summary(self) -> Dict[str, Any]:
         """
-        Enhanced name equivalence check with hyphen awareness.
+        Get a summary of all consolidations performed.
+        
+        Returns:
+            Dictionary with consolidation summary
+        """
+        total_consolidations = len(self.consolidations)
+        
+        # Count by reason
+        reason_counts = defaultdict(int)
+        for consolidation in self.consolidations:
+            reason_counts[consolidation['reason']] += 1
+        
+        # Average confidence by reason
+        reason_confidence = defaultdict(list)
+        for consolidation in self.consolidations:
+            reason_confidence[consolidation['reason']].append(consolidation['confidence'])
+        
+        avg_confidence_by_reason = {
+            reason: sum(confidences) / len(confidences) if confidences else 0.0
+            for reason, confidences in reason_confidence.items()
+        }
+        
+        return {
+            'total_consolidations': total_consolidations,
+            'consolidations_by_reason': dict(reason_counts),
+            'average_confidence_by_reason': avg_confidence_by_reason,
+            'consolidations': self.consolidations
+        }
+
+    def _normalize_hyphens(self, name: str) -> str:
+        """
+        Normalize hyphen usage in names.
         
         Args:
-            name1, name2: Names to compare
+            name: Name to normalize
             
         Returns:
-            True if names are considered equivalent
+            Name with normalized hyphens
         """
-        if not name1 or not name2:
-            return False
+        if not name:
+            return ""
         
-        # Normalize both names
-        norm1 = self.normalize_name_advanced(name1)
-        norm2 = self.normalize_name_advanced(name2)
+        # Standardize hyphen spacing
+        normalized = re.sub(r'\s*-\s*', '-', name)
         
-        # Direct exact match
-        if norm1 == norm2:
+        # Remove extra spaces
+        normalized = re.sub(r'\s+', ' ', normalized).strip()
+        
+        return normalized
+    
+    def _is_cuban_author(self, author_data: Dict) -> bool:
+        """
+        Determine if an author has Cuban nationality based on institutional affiliations.
+        
+        Args:
+            author_data: Raw author data from OpenAlex
+            
+        Returns:
+            bool: True if the author is affiliated with Cuban institutions
+        """
+        countries = author_data.get("countries", [])
+        if "CU" in countries:
             return True
-        
-        # If hyphen-aware matching is enabled, check additional variations
-        if self.hyphen_aware_matching:
-            # Normalize hyphens specifically
-            hyphen_norm1 = self._normalize_hyphens(norm1)
-            hyphen_norm2 = self._normalize_hyphens(norm2)
-            
-            # Check hyphen-normalized versions
-            if hyphen_norm1 == hyphen_norm2:
-                return True
-            
-            # Check with hyphens removed entirely
-            no_hyphen1 = hyphen_norm1.replace('-', ' ').replace('  ', ' ').strip()
-            no_hyphen2 = hyphen_norm2.replace('-', ' ').replace('  ', ' ').strip()
-            
-            if no_hyphen1 == no_hyphen2:
+        # Check affiliations for Cuban institutions (country_code "CU")
+        for affil in author_data.get("affiliations", []):
+            institution = affil.get("institution", {})
+            if institution and institution.get("country_code") == "CU":
                 return True
         
-        # Apply phonetic normalization and check
-        phon1 = self._apply_phonetic_normalization(norm1)
-        phon2 = self._apply_phonetic_normalization(norm2)
+        # Also check the countries field if present
         
-        if phon1 == phon2:
-            return True
-        
+            
         return False

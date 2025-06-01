@@ -42,6 +42,7 @@ import time
 import json
 import argparse
 from tqdm import tqdm
+from typing import Dict
 
 # Add project root to path
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -59,6 +60,14 @@ from utils.data_processing import (
 )
 from db.db_operations import save_to_neo4j
 
+# Check for pyvis availability for visualization
+try:
+    from pyvis.network import Network
+    PYVIS_AVAILABLE = True
+except ImportError:
+    PYVIS_AVAILABLE = False
+    print("⚠️ pyvis not available. Install with: pip install pyvis")
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -70,29 +79,38 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Add pyvis for component visualization
+try:
+    from pyvis.network import Network
+    PYVIS_AVAILABLE = True
+except ImportError:
+    PYVIS_AVAILABLE = False
+    logger.warning("⚠️ pyvis not available - component visualization will be skipped")
+
 
 def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.95, limit=None, 
                                exhaustive_comparison=True, hyphen_aware_matching=True):
-    """Enhanced consolidation method using the new EnhancedAuthorMatcher."""
-    logger.info("\n🚀 Starting Enhanced Author Consolidation")
-    logger.info("=" * 70)
+    """Enhanced consolidation method using the simplified EnhancedAuthorMatcher.
     
-    # Apply limit if specified
+    Note: threshold, exhaustive_comparison, and hyphen_aware_matching parameters
+    are kept for compatibility but are not used in the simplified version.
+    The matcher now only compares exact names and alternative names.
+    """
+    logger.info("\n🚀 Starting Simplified Author Consolidation")
+    logger.info("=" * 70)
+    logger.info("   Mode: Exact names and alternative names comparison ONLY")
+    logger.info(f"   Threshold parameter ({threshold}) ignored - using exact matching")
+    
     if limit and len(authors_data) > limit:
         logger.info(f"📊 Limiting to first {limit} authors for testing...")
         authors_data = dict(list(authors_data.items())[:limit])
     
     start_time = time.time()
     
-    # Initialize enhanced matcher with optimized settings
     matcher = EnhancedAuthorMatcher(
-        similarity_threshold=threshold,
         batch_size=1000,
-        use_semantic_similarity=True,
-        use_phonetic_matching=True,
-        enable_caching=True,
-        exhaustive_comparison=exhaustive_comparison,
-        hyphen_aware_matching=hyphen_aware_matching
+        use_multiprocessing=True,
+        num_processes=None  
     )
     
     # Extract enhanced features
@@ -120,13 +138,22 @@ def consolidate_authors_enhanced(authors_data, author_work_map, threshold=0.95, 
     # Print consolidation stats
     print_consolidation_stats(consolidated, authors_data, component_stats, G)
     
+    # Log consolidation summary from the matcher
+    if hasattr(matcher, 'get_consolidation_summary'):
+        consolidation_summary = matcher.get_consolidation_summary()
+        logger.info("\n🔗 CONSOLIDATION SUMMARY:")
+        logger.info(f"   Total consolidations: {consolidation_summary['total_consolidations']}")
+        for reason, count in consolidation_summary['consolidations_by_reason'].items():
+            avg_conf = consolidation_summary['average_confidence_by_reason'].get(reason, 0.0)
+            logger.info(f"   {reason}: {count} matches (avg confidence: {avg_conf:.2f})")
+    
     # Export performance metrics
     if hasattr(matcher, 'export_metrics'):
         metrics_file = "enhanced_matcher_metrics.json"
         matcher.export_metrics(metrics_file)
         logger.info(f"📊 Performance metrics exported to: {metrics_file}")
     
-    logger.info(f"✅ Enhanced consolidation completed in {processing_time:.2f} seconds")
+    logger.info(f"✅ Simplified consolidation completed in {processing_time:.2f} seconds")
     
     return consolidated, G, matcher
 
@@ -187,13 +214,9 @@ def benchmark_matchers(authors_data, author_work_map, threshold=0.95, limit=1000
     
     try:
         enhanced_matcher = EnhancedAuthorMatcher(
-            similarity_threshold=threshold,
             batch_size=1000,
-            use_semantic_similarity=True,
-            use_phonetic_matching=True,
-            enable_caching=True,
-            exhaustive_comparison=False,  # Use batch optimization for benchmarks
-            hyphen_aware_matching=True
+            use_multiprocessing=True,
+            num_processes=None  # Auto-detect
         )
         
         # Extract features
@@ -390,16 +413,22 @@ def consolidate_authors_main(authors_data, author_work_map, works_data=None, use
                            run_benchmark=False, threshold=0.85, limit=None, 
                            exhaustive_comparison=True, hyphen_aware_matching=True):
     """
-    Main consolidation function with enhanced matcher as the primary method.
+    Main consolidation function with simplified enhanced matcher as the primary method.
+    
+    Note: In the simplified version, only exact name and alternative name matching is performed.
+    Parameters like threshold, exhaustive_comparison, and hyphen_aware_matching are kept
+    for compatibility but are not used in the actual matching process.
     
     Args:
         authors_data: Dictionary of author data
         author_work_map: Mapping of authors to works
         works_data: Works data (for compatibility)
-        use_enhanced: Whether to use enhanced matcher (default: True)
+        use_enhanced: Whether to use simplified enhanced matcher (default: True)
         run_benchmark: Whether to run benchmark comparison (default: False)
-        threshold: Similarity threshold for matching (default: 0.85)
+        threshold: Similarity threshold - NOT USED in simplified version (default: 0.85)
         limit: Limit number of authors for testing (default: None)
+        exhaustive_comparison: NOT USED in simplified version (default: True)
+        hyphen_aware_matching: NOT USED in simplified version (default: True)
     """
     
     total_authors = len(authors_data)
@@ -471,7 +500,6 @@ Examples:
     try:
         args = parser.parse_args()
     except:
-        # If parsing fails (like in Jupyter), use defaults
         class DefaultArgs:
             matcher = 'enhanced'
             benchmark = False
@@ -505,7 +533,7 @@ Examples:
     logger.info(f"🐍 Python: {platform.python_version()}")
     
     if use_enhanced:
-        logger.info("🚀 Using Enhanced Author Matcher with advanced algorithms (PRIMARY METHOD)")
+        logger.info("🚀 Using Simplified Author Matcher - names and aliases only (PRIMARY METHOD)")
     else:
         logger.info("🔍 Using Traditional rule-based approach")
     
@@ -550,18 +578,11 @@ Examples:
         method_name = "Enhanced" if use_enhanced else "Traditional"
         logger.info(f"🎯 Selected approach: {method_name} (Threshold: {args.threshold})")
         
-        # Log configuration details for enhanced matcher
+        # Log configuration details for simplified matcher
         if use_enhanced:
-            config_details = []
-            if exhaustive_mode:
-                config_details.append("Exhaustive N×N comparison")
-            else:
-                config_details.append("Batch-optimized comparison")
-            
-            if args.hyphen_aware:
-                config_details.append("Hyphen-aware matching")
-            
-            logger.info(f"⚙️ Enhanced matcher configuration: {', '.join(config_details)}")
+            logger.info("⚙️ Simplified matcher: exact names and alternative names only")
+            logger.info("⚙️ All advanced similarity algorithms disabled")
+            logger.info("⚙️ Multiprocessing enabled for N×N comparison")
             
         consolidation_result = consolidate_authors_main(
             authors_data, author_work_map, works_data, 
@@ -638,6 +659,14 @@ Examples:
                 json.dump(results, f, indent=2)
             logger.info(f"📊 Results exported to: {results_file}")
 
+        # Create simple graph visualization
+        logger.info("\n🎨 Creating graph visualization...")
+        try:
+            # Save consolidation graph as HTML using pyvis
+            save_consolidation_graph_html(author_graph, authors_data)
+        except Exception as e:
+            logger.warning(f"⚠️ Could not create graph visualization: {e}")
+
         # Final summary
         logger.info("\n✅ PROCESS COMPLETED SUCCESSFULLY!")
         logger.info("=" * 80)
@@ -652,7 +681,7 @@ Examples:
         
         if matcher and hasattr(matcher, 'metrics'):
             logger.info(f"   • Performance: {matcher.metrics.authors_per_second:.1f} authors/sec")
-            logger.info(f"   • Match types: exact={matcher.metrics.exact_matches}, fuzzy={matcher.metrics.fuzzy_matches}, orcid={matcher.metrics.orcid_matches}")
+            logger.info(f"   • Match types: exact={matcher.metrics.exact_matches}, alt={matcher.metrics.alt_matches}, orcid={matcher.metrics.orcid_matches}")
         
         if args.benchmark:
             logger.info("📊 Benchmark results saved to matcher_benchmark_results.json")
@@ -668,5 +697,78 @@ Examples:
         sys.exit(1)
 
 
+def save_consolidation_graph_html(author_graph: nx.Graph, authors_data: Dict):
+    """
+    Save the consolidation graph as a simple HTML file using pyvis.
+    
+    Args:
+        author_graph: NetworkX graph with author consolidation edges
+        authors_data: Dictionary with author data
+    """
+    if not PYVIS_AVAILABLE:
+        logger.warning("⚠️ Pyvis not available, skipping graph visualization")
+        return
+    
+    logger.info("🌐 Creating consolidation graph HTML...")
+    
+    # Create pyvis network
+    net = Network(
+        height="800px", 
+        width="100%", 
+        bgcolor="#ffffff", 
+        font_color="#000000",
+        directed=False
+    )
+    
+    # Simple physics configuration
+    net.set_options("""
+    var options = {
+        "physics": {
+            "enabled": true,
+            "stabilization": {"enabled": true, "iterations": 100}
+        },
+        "nodes": {
+            "font": {"size": 12},
+            "borderWidth": 2
+        },
+        "edges": {
+            "width": 2,
+            "smooth": true
+        }
+    }
+    """)
+    
+    # Add all nodes
+    for author_id in author_graph.nodes():
+        author_data = authors_data.get(author_id, {})
+        display_name = author_data.get('display_name', f'Author {author_id[:8]}')
+        works_count = author_data.get('works_count', 0)
+        
+        # Simple title with basic info
+        title = f"{display_name}\nWorks: {works_count}"
+        
+        # Add node
+        net.add_node(
+            author_id,
+            label=display_name[:20] + ("..." if len(display_name) > 20 else ""),
+            title=title,
+            color="#97c2fc",
+            size=15
+        )
+    
+    # Add all edges
+    for u, v, edge_data in author_graph.edges(data=True):
+        reason = edge_data.get('reason', 'match')
+        net.add_edge(u, v, title=f"Match: {reason}")
+    
+    # Save to HTML file
+    filename = f"consolidation_graph_{time.strftime('%Y%m%d_%H%M%S')}.html"
+    net.save_graph(filename)
+    
+    logger.info(f"✅ Graph saved as: {filename}")
+
+
+
 if __name__ == "__main__":
     main()
+
