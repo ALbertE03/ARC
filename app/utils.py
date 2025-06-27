@@ -22,11 +22,20 @@ def load_author_graph():
         st.warning("No se encontró el archivo 'data/grafo_autor_autor.graphml'. Usando análisis básico.")
         return None
 
+@st.cache_data
+def load_article_graph():
+    """Carga el grafo artículo-artículo para análisis de conexiones entre artículos"""
+    try:
+        graph = nx.read_graphml("data/grafo_articulo_articulo.graphml")
+        return graph
+    except FileNotFoundError:
+        st.warning("No se encontró el archivo 'data/grafo_articulo_articulo.graphml'. El análisis de artículos no estará disponible.")
+        return None
+
 
 def save_graph(graph, filename="subgrafo_con_articulos.graphml"):
     """Guarda el grafo en formato GraphML"""
     try:
-        # Convertir tipos no compatibles
         for n, d in graph.nodes(data=True):
             for k, v in list(d.items()):
                 if v is None:
@@ -85,7 +94,7 @@ def save_consolidation_history():
         st.error(f"Error al guardar historial de consolidaciones: {str(e)}")
         return False
 
-# Función para limpiar cache de centralidades
+
 def clear_centralities_cache():
     """
     Limpia el cache de centralidades cuando el grafo se modifica

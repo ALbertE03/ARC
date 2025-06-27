@@ -20,7 +20,6 @@ def show_connection_management():
             col1, col2 = st.columns(2)
             
             with col1:
-                # Crear mapeo de nombres a IDs para autores
                 author_options = {}
                 for author_id in authors:
                     author_data = st.session_state.graph.nodes[author_id]
@@ -35,7 +34,6 @@ def show_connection_management():
                     st.info(f"👤 {author_data.get('display_name', 'N/A')}")
             
             with col2:
-                # Crear mapeo de títulos a IDs para artículos
                 article_options = {}
                 for article_id in articles:
                     article_data = st.session_state.graph.nodes[article_id]
@@ -61,7 +59,6 @@ def show_connection_management():
                                                       type=connection_type,
                                                       created_date=datetime.now().isoformat())
                         
-                        # Limpiar cache de centralidades
                         clear_centralities_cache()
                         
                         st.success("✅ Conexión creada exitosamente")
@@ -90,7 +87,6 @@ def show_connection_management():
                 u, v, data = edges[selected_edge_idx]
                 st.session_state.graph.remove_edge(u, v)
                 
-                # Limpiar cache de centralidades
                 clear_centralities_cache()
                 
                 st.success("✅ Conexión eliminada exitosamente")

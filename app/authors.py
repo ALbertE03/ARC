@@ -23,7 +23,6 @@ def show_author_management():
             
             with col2:
                 orcid = st.text_input("ORCID", placeholder="0000-0000-0000-0000")
-                scopus_id = st.text_input("Scopus ID", placeholder="12345678900")
                 affiliation = st.text_input("Institución", placeholder="Universidad XYZ")
                 h_index = st.number_input("Índice H", min_value=0, value=0)
             
@@ -31,11 +30,9 @@ def show_author_management():
             
             if submitted:
                 if author_id and display_name:
-                    # Verificar si el autor ya existe
                     if author_id in st.session_state.graph.nodes():
                         st.error("❌ Este investigador ya existe en tu red")
                     else:
-                        # Crear datos del autor
                         author_data = {
                             'node_type': 'author',
                             'id': author_id,
@@ -43,16 +40,12 @@ def show_author_management():
                             'first_name': first_name,
                             'last_name': last_name,
                             'orcid': orcid,
-                            'scopus_id': scopus_id,
                             'affiliation': affiliation,
                             "summary_stats":{'h_index': h_index},
                             'created_date': datetime.now().isoformat()
                         }
                         
-                        # Agregar al grafo
                         st.session_state.graph.add_node(author_id, **author_data)
-                        
-                        # Limpiar cache de centralidades
                         clear_centralities_cache()
                         
                         st.success("✅ Investigador agregado exitosamente a tu red")
@@ -63,11 +56,9 @@ def show_author_management():
     with tab2:
         st.markdown("### Editar Investigador Existente")
         
-        # Seleccionar autor
         authors = [n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'author']
         
         if authors:
-            # Crear mapeo de nombres a IDs
             author_options = {}
             for author_id in authors:
                 author_data = st.session_state.graph.nodes[author_id]
@@ -90,24 +81,19 @@ def show_author_management():
                     
                     with col2:
                         new_orcid = st.text_input("ORCID", value=author_data.get('orcid', ''))
-                        new_scopus_id = st.text_input("Scopus ID", value=author_data.get('scopus_id', ''))
                         new_affiliation = st.text_input("Institución", value=author_data.get('affiliation', ''))
                     
                     submitted = st.form_submit_button("💾 Guardar Cambios", use_container_width=True)
                     
                     if submitted:
-                        # Actualizar datos
                         st.session_state.graph.nodes[selected_author].update({
                             'display_name': new_display_name,
                             'first_name': new_first_name,
                             'last_name': new_last_name,
                             'orcid': new_orcid,
-                            'scopus_id': new_scopus_id,
                             'affiliation': new_affiliation,
                             'modified_date': datetime.now().isoformat()
                         })
-                        
-                        # Limpiar cache de centralidades
                         clear_centralities_cache()
                         
                         st.success("✅ Investigador actualizado exitosamente")
@@ -121,7 +107,6 @@ def show_author_management():
         authors = [n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'author']
         
         if authors:
-            # Crear mapeo de nombres a IDs
             author_options = {}
             for author_id in authors:
                 author_data = st.session_state.graph.nodes[author_id]
@@ -143,8 +128,7 @@ def show_author_management():
                 
                 if st.button("🗑️ Confirmar Eliminación", type="secondary"):
                     st.session_state.graph.remove_node(selected_author)
-                    
-                    # Limpiar cache de centralidades
+
                     clear_centralities_cache()
                     
                     st.success("✅ Autor eliminado exitosamente")
@@ -161,7 +145,6 @@ def show_author_management():
         if len(authors) < 2:
             st.info("Necesitas al menos 2 autores para poder consolidar")
         else:
-            # Crear mapeo de nombres a IDs para autores
             author_options = {}
             for author_id in authors:
                 author_data = st.session_state.graph.nodes[author_id]
@@ -179,12 +162,10 @@ def show_author_management():
             )
             
             if len(selected_authors) >= 2:
-                # Convertir nombres a IDs
                 selected_author_ids = [author_options[name] for name in selected_authors]
                 
                 st.markdown("#### Paso 2: Información de autores seleccionados")
                 
-                # Mostrar información de cada autor seleccionado
                 for i, author_name in enumerate(selected_authors):
                     author_id = author_options[author_name]
                     author_data = st.session_state.graph.nodes[author_id]
@@ -201,13 +182,11 @@ def show_author_management():
                         
                         with col2:
                             st.write(f"**ORCID:** {author_data.get('orcid', 'N/A')}")
-                            st.write(f"**Scopus ID:** {author_data.get('scopus_id', 'N/A')}")
                             st.write(f"**Afiliación:** {author_data.get('affiliation', 'N/A')}")
                             st.write(f"**Conexiones:** {connections}")
                 
                 st.markdown("#### Paso 3: Configurar autor consolidado")
                 
-                # Obtener datos del primer autor como base
                 primary_author_id = selected_author_ids[0]
                 primary_data = st.session_state.graph.nodes[primary_author_id]
                 
@@ -232,7 +211,6 @@ def show_author_management():
                         )
                     
                     with col2:
-                        # Recopilar todos los ORCIDs únicos
                         all_orcids = [st.session_state.graph.nodes[aid].get('orcid', '') 
                                     for aid in selected_author_ids]
                         unique_orcids = [o for o in all_orcids if o and o != 'N/A']
@@ -243,45 +221,25 @@ def show_author_management():
                             index=0 if not unique_orcids else 1
                         )
                         
-                        # Recopilar todos los Scopus IDs únicos
-                        all_scopus = [st.session_state.graph.nodes[aid].get('scopus_id', '') 
-                                    for aid in selected_author_ids]
-                        unique_scopus = [s for s in all_scopus if s and s != 'N/A']
-                        
-                        consolidated_scopus = st.selectbox(
-                            "Scopus ID:", 
-                            [''] + unique_scopus,
-                            index=0 if not unique_scopus else 1
-                        )
-                        
                         consolidated_affiliation = st.text_input(
                             "Afiliación:", 
                             value=primary_data.get('affiliation', '')
                         )
                     
-                    # Opciones de consolidación
-                    new_author_id = st.text_input(
-                        "ID para el autor consolidado:",
-                        value=primary_author_id,
-                        help="ID que tendrá el nuevo autor consolidado(se recomienda no cambiar)"
-                    )
                     
                     submitted = st.form_submit_button("🔄 Consolidar Autores", type="primary")
                     
-                    if submitted and consolidated_name and new_author_id:
+                    if submitted and consolidated_name:
             
-                        
-                            # Realizar consolidación
                             consolidate_authors(
                                 selected_author_ids, 
-                                new_author_id,
+                                primary_author_id,
                                 {
                                     'node_type': 'author',
                                     'display_name': consolidated_name,
                                     'first_name': consolidated_first,
                                     'last_name': consolidated_last,
                                     'orcid': consolidated_orcid,
-                                    'scopus_id': consolidated_scopus,
                                     'affiliation': consolidated_affiliation,
                                     'consolidated_from': selected_author_ids,
                                     'consolidation_date': datetime.now().isoformat()
@@ -303,7 +261,6 @@ def show_consolidation_history():
     st.markdown("### ↩️ Historial de Consolidaciones")
     st.markdown("Aquí puedes ver todas las consolidaciones realizadas, revertirlas o rehacerlas.")
     
-    # Inicializar historial si no existe
     if 'consolidation_history' not in st.session_state:
         st.session_state.consolidation_history = load_consolidation_history()
     
@@ -314,7 +271,6 @@ def show_consolidation_history():
         st.markdown("---")
         st.markdown("### 🔄 Rehacer Consolidación desde Archivo")
         
-        # Opción para cargar historial desde archivo
         if st.button("📂 Cargar Historial desde Archivo"):
             loaded_history = load_consolidation_history()
             if loaded_history:
@@ -325,7 +281,6 @@ def show_consolidation_history():
                 st.warning("No se encontró historial guardado")
         return
     
-    # Mostrar información del archivo
     try:       
         with open(os.path.join('data','consolidation_history.json'), "r", encoding="utf-8") as f:
             file_data = json.load(f)
@@ -334,7 +289,6 @@ def show_consolidation_history():
         print(e)
         st.warning("⚠️ No se pudo acceder al archivo de historial")
     
-    # Mostrar historial en orden cronológico inverso
     st.markdown(f"**Total de consolidaciones:** {len(history)}")
     
     if len(history) > 0:
@@ -347,8 +301,7 @@ def show_consolidation_history():
     
     for i, consolidation in enumerate(reversed(history)):
         consolidation_id = len(history) - i - 1
-        
-        # Crear título más descriptivo
+
         author_names = [author['display_name'] for author in consolidation['original_authors']]
         if len(author_names) <= 2:
             authors_text = " y ".join(author_names)
@@ -358,19 +311,15 @@ def show_consolidation_history():
         expander_title = f"🔄 {authors_text} se consolidaron en {consolidation['consolidated_name']}"
         
         with st.expander(expander_title, expanded=(i == 0)):
-            # Información principal de la consolidación
             st.markdown(f"### 📋 Resumen de Consolidación #{consolidation_id + 1}")
             st.markdown(f"**📅 Fecha:** {consolidation['date']}")
-            
-            # Mostrar el resultado de la consolidación
+ 
             st.markdown("### ✨ Resultado")
             st.success(f"**Autor Final:** {consolidation['consolidated_name']} (ID: {consolidation['consolidated_id']})")
-            
-            # Mostrar autores que se consolidaron
+
             st.markdown("### 👥 Autores que se Consolidaron")
             st.markdown(f"**Total:** {len(consolidation['original_authors'])} autores")
-            
-            # Crear columnas para mostrar los autores de manera más organizada
+
             for j, author_info in enumerate(consolidation['original_authors']):
                 with st.container():
                     author_col1, author_col2 = st.columns([3, 1])
@@ -385,26 +334,23 @@ def show_consolidation_history():
                     
                     with author_col2:
                         st.metric("Conexiones", len(author_info['connections']))
-                
-                # Línea separadora entre autores (excepto el último)
+
                 if j < len(consolidation['original_authors']) - 1:
                     st.markdown("---")
-            
-            # Sección de acciones
+
             st.markdown("### ⚙️ Acciones Disponibles")
             col1, col2 = st.columns(2)
             
             with col1:
                 st.markdown("#### 🔄 Gestión de Consolidación")
-                
-                # Verificar si se puede revertir
+ 
                 can_revert = consolidation['consolidated_id'] in st.session_state.graph.nodes()
                 
                 if can_revert:
                     if st.button(f"↩️ Revertir Consolidación", key=f"revert_{consolidation_id}", type="secondary", use_container_width=True):
                         if revert_consolidation(consolidation):
-                            save_graph(st.session_state.graph, "subgrafo_con_articulos.graphml")  # Guardar cambios
-                            save_consolidation_history()  # Actualizar historial
+                            save_graph(st.session_state.graph, "subgrafo_con_articulos.graphml")  
+                            save_consolidation_history()  
                             st.success("✅ Consolidación revertida exitosamente")
                             st.rerun()
                         else:
@@ -414,13 +360,12 @@ def show_consolidation_history():
                     st.button(f"↩️ Revertir Consolidación", key=f"revert_{consolidation_id}_disabled", disabled=True, use_container_width=True)
                     st.warning("⚠️ No se puede revertir: el autor consolidado ya no existe")
                 
-                # Botón para rehacer consolidación
                 can_redo = check_can_redo_consolidation(consolidation)
                 if can_redo['can_redo']:
                     if st.button(f"🔄 Rehacer Consolidación", key=f"redo_{consolidation_id}", type="primary", use_container_width=True):
                         if redo_consolidation(consolidation):
-                            save_graph(st.session_state.graph, "subgrafo_con_articulos.graphml")  # Guardar cambios
-                            save_consolidation_history()  # Actualizar historial
+                            save_graph(st.session_state.graph, "subgrafo_con_articulos.graphml") 
+                            save_consolidation_history()  
                             st.success("✅ Consolidación rehecha exitosamente")
                             st.rerun()
                         else:
@@ -432,33 +377,28 @@ def show_consolidation_history():
             
             with col2:
                 st.markdown("#### 📊 Información de Estado")
-                
-                # Estado de la consolidación
+
                 if can_revert:
                     st.success("✅ **Estado:** Activa")
                     st.caption("Esta consolidación está activa y se puede revertir")
                 else:
                     st.error("❌ **Estado:** Inactiva")
                     st.caption("El autor consolidado ya no existe en el grafo")
-                
-                # Información de autores
+
                 total_original = len(consolidation['original_authors'])
                 existing_authors = sum(1 for author in consolidation['original_authors'] 
                                      if author['id'] in st.session_state.graph.nodes())
                 
                 st.metric("Autores Originales", f"{existing_authors}/{total_original}", 
                          delta="Disponibles" if existing_authors > 0 else "No disponibles")
-                
-                # Información adicional
+
                 if 'original_consolidation_date' in consolidation.get('consolidation_data', {}):
                     st.info(f"🔄 **Rehecha desde:** {consolidation['consolidation_data']['original_consolidation_date']}")
-                
-                # Botón para ver detalles JSON
+
                 if st.button(f"📋 Ver Detalles Técnicos", key=f"details_{consolidation_id}", help="Ver información técnica completa", use_container_width=True):
                     with st.expander("🔍 Datos Técnicos de la Consolidación", expanded=True):
                         st.json(consolidation)
-    
-    # Botón para exportar historial
+
     if history:
         st.markdown("---")
         st.markdown("### 📄 Exportar Datos")
@@ -482,32 +422,27 @@ def consolidate_authors(author_ids, consolidated_id, consolidated_data):
         consolidated_data: Datos del autor consolidado
     """
     graph = st.session_state.graph
-    
-    # Inicializar historial si no existe
+
     if 'consolidation_history' not in st.session_state:
         st.session_state.consolidation_history = []
     
-    # Paso 1: Guardar información completa de los autores originales
     original_authors_info = []
     all_connections = set()
     
     for author_id in author_ids:
-        # Guardar datos del autor
         author_data = dict(graph.nodes[author_id])
         author_data['id'] = author_id
         
-        # Guardar todas sus conexiones
         connections = []
         for neighbor in list(graph.neighbors(author_id)):
-            if neighbor not in author_ids:  # No incluir conexiones entre autores a consolidar
+            if neighbor not in author_ids:  
                 edge_data = graph.get_edge_data(author_id, neighbor)
                 connections.append((neighbor, edge_data))
                 all_connections.add((neighbor, json.dumps(edge_data) if edge_data else "{}"))
         
         author_data['connections'] = connections
         original_authors_info.append(author_data)
-    
-    # Paso 2: Crear registro de consolidación
+ 
     consolidation_record = {
         'consolidated_id': consolidated_id,
         'consolidated_name': consolidated_data.get('display_name', 'N/A'),
@@ -515,29 +450,22 @@ def consolidate_authors(author_ids, consolidated_id, consolidated_data):
         'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'consolidation_data': consolidated_data.copy()
     }
-    
-    # Paso 3: Eliminar todos los autores originales
+
     for author_id in author_ids:
         graph.remove_node(author_id)
-    
-    # Paso 4: Crear el nuevo autor consolidado
+
     graph.add_node(consolidated_id, **consolidated_data)
-    
-    # Paso 5: Conectar el autor consolidado a todos los nodos que estaban conectados
+
     for neighbor, edge_data_json in all_connections:
         edge_data = json.loads(edge_data_json) if edge_data_json != "{}" else {}
         graph.add_edge(consolidated_id, neighbor, **edge_data)
-    
-    # Paso 6: Guardar el registro en el historial
+
     st.session_state.consolidation_history.append(consolidation_record)
-    
-    # Paso 7: Limpiar cache de centralidades
+
     clear_centralities_cache()
-    
-    # Paso 8: Guardar automáticamente el grafo modificado
+
     save_graph(graph, "subgrafo_con_articulos.graphml")
     
-    # Paso 9: Guardar el historial de consolidaciones en archivo separado
     save_consolidation_history()
 
 def check_can_redo_consolidation(consolidation_data):
@@ -551,12 +479,10 @@ def check_can_redo_consolidation(consolidation_data):
         dict: {'can_redo': bool, 'reason': str}
     """
     graph = st.session_state.graph
-    
-    # Verificar que el autor consolidado NO exista
+
     if consolidation_data['consolidated_id'] in graph.nodes():
         return {'can_redo': False, 'reason': 'El autor consolidado ya existe'}
-    
-    # Verificar que al menos uno de los autores originales exista
+
     existing_authors = []
     for author_info in consolidation_data['original_authors']:
         if author_info['id'] in graph.nodes():
@@ -580,13 +506,11 @@ def redo_consolidation(consolidation_data):
     """
     try:
         graph = st.session_state.graph
-        
-        # Verificar que se puede rehacer
+
         can_redo_result = check_can_redo_consolidation(consolidation_data)
         if not can_redo_result['can_redo']:
             return False
-        
-        # Identificar autores que aún existen
+
         existing_author_ids = []
         for author_info in consolidation_data['original_authors']:
             if author_info['id'] in graph.nodes():
@@ -594,13 +518,11 @@ def redo_consolidation(consolidation_data):
         
         if not existing_author_ids:
             return False
-        
-        # Rehacer la consolidación con los autores que existen
+
         consolidation_data_copy = consolidation_data['consolidation_data'].copy()
         consolidation_data_copy['re_consolidated_date'] = datetime.now().isoformat()
         consolidation_data_copy['original_consolidation_date'] = consolidation_data['date']
-        
-        # Usar la función de consolidación existente
+
         consolidate_authors(
             existing_author_ids,
             consolidation_data['consolidated_id'],
@@ -629,47 +551,36 @@ def revert_consolidation(consolidation_data):
     try:
         graph = st.session_state.graph
         consolidated_id = consolidation_data['consolidated_id']
-        
-        # Verificar que el nodo consolidado existe
+
         if consolidated_id not in graph.nodes():
             return False
-        
-        # Paso 1: Recopilar conexiones actuales del autor consolidado
+
         current_connections = []
         for neighbor in list(graph.neighbors(consolidated_id)):
             edge_data = graph.get_edge_data(consolidated_id, neighbor)
             current_connections.append((neighbor, edge_data))
-        
-        # Paso 2: Eliminar el autor consolidado
+
         graph.remove_node(consolidated_id)
-        
-        # Paso 3: Recrear los autores originales
+
         for author_info in consolidation_data['original_authors']:
-            # Recrear el nodo del autor
             author_id = author_info['id']
             author_data = {k: v for k, v in author_info.items() if k not in ['id', 'connections']}
             graph.add_node(author_id, **author_data)
-            
-            # Recrear sus conexiones originales
+
             for neighbor, edge_data in author_info['connections']:
-                if neighbor in graph.nodes():  # Solo si el nodo vecino aún existe
+                if neighbor in graph.nodes():  
                     graph.add_edge(author_id, neighbor, **(edge_data or {}))
-        
-        # Paso 4: Distribuir conexiones nuevas que el autor consolidado pudiera haber adquirido
-        # Las repartimos entre los autores originales (al primero por simplicidad)
+  
         if consolidation_data['original_authors'] and current_connections:
             primary_author_id = consolidation_data['original_authors'][0]['id']
             if primary_author_id in graph.nodes():
                 for neighbor, edge_data in current_connections:
-                    # Solo agregar si no existía originalmente
                     original_neighbors = [conn[0] for conn in consolidation_data['original_authors'][0]['connections']]
                     if neighbor not in original_neighbors and neighbor in graph.nodes():
                         graph.add_edge(primary_author_id, neighbor, **(edge_data or {}))
         
-        # Paso 5: Remover la consolidación del historial
         st.session_state.consolidation_history.remove(consolidation_data)
         
-        # Paso 6: Limpiar cache de centralidades
         clear_centralities_cache()
         
         return True

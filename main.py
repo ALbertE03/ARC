@@ -7,7 +7,6 @@ from app.authors import show_author_management
 from app.articles import show_article_management
 from app.conections import show_connection_management
 from app.network import show_network_analysis
-from app.export import show_export_page
 
 st.set_page_config(
     page_title="ARC Graph Editor",
@@ -158,7 +157,7 @@ def main():
         st.markdown("### 🧭 Navegación")
         page = st.selectbox(
             "¿Qué te gustaría hacer?",
-            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones", "💾 Guardar Resultados"]
+            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones"]
         )
         
     if page == "📈 Explorar mi Red":
@@ -171,8 +170,7 @@ def main():
         show_connection_management()
     elif page == "🔍 Descubrir Patrones":
         show_network_analysis()
-    elif page == "💾 Guardar Resultados":
-        show_export_page()
+
 
 
 def show_mixed_graph_analysis():

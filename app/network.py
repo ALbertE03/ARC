@@ -10,11 +10,6 @@ import hashlib
 import warnings
 warnings.filterwarnings('ignore')
 
-
-
-
-
-
 def create_sampling_ui(graph, graph_type):
     """Crea interfaz de muestreo según el tipo de grafo"""
     st.markdown("### 🎯 Configuración de Muestreo")
@@ -22,7 +17,6 @@ def create_sampling_ui(graph, graph_type):
     total_nodes = len(graph.nodes())
     
     if graph_type == "author":
-        # Para grafo autor-autor: solo muestreo aleatorio
         st.markdown("#### 🤝 Red de Colaboración - Muestreo Aleatorio")
         
         with st.expander("⚙️ Configuración de Muestreo", expanded=True):
@@ -145,7 +139,6 @@ def apply_sampling_filters(graph, filters):
 
 def calculate_fast_metrics(graph, graph_type):
     """Calcula métricas básicas"""
-    # Calcular métricas básicas
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
     
@@ -194,7 +187,6 @@ def calculate_fast_metrics(graph, graph_type):
         return metrics
         
     except Exception as e:
-        # En caso de error, retornar métricas básicas completas
         return {
             'n_nodes': n_nodes,
             'n_edges': n_edges,
@@ -215,8 +207,7 @@ def calculate_fast_metrics(graph, graph_type):
 
 def show_network_analysis_optimized():
     """Análisis avanzado de patrones de red"""
-    
-    # Header profesional
+
     st.markdown("""
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
                 padding: 2rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
@@ -229,16 +220,13 @@ def show_network_analysis_optimized():
     </div>
     """, unsafe_allow_html=True)
     
-    # Selector de grafo
     st.markdown("### 🎯 Selección de Grafo")
     
     graph_options = {}
     
-    # Grafo principal
     if st.session_state.graph is not None and len(st.session_state.graph.nodes()) > 0:
         graph_options[f"📊 Grafo Bipartito ({len(st.session_state.graph.nodes()):,} nodos)"] = ("main", st.session_state.graph)
-    
-    # Grafo de colaboración
+
     if hasattr(st.session_state, 'author_graph') and st.session_state.author_graph is not None and len(st.session_state.author_graph.nodes()) > 0:
         graph_options[f"🤝 Red de Colaboración ({len(st.session_state.author_graph.nodes()):,} nodos)"] = ("author", st.session_state.author_graph)
     
@@ -257,24 +245,19 @@ def show_network_analysis_optimized():
     
     st.markdown("---")
     
-    # Interfaz de muestreo según tipo de grafo
     sampling_filters = create_sampling_ui(graph, graph_type)
-    
-    # Botón principal para calcular
+
     if st.button("🚀 Calcular Análisis Completo", type="primary", help="Aplica el muestreo y calcula todas las métricas"):
         with st.spinner("⚡ Aplicando muestreo y preparando análisis..."):
-            # Aplicar filtros de muestreo
             filtered_graph = apply_sampling_filters(graph, sampling_filters)
-            
-            # Guardar el grafo filtrado en session state para uso en pestañas
+ 
             st.session_state.filtered_graph = filtered_graph
             st.session_state.original_graph = graph
             st.session_state.current_filters = sampling_filters
             st.session_state.current_graph_type = graph_type
             
             st.success(f"✅ Muestreo completado: {len(filtered_graph.nodes()):,} nodos seleccionados de {len(graph.nodes()):,} totales")
-    
-    # Mostrar análisis solo si hay un grafo filtrado
+
     if hasattr(st.session_state, 'filtered_graph') and st.session_state.filtered_graph is not None:
         filtered_graph = st.session_state.filtered_graph
         original_graph = st.session_state.original_graph
@@ -282,8 +265,7 @@ def show_network_analysis_optimized():
         graph_type = st.session_state.current_graph_type
         
         st.markdown("---")
-        
-        # Análisis principal con tabs optimizadas
+
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "🎯 Análisis Estructural", 
             "🎲 Comparación Aleatoria", 
@@ -372,7 +354,6 @@ def show_degree_analysis(graph, graph_type):
         st.metric("Máximo", f"{degrees.max()}")
         st.metric("Desv. Est.", f"{degrees.std():.2f}")
         
-        # Análisis de ley de potencias
         if len(degree_dist['unique_degrees']) > 5:
             power_law_exp = analyze_power_law_fast(degree_dist)
             st.metric("Exp. Potencia", f"{power_law_exp:.2f}")
@@ -394,7 +375,6 @@ def create_degree_distribution_plot(degree_dist):
         row=1, col=1
     )
     
-    # Gráfico log-log
     valid_idx = (unique_degrees > 0) & (counts > 0)
     if np.sum(valid_idx) > 1:
         fig.add_trace(
@@ -423,8 +403,7 @@ def analyze_power_law_fast(degree_dist):
     """Análisis rápido de ley de potencias"""
     unique_degrees = degree_dist['unique_degrees']
     counts = degree_dist['counts']
-    
-    # Filtrar valores válidos para log
+
     valid_idx = (unique_degrees > 0) & (counts > 0)
     
     if np.sum(valid_idx) < 3:
@@ -432,8 +411,7 @@ def analyze_power_law_fast(degree_dist):
     
     log_degrees = np.log(unique_degrees[valid_idx])
     log_counts = np.log(counts[valid_idx])
-    
-    # Regresión lineal simple
+
     slope, _ = np.polyfit(log_degrees, log_counts, 1)
     
     return abs(slope)
@@ -444,8 +422,7 @@ def show_random_comparison(graph, graph_type):
     
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
-    
-    # Información del grafo actual
+
     st.markdown("#### 📊 Información del Grafo Original")
     col_info1, col_info2, col_info3, col_info4 = st.columns(4)
     
@@ -462,13 +439,11 @@ def show_random_comparison(graph, graph_type):
     
     st.markdown("---")
     
-    # Configuración expandida de modelos
     st.markdown("#### ⚙️ Configuración de Modelos")
     
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # Modelos disponibles según tipo de grafo
         if graph_type == "main":
             st.markdown("**📊 Modelos para Grafo Bipartito:**")
             available_models = [
@@ -518,14 +493,12 @@ def show_random_comparison(graph, graph_type):
                     elif model == "Modelo de Encuentros Aleatorios":
                         st.markdown("**⚡ Modelo de Encuentros:** Los nodos se mueven aleatoriamente y se conectan cuando se 'encuentran', simulando dinámicas de movilidad.")
         
-        # Configuraciones adicionales
         if models:
             st.markdown("**🎛️ Configuraciones Avanzadas:**")
             
             advanced_config = {}
             
             if "Erdős–Rényi" in models:
-                # Calcular probabilidad por defecto basada en densidad actual
                 default_p = 2 * n_edges / (n_nodes * (n_nodes - 1)) if n_nodes > 1 else 0.01
                 advanced_config['er_p'] = st.slider(
                     "Probabilidad de enlace (Erdős–Rényi):",
@@ -590,13 +563,11 @@ def perform_random_comparison_optimized(graph, models, n_samples, graph_type, ad
     """Comparación con modelos aleatorios"""
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
-    
-    # Métricas del grafo original
+
     original_metrics = calculate_fast_metrics(graph, graph_type)
     
     results = {}
-    
-    # Progreso de la simulación
+
     total_simulations = len(models) * n_samples
     progress_bar = st.progress(0)
     status_text = st.empty()
@@ -608,7 +579,6 @@ def perform_random_comparison_optimized(graph, models, n_samples, graph_type, ad
         model_metrics = []
         
         for i in range(n_samples):
-            # Generar grafo aleatorio
             random_graph = generate_random_graph_expanded(
                 model, n_nodes, n_edges, graph, advanced_config
             )
@@ -619,13 +589,11 @@ def perform_random_comparison_optimized(graph, models, n_samples, graph_type, ad
                 )
                 model_metrics.append(metrics)
             
-            # Actualizar progreso
             simulation_count += 1
             progress_bar.progress(simulation_count / total_simulations)
         
         results[model] = model_metrics
     
-    # Limpiar elementos de progreso
     progress_bar.empty()
     status_text.empty()
     
@@ -640,7 +608,6 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
     """Genera grafo aleatorio según el modelo especificado"""
     try:
         if model == "Erdős–Rényi":
-            # Usar probabilidad configurada por el usuario o calcular por defecto
             p = config.get('er_p', 2 * n_edges / (n_nodes * (n_nodes - 1))) if n_nodes > 1 else 0.01
             return nx.erdos_renyi_graph(n_nodes, p)
             
@@ -649,7 +616,6 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             return nx.barabasi_albert_graph(n_nodes, m)
             
         elif model == "Watts-Strogatz":
-            # Usar configuración del usuario
             k = config.get('ws_k', min(6, n_nodes//3))
             if k % 2 == 1:
                 k += 1
@@ -662,18 +628,15 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             if sum(degree_sequence) % 2 == 1:
                 degree_sequence[-1] += 1
             random_graph = nx.configuration_model(degree_sequence)
-            return nx.Graph(random_graph)  # Remover self-loops y multi-edges
+            return nx.Graph(random_graph) 
             
         elif model == "Modelo de Crecimiento":
-            # Modelo de crecimiento simple: nodos se agregan en el tiempo
             G = nx.Graph()
-            # Comenzar con unos pocos nodos conectados
             G.add_edges_from([(0, 1), (1, 2), (0, 2)])
-            
-            # Agregar nodos uno por uno
-            m = max(1, min(3, n_edges // n_nodes))  # Enlaces por nodo nuevo
+
+            m = max(1, min(3, n_edges // n_nodes))  
             for new_node in range(3, n_nodes):
-                # Conectar a nodos existentes aleatoriamente
+
                 existing_nodes = list(G.nodes())
                 targets = np.random.choice(existing_nodes, min(m, len(existing_nodes)), replace=False)
                 for target in targets:
@@ -681,11 +644,9 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             return G
             
         elif model == "Modelo de Introducción":
-            # Modelo donde nuevas conexiones se hacen a través de amigos comunes
-            G = nx.erdos_renyi_graph(n_nodes, 0.01)  # Red inicial muy dispersa
+            G = nx.erdos_renyi_graph(n_nodes, 0.01)  
             p_intro = config.get('intro_p', 0.3)
             
-            # Agregar enlaces adicionales hasta alcanzar el número deseado
             current_edges = G.number_of_edges()
             target_edges = min(n_edges, n_nodes * (n_nodes - 1) // 2)
             
@@ -693,11 +654,9 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             max_attempts = (target_edges - current_edges) * 10
             
             while G.number_of_edges() < target_edges and attempts < max_attempts:
-                # Seleccionar dos nodos
                 u, v = np.random.choice(n_nodes, 2, replace=False)
                 
                 if not G.has_edge(u, v):
-                    # Con probabilidad p_intro, conectar si tienen amigos comunes
                     common_neighbors = set(G.neighbors(u)) & set(G.neighbors(v))
                     
                     if (len(common_neighbors) > 0 and np.random.random() < p_intro) or \
@@ -709,26 +668,20 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             return G
             
         elif model == "Modelo Geográfico Estático":
-            # Cada nodo se conecta a sus k vecinos más cercanos
             k = config.get('geo_neighbors', min(3, n_nodes//10))
-            
-            # Generar posiciones aleatorias para nodos
             pos = {i: (np.random.random(), np.random.random()) for i in range(n_nodes)}
             
             G = nx.Graph()
             G.add_nodes_from(range(n_nodes))
-            
-            # Para cada nodo, conectar a los k más cercanos
+
             for node in range(n_nodes):
-                # Calcular distancias a todos los otros nodos
                 distances = []
                 for other in range(n_nodes):
                     if other != node:
                         dist = np.sqrt((pos[node][0] - pos[other][0])**2 + 
                                      (pos[node][1] - pos[other][1])**2)
                         distances.append((dist, other))
-                
-                # Conectar a los k más cercanos
+
                 distances.sort()
                 for i in range(min(k, len(distances))):
                     neighbor = distances[i][1]
@@ -737,19 +690,16 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
             return G
             
         elif model == "Modelo de Encuentros Aleatorios":
-            # Nodos se mueven y se conectan cuando se encuentran
             encounter_prob = config.get('encounter_prob', 0.5)
             
             G = nx.Graph()
             G.add_nodes_from(range(n_nodes))
-            
-            # Simular múltiples rondas de encuentros
+
             target_edges = min(n_edges, n_nodes * (n_nodes - 1) // 2)
             rounds = 0
             max_rounds = 50
             
             while G.number_of_edges() < target_edges and rounds < max_rounds:
-                # En cada ronda, cada par de nodos tiene una probabilidad de encontrarse
                 for i in range(n_nodes):
                     for j in range(i + 1, n_nodes):
                         if not G.has_edge(i, j) and np.random.random() < encounter_prob:
@@ -759,12 +709,11 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
                     if G.number_of_edges() >= target_edges:
                         break
                 rounds += 1
-                encounter_prob *= 0.9  # Reducir probabilidad en cada ronda
+                encounter_prob *= 0.9 
             
             return G
             
     except Exception as e:
-        # Fallback a Erdős–Rényi
         p = 2 * n_edges / (n_nodes * (n_nodes - 1)) if n_nodes > 1 else 0.01
         return nx.erdos_renyi_graph(n_nodes, p)
 
@@ -778,8 +727,7 @@ def calculate_basic_metrics_fast_expanded(graph, metrics_to_compare=None):
     
     try:
         degrees = np.array([graph.degree(n) for n in graph.nodes()])
-        
-        # Métricas base con manejo de errores
+
         all_metrics = {
             'n_nodes': n_nodes,
             'n_edges': n_edges,
@@ -794,8 +742,7 @@ def calculate_basic_metrics_fast_expanded(graph, metrics_to_compare=None):
             'transitivity': nx.transitivity(graph) or 0.0,
             'avg_clustering': nx.average_clustering(graph) or 0.0
         }
-        
-        # Métricas adicionales para grafos conectados
+
         if all_metrics['is_connected']:
             try:
                 all_metrics['diameter'] = nx.diameter(graph)
@@ -810,22 +757,19 @@ def calculate_basic_metrics_fast_expanded(graph, metrics_to_compare=None):
             all_metrics['radius'] = 0
             all_metrics['avg_path_length'] = 0.0
         
-        # Validar que no hay valores None o NaN
         for key, value in all_metrics.items():
             if value is None or (isinstance(value, float) and np.isnan(value)):
                 if key in ['n_nodes', 'n_edges', 'max_degree', 'min_degree', 'n_components', 'diameter', 'radius']:
                     all_metrics[key] = 0
                 else:
                     all_metrics[key] = 0.0
-        
-        # Filtrar métricas si se especifica
+ 
         if metrics_to_compare:
             return {k: v for k, v in all_metrics.items() if k in metrics_to_compare}
         
         return all_metrics
         
     except Exception as e:
-        # En caso de error, retornar métricas básicas completas
         return {
             'n_nodes': n_nodes,
             'n_edges': n_edges,
@@ -852,23 +796,19 @@ def display_comparison_results_cached(graph, comparison_results, show_distributi
     models = comparison_results['random_models']
     config = comparison_results.get('config', {})
     metrics_compared = comparison_results.get('metrics_compared', list(original.keys()))
-    
-    # Información de configuración utilizada
+
     if config:
         with st.expander("⚙️ Configuración Utilizada", expanded=False):
             st.json(config)
     
-    # Crear tabla comparativa mejorada
     comparison_data = []
-    
-    # Agregar original
+
     row = {'Modelo': '🎯 Red Original', 'Tipo': 'Real'}
     for metric in metrics_compared:
         if metric in original and isinstance(original[metric], (int, float)):
             row[metric] = original[metric]
     comparison_data.append(row)
-    
-    # Agregar modelos aleatorios con estadísticas
+
     for model_name, model_results in models.items():
         row = {'Modelo': f'🎲 {model_name}', 'Tipo': 'Aleatorio'}
         
@@ -883,11 +823,9 @@ def display_comparison_results_cached(graph, comparison_results, show_distributi
                     row[f'{metric}_max'] = np.max(values)
         
         comparison_data.append(row)
-    
-    # Mostrar tabla principal
+
     df = pd.DataFrame(comparison_data)
     
-    # Formatear números en columnas principales
     display_cols = ['Modelo', 'Tipo'] + [col for col in metrics_compared if col in df.columns]
     df_display = df[display_cols].copy()
     
@@ -903,11 +841,8 @@ def display_comparison_results_cached(graph, comparison_results, show_distributi
 
 def plot_metric_distributions(original, models, metric, show_violin=False):
     """Crea gráficos de distribución para una métrica específica"""
-    
-    # Recopilar datos
     plot_data = []
-    
-    # Agregar valor original
+
     original_value = original.get(metric, 0)
     
     for model_name, model_results in models.items():
@@ -931,15 +866,13 @@ def plot_metric_distributions(original, models, metric, show_violin=False):
     
     with col1:
         if show_violin:
-            # Gráfico de violín
             fig_violin = px.violin(
                 df_plot, y='Valor', x='Modelo', 
                 title=f"Distribución de {metric.replace('_', ' ').title()}",
                 color='Modelo',
                 points="all"
             )
-            
-            # Agregar línea para valor original
+
             fig_violin.add_hline(
                 y=original_value, 
                 line_dash="dash", 
@@ -949,7 +882,6 @@ def plot_metric_distributions(original, models, metric, show_violin=False):
             
             st.plotly_chart(fig_violin, use_container_width=True)
         else:
-            # Histogramas por modelo
             fig_hist = make_subplots(
                 rows=len(models), cols=1,
                 subplot_titles=[f"{model}" for model in models.keys()],
@@ -971,8 +903,7 @@ def plot_metric_distributions(original, models, metric, show_violin=False):
                     ),
                     row=i+1, col=1
                 )
-                
-                # Línea del valor original
+
                 fig_hist.add_vline(
                     x=original_value,
                     line_dash="dash",
@@ -988,7 +919,7 @@ def plot_metric_distributions(original, models, metric, show_violin=False):
             st.plotly_chart(fig_hist, use_container_width=True)
     
     with col2:
-        # Estadísticas detalladas
+
         st.markdown(f"**📊 Estadísticas para {metric.replace('_', ' ').title()}:**")
         
         stats_data = []
@@ -1024,7 +955,6 @@ def show_anomaly_analysis_expanded(original, models, metrics_compared):
         if metric in original and isinstance(original[metric], (int, float)):
             original_value = original[metric]
             
-            # Recopilar valores aleatorios
             all_random_values = []
             model_stats = {}
             
@@ -1047,7 +977,7 @@ def show_anomaly_analysis_expanded(original, models, metrics_compared):
                 if std_random > 0:
                     z_score = (original_value - mean_random) / std_random
                     
-                    if abs(z_score) > 1.5:  # Umbral para anomalía
+                    if abs(z_score) > 1.5:  
                         if abs(z_score) > 3:
                             anomaly_type = "🔴 Muy Anómalo"
                         elif abs(z_score) > 2:
@@ -1056,8 +986,7 @@ def show_anomaly_analysis_expanded(original, models, metrics_compared):
                             anomaly_type = "🟠 Moderadamente Anómalo"
                         
                         direction = "⬆️ Superior" if z_score > 0 else "⬇️ Inferior"
-                        
-                        # Calcular percentil
+
                         percentile = (sum(1 for v in all_random_values if v < original_value) / 
                                     len(all_random_values)) * 100
                         
@@ -1075,8 +1004,7 @@ def show_anomaly_analysis_expanded(original, models, metrics_compared):
         st.markdown("**🚨 Anomalías Detectadas:**")
         anomaly_df = pd.DataFrame(anomalies)
         st.dataframe(anomaly_df, use_container_width=True)
-        
-        # Interpretación inteligente expandida
+
         high_anomalies = [a for a in anomalies if "Muy Anómalo" in a['Nivel']]
         moderate_anomalies = [a for a in anomalies if "Moderadamente Anómalo" in a['Nivel']]
         
@@ -1114,11 +1042,10 @@ def show_model_similarity_ranking(original, models, metrics_compared):
                 if values:
                     mean_model = np.mean(values)
                     std_model = np.std(values)
-                    
-                    # Calcular score de similitud (inverso de la distancia normalizada)
+
                     if std_model > 0:
                         z_score = abs(original_value - mean_model) / std_model
-                        score = max(0, 1 - z_score / 3)  # Normalizar para que 3 desvest = score 0
+                        score = max(0, 1 - z_score / 3)  
                     else:
                         score = 1 if original_value == mean_model else 0
                     
@@ -1131,17 +1058,14 @@ def show_model_similarity_ranking(original, models, metrics_compared):
                 'Modelo': model_name,
                 'Score de Similitud': f"{avg_score:.3f}",
                 'Similitud %': f"{avg_score * 100:.1f}%",
-                'Ranking': 0  # Se asignará después
+                'Ranking': 0  
             })
     
-    # Ordenar por score
     model_scores.sort(key=lambda x: float(x['Score de Similitud']), reverse=True)
-    
-    # Asignar rankings
+ 
     for i, model in enumerate(model_scores):
         model['Ranking'] = i + 1
-        
-        # Añadir emojis de ranking
+  
         if i == 0:
             model['Modelo'] = f"🥇 {model['Modelo']}"
         elif i == 1:
@@ -1151,11 +1075,9 @@ def show_model_similarity_ranking(original, models, metrics_compared):
         else:
             model['Modelo'] = f"#{i+1} {model['Modelo']}"
     
-    # Mostrar tabla de ranking
     ranking_df = pd.DataFrame(model_scores)
     st.dataframe(ranking_df, use_container_width=True, hide_index=True)
     
-    # Interpretación del mejor modelo
     if model_scores:
         best_model = model_scores[0]
         best_score = float(best_model['Score de Similitud'])
@@ -1182,7 +1104,6 @@ def show_anomaly_analysis(original, models):
         if metric in original and isinstance(original[metric], (int, float)):
             original_value = original[metric]
             
-            # Recopilar valores aleatorios
             all_random_values = []
             for model_results in models.values():
                 values = [r.get(metric, 0) for r in model_results 
@@ -1196,7 +1117,7 @@ def show_anomaly_analysis(original, models):
                 if std_random > 0:
                     z_score = abs(original_value - mean_random) / std_random
                     
-                    if z_score > 1.5:  # Umbral más sensible
+                    if z_score > 1.5:  
                         if z_score > 3:
                             anomaly_type = "🔴 Muy Anómalo"
                         elif z_score > 2:
@@ -1219,8 +1140,7 @@ def show_anomaly_analysis(original, models):
         st.markdown("**🚨 Anomalías Detectadas:**")
         anomaly_df = pd.DataFrame(anomalies)
         st.dataframe(anomaly_df, use_container_width=True)
-        
-        # Interpretación inteligente
+
         high_anomalies = [a for a in anomalies if "Muy Anómalo" in a['Nivel']]
         if high_anomalies:
             st.error(f"⚠️ Se detectaron {len(high_anomalies)} anomalías críticas que sugieren estructura muy especial")
@@ -1230,7 +1150,6 @@ def show_anomaly_analysis(original, models):
     else:
         st.success("✅ No se detectaron anomalías significativas - comportamiento similar a modelos aleatorios")
 
-# Funciones stub para las otras pestañas (implementar según necesidad)
 def show_resilience_analysis(graph, graph_type):
     """Análisis de resiliencia"""
     st.markdown("### 🛡️ Análisis de Resiliencia y Robustez")
@@ -1241,7 +1160,6 @@ def show_resilience_analysis(graph, graph_type):
         st.warning("⚠️ Grafo muy pequeño para análisis de resiliencia")
         return
     
-    # Configuración
     col1, col2 = st.columns([3, 1])
     
     with col1:
@@ -1274,7 +1192,6 @@ def perform_resilience_analysis_fast(graph, strategies, max_removal_pct):
     results = {}
     
     for strategy in strategies:
-        # Determinar secuencia de remoción
         if strategy == "Aleatorio":
             removal_sequence = np.random.permutation(list(graph.nodes()))
         elif strategy == "Alto Grado":
@@ -1282,8 +1199,7 @@ def perform_resilience_analysis_fast(graph, strategies, max_removal_pct):
         elif strategy == "Alta Intermediación":
             removal_sequence = sorted(graph.nodes(), 
                                     key=lambda x: betweenness.get(x, 0), reverse=True)
-        
-        # Simulación 
+
         connectivity_history = []
         temp_graph = graph.copy()
         
@@ -1407,13 +1323,11 @@ def show_community_diffusion_analysis(graph, graph_type):
 def perform_community_analysis_fast(graph, algorithm, min_size):
     """Detección de comunidades"""
     try:
-        # Detectar comunidades
         if algorithm == "Greedy Modularity":
             communities = list(nx.community.greedy_modularity_communities(graph))
-        else:  # Label Propagation
+        else:  
             communities = list(nx.community.label_propagation_communities(graph))
         
-        # Filtrar por tamaño mínimo
         large_communities = [comm for comm in communities if len(comm) >= min_size]
         
         if large_communities:
@@ -1439,7 +1353,6 @@ def display_community_results_cached(results):
         st.error(results['error'])
         return
     
-    # Métricas principales
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -1451,7 +1364,6 @@ def display_community_results_cached(results):
     with col4:
         st.metric("📈 Cobertura", f"{results['coverage']:.1%}")
     
-    # Distribución de tamaños
     if len(results['sizes']) > 1:
         fig_communities = px.histogram(
             x=results['sizes'],
@@ -1462,8 +1374,7 @@ def display_community_results_cached(results):
         )
         fig_communities.update_layout(height=350, template="plotly_white")
         st.plotly_chart(fig_communities, use_container_width=True)
-    
-    # Simulación de difusión básica
+
     st.markdown("#### 🔄 Simulación de Difusión Entre Comunidades")
     
     if st.button("🚀 Simular Difusión Rápida"):
@@ -1481,19 +1392,15 @@ def simulate_diffusion_fast(community_results):
     """Simulación rápida de difusión entre comunidades"""
     n_communities = community_results['n_communities']
     sizes = community_results['sizes']
-    
-    # Usar una comunidad por cada 3 como semilla
+
     seed_communities = max(1, n_communities // 3)
-    
-    # Estimación simple de cobertura basada en tamaños
+
     if sizes:
         seed_coverage = sum(sorted(sizes, reverse=True)[:seed_communities]) / sum(sizes)
-        # Asumir difusión del 60-80% adicional
         estimated_coverage = min(1.0, seed_coverage + 0.7 * (1 - seed_coverage))
     else:
         estimated_coverage = 0
-    
-    # Velocidad basada en modularidad (menor modularidad = mayor difusión)
+
     modularity = community_results['modularity']
     if modularity < 0.3:
         speed = "Rápida"
@@ -1514,7 +1421,6 @@ def show_advanced_metrics(graph, graph_type):
     
     n_nodes = len(graph.nodes())
     
-    # Selección de métricas
     col1, col2 = st.columns(2)
     
     with col1:
@@ -1541,12 +1447,10 @@ def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
     """Calcula métricas avanzadas para el grafo completo"""
     n_nodes = len(graph.nodes())
     results = {'sample_size': n_nodes}
-    
-    # Usar siempre el grafo completo
+
     analysis_graph = graph
     results['used_sampling'] = False
-    
-    # Calcular centralidades seleccionadas
+
     results['centralities'] = {}
     
     try:
@@ -1564,7 +1468,6 @@ def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
     except Exception as e:
         results['centrality_error'] = str(e)
     
-    # Métricas estructurales adicionales
     try:
         if nx.is_connected(analysis_graph):
             results['diameter'] = nx.diameter(analysis_graph)
@@ -1574,10 +1477,8 @@ def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
             
     except Exception as e:
         results['structural_error'] = str(e)
-    
-    # Métricas específicas por tipo de grafo
+
     if graph_type == "author":
-        # Para redes de colaboración
         try:
             results['avg_clustering'] = nx.average_clustering(analysis_graph)
             results['transitivity'] = nx.transitivity(analysis_graph)
@@ -1591,8 +1492,7 @@ def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
 def display_advanced_metrics_results(results):
     """Muestra resultados de métricas avanzadas"""
     st.markdown("#### 📊 Resultados de Métricas Avanzadas")
-    
-    # Información del análisis
+
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -1605,15 +1505,12 @@ def display_advanced_metrics_results(results):
             st.info(f"**Centralidades:** {len(results['centralities'])}")
     with col3:
         st.info("**Estado:** Calculado")
-    
-    # Mostrar centralidades
+
     if 'centralities' in results and results['centralities']:
         st.markdown("#### 🎯 Ranking de Centralidades")
-        
-        # Crear tabla comparativa de top nodos
+
         centrality_data = []
-        
-        # Obtener top 5 para cada centralidad
+
         for cent_name, cent_values in results['centralities'].items():
             top_nodes = sorted(cent_values.items(), key=lambda x: x[1], reverse=True)[:5]
             
@@ -1621,14 +1518,13 @@ def display_advanced_metrics_results(results):
                 centrality_data.append({
                     'Centralidad': cent_name.title(),
                     'Ranking': rank,
-                    'Nodo': str(node)[:20],  # Truncar nombres largos
+                    'Nodo': str(node)[:20],  
                     'Valor': f"{value:.4f}"
                 })
         
         if centrality_data:
             df_centralities = pd.DataFrame(centrality_data)
-            
-            # Mostrar por centralidad
+
             for cent_name in results['centralities'].keys():
                 cent_data = df_centralities[df_centralities['Centralidad'] == cent_name.title()]
                 if not cent_data.empty:
@@ -1639,7 +1535,6 @@ def display_advanced_metrics_results(results):
                         hide_index=True
                     )
     
-    # Mostrar métricas estructurales
     structural_metrics = ['diameter', 'radius', 'center_size', 'wiener_index', 
                          'avg_clustering', 'transitivity', 'triangles']
     
@@ -1648,7 +1543,6 @@ def display_advanced_metrics_results(results):
     if available_structural:
         st.markdown("#### 🏗️ Métricas Estructurales")
         
-        # Organizar en columns
         cols = st.columns(min(3, len(available_structural)))
         
         for i, (metric, value) in enumerate(available_structural.items()):
@@ -1659,16 +1553,12 @@ def display_advanced_metrics_results(results):
                 else:
                     st.metric(metric_name, f"{value:,}")
     
-    # Mostrar errores si los hay
     error_keys = [k for k in results.keys() if k.endswith('_error')]
     if error_keys:
         with st.expander("⚠️ Errores en Cálculos", expanded=False):
             for error_key in error_keys:
                 st.error(f"{error_key}: {results[error_key]}")
 
-# ========================================
-# FUNCIONES DE UTILIDAD ADICIONALES
-# ========================================
 
 def get_cache_statistics():
     """Obtiene estadísticas del caché"""
@@ -1686,8 +1576,7 @@ def get_cache_statistics():
         timestamps = [data['timestamp'] for data in cache.values()]
         stats['oldest_entry'] = time.strftime('%H:%M:%S', time.localtime(min(timestamps)))
         stats['newest_entry'] = time.strftime('%H:%M:%S', time.localtime(max(timestamps)))
-        
-        # Contar tipos de métricas
+
         for key in cache.keys():
             parts = key.split('_')
             if len(parts) >= 2:

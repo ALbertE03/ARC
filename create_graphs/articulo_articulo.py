@@ -37,15 +37,13 @@ def create_article_to_article_graph(author_article_graph_path="data/subgrafo_con
     
     print(f"Encontrados {len(articles)} artículos y {len(authors)} autores")
     
-    # Agregar nodos de artículos al nuevo grafo
     for article in articles:
         article_data = G_base.nodes[article].copy()
         G_articles.add_node(article, **article_data)
     
-    # Crear diccionario: autor -> lista de artículos
+
     author_to_articles = defaultdict(list)
     for article in articles:
-        # Encontrar todos los autores conectados a este artículo
         article_authors = []
         for neighbor in G_base.neighbors(article):
             if G_base.nodes[neighbor].get('node_type') == 'author':
@@ -54,33 +52,27 @@ def create_article_to_article_graph(author_article_graph_path="data/subgrafo_con
     
     print("Creando conexiones entre artículos...")
     
-    # Crear conexiones entre artículos que comparten autores
     connections_count = 0
     for i, article1 in enumerate(articles):
         if i % 100 == 0:
             print(f"Procesando artículo {i+1}/{len(articles)}")
-        
-        # Obtener autores del artículo 1
+
         authors1 = set()
         for neighbor in G_base.neighbors(article1):
             if G_base.nodes[neighbor].get('node_type') == 'author':
                 authors1.add(neighbor)
-        
-        # Comparar con artículos posteriores
+
         for j in range(i+1, len(articles)):
             article2 = articles[j]
-            
-            # Obtener autores del artículo 2
+
             authors2 = set()
             for neighbor in G_base.neighbors(article2):
                 if G_base.nodes[neighbor].get('node_type') == 'author':
                     authors2.add(neighbor)
             
-            # Calcular autores en común
             common_authors = authors1.intersection(authors2)
             
             if common_authors:
-                # Crear arista con peso igual al número de autores en común
                 weight = len(common_authors)
                 G_articles.add_edge(article1, article2, 
                                   weight=weight, 
@@ -106,7 +98,6 @@ def save_article_graph(G_articles, output_path="data/grafo_articulo_articulo.gra
     
     print(f"Guardando grafo en {output_path}...")
     
-    # Limpiar datos para GraphML (convertir listas y diccionarios a JSON)
     for n, d in G_articles.nodes(data=True):
         for k, v in list(d.items()):
             if v is None:
@@ -129,13 +120,10 @@ def save_article_graph(G_articles, output_path="data/grafo_articulo_articulo.gra
 
 
 if __name__ == "__main__":
-    # Crear el grafo artículo-artículo
     G_articles = create_article_to_article_graph()
     
     if G_articles is not None:
-       
-        
-        # Guardar el grafo
+
         save_article_graph(G_articles)
         
         print("\n¡Proceso completado exitosamente!")

@@ -8,7 +8,7 @@ def show_article_management():
     """Muestra la página de gestión de artículos"""
     st.markdown("## 📄 Gestión de Artículos")
     
-    tab1, tab2, tab3 = st.tabs(["➕ Agregar Artículo", "✏️ Editar Artículo", "🗑️ Eliminar Artículo"])
+    tab1, tab2, tab3 = st.tabs(["➕ Agregar Artículo", "✏️ Editar Artículo"])
     
     with tab1:
         st.markdown("### Agregar Nuevo Artículo")
@@ -32,11 +32,9 @@ def show_article_management():
             
             if submitted:
                 if title:
-                    # Verificar si el artículo ya existe
                     if title in st.session_state.graph.nodes():
                         st.error("❌ Ya existe un artículo con este título")
                     else:
-                        # Crear datos del artículo
                         article_data = {
                             'node_type': 'article',
                             'display_name': title,
@@ -53,7 +51,6 @@ def show_article_management():
 
                         st.session_state.graph.add_node(title, **article_data)
                         
-                        # Limpiar cache de centralidades
                         clear_centralities_cache()
                         
                         st.success("✅ Artículo agregado exitosamente")
@@ -67,7 +64,6 @@ def show_article_management():
         articles = [n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'article']
         
         if articles:
-            # Crear mapeo de títulos a IDs
             article_options = {}
             for article_id in articles:
                 article_data = st.session_state.graph.nodes[article_id]
@@ -101,7 +97,6 @@ def show_article_management():
                     submitted = st.form_submit_button("💾 Guardar Cambios", use_container_width=True)
                     
                     if submitted:
-                        # Actualizar datos
                         st.session_state.graph.nodes[selected_article].update({
                             'title': new_title,
                             'display_name': new_title,
@@ -114,8 +109,7 @@ def show_article_management():
                             'open_access': new_open_access,
                             'modified_date': datetime.now().isoformat()
                         })
-                        
-                        # Limpiar cache de centralidades
+
                         clear_centralities_cache()
                         
                         st.success("✅ Artículo actualizado exitosamente")
@@ -123,39 +117,4 @@ def show_article_management():
         else:
             st.info("No hay artículos en el grafo")
     
-    with tab3:
-        st.markdown("### Eliminar Artículo")
-        
-        articles = [n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'article']
-        
-        if articles:
-            # Crear mapeo de títulos a IDs
-            article_options = {}
-            for article_id in articles:
-                article_data = st.session_state.graph.nodes[article_id]
-                display_title = article_data.get('title', article_data.get('display_name', article_id))
-                article_options[display_title] = article_id
-            
-            selected_article_name = st.selectbox("Selecciona un artículo para eliminar:", list(article_options.keys()))
-            selected_article = article_options[selected_article_name] if selected_article_name else None
-            
-            if selected_article:
-                article_data = st.session_state.graph.nodes[selected_article]
-                connections = len(list(st.session_state.graph.neighbors(selected_article)))
-                
-                st.markdown(f"**Título:** {article_data.get('title', 'N/A')}")
-                st.markdown(f"**Autores:** {connections}")
-                
-                if connections > 0:
-                    st.warning(f"⚠️ Este artículo tiene {connections} autores conectados")
-                
-                if st.button("🗑️ Confirmar Eliminación", type="secondary"):
-                    st.session_state.graph.remove_node(selected_article)
-                    
-                    # Limpiar cache de centralidades
-                    clear_centralities_cache()
-                    
-                    st.success("✅ Artículo eliminado exitosamente")
-                    st.rerun()
-        else:
-            st.info("No hay artículos en el grafo")
+   
