@@ -16,21 +16,22 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 load_styles()
+if 'metrics_cache' not in st.session_state:
+    st.session_state.metrics_cache = {}
 
-# Función para visualizar el grafo
+if 'graph_signatures' not in st.session_state:
+    st.session_state.graph_signatures = {}
+
 def create_graph_visualization(graph, selected_nodes=None):
     """Crea una visualización interactiva del grafo usando Plotly"""
     if len(graph.nodes()) == 0:
         return go.Figure()
     
-    # Calcular posiciones usando spring layout
     pos = nx.spring_layout(graph, k=1, iterations=50)
     
-    # Separar nodos por tipo
     author_nodes = [n for n, d in graph.nodes(data=True) if d.get('type') == 'author']
     article_nodes = [n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article']
     
-    # Crear trazas para aristas
     edge_x = []
     edge_y = []
     for edge in graph.edges():
@@ -46,7 +47,6 @@ def create_graph_visualization(graph, selected_nodes=None):
         mode='lines'
     )
     
-    # Crear trazas para nodos de autores
     author_x = [pos[node][0] for node in author_nodes]
     author_y = [pos[node][1] for node in author_nodes]
     author_text = [f"Autor: {node}" for node in author_nodes]
@@ -65,8 +65,7 @@ def create_graph_visualization(graph, selected_nodes=None):
         ),
         name='Autores'
     )
-    
-    # Crear trazas para nodos de artículos
+
     article_x = [pos[node][0] for node in article_nodes]
     article_y = [pos[node][1] for node in article_nodes]
     article_text = [f"Artículo: {node}" for node in article_nodes]
@@ -86,8 +85,7 @@ def create_graph_visualization(graph, selected_nodes=None):
         ),
         name='Artículos'
     )
-    
-    # Crear figura
+
     fig = go.Figure(data=[edge_trace, author_trace, article_trace],
                    layout=go.Layout(
                        title='Grafo de Colaboración Académica',
@@ -114,20 +112,16 @@ def create_graph_visualization(graph, selected_nodes=None):
 
 
 
-# Función principal
 def main():
-    # Header principal
     st.markdown('<div class="main-header">🔗 ARC Graph Editor 2025</div>', unsafe_allow_html=True)
     st.markdown("---")
-    
-    # Cargar grafos
+
     if 'graph' not in st.session_state:
         st.session_state.graph = load_graph()
     
     if 'author_graph' not in st.session_state:
         st.session_state.author_graph = load_author_graph()
-    
-    # Cargar historial de consolidaciones
+
     if 'consolidation_history' not in st.session_state:
         st.session_state.consolidation_history = load_consolidation_history()
     
@@ -135,17 +129,14 @@ def main():
         st.error("No se pudo cargar el grafo principal. Asegúrate de que el archivo existe.")
         return
     
-    # Sidebar para navegación
     with st.sidebar:
         st.markdown("### 📊 Panel de Control")
         
-        # Métricas del grafo
         num_nodes = len(st.session_state.graph.nodes())
         num_edges = len(st.session_state.graph.edges())
         num_authors = len([n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'author'])
         num_articles = len([n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'article'])
         
-        # Métricas del grafo autor-autor
         author_graph_info = ""
         if st.session_state.author_graph is not None:
             author_nodes = len(st.session_state.author_graph.nodes())
@@ -170,8 +161,6 @@ def main():
             ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones", "💾 Guardar Resultados"]
         )
         
-    
-    # Contenido principal según la página seleccionada
     if page == "📈 Explorar mi Red":
         show_overview()
     elif page == "👤 Gestionar Investigadores":
@@ -186,15 +175,12 @@ def main():
         show_export_page()
 
 
-
-# Funciones auxiliares para análisis mejorado
 def show_mixed_graph_analysis():
     """Análisis del grafo mixto autor-artículo"""
     st.markdown("### 🌐 Análisis de tu Red Completa")
     
     graph = st.session_state.graph
-    
-    # Visualización del grafo
+
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -217,16 +203,13 @@ def show_mixed_graph_analysis():
 def show_author_collaboration_analysis():
     """Análisis de la red de colaboración entre autores"""
     st.markdown("### 🤝 Red de Colaboración entre Investigadores")
-    
-    # Crear o cargar la proyección de autores
+
     if 'author_graph' not in st.session_state or st.session_state.author_graph is None:
         if st.button("🔄 Generar Red de Colaboración", type="primary", use_container_width=True):
             with st.spinner("Creando red de colaboración entre investigadores..."):
                 try:
-                    # Intentar cargar desde archivo
                     author_graph = load_author_graph()
                     if author_graph is None:
-                        # Crear proyección desde el grafo principal
                         author_graph = create_author_projection(st.session_state.graph)
                     
                     st.session_state.author_graph = author_graph
@@ -240,7 +223,6 @@ def show_author_collaboration_analysis():
     
     author_graph = st.session_state.author_graph
     
-    # Visualización de la red de autores
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -263,8 +245,7 @@ def show_comparative_analysis():
     st.markdown("### 📊 Análisis Comparativo de Redes")
     
     graph = st.session_state.graph
-    
-    # Verificar si existe la red de autores
+
     if 'author_graph' not in st.session_state or st.session_state.author_graph is None:
         st.warning("⚠️ Primero necesitas generar la red de colaboración")
         if st.button("🔄 Generar Red de Colaboración", type="primary"):
@@ -309,29 +290,23 @@ def create_author_projection(main_graph):
     """Crea una proyección de la red de colaboración entre autores"""
     author_graph = nx.Graph()
     
-    # Obtener todos los autores
     authors = [n for n, d in main_graph.nodes(data=True) if d.get('node_type') == 'author']
     
-    # Agregar nodos de autores
     for author in authors:
         author_data = main_graph.nodes[author]
         author_graph.add_node(author, **author_data)
-    
-    # Crear conexiones entre autores que colaboraron en artículos
+
     for article_node in main_graph.nodes():
         article_data = main_graph.nodes[article_node]
         if article_data.get('node_type') == 'article':
-            # Obtener autores conectados a este artículo
             article_authors = [n for n in main_graph.neighbors(article_node) 
                              if main_graph.nodes[n].get('node_type') == 'author']
             
-            # Crear aristas entre todos los pares de autores
             for i, author1 in enumerate(article_authors):
                 for author2 in article_authors[i+1:]:
                     if not author_graph.has_edge(author1, author2):
                         author_graph.add_edge(author1, author2, weight=1)
                     else:
-                        # Incrementar peso si ya existe la arista
                         author_graph[author1][author2]['weight'] += 1
     
     return author_graph
@@ -341,10 +316,8 @@ def create_author_graph_visualization(author_graph):
     if len(author_graph.nodes()) == 0:
         return go.Figure()
     
-    # Calcular posiciones usando spring layout
     pos = nx.spring_layout(author_graph, k=2, iterations=50)
-    
-    # Crear trazas para aristas
+
     edge_x = []
     edge_y = []
     edge_weights = []
@@ -364,7 +337,6 @@ def create_author_graph_visualization(author_graph):
         mode='lines'
     )
     
-    # Crear trazas para nodos de autores
     node_x = []
     node_y = []
     node_text = []
@@ -376,13 +348,11 @@ def create_author_graph_visualization(author_graph):
             node_x.append(x)
             node_y.append(y)
             
-            # Información del nodo
             node_data = author_graph.nodes[node]
             display_name = node_data.get('display_name', str(node))
             degree = author_graph.degree(node)
             node_text.append(f"{display_name}<br>Colaboraciones: {degree}")
-            
-            # Tamaño basado en el grado del nodo
+
             node_sizes.append(max(10, degree * 3))
     
     node_trace = go.Scatter(
@@ -400,7 +370,6 @@ def create_author_graph_visualization(author_graph):
         name='Investigadores'
     )
     
-    # Crear la figura
     fig = go.Figure(data=[edge_trace, node_trace],
                    layout=go.Layout(
                         title='Red de Colaboración entre Investigadores',

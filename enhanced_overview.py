@@ -4,8 +4,11 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from datetime import datetime
-
+import warnings
+warnings.filterwarnings('ignore')
+import json
 # Función para visualizar el grafo (importada desde main.py)
 def create_graph_visualization(graph, selected_nodes=None):
     """Crea una visualización interactiva del grafo usando Plotly"""
@@ -126,59 +129,232 @@ def create_graph_visualization(graph, selected_nodes=None):
 
 def show_overview():
     """Muestra la página de vista general con análisis completos"""
-    st.markdown("## 📈 Explora tu Red de Colaboración")
+    # Header profesional
+    st.markdown("""
+    <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); 
+                padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
+        <h1 style="color: white; text-align: center; margin: 0;">
+            🚀 Red de Colaboración Académica - Panel de Control
+        </h1>
+        <p style="color: white; text-align: center; margin: 0.5rem 0 0 0; font-size: 1.2rem;">
+            Análisis de Redes de Investigación UH
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # Selector del tipo de análisis
-    st.markdown("### 🎯 Selecciona el tipo de análisis")
-    analysis_type = st.radio(
-        "¿Qué aspecto de tu red quieres explorar?",
-        ["🌐 Vista Completa (Investigadores + Publicaciones)", 
-         "🤝 Red de Colaboración (Solo Investigadores)",
-         "📊 Análisis Comparativo"],
-        horizontal=True
-    )
+    show_executive_summary()
     
-    if analysis_type == "🌐 Vista Completa (Investigadores + Publicaciones)":
+    st.markdown("### 🎯 Centro de Análisis")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if st.button("🌐 Red Completa\n(Investigadores + Publicaciones)", 
+                    use_container_width=True, type="primary"):
+            st.session_state.analysis_type = "complete"
+    with col2:
+        if st.button("🤝 Red de Colaboración\n(Solo Investigadores)", 
+                    use_container_width=True):
+            st.session_state.analysis_type = "collaboration"
+    with col3:
+        if st.button("📊 Análisis Comparativo\n(Métricas Avanzadas)", 
+                    use_container_width=True):
+            st.session_state.analysis_type = "comparative"
+    
+    # Mostrar análisis basado en selección
+    analysis_type = getattr(st.session_state, 'analysis_type', 'complete')
+    
+    if analysis_type == "complete":
         show_mixed_graph_analysis()
-    elif analysis_type == "🤝 Red de Colaboración (Solo Investigadores)":
+    elif analysis_type == "collaboration":
         show_author_collaboration_analysis()
     else:
         show_comparative_analysis()
 
-def show_mixed_graph_analysis():
-    """Análisis del grafo mixto autor-artículo"""
-    st.markdown("### 🌐 Análisis de tu Red Completa")
-    
+def show_executive_summary():
+    """Muestra un resumen ejecutivo con métricas clave"""
     graph = st.session_state.graph
     
-    # Visualización del grafo
+    # Calcular métricas principales
+    num_authors = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'author'])
+    num_articles = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article'])
+    total_connections = len(graph.edges())
+    network_density = nx.density(graph)
+    
+    # Calcular métricas adicionales
+    author_productivity = []
+    collaboration_strength = []
+    
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'author':
+            publications = len([n for n in graph.neighbors(node) 
+                              if graph.nodes[n].get('node_type') == 'article'])
+            author_productivity.append(publications)
+    
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'article':
+            coauthors = len([n for n in graph.neighbors(node) 
+                           if graph.nodes[n].get('node_type') == 'author'])
+            collaboration_strength.append(coauthors)
+    
+    avg_productivity = np.mean(author_productivity) if author_productivity else 0
+    avg_collaboration = np.mean(collaboration_strength) if collaboration_strength else 0
+       
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    with col1:
+        st.metric(
+            label="👥 Investigadores",
+            value=f"{num_authors:,}",
+            delta=f"Activos en la red"
+        )
+    
+    with col2:
+        st.metric(
+            label="📄 Publicaciones",
+            value=f"{num_articles:,}",
+            delta=f"Documentos analizados"
+        )
+    
+    with col3:
+        st.metric(
+            label="🔗 Conexiones",
+            value=f"{total_connections:,}",
+            delta=f"Vínculos identificados"
+        )
+    
+    with col4:
+        st.metric(
+            label="📈 Productividad Media",
+            value=f"{avg_productivity:.1f}",
+            delta="Pubs/Investigador"
+        )
+    
+    with col5:
+        st.metric(
+            label="🤝 Colaboración Media",
+            value=f"{avg_collaboration:.1f}",
+            delta="Coautores/Publicación"
+        )
+    
+    
+    # Crear dashboard de métricas
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        if st.button("📊 Ver Red Completa", type="primary", use_container_width=True):
-            with st.spinner("Generando visualización de tu red completa..."):
-                fig = create_graph_visualization(graph)
+        # Gráfico combinado de métricas
+        fig = create_kpi_dashboard(graph, author_productivity, collaboration_strength)
+        st.plotly_chart(fig, use_container_width=True)
+ 
+
+def create_kpi_dashboard(graph, author_productivity, collaboration_strength):
+    """Crea un dashboard visual con métricas clave"""
+    from plotly.subplots import make_subplots
+    
+    # Crear subplots
+    fig = make_subplots(
+        rows=2, cols=2,
+        subplot_titles=('Distribución de Productividad', 'Tendencia de Colaboración', 
+                       ),
+        specs=[[{"secondary_y": False}, {"secondary_y": False}],
+               [{"secondary_y": False}, {"secondary_y": True}]]
+    )
+    
+    if author_productivity:
+        productivity_hist = np.histogram(author_productivity, bins=min(20, len(set(author_productivity))))
+        fig.add_trace(
+            go.Bar(x=productivity_hist[1][:-1], y=productivity_hist[0], 
+                   name="Productividad", marker_color='#667eea'),
+            row=1, col=1
+        )
+
+    if collaboration_strength:
+        collab_hist = np.histogram(collaboration_strength, bins=min(15, len(set(collaboration_strength))))
+        fig.add_trace(
+            go.Bar(x=collab_hist[1][:-1], y=collab_hist[0], 
+                   name="Colaboración", marker_color='#764ba2'),
+            row=1, col=2
+        )
+    
+    # Gráfico 3: Métricas de conectividad
+    if len(graph.nodes()) > 0:
+        degrees = [graph.degree(n) for n in graph.nodes()]
+        degree_dist = np.histogram(degrees, bins=min(10, len(set(degrees))))
+        fig.add_trace(
+            go.Scatter(x=degree_dist[1][:-1], y=degree_dist[0], 
+                      mode='lines+markers', name="Conectividad", 
+                      line=dict(color='#f093fb')),
+            row=2, col=1
+        )
+    
+   
+    
+    fig.update_layout(
+        height=600,
+        title_text="Dashboard de Métricas de Red",
+        title_x=0.5,
+        showlegend=True,
+        template="plotly_white"
+    )
+    
+    return fig
+
+def show_mixed_graph_analysis():
+    """Análisis del grafo mixto autor-artículo con visualizaciones avanzadas"""
+    st.markdown("### 🌐 Análisis Completo de la Red de Investigación")
+    
+    graph = st.session_state.graph
+    
+    # Panel de control interactivo
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        # Visualización principal mejorada
+        st.markdown("#### 🎨 Visualización Interactiva de la Red")
+        
+        # Opciones de visualización
+        viz_options = st.columns(3)
+        with viz_options[0]:
+            show_labels = st.checkbox("Mostrar etiquetas", value=False)
+        with viz_options[1]:
+            layout_type = st.selectbox("Algoritmo de layout", 
+                                     ["spring", "circular", "kamada_kawai", "shell"])
+        with viz_options[2]:
+            node_size_metric = st.selectbox("Tamaño de nodo basado en", 
+                                          ["grado", "h_index", "citaciones"])
+        
+        if st.button("� Generar Visualización Avanzada", type="primary", use_container_width=True):
+            with st.spinner("Creando visualización profesional de la red..."):
+                fig = create_advanced_graph_visualization(
+                    graph, layout_type, show_labels, node_size_metric
+                )
                 st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.info("👆 Visualiza cómo se conectan investigadores con sus publicaciones")
     
     with col2:
-        st.markdown("#### 📋 Resumen de tu Red")
-        num_authors = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'author'])
-        num_articles = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article'])
-        
-        st.metric("👥 Investigadores", num_authors)
-        st.metric("📄 Publicaciones", num_articles)
-        st.metric("🔗 Conexiones Totales", len(graph.edges()))
-        
-        if num_authors > 0 and num_articles > 0:
-            ratio = num_articles / num_authors
-            st.metric("📈 Publicaciones por Investigador", f"{ratio:.1f}")
+        # Panel de métricas dinámicas
+        st.markdown("#### � Métricas en Tiempo Real")
+        show_dynamic_metrics_panel(graph)
     
-    # Análisis de productividad
-    st.markdown("### 📈 Análisis de Productividad")
+    # Análisis de productividad mejorado
+    st.markdown("### 📈 Centro de Análisis de Productividad")
     
-    tab1, tab2, tab3 = st.tabs(["🏆 Investigadores Más Activos", "📚 Publicaciones Más Colaborativas", "🔍 Distribuciones"])
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "🏆 Rankings de Impacto", 
+        "📚 Análisis de Colaboración", 
+        "🔍 Patrones Temporales",
+        "🌍 Análisis Geográfico"
+    ])
+    
+    with tab1:
+        show_impact_rankings(graph)
+    
+    with tab2:
+        show_collaboration_analysis_enhanced(graph)
+    
+    with tab3:
+        show_temporal_patterns(graph)
+    
+    with tab4:
+        show_geographic_analysis(graph)
     
     with tab1:
         # Top investigadores por número de publicaciones
@@ -624,3 +800,535 @@ def show_comparative_analysis():
         st.metric("📄 Solo en Red Completa", len(mixed_authors_set - collab_authors_set))
     with col3:
         st.metric("🤝 Solo en Red Colaboración", len(collab_authors_set - mixed_authors_set))
+
+def create_advanced_graph_visualization(graph, layout_type, show_labels, node_size_metric):
+    """Crea una visualización avanzada del grafo con opciones personalizables"""
+    if len(graph.nodes()) == 0:
+        return go.Figure()
+    
+    # Calcular posiciones según el layout seleccionado
+    if layout_type == "spring":
+        pos = nx.spring_layout(graph, k=2, iterations=100)
+    elif layout_type == "circular":
+        pos = nx.circular_layout(graph)
+    elif layout_type == "kamada_kawai":
+        pos = nx.kamada_kawai_layout(graph)
+    elif layout_type == "shell":
+        # Separar nodos por tipo para shell layout
+        authors = [n for n, d in graph.nodes(data=True) if d.get('node_type') == 'author']
+        articles = [n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article']
+        shells = [authors, articles] if authors and articles else [list(graph.nodes())]
+        pos = nx.shell_layout(graph, nlist=shells)
+    else:
+        pos = nx.spring_layout(graph, k=1, iterations=50)
+    
+    # Separar nodos por tipo
+    author_nodes = [n for n, d in graph.nodes(data=True) if d.get('node_type') == 'author']
+    article_nodes = [n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article']
+    
+    # Crear trazas para aristas con gradiente
+    edge_x, edge_y = [], []
+    edge_weights = []
+    
+    for edge in graph.edges():
+        if edge[0] in pos and edge[1] in pos:
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_x.extend([x0, x1, None])
+            edge_y.extend([y0, y1, None])
+            
+            # Peso de la arista (para grosor)
+            weight = graph[edge[0]][edge[1]].get('weight', 1)
+            edge_weights.extend([weight, weight, None])
+    
+    edge_trace = go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=1, color='rgba(125,125,125,0.5)'),
+        hoverinfo='none',
+        mode='lines',
+        name='Conexiones'
+    )
+    
+    # Función para calcular tamaño de nodo
+    def get_node_size(node, metric):
+        node_data = graph.nodes[node]
+        if metric == "grado":
+            return min(max(graph.degree(node) * 2, 8), 50)
+        elif metric == "h_index":
+            return min(max(node_data.get('h_index', 0) * 1.5, 8), 50)
+        elif metric == "citaciones":
+            return min(max(node_data.get('citation_count', 0) / 10, 8), 50)
+        return 15
+    
+    # Crear trazas para nodos de autores con colores mejorados
+    author_x, author_y, author_text, author_colors, author_sizes = [], [], [], [], []
+    
+    for node in author_nodes:
+        if node in pos:
+            x, y = pos[node]
+            author_x.append(x)
+            author_y.append(y)
+            
+            node_data = graph.nodes[node]
+            display_name = node_data.get('display_name', str(node))
+            h_index = node_data.get('h_index', 0)
+            affiliation = node_data.get('affiliation', 'N/A')
+            
+            # Texto del hover mejorado
+            hover_text = f"<b>{display_name}</b><br>"
+            hover_text += f"H-Index: {h_index}<br>"
+            hover_text += f"Institución: {affiliation}<br>"
+            hover_text += f"Conexiones: {graph.degree(node)}"
+            author_text.append(hover_text)
+            
+            # Color basado en h-index
+            if h_index > 20:
+                author_colors.append('#FF6B6B')  # Rojo para alto impacto
+            elif h_index > 10:
+                author_colors.append('#4ECDC4')  # Verde para impacto medio
+            else:
+                author_colors.append('#45B7D1')  # Azul para otros
+            
+            author_sizes.append(get_node_size(node, node_size_metric))
+    
+    author_trace = go.Scatter(
+        x=author_x, y=author_y,
+        mode='markers+text' if show_labels else 'markers',
+        text=[node_data.get('display_name', str(node))[:10] + "..." 
+              if len(node_data.get('display_name', str(node))) > 10 
+              else node_data.get('display_name', str(node)) 
+              for node in author_nodes if node in pos] if show_labels else None,
+        textposition="top center",
+        hoverinfo='text',
+        hovertext=author_text,
+        marker=dict(
+            size=author_sizes,
+            color=author_colors,
+            line=dict(width=2, color='white'),
+            opacity=0.8
+        ),
+        name='Investigadores'
+    )
+    
+    # Crear trazas para artículos
+    article_x, article_y, article_text, article_sizes = [], [], [], []
+    
+    for node in article_nodes:
+        if node in pos:
+            x, y = pos[node]
+            article_x.append(x)
+            article_y.append(y)
+            
+            node_data = graph.nodes[node]
+            display_name = node_data.get('display_name', str(node))
+            year = node_data.get('publication_year', 'N/A')
+            citations = node_data.get('citation_count', 0)
+            
+            hover_text = f"<b>{display_name[:50]}...</b><br>"
+            hover_text += f"Año: {year}<br>"
+            hover_text += f"Citas: {citations}<br>"
+            hover_text += f"Co-autores: {graph.degree(node)}"
+            article_text.append(hover_text)
+            
+            article_sizes.append(get_node_size(node, "citaciones"))
+    
+    article_trace = go.Scatter(
+        x=article_x, y=article_y,
+        mode='markers',
+        hoverinfo='text',
+        hovertext=article_text,
+        marker=dict(
+            size=article_sizes,
+            color='#FFA07A',
+            symbol='diamond',
+            line=dict(width=1, color='white'),
+            opacity=0.7
+        ),
+        name='Publicaciones'
+    )
+    
+    # Crear la figura con diseño mejorado
+    fig = go.Figure(data=[edge_trace, author_trace, article_trace])
+    
+    fig.update_layout(
+        title=dict(
+            text='Red de Colaboración Académica - Vista Avanzada',
+            x=0.5,
+            font=dict(size=20, color='#2C3E50')
+        ),
+        showlegend=True,
+        hovermode='closest',
+        margin=dict(b=20, l=5, r=5, t=60),
+        annotations=[
+            dict(
+                text=f"Layout: {layout_type.title()} | Nodos: {len(graph.nodes())} | Conexiones: {len(graph.edges())}",
+                showarrow=False,
+                xref="paper", yref="paper",
+                x=0.005, y=-0.002,
+                xanchor='left', yanchor='bottom',
+                font=dict(color='gray', size=12)
+            )
+        ],
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        plot_bgcolor='white',
+        height=700,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+    
+    return fig
+
+def show_dynamic_metrics_panel(graph):
+    """Panel de métricas dinámicas"""
+    # Métricas básicas
+    num_authors = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'author'])
+    num_articles = len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'article'])
+    
+    st.metric("👥 Investigadores", f"{num_authors:,}")
+    st.metric("📄 Publicaciones", f"{num_articles:,}")
+    st.metric("🔗 Conexiones", f"{len(graph.edges()):,}")
+    
+    # Densidad con indicador visual
+    density = nx.density(graph)
+    if density > 0.1:
+        density_color = "🟢"
+    elif density > 0.05:
+        density_color = "🟡"
+    else:
+        density_color = "🔴"
+    
+    st.metric("📊 Densidad", f"{density:.4f}", delta=f"{density_color}")
+    
+    # Gráfico de distribución de grados
+    degrees = [graph.degree(n) for n in graph.nodes()]
+    if degrees:
+        fig_degree = px.histogram(
+            x=degrees, 
+            nbins=min(20, len(set(degrees))),
+            title="Distribución de Conexiones",
+            labels={'x': 'Grado', 'y': 'Frecuencia'}
+        )
+        fig_degree.update_layout(height=200, margin=dict(t=30, b=30))
+        st.plotly_chart(fig_degree, use_container_width=True)
+
+def show_impact_rankings(graph):
+    """Muestra rankings de impacto con visualizaciones mejoradas"""
+    st.markdown("#### 🏆 Rankings de Alto Impacto")
+    
+    # Recopilar datos de investigadores
+    researcher_data = []
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'author':
+            publications = len([n for n in graph.neighbors(node) 
+                              if graph.nodes[n].get('node_type') == 'article'])
+            
+            # Calcular citas totales
+            total_citations = 0
+            for neighbor in graph.neighbors(node):
+                if graph.nodes[neighbor].get('node_type') == 'article':
+                    total_citations += graph.nodes[neighbor].get('citation_count', 0)
+            try:
+                s = data.get("summary_stats", {} )
+                d = json.loads(s)
+            except:
+                d = {'h_index': 0}
+            researcher_data.append({
+                'Investigador': data.get('display_name', node),
+                'Institución': data.get('affiliation', 'N/A'),
+                'Publicaciones': publications,
+                'H-Index': d['h_index'],
+                'Citas Totales': total_citations,
+                'Impacto Promedio': total_citations / publications if publications > 0 else 0
+            })
+    
+    if researcher_data:
+        df = pd.DataFrame(researcher_data)
+        
+        # Crear tabs para diferentes rankings
+        rank_tab1, rank_tab2, rank_tab3 = st.tabs([
+            "📈 Por H-Index", "📊 Por Publicaciones", "⭐ Por Impacto"
+        ])
+        
+        with rank_tab1:
+            df_h = df.sort_values('H-Index', ascending=False).head(15)
+            col1, col2 = st.columns([1, 1])
+            
+            with col1:
+                st.dataframe(df_h[['Investigador', 'Institución', 'H-Index']], 
+                           use_container_width=True)
+            
+            with col2:
+                fig = px.bar(df_h.head(10), 
+                           x='H-Index', y='Investigador',
+                           title="Top 10 por H-Index",
+                           orientation='h',
+                           color='H-Index',
+                           color_continuous_scale='Viridis')
+                fig.update_layout(height=400)
+                st.plotly_chart(fig, use_container_width=True)
+        
+        with rank_tab2:
+            df_pub = df.sort_values('Publicaciones', ascending=False).head(15)
+            col1, col2 = st.columns([1, 1])
+            
+            with col1:
+                st.dataframe(df_pub[['Investigador', 'Institución', 'Publicaciones']], 
+                           use_container_width=True)
+            
+            with col2:
+                fig = px.scatter(df_pub, 
+                               x='Publicaciones', y='H-Index',
+                               size='Citas Totales',
+                               hover_data=['Investigador'],
+                               title="Productividad vs Impacto",
+                               color='Impacto Promedio',
+                               color_continuous_scale='Plasma')
+                st.plotly_chart(fig, use_container_width=True)
+        
+        with rank_tab3:
+            df_impact = df.sort_values('Impacto Promedio', ascending=False).head(15)
+            col1, col2 = st.columns([1, 1])
+            
+            with col1:
+                st.dataframe(df_impact[['Investigador', 'Institución', 'Impacto Promedio']], 
+                           use_container_width=True)
+            
+            with col2:
+                # Crear gráfico de burbujas
+                fig = px.scatter(df_impact, 
+                               x='Publicaciones', y='Impacto Promedio',
+                               size='H-Index',
+                               hover_data=['Investigador', 'Citas Totales'],
+                               title="Calidad vs Cantidad",
+                               color='H-Index',
+                               color_continuous_scale='RdYlBu_r')
+                st.plotly_chart(fig, use_container_width=True)
+
+def show_collaboration_analysis_enhanced(graph):
+    """Análisis de colaboración mejorado"""
+    st.markdown("#### 🤝 Análisis Avanzado de Colaboración")
+    
+    # Recopilar datos de colaboración
+    collaboration_data = []
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'article':
+            coauthors = [n for n in graph.neighbors(node) 
+                        if graph.nodes[n].get('node_type') == 'author']
+            
+            if len(coauthors) > 1:  # Solo artículos colaborativos
+                collaboration_data.append({
+                    'Título': data.get('display_name', node)[:60] + "...",
+                    'Año': data.get('publication_year', 'N/A'),
+                    'Co-autores': len(coauthors),
+                    'Citas': data.get('citation_count', 0),
+                    'Revista': data.get('journal', 'N/A'),
+                    'Factor de Colaboración': len(coauthors) * data.get('citation_count', 0)
+                })
+    
+    if collaboration_data:
+        df_collab = pd.DataFrame(collaboration_data)
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Top colaboraciones
+            df_top = df_collab.sort_values('Factor de Colaboración', ascending=False).head(10)
+            st.markdown("##### 🌟 Colaboraciones Más Exitosas")
+            st.dataframe(df_top[['Título', 'Co-autores', 'Citas']], use_container_width=True)
+        
+        with col2:
+            # Gráfico de colaboración vs impacto
+            fig = px.scatter(df_collab,
+                           x='Co-autores', y='Citas',
+                           size='Factor de Colaboración',
+                           color='Año',
+                           title="Colaboración vs Impacto",
+                           hover_data=['Título'])
+            st.plotly_chart(fig, use_container_width=True)
+        
+        # Análisis temporal de colaboración
+        st.markdown("##### 📈 Evolución de la Colaboración")
+        
+        # Agrupar por año
+        yearly_collab = df_collab.groupby('Año').agg({
+            'Co-autores': 'mean',
+            'Citas': 'mean',
+            'Título': 'count'
+        }).reset_index()
+        yearly_collab.columns = ['Año', 'Promedio Co-autores', 'Promedio Citas', 'Número Publicaciones']
+        
+        if len(yearly_collab) > 1:
+            fig_trend = px.line(yearly_collab, x='Año', y='Promedio Co-autores',
+                              title="Tendencia de Colaboración por Año")
+            fig_trend.add_scatter(x=yearly_collab['Año'], y=yearly_collab['Promedio Citas'],
+                                mode='lines', name='Promedio Citas', yaxis='y2')
+            
+            fig_trend.update_layout(
+                yaxis2=dict(overlaying='y', side='right', title='Promedio Citas'),
+                yaxis=dict(title='Promedio Co-autores')
+            )
+            st.plotly_chart(fig_trend, use_container_width=True)
+
+def show_temporal_patterns(graph):
+    """Análisis de patrones temporales"""
+    st.markdown("#### ⏰ Patrones Temporales de Investigación")
+    
+    # Recopilar datos temporales
+    temporal_data = []
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'article':
+            year = data.get('publication_year')
+            if year and year != 'N/A':
+                try:
+                    year = int(year)
+                    if 2000 <= year <= 2024:  # Filtrar años válidos
+                        coauthors = len([n for n in graph.neighbors(node) 
+                                       if graph.nodes[n].get('node_type') == 'author'])
+                        temporal_data.append({
+                            'Año': year,
+                            'Citas': data.get('citation_count', 0),
+                            'Co-autores': coauthors,
+                            'Revista': data.get('journal', 'N/A')
+                        })
+                except ValueError:
+                    continue
+    
+    if temporal_data:
+        df_temporal = pd.DataFrame(temporal_data)
+        
+        # Análisis por año
+        yearly_stats = df_temporal.groupby('Año').agg({
+            'Citas': ['count', 'sum', 'mean'],
+            'Co-autores': 'mean'
+        }).round(2)
+        
+        yearly_stats.columns = ['Publicaciones', 'Citas Totales', 'Citas Promedio', 'Colaboración Promedio']
+        yearly_stats = yearly_stats.reset_index()
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Evolución de publicaciones
+            fig1 = px.bar(yearly_stats, x='Año', y='Publicaciones',
+                         title="Evolución de Publicaciones por Año",
+                         color='Publicaciones',
+                         color_continuous_scale='Blues')
+            st.plotly_chart(fig1, use_container_width=True)
+        
+        with col2:
+            # Evolución del impacto
+            fig2 = px.line(yearly_stats, x='Año', y='Citas Promedio',
+                          title="Evolución del Impacto Promedio",
+                          markers=True)
+            st.plotly_chart(fig2, use_container_width=True)
+        
+        # Heatmap de productividad
+        st.markdown("##### 🔥 Mapa de Calor de Productividad")
+        
+        # Crear matriz para heatmap
+        years = sorted(df_temporal['Año'].unique())
+        if len(years) > 3:
+            productivity_matrix = []
+            
+            for year in years[-10:]:  # Últimos 10 años
+                year_data = df_temporal[df_temporal['Año'] == year]
+                productivity_matrix.append([
+                    len(year_data),  # Publicaciones
+                    year_data['Citas'].sum(),  # Citas totales
+                    year_data['Co-autores'].mean(),  # Colaboración promedio
+                    year_data['Citas'].mean()  # Impacto promedio
+                ])
+            
+            heatmap_df = pd.DataFrame(productivity_matrix, 
+                                    index=years[-10:],
+                                    columns=['Publicaciones', 'Citas Totales', 'Colaboración', 'Impacto'])
+            
+            # Normalizar para el heatmap
+            heatmap_normalized = (heatmap_df - heatmap_df.min()) / (heatmap_df.max() - heatmap_df.min())
+            
+            fig_heatmap = px.imshow(heatmap_normalized.T, 
+                                  aspect='auto',
+                                  title="Mapa de Calor de Métricas Normalizadas",
+                                  color_continuous_scale='RdYlBu_r')
+            st.plotly_chart(fig_heatmap, use_container_width=True)
+
+def show_geographic_analysis(graph):
+    """Análisis geográfico de la red"""
+    st.markdown("#### 🌍 Análisis Geográfico de Colaboración")
+    
+    # Recopilar datos de afiliaciones
+    affiliations = []
+    for node, data in graph.nodes(data=True):
+        if data.get('node_type') == 'author':
+            affiliation = data.get('affiliation', 'N/A')
+            if affiliation and affiliation != 'N/A':
+                publications = len([n for n in graph.neighbors(node) 
+                                  if graph.nodes[n].get('node_type') == 'article'])
+                h_index = data.get('h_index', 0)
+                
+                affiliations.append({
+                    'Institución': affiliation,
+                    'Investigador': data.get('display_name', node),
+                    'Publicaciones': publications,
+                    'H-Index': h_index
+                })
+    
+    if affiliations:
+        df_geo = pd.DataFrame(affiliations)
+        
+        # Análisis por institución
+        inst_stats = df_geo.groupby('Institución').agg({
+            'Investigador': 'count',
+            'Publicaciones': 'sum',
+            'H-Index': 'mean'
+        }).round(2)
+        inst_stats.columns = ['Investigadores', 'Publicaciones Totales', 'H-Index Promedio']
+        inst_stats = inst_stats.sort_values('Publicaciones Totales', ascending=False).reset_index()
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("##### 🏛️ Top Instituciones")
+            st.dataframe(inst_stats.head(10), use_container_width=True)
+        
+        with col2:
+            # Gráfico de burbujas por institución
+            if len(inst_stats) > 1:
+                fig_inst = px.scatter(inst_stats.head(15),
+                                    x='Investigadores', 
+                                    y='H-Index Promedio',
+                                    size='Publicaciones Totales',
+                                    hover_data=['Institución'],
+                                    title="Análisis Institucional",
+                                    color='Publicaciones Totales',
+                                    color_continuous_scale='Viridis')
+                st.plotly_chart(fig_inst, use_container_width=True)
+        
+        # Análisis de diversidad institucional
+        st.markdown("##### 🌐 Diversidad Institucional")
+        
+        total_institutions = len(inst_stats)
+        total_researchers = df_geo['Investigador'].nunique()
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("🏛️ Instituciones Únicas", total_institutions)
+        with col2:
+            diversity_index = total_institutions / total_researchers if total_researchers > 0 else 0
+            st.metric("📊 Índice de Diversidad", f"{diversity_index:.3f}")
+        with col3:
+            avg_researchers_per_inst = total_researchers / total_institutions if total_institutions > 0 else 0
+            st.metric("👥 Promedio por Institución", f"{avg_researchers_per_inst:.1f}")
+        
+        # Distribución de tamaños institucionales
+        if len(inst_stats) > 5:
+            fig_dist = px.histogram(inst_stats, x='Investigadores',
+                                  title="Distribución de Tamaños Institucionales",
+                                  nbins=min(20, len(inst_stats)))
+            st.plotly_chart(fig_dist, use_container_width=True)

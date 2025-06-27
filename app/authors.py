@@ -45,7 +45,7 @@ def show_author_management():
                             'orcid': orcid,
                             'scopus_id': scopus_id,
                             'affiliation': affiliation,
-                            'h_index': h_index,
+                            "summary_stats":{'h_index': h_index},
                             'created_date': datetime.now().isoformat()
                         }
                         
