@@ -12,66 +12,7 @@ warnings.filterwarnings('ignore')
 
 
 
-def get_graph_signature(graph):
-    """Genera una firma única para el grafo"""
-    try:
-        basic_info = {
-            'nodes': len(graph.nodes()),
-            'edges': len(graph.edges()),
-            'directed': graph.is_directed()
-        }
-        
-        edges_sample = list(graph.edges())
-        if len(edges_sample) > 10000:
-            step = len(edges_sample) // 5000
-            edges_sample = edges_sample[::step]
-        
-        edges_str = str(sorted(edges_sample))
-        structure_hash = hashlib.md5(edges_str.encode()).hexdigest()[:8]
-        
-        return f"{basic_info['nodes']}_{basic_info['edges']}_{structure_hash}"
-    except:
-        return f"{len(graph.nodes())}_{len(graph.edges())}_{int(time.time())}"
 
-def get_cached_metrics(graph, graph_type, metric_type):
-    """Obtiene métricas del caché o retorna None"""
-    signature = get_graph_signature(graph)
-    cache_key = f"{graph_type}_{metric_type}_{signature}"
-    
-    if cache_key in st.session_state.metrics_cache:
-        cached_data = st.session_state.metrics_cache[cache_key]
-
-        age_hours = (time.time() - cached_data['timestamp']) / 3600
-        if age_hours:
-            return cached_data['metrics']
-    return None
-
-def cache_metrics(graph, graph_type, metric_type, metrics):
-    """Guarda métricas en el caché"""
-    signature = get_graph_signature(graph)
-    cache_key = f"{graph_type}_{metric_type}_{signature}"
-    
-    st.session_state.metrics_cache[cache_key] = {
-        'metrics': metrics,
-        'timestamp': time.time(),
-        'signature': signature
-    }
-    
-    if len(st.session_state.metrics_cache) > 100:
-        clean_old_cache()
-
-def clean_old_cache():
-    """Limpia entradas viejas del caché"""
-    current_time = time.time()
-    keys_to_remove = []
-    
-    for key, data in st.session_state.metrics_cache.items():
-        age_hours = (current_time - data['timestamp']) / 3600
-        if age_hours > 48:  
-            keys_to_remove.append(key)
-    
-    for key in keys_to_remove:
-        del st.session_state.metrics_cache[key]
 
 
 def create_sampling_ui(graph, graph_type):
@@ -202,12 +143,8 @@ def apply_sampling_filters(graph, filters):
 
 
 
-def calculate_fast_metrics_cached(graph, graph_type):
-    """Calcula métricas básicas con caché"""
-    cached = get_cached_metrics(graph, graph_type, "basic_metrics")
-    if cached:
-        return cached
-    
+def calculate_fast_metrics(graph, graph_type):
+    """Calcula métricas básicas"""
     # Calcular métricas básicas
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
@@ -254,7 +191,6 @@ def calculate_fast_metrics_cached(graph, graph_type):
                 else:
                     metrics[key] = 0.0
         
-        cache_metrics(graph, graph_type, "basic_metrics", metrics)
         return metrics
         
     except Exception as e:
@@ -360,16 +296,16 @@ def show_network_analysis_optimized():
             show_structural_analysis_cached(filtered_graph, graph_type)
         
         with tab2:
-            show_random_comparison_cached(filtered_graph, graph_type)
+            show_random_comparison(filtered_graph, graph_type)
         
         with tab3:
-            show_resilience_analysis_cached(filtered_graph, graph_type)
+            show_resilience_analysis(filtered_graph, graph_type)
         
         with tab4:
-            show_community_diffusion_analysis_cached(filtered_graph, graph_type)
+            show_community_diffusion_analysis(filtered_graph, graph_type)
         
         with tab5:
-            show_advanced_metrics_cached(filtered_graph, graph_type)
+            show_advanced_metrics(filtered_graph, graph_type)
     
     else:
         st.markdown("### 📊 Configuración de Análisis")
@@ -384,7 +320,7 @@ def show_structural_analysis_cached(graph, graph_type):
         st.markdown("### 🤝 Análisis Estructural - Red de Colaboración")
     
     with st.spinner("📊 Calculando métricas estructurales..."):
-        basic_metrics = calculate_fast_metrics_cached(graph, graph_type)
+        basic_metrics = calculate_fast_metrics(graph, graph_type)
     
     if not basic_metrics:
         st.warning("⚠️ No se pudieron calcular las métricas básicas")
@@ -409,31 +345,19 @@ def show_structural_analysis_cached(graph, graph_type):
         if 'transitivity' in basic_metrics:
             st.metric("🔺 Transitividad", f"{basic_metrics['transitivity']:.4f}")
     
-    show_degree_analysis_cached(graph, graph_type)
+    show_degree_analysis(graph, graph_type)
 
-def show_degree_analysis_cached(graph, graph_type):
-    """Análisis de distribución de grados con caché"""
+def show_degree_analysis(graph, graph_type):
+    """Análisis de distribución de grados"""
     st.markdown("#### 📈 Análisis de Conectividad")
     
-    # Verificar caché
-    cached = get_cached_metrics(graph, graph_type, "degree_analysis")
-    if cached:
-        degrees = cached['degrees']
-        degree_dist = cached['degree_distribution']
-    else:
-        degrees = np.array([graph.degree(n) for n in graph.nodes()])
-        unique_degrees, counts = np.unique(degrees, return_counts=True)
-        
-        degree_data = {
-            'degrees': degrees,
-            'degree_distribution': {
-                'unique_degrees': unique_degrees,
-                'counts': counts
-            }
-        }
-        
-        cache_metrics(graph, graph_type, "degree_analysis", degree_data)
-        degree_dist = degree_data['degree_distribution']
+    degrees = np.array([graph.degree(n) for n in graph.nodes()])
+    unique_degrees, counts = np.unique(degrees, return_counts=True)
+    
+    degree_dist = {
+        'unique_degrees': unique_degrees,
+        'counts': counts
+    }
     
     col1, col2 = st.columns([2, 1])
     
@@ -514,29 +438,9 @@ def analyze_power_law_fast(degree_dist):
     
     return abs(slope)
 
-def show_random_comparison_cached(graph, graph_type):
+def show_random_comparison(graph, graph_type):
     """Comparación con modelos aleatorios"""
     st.markdown("### 🎲 Comparación con Modelos Aleatorios")
-    
-    # Verificar si ya hay resultados en caché
-    cached = get_cached_metrics(graph, graph_type, "random_comparison")
-    
-    if cached:
-        st.info("✅ Usando resultados en caché")
-        display_comparison_results_cached(graph, cached)
-        
-        # Botón para limpiar caché y rehacer análisis
-        if st.button("🔄 Rehacer Análisis", help="Limpia el caché y ejecuta nuevo análisis"):
-            # Limpiar caché específico
-            signature = get_graph_signature(graph)
-            cache_key = f"{graph_type}_random_comparison_{signature}"
-            if cache_key in st.session_state.metrics_cache:
-                del st.session_state.metrics_cache[cache_key]
-            try:
-                st.experimental_rerun()
-            except:
-                st.rerun()
-        return
     
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
@@ -677,9 +581,6 @@ def show_random_comparison_cached(graph, graph_type):
                 metrics_to_compare=None
             )
             
-            # Cachear resultados
-            cache_metrics(graph, graph_type, "random_comparison", comparison_results)
-            
             display_comparison_results_cached(
                 graph, comparison_results, 
                 show_distributions=None, show_violin_plots=None
@@ -691,7 +592,7 @@ def perform_random_comparison_optimized(graph, models, n_samples, graph_type, ad
     n_edges = len(graph.edges())
     
     # Métricas del grafo original
-    original_metrics = calculate_fast_metrics_cached(graph, graph_type)
+    original_metrics = calculate_fast_metrics(graph, graph_type)
     
     results = {}
     
@@ -1330,15 +1231,9 @@ def show_anomaly_analysis(original, models):
         st.success("✅ No se detectaron anomalías significativas - comportamiento similar a modelos aleatorios")
 
 # Funciones stub para las otras pestañas (implementar según necesidad)
-def show_resilience_analysis_cached(graph, graph_type):
-    """Análisis de resiliencia con caché"""
+def show_resilience_analysis(graph, graph_type):
+    """Análisis de resiliencia"""
     st.markdown("### 🛡️ Análisis de Resiliencia y Robustez")
-    
-    cached = get_cached_metrics(graph, graph_type, "resilience")
-    if cached:
-        st.info("✅ Usando análisis de resiliencia en caché")
-        display_resilience_results_cached(cached)
-        return
     
     n_nodes = len(graph.nodes())
     
@@ -1363,7 +1258,6 @@ def show_resilience_analysis_cached(graph, graph_type):
     if st.button("🎯 Análisis de Resiliencia", type="primary"):
         with st.spinner("🛡️ Simulando ataques..."):
             results = perform_resilience_analysis_fast(graph, strategies, max_removal)
-            cache_metrics(graph, graph_type, "resilience", results)
             display_resilience_results_cached(results)
 
 def perform_resilience_analysis_fast(graph, strategies, max_removal_pct):
@@ -1479,15 +1373,9 @@ def display_resilience_results_cached(results):
     
     st.dataframe(pd.DataFrame(resilience_summary), use_container_width=True)
 
-def show_community_diffusion_analysis_cached(graph, graph_type):
+def show_community_diffusion_analysis(graph, graph_type):
     """Análisis de comunidades y difusión"""
     st.markdown("### 🌐 Análisis de Comunidades y Difusión")
-    
-    cached = get_cached_metrics(graph, graph_type, "communities")
-    if cached:
-        st.info("✅ Usando análisis de comunidades en caché")
-        display_community_results_cached(cached)
-        return
     
     if len(graph.nodes()) < 5:
         st.warning("⚠️ Grafo muy pequeño para análisis de comunidades")
@@ -1514,7 +1402,6 @@ def show_community_diffusion_analysis_cached(graph, graph_type):
     if st.button("🔍 Detectar Comunidades", type="primary"):
         with st.spinner("🌐 Detectando comunidades..."):
             results = perform_community_analysis_fast(graph, algorithm, min_community_size)
-            cache_metrics(graph, graph_type, "communities", results)
             display_community_results_cached(results)
 
 def perform_community_analysis_fast(graph, algorithm, min_size):
@@ -1621,16 +1508,9 @@ def simulate_diffusion_fast(community_results):
         'diffusion_speed': speed
     }
 
-def show_advanced_metrics_cached(graph, graph_type):
-    """Métricas avanzadas con caché"""
+def show_advanced_metrics(graph, graph_type):
+    """Métricas avanzadas"""
     st.markdown("### ⚡ Métricas Avanzadas")
-    
-    # Verificar caché
-    cached = get_cached_metrics(graph, graph_type, "advanced_metrics")
-    if cached:
-        st.info("✅ Usando métricas avanzadas en caché")
-        display_advanced_metrics_results(cached)
-        return
     
     n_nodes = len(graph.nodes())
     
@@ -1655,7 +1535,6 @@ def show_advanced_metrics_cached(graph, graph_type):
             results = calculate_advanced_metrics_optimized(
                 graph, graph_type, centrality_metrics
             )
-            cache_metrics(graph, graph_type, "advanced_metrics", results)
             display_advanced_metrics_results(results)
 
 def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
