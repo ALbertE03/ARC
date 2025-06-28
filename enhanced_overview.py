@@ -227,14 +227,22 @@ class OptimizedBridgeAnalyzer:
         return sorted(all_bridges, key=lambda x: (x['Criticidad Global'], x['Colaboraciones']), reverse=True)
 
 def show_overview():
-    """Muestra una vista general de los grafos"""
+    """Muestra una vista general de los grafos con caché en session_state"""
     st.title("📊 Vista General")
     st.markdown("---")
 
-    main_graph = load_graph()
-    author_graph = load_author_graph()
-    article_graph = load_article_graph()
-    
+    # Cargar grafos solo si no están en session_state
+    if 'main_graph' not in st.session_state or st.session_state.main_graph is None:
+        st.session_state.main_graph = load_graph()
+    if 'author_graph' not in st.session_state or st.session_state.author_graph is None:
+        st.session_state.author_graph = load_author_graph()
+    if 'article_graph' not in st.session_state or st.session_state.article_graph is None:
+        st.session_state.article_graph = load_article_graph()
+
+    main_graph = st.session_state.main_graph
+    author_graph = st.session_state.author_graph
+    article_graph = st.session_state.article_graph
+
     tab1, tab2, tab3 = st.tabs([
         "🔗 Grafo Principal (Autores-Artículos)", 
         "👥 Grafo Autor-Autor",
@@ -243,10 +251,8 @@ def show_overview():
     
     with tab1:
         show_main_graph_overview(main_graph)
-    
     with tab2:
         show_author_graph_overview(author_graph)
-    
     with tab3:
         show_article_graph_overview(article_graph)
 
@@ -255,75 +261,72 @@ def show_main_graph_overview(graph):
     if graph is None:
         st.error("❌ No se pudo cargar el grafo principal")
         return
-    
+
     st.header("🔗 Grafo Principal: Autores y Artículos")
     st.markdown("Este grafo representa las relaciones entre autores y sus artículos publicados.")
-    
+    st.markdown("---")
+
     metrics_cache = GraphMetricsCache(graph)
     basic_stats = metrics_cache.get_basic_stats()
 
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric("Total de Nodos", basic_stats['num_nodes'])
-    with col2:
-        st.metric("Autores", basic_stats['num_authors'])
-    with col3:
-        st.metric("Artículos", basic_stats['num_articles'])
-    with col4:
-        st.metric("Conexiones", basic_stats['num_edges'])
-    
+    # Métricas principales agrupadas
+    with st.container():
+
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total de Nodos", basic_stats['num_nodes'])
+        with col2:
+            st.metric("Autores", basic_stats['num_authors'])
+        with col3:
+            st.metric("Artículos", basic_stats['num_articles'])
+        with col4:
+            st.metric("Conexiones", basic_stats['num_edges'])
     st.markdown("---")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("📈 Estadísticas del Grafo")
-        
-        st.metric("Densidad del Grafo", f"{basic_stats['density']:.4f}")
-        st.metric("Grado Promedio", f"{basic_stats['avg_degree']:.2f}")
 
-        components_info = metrics_cache.get_components_info()
-        if graph.is_directed():
-            st.metric("Componentes Débilmente Conectados", components_info['num_components'])
+    # Estadísticas y Top autores
+    with st.container():
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("📈 Estadísticas del Grafo")
+            st.metric("Densidad del Grafo", f"{basic_stats['density']:.4f}")
+            st.metric("Grado Promedio", f"{basic_stats['avg_degree']:.2f}")
+            components_info = metrics_cache.get_components_info()
+            if graph.is_directed():
+                st.metric("Componentes Débilmente Conectados", components_info['num_components'])
+            else:
+                st.metric("Componentes Conectados", components_info['num_components'])
+        with col2:
+            st.subheader("🏆 Top Autores por Conexiones")
+            top_authors = metrics_cache.get_top_nodes_by_degree('author', 10)
+            if top_authors:
+                df_data = []
+                for author_id, connections in top_authors:
+                    if author_id in graph.nodes():
+                        author_data = graph.nodes[author_id]
+                        display_name = author_data.get('display_name', author_id)
+                        df_data.append({'Autor': display_name, 'Conexiones': connections})
+                df_top = pd.DataFrame(df_data)
+                st.dataframe(df_top, use_container_width=True, hide_index=True)
+            else:
+                st.info("No hay datos de autores disponibles")
+    st.markdown("---")
+
+    # Distribución de grados
+    with st.container():
+        st.subheader("📊 Distribución de Grados")
+        if basic_stats['num_nodes'] > 0:
+            degree_dist = metrics_cache.get_degree_distribution()
+            degree_values = metrics_cache.degree_values
+            fig = px.histogram(
+                x=degree_values,
+                nbins=min(20, degree_dist['unique_degrees']),
+                title="Distribución de Grados en el Grafo",
+                labels={'x': 'Grado', 'y': 'Frecuencia'}
+            )
+            fig.update_layout(showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
         else:
-            st.metric("Componentes Conectados", components_info['num_components'])
-    
-    with col2:
-        st.subheader("🏆 Top Autores por Conexiones")
-
-        top_authors = metrics_cache.get_top_nodes_by_degree('author', 10)
-        
-        if top_authors:
-            df_data = []
-            for author_id, connections in top_authors:
-                if author_id in graph.nodes():
-                    author_data = graph.nodes[author_id]
-                    display_name = author_data.get('display_name', author_id)
-                    df_data.append({'Autor': display_name, 'Conexiones': connections})
-            
-            df_top = pd.DataFrame(df_data)
-            st.dataframe(df_top, use_container_width=True, hide_index=True)
-        else:
-            st.info("No hay datos de autores disponibles")
-
-    st.subheader("📊 Distribución de Grados")
-    
-    if basic_stats['num_nodes'] > 0:
-        degree_dist = metrics_cache.get_degree_distribution()
-        degree_values = metrics_cache.degree_values
-        
-        fig = px.histogram(
-            x=degree_values,
-            nbins=min(20, degree_dist['unique_degrees']),
-            title="Distribución de Grados en el Grafo",
-            labels={'x': 'Grado', 'y': 'Frecuencia'}
-        )
-        fig.update_layout(showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
-
-    else:
-        st.info("No hay suficientes enlaces para realizar interpretaciones detalladas")
+            st.info("No hay suficientes enlaces para realizar interpretaciones detalladas")
 
 
 def fast_top_k_degree_nodes(graph, k=10):
@@ -344,10 +347,11 @@ def show_author_graph_overview(graph):
         st.warning("⚠️ No se pudo cargar el grafo autor-autor")
         st.info("Este grafo se genera automáticamente basado en colaboraciones entre autores.")
         return
-    
+
     st.header("👥 Grafo Autor-Autor: Red de Colaboraciones")
     st.markdown("Este grafo muestra las relaciones de colaboración entre autores basadas en artículos compartidos.")
-    
+    st.markdown("---")
+
     num_nodes = graph.number_of_nodes()
     num_edges = graph.number_of_edges()
     density = nx.density(graph)
@@ -355,77 +359,88 @@ def show_author_graph_overview(graph):
         num_components = nx.number_weakly_connected_components(graph)
     else:
         num_components = nx.number_connected_components(graph)
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Autores", num_nodes)
-    with col2:
-        st.metric("Colaboraciones", num_edges)
-    with col3:
-        st.metric("Densidad", f"{density:.4f}")
-    with col4:
-        st.metric("Componentes", num_components)
+
+    # Métricas principales agrupadas
+    with st.container():
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Autores", num_nodes)
+        with col2:
+            st.metric("Colaboraciones", num_edges)
+        with col3:
+            st.metric("Densidad", f"{density:.4f}")
+        with col4:
+            st.metric("Componentes", num_components)
     st.markdown("---")
+
     if num_edges == 0:
         st.info("👥 No hay colaboraciones entre autores en este grafo")
         return
+
     degrees = dict(graph.degree())
     degree_values = np.fromiter(degrees.values(), dtype=int)
     max_collaborations = degree_values.max() if degree_values.size else 0
     min_collaborations = degree_values.min() if degree_values.size else 0
     avg_collaborations = degree_values.mean() if degree_values.size else 0
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("🔍 Análisis de Colaboraciones")
-        st.metric("Máximo de Colaboraciones", max_collaborations)
-        st.metric("Mínimo de Colaboraciones", min_collaborations)
-        st.metric("Promedio de Colaboraciones", f"{avg_collaborations:.1f}")
-        if not graph.is_directed():
-            art_points = fast_articulation_points(graph, max_points=10)
-            if art_points:
-                st.success(f"🌉 {len(art_points)} autores actúan como puentes críticos (muestra)")
-                df_bridges = pd.DataFrame({
-                    'Autor': [graph.nodes[n].get('display_name', n) for n in art_points],
-                    'Colaboraciones': [degrees[n] for n in art_points]
+
+    # Estadísticas y Top colaboradores
+    with st.container():
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("🔍 Análisis de Colaboraciones")
+            st.metric("Máximo de Colaboraciones", max_collaborations)
+            st.metric("Mínimo de Colaboraciones", min_collaborations)
+            st.metric("Promedio de Colaboraciones", f"{avg_collaborations:.1f}")
+            if not graph.is_directed():
+                art_points = fast_articulation_points(graph, max_points=10)
+                if art_points:
+                    st.success(f"🌉 {len(art_points)} autores actúan como puentes críticos (muestra)")
+                    df_bridges = pd.DataFrame({
+                        'Autor': [graph.nodes[n].get('display_name', n) for n in art_points],
+                        'Colaboraciones': [degrees[n] for n in art_points]
+                    })
+                    st.dataframe(df_bridges, use_container_width=True, hide_index=True)
+                else:
+                    st.info("🔗 No hay autores puentes críticos identificados (o muestra vacía)")
+            isolated_count = int(np.sum(degree_values == 0))
+            if isolated_count > 0:
+                st.warning(f"⚠️ {isolated_count} autores están aislados")
+        with col2:
+            st.subheader("🤝 Top Colaboradores")
+            top_collaborators = fast_top_k_degree_nodes(graph, 10)
+            if top_collaborators:
+                df_collab = pd.DataFrame({
+                    'Autor': [graph.nodes[n].get('display_name', n) for n, _ in top_collaborators],
+                    'Colaboraciones': [d for _, d in top_collaborators]
                 })
-                st.dataframe(df_bridges, use_container_width=True, hide_index=True)
+                st.dataframe(df_collab, use_container_width=True, hide_index=True)
             else:
-                st.info("🔗 No hay autores puentes críticos identificados (o muestra vacía)")
+                st.info("No hay datos de colaboración disponibles")
+    st.markdown("---")
 
-        isolated_count = int(np.sum(degree_values == 0))
-        if isolated_count > 0:
-            st.warning(f"⚠️ {isolated_count} autores están aislados")
-
-    with col2:
-        st.subheader("🤝 Top Colaboradores")
-        top_collaborators = fast_top_k_degree_nodes(graph, 10)
-        if top_collaborators:
-            df_collab = pd.DataFrame({
-                'Autor': [graph.nodes[n].get('display_name', n) for n, _ in top_collaborators],
-                'Colaboraciones': [d for _, d in top_collaborators]
-            })
-            st.dataframe(df_collab, use_container_width=True, hide_index=True)
-        else:
-            st.info("No hay datos de colaboración disponibles")
-    st.subheader("📊 Distribución de Colaboraciones")
-    fig = px.histogram(
-        x=degree_values,
-        nbins=min(15, len(np.unique(degree_values))),
-        title="Distribución de Número de Colaboraciones",
-        labels={'x': 'Número de Colaboraciones', 'y': 'Frecuencia'}
-    )
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
+    # Distribución de colaboraciones
+    with st.container():
+        st.subheader("📊 Distribución de Colaboraciones")
+        fig = px.histogram(
+            x=degree_values,
+            nbins=min(15, len(np.unique(degree_values))),
+            title="Distribución de Número de Colaboraciones",
+            labels={'x': 'Número de Colaboraciones', 'y': 'Frecuencia'}
+        )
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
 
 def show_article_graph_overview(graph):
     """Muestra información general del grafo artículo-artículo con optimizaciones avanzadas"""
     st.header("📄 Grafo Artículo-Artículo: Red de Coautorías")
     st.markdown("Este grafo muestra las relaciones entre artículos que comparten autores en común.")
-    
+    st.markdown("---")
+
     if graph is None:
         st.warning("⚠️ No se pudo cargar el grafo artículo-artículo")
         st.info("Este grafo se genera automáticamente basado en artículos que comparten autores.")
         return
-    
+
     num_nodes = graph.number_of_nodes()
     num_edges = graph.number_of_edges()
     density = nx.density(graph)
@@ -433,19 +448,25 @@ def show_article_graph_overview(graph):
         num_components = nx.number_weakly_connected_components(graph)
     else:
         num_components = nx.number_connected_components(graph)
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Artículos", num_nodes)
-    with col2:
-        st.metric("Conexiones", num_edges)
-    with col3:
-        st.metric("Densidad", f"{density:.4f}")
-    with col4:
-        st.metric("Componentes", num_components)
+
+    # Métricas principales agrupadas
+    with st.container():
+        st.subheader("📌 Resumen General")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Artículos", num_nodes)
+        with col2:
+            st.metric("Conexiones", num_edges)
+        with col3:
+            st.metric("Densidad", f"{density:.4f}")
+        with col4:
+            st.metric("Componentes", num_components)
     st.markdown("---")
+
     if num_edges == 0:
         st.info("📄 No hay conexiones entre artículos en este grafo")
         return
+
     degrees = dict(graph.degree())
     degree_values = np.fromiter(degrees.values(), dtype=int)
     max_connections = degree_values.max() if degree_values.size else 0
@@ -460,82 +481,92 @@ def show_article_graph_overview(graph):
     else:
         avg_weight = None
         max_weight = None
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("📊 Estadísticas del Grafo")
-        st.metric("Máximo de Conexiones", max_connections)
-        st.metric("Mínimo de Conexiones", min_connections)
-        st.metric("Promedio de Conexiones", f"{avg_connections:.1f}")
-        if avg_weight is not None:
-            st.metric("Peso Promedio", f"{avg_weight:.1f}")
-            st.metric("Máximo Autores Compartidos", int(max_weight))
-    with col2:
-        st.subheader("📰 Top Artículos por Conexiones")
-        top_articles = fast_top_k_degree_nodes(graph, 10)
-        if top_articles:
-            df_top = pd.DataFrame({
-                'Artículo': [graph.nodes[n].get('title', graph.nodes[n].get('display_name', n)) for n, _ in top_articles],
-                'Conexiones': [d for _, d in top_articles]
-            })
-            st.dataframe(df_top, use_container_width=True, hide_index=True)
-        else:
-            st.info("No hay datos de conexiones disponibles")
-    st.subheader("🔗 Análisis de Agrupaciones por Coautoría")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write("**🌐 Estructura de la Red:**")
-        if num_components == 1:
-            st.write("• Red completamente conectada de artículos")
-            try:
-                if not graph.is_directed() and num_nodes > 2:
-                    clustering = nx.average_clustering(graph)
-                    st.write(f"• **Coeficiente de Clustering:** {clustering:.4f}")
-                    if clustering > 0.3:
-                        st.write("• Alta formación de clusters por coautoría")
-                    elif clustering > 0.1:
-                        st.write("• Moderada agrupación por coautoría")
-                    else:
-                        st.write("• Baja agrupación por coautoría")
-            except:
-                st.write("• Coeficiente de clustering no calculable")
-        else:
-            st.write(f"• **{num_components} grupos de coautoría separados**")
-            components = sorted((len(c) for c in nx.connected_components(graph)), reverse=True)
-            st.write(f"• **Grupo principal:** {components[0]} artículos")
-            if len(components) > 1:
-                st.write(f"• **Segundo grupo:** {components[1]} artículos")
-            component_data = []
-            for i, size in enumerate(components[:10]):
-                component_data.append({
-                    'Componente': f"Componente {i+1}",
-                    'Artículos': int(size),
-                    'Porcentaje': f"{(size/num_nodes)*100:.1f}%"
+
+    # Estadísticas y Top artículos
+    with st.container():
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("📊 Estadísticas del Grafo")
+            st.metric("Máximo de Conexiones", max_connections)
+            st.metric("Mínimo de Conexiones", min_connections)
+            st.metric("Promedio de Conexiones", f"{avg_connections:.1f}")
+            if avg_weight is not None:
+                st.metric("Peso Promedio", f"{avg_weight:.1f}")
+                st.metric("Máximo Autores Compartidos", int(max_weight))
+        with col2:
+            st.subheader("📰 Top Artículos por Conexiones")
+            top_articles = fast_top_k_degree_nodes(graph, 10)
+            if top_articles:
+                df_top = pd.DataFrame({
+                    'Artículo': [graph.nodes[n].get('title', graph.nodes[n].get('display_name', n)) for n, _ in top_articles],
+                    'Conexiones': [d for _, d in top_articles]
                 })
-            st.write("**🏆 Top 10 Componentes:**")
-            df_components = pd.DataFrame(component_data)
-            st.dataframe(df_components, use_container_width=True, hide_index=True)
-    with col2:
-        st.write("**📚 Patrones de Coautoría:**")
-        if has_weights:
-            strong_count = int(np.sum(weights >= 3))
-            medium_count = int(np.sum((weights >= 2) & (weights < 3)))
-            weak_count = int(np.sum(weights == 1))
-            total_count = len(weights)
-            st.write(f"• **Coautorías intensas:** {strong_count} ({(strong_count/total_count)*100:.1f}%)")
-            st.write(f"• **Coautorías moderadas:** {medium_count} ({(medium_count/total_count)*100:.1f}%)")
-            st.write(f"• **Coautorías ocasionales:** {weak_count} ({(weak_count/total_count)*100:.1f}%)")
-        else:
-            st.write("• Todas las conexiones tienen peso unitario")
-        isolated_count = int(np.sum(degree_values == 0))
-        if isolated_count > 0:
-            st.warning(f"⚠️ {isolated_count} artículos están aislados")
-    st.subheader("📊 Distribución de Conexiones")
-    fig = px.histogram(
-        x=degree_values,
-        nbins=min(15, len(np.unique(degree_values))),
-        title="Distribución de Conexiones por Coautoría",
-        labels={'x': 'Número de Conexiones', 'y': 'Frecuencia'}
-    )
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
+                st.dataframe(df_top, use_container_width=True, hide_index=True)
+            else:
+                st.info("No hay datos de conexiones disponibles")
+    st.markdown("---")
+
+    with st.container():
+        st.subheader("🔗 Análisis de Agrupaciones por Coautoría")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write("**🌐 Estructura de la Red:**")
+            if num_components == 1:
+                st.write("• Red completamente conectada de artículos")
+                try:
+                    if not graph.is_directed() and num_nodes > 2:
+                        clustering = nx.average_clustering(graph)
+                        st.write(f"• **Coeficiente de Clustering:** {clustering:.4f}")
+                        if clustering > 0.3:
+                            st.write("• Alta formación de clusters por coautoría")
+                        elif clustering > 0.1:
+                            st.write("• Moderada agrupación por coautoría")
+                        else:
+                            st.write("• Baja agrupación por coautoría")
+                except:
+                    st.write("• Coeficiente de clustering no calculable")
+            else:
+                st.write(f"• **{num_components} grupos de coautoría separados**")
+                components = sorted((len(c) for c in nx.connected_components(graph)), reverse=True)
+                st.write(f"• **Grupo principal:** {components[0]} artículos")
+                if len(components) > 1:
+                    st.write(f"• **Segundo grupo:** {components[1]} artículos")
+                component_data = []
+                for i, size in enumerate(components[:10]):
+                    component_data.append({
+                        'Componente': f"Componente {i+1}",
+                        'Artículos': int(size),
+                        'Porcentaje': f"{(size/num_nodes)*100:.1f}%"
+                    })
+                st.write("**🏆 Top 10 Componentes:**")
+                df_components = pd.DataFrame(component_data)
+                st.dataframe(df_components, use_container_width=True, hide_index=True)
+        with col2:
+            st.write("**📚 Patrones de Coautoría:**")
+            if has_weights:
+                strong_count = int(np.sum(weights >= 3))
+                medium_count = int(np.sum((weights >= 2) & (weights < 3)))
+                weak_count = int(np.sum(weights == 1))
+                total_count = len(weights)
+                st.write(f"• **Coautorías intensas:** {strong_count} ({(strong_count/total_count)*100:.1f}%)")
+                st.write(f"• **Coautorías moderadas:** {medium_count} ({(medium_count/total_count)*100:.1f}%)")
+                st.write(f"• **Coautorías ocasionales:** {weak_count} ({(weak_count/total_count)*100:.1f}%)")
+            else:
+                st.write("• Todas las conexiones tienen peso unitario")
+            isolated_count = int(np.sum(degree_values == 0))
+            if isolated_count > 0:
+                st.warning(f"⚠️ {isolated_count} artículos están aislados")
+    st.markdown("---")
+
+    # Distribución de conexiones
+    with st.container():
+        st.subheader("📊 Distribución de Conexiones")
+        fig = px.histogram(
+            x=degree_values,
+            nbins=min(15, len(np.unique(degree_values))),
+            title="Distribución de Conexiones por Coautoría",
+            labels={'x': 'Número de Conexiones', 'y': 'Frecuencia'}
+        )
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
 

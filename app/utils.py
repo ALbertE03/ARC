@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import networkx as nx
 from datetime import datetime
+import os
 @st.cache_data
 def load_graph():
     """Carga el grafo con artículos desde el archivo GraphML"""
@@ -161,4 +162,17 @@ def load_styles():
         }
     </style>
     """, unsafe_allow_html=True)
+
+def save_article_modification_history(history):
+    
+    os.makedirs("data", exist_ok=True)
+    with open("data/article_modification_history.json", "w", encoding="utf-8") as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
+
+def load_article_modification_history():
+    try:
+        with open("data/article_modification_history.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
 
