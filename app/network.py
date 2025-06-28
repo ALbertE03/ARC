@@ -511,7 +511,6 @@ def show_random_comparison(graph, graph_type):
                     0.1, 1.0, min(default_p, 0.1), 0.1,
                     help="Probabilidad de que dos nodos estén conectados",
                 )
-                st.info(f"Probabilidad del grafo original: {default_p:.4f}")
             
             if "Watts-Strogatz" in models:
                 advanced_config['ws_p'] = st.slider(
