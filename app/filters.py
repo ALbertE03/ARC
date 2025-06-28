@@ -153,7 +153,7 @@ def show_page_filter():
                                             if graph.nodes[x].get('node_type') == 'article')
                         authors_data.append({
                             'Nombre': author_data.get('display_name', author_id),
-                            'Afiliación': author_data.get('affiliation', 'No disponible'),
+                            'Afiliación': author_data.get('affiliation', 'No disponible').title(),
                             'Total Publicaciones': author_articles,
                             'ID': author_id
                         })

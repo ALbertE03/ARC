@@ -112,7 +112,7 @@ def create_graph_visualization(graph, selected_nodes=None):
 
 
 def main():
-    st.markdown('<div class="main-header">🔗 ARC Graph Editor 2025</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header" style="font-size:2.2rem;font-weight:bold;color:#4B286D;letter-spacing:1px;">Red Académica de Colaboraciones y Publicaciones<span style="color:#764ba2;font-size:1.3rem;font-weight:normal;"></span> <span style="font-size:1.1rem;color:#888;"></span></div>', unsafe_allow_html=True)
     st.markdown("---")
 
     if 'graph' not in st.session_state:
@@ -133,12 +133,12 @@ def main():
         st.markdown("### 🧭 Navegación")
         page = st.selectbox(
             "¿Qué te gustaría hacer?",
-            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones",'🔍 filter']
+            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones",'🔍 filtros']
         )
         
     if page == "📈 Explorar mi Red":
         show_overview()
-    elif page == "🔍 filter":
+    elif page == "🔍 filtros":
         show_page_filter()
     elif page == "👤 Gestionar Investigadores":
         show_author_management()

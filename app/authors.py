@@ -46,6 +46,7 @@ def show_author_management():
                         }
                         
                         st.session_state.graph.add_node(author_id, **author_data)
+                        save_graph(st.session_state.graph,filename='subgrafo_con_articulos.graphml')
                         clear_centralities_cache()
                         
                         st.success("✅ Investigador agregado exitosamente a tu red")
@@ -94,6 +95,7 @@ def show_author_management():
                             'affiliation': new_affiliation,
                             'modified_date': datetime.now().isoformat()
                         })
+                        save_graph(st.session_state.graph,filename='subgrafo_con_articulos.graphml')
                         clear_centralities_cache()
                         
                         st.success("✅ Investigador actualizado exitosamente")
@@ -128,7 +130,7 @@ def show_author_management():
                 
                 if st.button("🗑️ Confirmar Eliminación", type="secondary"):
                     st.session_state.graph.remove_node(selected_author)
-
+                    save_graph(st.session_state.graph,filename='subgrafo_con_articulos.graphml')
                     clear_centralities_cache()
                     
                     st.success("✅ Autor eliminado exitosamente")

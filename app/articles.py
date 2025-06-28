@@ -70,10 +70,10 @@ def show_article_management():
                         clear_centralities_cache()
                         from app.utils import save_graph, load_article_graph
                         save_graph(st.session_state.graph)
-                        # Guardar también el grafo de artículo-artículo
+
                         article_graph = load_article_graph()
                         if article_graph is not None:
-                            # Actualizar nodo en grafo artículo-artículo
+
                             if title in article_graph.nodes:
                                 article_graph.nodes[title].update({
                                     'title': title,
@@ -89,7 +89,7 @@ def show_article_management():
                                 })
                             save_graph(article_graph, filename="grafo_articulo_articulo.graphml")
                             st.session_state.article_graph = article_graph
-                        # Al agregar artículo, guardar historial externo
+
                         if submitted:
                             all_history = load_article_modification_history()
                             all_history[title] = modification_history
@@ -116,7 +116,7 @@ def show_article_management():
             
             if selected_article:
                 article_data = st.session_state.graph.nodes[selected_article]
-                # Cargar historial externo
+
                 all_history = load_article_modification_history()
                 article_history = all_history.get(selected_article, article_data.get('modification_history', []))
                 with st.form("edit_article_form"):
@@ -155,7 +155,7 @@ def show_article_management():
                         ]:
                             if old != new:
                                 changes[field] = {'old': old, 'new': new}
-                        # Actualizar historial
+
                         if 'modification_history' not in article_data:
                             article_data['modification_history'] = []
                         article_data['modification_history'].append({
@@ -164,7 +164,7 @@ def show_article_management():
                             'timestamp': now,
                             'changes': changes
                         })
-                        # Guardar historial externo
+                        
                         all_history = load_article_modification_history()
                         if new_title != selected_article:
                             all_history[new_title] = article_data['modification_history']
@@ -173,10 +173,10 @@ def show_article_management():
                         else:
                             all_history[selected_article] = article_data['modification_history']
                         save_article_modification_history(all_history)
-                        # Si el título cambia, crear nuevo nodo y transferir datos y aristas
+
                         if new_title != selected_article:
                             G = st.session_state.graph
-                            # Copiar datos y actualizar
+                            
                             new_data = dict(article_data)
                             new_data.update({
                                 'title': new_title,
@@ -191,7 +191,7 @@ def show_article_management():
                                 'modified_date': now
                             })
                             G.add_node(new_title, **new_data)
-                            # Transferir aristas
+                    
                             for u, v, d in list(G.edges(selected_article, data=True)):
                                 if u == selected_article:
                                     G.add_edge(new_title, v, **d)
@@ -200,7 +200,6 @@ def show_article_management():
                             for u, v, d in list(G.in_edges(selected_article, data=True)) if hasattr(G, 'in_edges') else []:
                                 if v == selected_article:
                                     G.add_edge(u, new_title, **d)
-                            # Eliminar nodo viejo
                             G.remove_node(selected_article)
                         else:
                             st.session_state.graph.nodes[selected_article].update({
@@ -220,13 +219,11 @@ def show_article_management():
                         from app.utils import save_graph, load_article_graph
                         import networkx as nx
                         save_graph(st.session_state.graph)
-                        # Guardar también el grafo de artículo-artículo
                         article_graph = load_article_graph()
                         if article_graph is not None:
-                            # Si el título cambió, renombrar el nodo
                             if selected_article != new_title and selected_article in article_graph.nodes:
                                 nx.relabel_nodes(article_graph, {selected_article: new_title}, copy=False)
-                            # Actualizar atributos
+
                             if new_title in article_graph.nodes:
                                 article_graph.nodes[new_title].update({
                                     'title': new_title,

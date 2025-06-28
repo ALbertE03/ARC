@@ -231,7 +231,6 @@ def show_overview():
     st.title("📊 Vista General")
     st.markdown("---")
 
-    # Cargar grafos solo si no están en session_state
     if 'main_graph' not in st.session_state or st.session_state.main_graph is None:
         st.session_state.main_graph = load_graph()
     if 'author_graph' not in st.session_state or st.session_state.author_graph is None:
@@ -269,7 +268,6 @@ def show_main_graph_overview(graph):
     metrics_cache = GraphMetricsCache(graph)
     basic_stats = metrics_cache.get_basic_stats()
 
-    # Métricas principales agrupadas
     with st.container():
 
         col1, col2, col3, col4 = st.columns(4)
@@ -528,9 +526,7 @@ def show_article_graph_overview(graph):
             else:
                 st.write(f"• **{num_components} grupos de coautoría separados**")
                 components = sorted((len(c) for c in nx.connected_components(graph)), reverse=True)
-                st.write(f"• **Grupo principal:** {components[0]} artículos")
-                if len(components) > 1:
-                    st.write(f"• **Segundo grupo:** {components[1]} artículos")
+                
                 component_data = []
                 for i, size in enumerate(components[:10]):
                     component_data.append({
@@ -558,7 +554,6 @@ def show_article_graph_overview(graph):
                 st.warning(f"⚠️ {isolated_count} artículos están aislados")
     st.markdown("---")
 
-    # Distribución de conexiones
     with st.container():
         st.subheader("📊 Distribución de Conexiones")
         fig = px.histogram(
