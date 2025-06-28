@@ -7,7 +7,7 @@ from app.authors import show_author_management
 from app.articles import show_article_management
 from app.conections import show_connection_management
 from app.network import show_network_analysis
-
+from app.filters import show_page_filter
 st.set_page_config(
     page_title="ARC Graph Editor",
     page_icon="🔗",
@@ -129,39 +129,17 @@ def main():
         return
     
     with st.sidebar:
-        st.markdown("### 📊 Panel de Control")
-        
-        num_nodes = len(st.session_state.graph.nodes())
-        num_edges = len(st.session_state.graph.edges())
-        num_authors = len([n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'author'])
-        num_articles = len([n for n, d in st.session_state.graph.nodes(data=True) if d.get('node_type') == 'article'])
-        
-        author_graph_info = ""
-        if st.session_state.author_graph is not None:
-            author_nodes = len(st.session_state.author_graph.nodes())
-            author_edges = len(st.session_state.author_graph.edges())
-            author_graph_info = f"Red de Colaboración: {author_nodes} investigadores, {author_edges} colaboraciones"
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Nodos Totales", num_nodes)
-            st.metric("Investigadores", num_authors)
-        with col2:
-            st.metric("Conexiones", num_edges)
-            st.metric("Publicaciones", num_articles)
-        
-        if author_graph_info:
-            st.info(f"🤝 {author_graph_info}")
-        
-    
+     
         st.markdown("### 🧭 Navegación")
         page = st.selectbox(
             "¿Qué te gustaría hacer?",
-            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones"]
+            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones",'🔍 filter']
         )
         
     if page == "📈 Explorar mi Red":
         show_overview()
+    elif page == "🔍 filter":
+        show_page_filter()
     elif page == "👤 Gestionar Investigadores":
         show_author_management()
     elif page == "📄 Gestionar Publicaciones":

@@ -441,10 +441,9 @@ def show_random_comparison(graph, graph_type):
     
     st.markdown("#### ⚙️ Configuración de Modelos")
     
-    col1, col2 = st.columns([2, 1])
+
     
-    with col1:
-        if graph_type == "main":
+    if graph_type == "main":
             st.markdown("**📊 Modelos para Grafo Bipartito:**")
             available_models = [
                 "Erdős–Rényi", 
@@ -452,7 +451,7 @@ def show_random_comparison(graph, graph_type):
                 "Modelo de Crecimiento"
             ]
             default_models = ["Erdős–Rényi", "Configuration Model"]
-        else:
+    else:
             st.markdown("**🤝 Modelos para Red de Colaboración:**")
             available_models = [
                 "Erdős–Rényi", 
@@ -466,14 +465,14 @@ def show_random_comparison(graph, graph_type):
             ]
             default_models = ["Erdős–Rényi", "Barabási–Albert", "Watts-Strogatz"]
         
-        models = st.multiselect(
+    models = st.multiselect(
             "Selecciona modelos a comparar:",
             available_models,
             default=default_models,
             help="Elige uno o más modelos de red aleatoria para comparar"
         )
         
-        if models:
+    if models:
             with st.expander("ℹ️ Información sobre Modelos Seleccionados", expanded=False):
                 for model in models:
                     if model == "Configuration Model":
@@ -493,7 +492,7 @@ def show_random_comparison(graph, graph_type):
                     elif model == "Modelo de Encuentros Aleatorios":
                         st.markdown("**⚡ Modelo de Encuentros:** Los nodos se mueven aleatoriamente y se conectan cuando se 'encuentran', simulando dinámicas de movilidad.")
         
-        if models:
+    if models:
             st.markdown("**🎛️ Configuraciones Avanzadas:**")
             
             advanced_config = {}
@@ -545,11 +544,11 @@ def show_random_comparison(graph, graph_type):
     if not models:
         st.warning("⚠️ Selecciona al menos un modelo para comparar")
         return
-    
+    n = st.slider('Cantidad de experimentos por modelos',1,30,5,step=1)
     if st.button("🚀 Ejecutar Comparación", type="primary"):
         with st.spinner("🎯 Generando modelos y calculando métricas..."):
             comparison_results = perform_random_comparison_optimized(
-                graph, models, 30, graph_type, 
+                graph, models, n, graph_type, 
                 advanced_config if 'advanced_config' in locals() else {},
                 metrics_to_compare=None
             )

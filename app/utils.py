@@ -1,7 +1,7 @@
 import streamlit as st 
 import json
 import networkx as nx
-import datetime
+from datetime import datetime
 @st.cache_data
 def load_graph():
     """Carga el grafo con artículos desde el archivo GraphML"""
@@ -65,6 +65,9 @@ def load_consolidation_history():
     Carga el historial de consolidaciones desde el archivo JSON
     """
     try:
+        import os 
+        if not os.path.exists("data/consolidation_history.json"):
+            return []
         with open("data/consolidation_history.json", "r", encoding="utf-8") as f:
             history_data = json.load(f)
             return history_data.get('consolidations', [])

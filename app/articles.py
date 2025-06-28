@@ -8,7 +8,7 @@ def show_article_management():
     """Muestra la página de gestión de artículos"""
     st.markdown("## 📄 Gestión de Artículos")
     
-    tab1, tab2, tab3 = st.tabs(["➕ Agregar Artículo", "✏️ Editar Artículo"])
+    tab1, tab2 = st.tabs(["➕ Agregar Artículo", "✏️ Editar Artículo"])
     
     with tab1:
         st.markdown("### Agregar Nuevo Artículo")
