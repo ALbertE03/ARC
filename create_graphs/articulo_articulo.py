@@ -74,11 +74,12 @@ def create_article_to_article_graph(author_article_graph_path="data/subgrafo_con
             
             if common_authors:
                 weight = len(common_authors)
-                G_articles.add_edge(article1, article2, 
+                if not G_articles.has_edge(article1,article2):
+                    G_articles.add_edge(article1, article2, 
                                   weight=weight, 
                                   common_authors=list(common_authors),
                                   common_authors_count=weight)
-                connections_count += 1
+                    connections_count += 1
     
     print(f"Grafo artículo-artículo creado con {G_articles.number_of_nodes()} nodos y {G_articles.number_of_edges()} aristas")
     

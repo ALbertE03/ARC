@@ -6,17 +6,41 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import time
-import hashlib
 import warnings
+import queue
+import threading
 warnings.filterwarnings('ignore')
+
 
 def create_sampling_ui(graph, graph_type):
     """Crea interfaz de muestreo según el tipo de grafo"""
     st.markdown("### 🎯 Configuración de Muestreo")
     
     total_nodes = len(graph.nodes())
-    
-    if graph_type == "author":
+    if graph_type == 'article':
+        st.markdown("#### 📰 Red de Artículos - Muestreo Aleatorio")
+
+        with st.expander("⚙️ Configuración de Muestreo", expanded=True):
+            col1, col2 = st.columns(2)
+            
+            st.info(f"**Total de artículos:** {total_nodes:,}")
+                
+            random_node_count = st.number_input(
+                    "Cantidad de artículos a analizar:",
+                    min_value=10,
+                    max_value=total_nodes,
+                    value=min(1000, total_nodes // 2) if total_nodes > 0 else 100,
+                    help="Seleccionar cantidad específica de artículos al azar"
+                )
+                
+            if total_nodes > 0:
+                percentage = (random_node_count / total_nodes) * 100
+                st.metric("📊 Porcentaje del total", f"{percentage:.1f}%")
+            return {
+            'random_node_count': random_node_count,
+            'filter_type': 'random_authors'
+        }
+    elif graph_type == "author":
         st.markdown("#### 🤝 Red de Colaboración - Muestreo Aleatorio")
         
         with st.expander("⚙️ Configuración de Muestreo", expanded=True):
@@ -84,8 +108,9 @@ def create_sampling_ui(graph, graph_type):
                 )
 
                 selected_article_authors = []
+                selected_articles=[]
                 if total_articles > 0 and article_count > 0:
-                    selected_articles = np.random.choice(article_nodes, article_count, replace=False)
+                    selected_articles = list(np.random.choice(article_nodes, article_count, replace=False))
                     for art in selected_articles:
                         neighbors = list(graph.neighbors(art))
                         selected_article_authors.extend(neighbors)
@@ -100,7 +125,8 @@ def create_sampling_ui(graph, graph_type):
             'filter_type': filter_type,
             'random_node_count': random_node_count,
             'article_count': article_count,
-            'selected_article_authors': selected_article_authors
+            'selected_article_authors': selected_article_authors,
+            "selected_articles": selected_articles if 'selected_articles' in locals() else []
         }
 
 def apply_sampling_filters(graph, filters):
@@ -131,8 +157,8 @@ def apply_sampling_filters(graph, filters):
     
     elif filter_type == 'Por artículos aleatorios':
         if filters.get('selected_article_authors') is not None and len(filters['selected_article_authors']) > 0:
-            filtered_graph = graph.subgraph(filters['selected_article_authors']).copy()
-    
+            filtered_graph = graph.subgraph(filters['selected_article_authors']+filters['selected_articles']).copy()
+
     return filtered_graph
 
 
@@ -229,7 +255,9 @@ def show_network_analysis_optimized():
 
     if hasattr(st.session_state, 'author_graph') and st.session_state.author_graph is not None and len(st.session_state.author_graph.nodes()) > 0:
         graph_options[f"🤝 Red de Colaboración ({len(st.session_state.author_graph.nodes()):,} nodos)"] = ("author", st.session_state.author_graph)
-    
+    if hasattr(st.session_state, 'article_graph') and st.session_state.article_graph is not None and len(st.session_state.article_graph.nodes()) > 0:
+        graph_options[f"📰 Red de Artículos ({len(st.session_state.article_graph.nodes()):,} nodos)"] = ("article", st.session_state.article_graph)
+
     if not graph_options:
         st.error("⚠️ No hay datos en ningún grafo para analizar")
         st.info("💡 Ve a la sección 'Explorar mi Red' para cargar datos o generar la red de colaboración")
@@ -266,28 +294,36 @@ def show_network_analysis_optimized():
         
         st.markdown("---")
 
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        tab_names = [
             "🎯 Análisis Estructural", 
             "🎲 Comparación Aleatoria", 
             "🛡️ Resiliencia & Robustez",
             "🌐 Comunidades & Difusión", 
             "⚡ Métricas"
-        ])
-        
-        with tab1:
+        ]
+        st.radio(
+            "Selecciona una pestaña de análisis:",
+            options=tab_names,
+            key="active_tab",  
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+
+        if st.session_state.active_tab == tab_names[0]:
             show_structural_analysis_cached(filtered_graph, graph_type)
         
-        with tab2:
+        elif st.session_state.active_tab == tab_names[1]:
             show_random_comparison(filtered_graph, graph_type)
         
-        with tab3:
+        elif st.session_state.active_tab == tab_names[2]:
             show_resilience_analysis(filtered_graph, graph_type)
         
-        with tab4:
+        elif st.session_state.active_tab == tab_names[3]:
             show_community_diffusion_analysis(filtered_graph, graph_type)
         
-        with tab5:
+        elif st.session_state.active_tab == tab_names[4]:
             show_advanced_metrics(filtered_graph, graph_type)
+            
     
     else:
         st.markdown("### 📊 Configuración de Análisis")
@@ -364,9 +400,9 @@ def create_degree_distribution_plot(degree_dist):
     counts = degree_dist['counts']
     
     fig = make_subplots(
-        rows=1, cols=2,
-        subplot_titles=('Distribución', 'Escala Log-Log'),
-        specs=[[{"secondary_y": False}, {"secondary_y": False}]]
+        rows=1, cols=1,
+        subplot_titles=('Distribución'),
+        specs=[[{"secondary_y": False} ]]
     )
     
     fig.add_trace(
@@ -374,23 +410,6 @@ def create_degree_distribution_plot(degree_dist):
                marker_color='#667eea', showlegend=False),
         row=1, col=1
     )
-    
-    valid_idx = (unique_degrees > 0) & (counts > 0)
-    if np.sum(valid_idx) > 1:
-        fig.add_trace(
-            go.Scatter(
-                x=unique_degrees[valid_idx], 
-                y=counts[valid_idx],
-                mode='markers+lines',
-                name="Log-Log",
-                marker=dict(color='#764ba2', size=6),
-                showlegend=False
-            ),
-            row=1, col=2
-        )
-        
-        fig.update_xaxes(title_text="Grado (log)", type="log", row=1, col=2)
-        fig.update_yaxes(title_text="Frecuencia (log)", type="log", row=1, col=2)
     
     fig.update_xaxes(title_text="Grado", row=1, col=1)
     fig.update_yaxes(title_text="Frecuencia", row=1, col=1)
@@ -441,19 +460,7 @@ def show_random_comparison(graph, graph_type):
     
     st.markdown("#### ⚙️ Configuración de Modelos")
     
-
-    
-    if graph_type == "main":
-            st.markdown("**📊 Modelos para Grafo Bipartito:**")
-            available_models = [
-                "Erdős–Rényi", 
-                "Configuration Model",
-                "Modelo de Crecimiento"
-            ]
-            default_models = ["Erdős–Rényi", "Configuration Model"]
-    else:
-            st.markdown("**🤝 Modelos para Red de Colaboración:**")
-            available_models = [
+    available_models = [
                 "Erdős–Rényi", 
                 "Barabási–Albert", 
                 "Watts-Strogatz",
@@ -463,7 +470,7 @@ def show_random_comparison(graph, graph_type):
                 "Modelo Geográfico Estático",
                 "Modelo de Encuentros Aleatorios"
             ]
-            default_models = ["Erdős–Rényi", "Barabási–Albert", "Watts-Strogatz"]
+    default_models = ["Erdős–Rényi", "Barabási–Albert", "Watts-Strogatz"]
         
     models = st.multiselect(
             "Selecciona modelos a comparar:",
@@ -498,12 +505,11 @@ def show_random_comparison(graph, graph_type):
             advanced_config = {}
             
             if "Erdős–Rényi" in models:
-                default_p = 2 * n_edges / (n_nodes * (n_nodes - 1)) if n_nodes > 1 else 0.01
+                default_p = 2 * n_edges / (n_nodes * (n_nodes - 1)) if n_nodes > 1 else 0.1
                 advanced_config['er_p'] = st.slider(
                     "Probabilidad de enlace (Erdős–Rényi):",
-                    0.001, 0.5, min(default_p, 0.1), 0.001,
+                    0.1, 1.0, min(default_p, 0.1), 0.1,
                     help="Probabilidad de que dos nodos estén conectados",
-                    format="%.3f"
                 )
                 st.info(f"Probabilidad del grafo original: {default_p:.4f}")
             
@@ -562,43 +568,54 @@ def perform_random_comparison_optimized(graph, models, n_samples, graph_type, ad
     """Comparación con modelos aleatorios"""
     n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
-
     original_metrics = calculate_fast_metrics(graph, graph_type)
-    
-    results = {}
-
     total_simulations = len(models) * n_samples
-    progress_bar = st.progress(0)
-    status_text = st.empty()
-    
-    simulation_count = 0
-    
+
+    result_dict = {model: [] for model in models}
+    model_counts = {model: 0 for model in models}
+    lock = threading.Lock()
+    task_queue = queue.Queue()
     for model in models:
-        status_text.text(f"Generando {model}...")
-        model_metrics = []
-        
         for i in range(n_samples):
+            task_queue.put((model, i))
+    def worker():
+        while not task_queue.empty():
+            try:
+                model, i = task_queue.get_nowait()
+            except queue.Empty:
+                break
             random_graph = generate_random_graph_expanded(
                 model, n_nodes, n_edges, graph, advanced_config
             )
-            
             if random_graph:
                 metrics = calculate_basic_metrics_fast_expanded(
                     random_graph, metrics_to_compare
                 )
-                model_metrics.append(metrics)
-            
-            simulation_count += 1
-            progress_bar.progress(simulation_count / total_simulations)
-        
-        results[model] = model_metrics
-    
-    progress_bar.empty()
-    status_text.empty()
-    
+                with lock:
+                    result_dict[model].append(metrics)
+                    model_counts[model] += 1
+            task_queue.task_done()
+              
+    num_threads = min(8, total_simulations)
+    threads = [threading.Thread(target=worker) for _ in range(num_threads)]
+    for t in threads:
+        t.start()
+
+    progress_bars = {model: st.progress(0, text=f"{model}") for model in models}
+    while any(t.is_alive() for t in threads):
+        for model in models:
+            progress_bars[model].progress(model_counts[model] / n_samples, text=f"{model}: {model_counts[model]}/{n_samples}")
+        time.sleep(0.1)
+    for model in models:
+        progress_bars[model].progress(1.0, text=f"{model}: {n_samples}/{n_samples}")
+        progress_bars[model].empty()
+
+    for t in threads:
+        t.join()
+             
     return {
         'original': original_metrics,
-        'random_models': results,
+        'random_models': result_dict,
         'config': advanced_config,
         'metrics_compared': metrics_to_compare or list(original_metrics.keys())
     }
@@ -718,29 +735,36 @@ def generate_random_graph_expanded(model, n_nodes, n_edges, original_graph, conf
 
 def calculate_basic_metrics_fast_expanded(graph, metrics_to_compare=None):
     """Calcula métricas básicas con selección opcional"""
-    n_nodes = len(graph.nodes())
     n_edges = len(graph.edges())
-    
+    n_nodes = len(graph.nodes())
     if n_nodes == 0:
         return {}
     
     try:
-        degrees = np.array([graph.degree(n) for n in graph.nodes()])
+        degrees = (graph.degree(n) for n in graph.nodes())
+        degree_list = list(degrees)
+        n_nodes = len(degree_list)
+        degree_sum = sum(degree_list)
+        degree_mean = degree_sum / n_nodes
+        degree_std = np.std(degree_list)
+        degree_max = max(degree_list)
+        degree_min = min(degree_list)
+        degree_cv = degree_std / degree_mean if degree_mean > 0 else 0.0
 
         all_metrics = {
-            'n_nodes': n_nodes,
-            'n_edges': n_edges,
-            'density': nx.density(graph),
-            'avg_degree': float(degrees.mean()) if len(degrees) > 0 else 0.0,
-            'degree_std': float(degrees.std()) if len(degrees) > 0 else 0.0,
-            'max_degree': int(degrees.max()) if len(degrees) > 0 else 0,
-            'min_degree': int(degrees.min()) if len(degrees) > 0 else 0,
-            'degree_cv': float(degrees.std() / degrees.mean()) if degrees.mean() > 0 else 0.0,
-            'n_components': nx.number_connected_components(graph),
-            'is_connected': nx.is_connected(graph) if not graph.is_directed() else nx.is_strongly_connected(graph),
-            'transitivity': nx.transitivity(graph) or 0.0,
-            'avg_clustering': nx.average_clustering(graph) or 0.0
-        }
+                'n_nodes': n_nodes,
+                'n_edges': n_edges,
+                'density': nx.density(graph),
+                'avg_degree': degree_mean,
+                'degree_std': degree_std,
+                'max_degree': degree_max,
+                'min_degree': degree_min,
+                'degree_cv': degree_cv,
+                'n_components': nx.number_connected_components(graph),
+                'is_connected': nx.is_connected(graph) if not graph.is_directed() else nx.is_strongly_connected(graph),
+                'transitivity': nx.transitivity(graph) or 0.0,
+                'avg_clustering': nx.average_clustering(graph) or 0.0
+            }
 
         if all_metrics['is_connected']:
             try:
@@ -1150,8 +1174,8 @@ def show_anomaly_analysis(original, models):
         st.success("✅ No se detectaron anomalías significativas - comportamiento similar a modelos aleatorios")
 
 def show_resilience_analysis(graph, graph_type):
-    """Análisis de resiliencia"""
-    st.markdown("### 🛡️ Análisis de Resiliencia y Robustez")
+    """Análisis de resiliencia mejorado con todas las opciones"""
+    st.markdown("### 🛡️ Análisis de Resiliencia y Robustez Avanzado")
     
     n_nodes = len(graph.nodes())
     
@@ -1159,24 +1183,288 @@ def show_resilience_analysis(graph, graph_type):
         st.warning("⚠️ Grafo muy pequeño para análisis de resiliencia")
         return
     
-    col1, col2 = st.columns([3, 1])
-    
-    with col1:
-        strategies = st.multiselect(
-            "Estrategias de ataque:",
-            ["Aleatorio", "Alto Grado", "Alta Intermediación"],
-            default=["Aleatorio", "Alto Grado"],
-            help="Estrategias de remoción de nodos"
-        )
-    
-    with col2:
-        max_removal = st.slider("% máximo remoción", 10, 50, 25, 5)
+    with st.expander("⚙️ Configuración de Análisis", expanded=True):
+        col1, col2 = st.columns(2)
         
-    if st.button("🎯 Análisis de Resiliencia", type="primary"):
-        with st.spinner("🛡️ Simulando ataques..."):
-            results = perform_resilience_analysis_fast(graph, strategies, max_removal)
-            display_resilience_results_cached(results)
+        with col1:
+            attack_strategies = st.multiselect(
+                "Estrategias de ataque:",
+                ["Aleatorio (Fallos)", 
+                 "Alto Grado (Ataques)", 
+                 "Alta Intermediación",
+                 "Alto PageRank",
+                 "Puntos de Articulación",
+                 "Aristas de Corte"],
+                default=["Aleatorio (Fallos)", "Alto Grado (Ataques)"],
+                help="Seleccione estrategias de remoción"
+            )
+            
+            max_removal = st.slider(
+                "% máximo de nodos a remover", 
+                1, 50, 25, 1,
+                help="Porcentaje máximo de nodos a eliminar en la simulación"
+            )
+            
+        with col2:
+            resilience_metrics = st.multiselect(
+                "Métricas a monitorear:",
+                ["Tamaño Componente Gigante", 
+                 "Coeficiente de Clustering",
+                 "Diámetro",
+                 "Conectividad",
+                 "Asortatividad"],
+                default=["Tamaño Componente Gigante", "Coeficiente de Clustering"],
+                help="Seleccione métricas para evaluar resiliencia"
+            )
+            
+    
+    if "Asortatividad" in resilience_metrics:
+        with st.expander("📊 Análisis de Asortatividad", expanded=False):
+            st.markdown("""
+            **Tipos de redes según asortatividad:**
+            - **Asortativas:** Hubs tienden a conectarse con hubs
+            - **No asortativas:** Hubs son periféricos
+            - **Aleatorias:** No existen grandes hubs
+            """)
+            
+            try:
+                assortativity = nx.degree_assortativity_coefficient(graph)
+                st.metric("Coeficiente de Asortatividad", f"{assortativity:.4f}")
+                
+                if assortativity > 0.3:
+                    st.success("🔵 Red asortativa (hubs conectados a hubs)")
+                elif assortativity < -0.3:
+                    st.warning("🔴 Red disasortativa (hubs periféricos)")
+                else:
+                    st.info("🟢 Red neutra (sin preferencia clara)")
+                    
+            except Exception as e:
+                st.error(f"No se pudo calcular asortatividad: {str(e)}")
+    
 
+    if "Puntos de Articulación" in attack_strategies:
+        with st.expander("🔍 Puntos de Articulación", expanded=False):
+            try:
+                articulation_points = list(nx.articulation_points(graph))
+                st.metric("Puntos de Articulación Detectados", len(articulation_points))
+                
+                if articulation_points:
+                    df_articulation = pd.DataFrame({
+                        "Nodo": list(articulation_points),
+                        "Grado": [graph.degree(n) for n in articulation_points]
+                    })
+                    st.dataframe(df_articulation.sort_values("Grado", ascending=False), 
+                               use_container_width=True)
+            except Exception as e:
+                st.error(f"No se pudo calcular puntos de articulación: {str(e)}")
+    
+    if "Aristas de Corte" in attack_strategies:
+        with st.expander("✂️ Aristas de Corte", expanded=False):
+            try:
+                bridges = list(nx.bridges(graph))
+                st.metric("Aristas de Corte Detectadas", len(bridges))
+                
+                if bridges:
+                    df_bridges = pd.DataFrame({
+                        "Arista": [f"{u}-{v}" for u, v in bridges],
+                        "Grado U": [graph.degree(u) for u, v in bridges],
+                        "Grado V": [graph.degree(v) for u, v in bridges]
+                    })
+                    st.dataframe(df_bridges, use_container_width=True)
+            except Exception as e:
+                st.error(f"No se pudo calcular aristas de corte: {str(e)}")
+
+    if st.button("🚀 Ejecutar Análisis Completo", type="primary"):
+        with st.spinner("🛡️ Simulando ataques y calculando métricas..."):
+            results = perform_advanced_resilience_analysis(
+                graph, 
+                attack_strategies, 
+                max_removal,
+                resilience_metrics
+            )
+            
+            display_advanced_resilience_results(results)
+
+def perform_advanced_resilience_analysis(graph, strategies, max_removal_pct, metrics, include_plots=False):
+    """Análisis de resiliencia avanzado con múltiples métricas"""
+    n_nodes = len(graph.nodes())
+    max_removals = min(int(n_nodes * max_removal_pct / 100), n_nodes - 1)
+  
+    properties = {
+        'degrees': dict(graph.degree()),
+        'betweenness': nx.betweenness_centrality(graph) if "Alta Intermediación" in strategies else {},
+        'pagerank': nx.pagerank(graph) if "Alto PageRank" in strategies else {},
+        'articulation_points': set(nx.articulation_points(graph)) if "Puntos de Articulación" in strategies else set(),
+        'bridges': set(nx.bridges(graph)) if "Aristas de Corte" in strategies else set()
+    }
+    
+    results = {
+        'strategies': {},
+        'initial_metrics': calculate_resilience_metrics(graph, metrics),
+        'topology_plots': {}
+    }
+    
+    for strategy in strategies:
+        removal_sequence = get_removal_sequence(graph, strategy, properties)
+        strategy_results = simulate_attack(graph.copy(), removal_sequence, max_removals, metrics)
+        
+        results['strategies'][strategy] = strategy_results
+        
+    return results
+
+def get_removal_sequence(graph, strategy, properties):
+    """Obtiene secuencia de remoción según estrategia"""
+    if strategy == "Aleatorio (Fallos)":
+        return np.random.permutation(list(graph.nodes()))
+    elif strategy == "Alto Grado (Ataques)":
+        return sorted(graph.nodes(), key=lambda x: properties['degrees'][x], reverse=True)
+    elif strategy == "Alta Intermediación":
+        return sorted(graph.nodes(), key=lambda x: properties['betweenness'].get(x, 0), reverse=True)
+    elif strategy == "Alto PageRank":
+        return sorted(graph.nodes(), key=lambda x: properties['pagerank'].get(x, 0), reverse=True)
+    elif strategy == "Puntos de Articulación":
+        # Ordenar puntos de articulación por grado descendente
+        articulation_points = [n for n in properties['articulation_points']]
+        return sorted(articulation_points, key=lambda x: properties['degrees'][x], reverse=True)
+    elif strategy == "Aristas de Corte":
+        # Para aristas de corte, seleccionamos nodos con más aristas de corte
+        bridge_nodes = {}
+        for u, v in properties['bridges']:
+            bridge_nodes[u] = bridge_nodes.get(u, 0) + 1
+            bridge_nodes[v] = bridge_nodes.get(v, 0) + 1
+        return sorted(graph.nodes(), key=lambda x: bridge_nodes.get(x, 0), reverse=True)
+    else:
+        return np.random.permutation(list(graph.nodes()))
+
+def simulate_attack(graph, removal_sequence, max_removals, metrics):
+    """Simula un ataque progresivo y registra métricas"""
+    results = {metric: [] for metric in metrics}
+    results['steps'] = []
+    results['components'] = []
+    
+    step_size = max(1, max_removals // 20) 
+    
+    for i in range(0, max_removals, step_size):
+        end_idx = min(i + step_size, len(removal_sequence))
+        nodes_to_remove = removal_sequence[i:end_idx]
+        graph.remove_nodes_from(nodes_to_remove)
+        
+        current_metrics = calculate_resilience_metrics(graph, metrics)
+        
+        for metric in metrics:
+            results[metric].append(current_metrics.get(metric, 0))
+        
+        results['steps'].append(i + step_size)
+        results['components'].append(nx.number_connected_components(graph))
+    
+    return results
+
+def calculate_resilience_metrics(graph, metrics):
+    """Calcula métricas de resiliencia para el grafo actual"""
+    metric_functions = {
+        "Tamaño Componente Gigante": lambda g: len(max(nx.connected_components(g), key=len)) if nx.number_of_nodes(g) > 0 else 0,
+        "Coeficiente de Clustering": lambda g: nx.average_clustering(g) if nx.number_of_nodes(g) > 0 else 0,
+        "Diámetro": lambda g: nx.diameter(g) if nx.is_connected(g) and nx.number_of_nodes(g) > 1 else 0,
+        "Conectividad": lambda g: nx.node_connectivity(g) if nx.number_of_nodes(g) > 1 else 0,
+        "Asortatividad": lambda g: nx.degree_assortativity_coefficient(g) if nx.number_of_edges(g) > 0 else 0
+    }
+    
+    results = {}
+    for metric in metrics:
+        try:
+            results[metric] = metric_functions[metric](graph)
+        except:
+            results[metric] = 0
+    
+    return results
+
+
+def display_advanced_resilience_results(results, show_plots=False):
+    """Muestra resultados del análisis de resiliencia avanzado"""
+    st.markdown("#### 📈 Resultados de Resiliencia")
+    
+    # Mostrar métricas iniciales
+    with st.expander("📊 Métricas Iniciales", expanded=False):
+        cols = st.columns(len(results['initial_metrics']))
+        for i, (metric, value) in enumerate(results['initial_metrics'].items()):
+            with cols[i % len(cols)]:
+                st.metric(metric, f"{value:.4f}" if isinstance(value, float) else value)
+    
+    # Gráficos comparativos por estrategia
+    st.markdown("#### 📉 Comparación de Estrategias")
+    
+    for metric in results['initial_metrics'].keys():
+        fig = go.Figure()
+        
+        colors = px.colors.qualitative.Plotly
+        
+        for i, (strategy, data) in enumerate(results['strategies'].items()):
+            if metric in data:
+                fig.add_trace(go.Scatter(
+                    x=data['steps'],
+                    y=data[metric],
+                    mode='lines+markers',
+                    name=strategy,
+                    line=dict(color=colors[i % len(colors)], width=3),
+                    marker=dict(size=8)
+                ))
+        
+        fig.update_layout(
+            title=f"Evolución de {metric}",
+            xaxis_title="Nodos Removidos",
+            yaxis_title=metric,
+            height=400,
+            template="plotly_white",
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+    
+    # Mostrar gráficos de topología si están disponibles
+    if show_plots and results['topology_plots']:
+        st.markdown("#### 🌐 Evolución de la Topología")
+        
+        selected_strategy = st.selectbox(
+            "Seleccionar estrategia para visualización:",
+            list(results['topology_plots'].keys()))
+        
+        plots = results['topology_plots'][selected_strategy]
+        
+        cols = st.columns(2)
+        for i, (step, fig) in enumerate(plots.items()):
+            with cols[i % 2]:
+                st.plotly_chart(fig, use_container_width=True)
+    
+    # Análisis comparativo final
+    st.markdown("#### 🏆 Comparación Final de Estrategias")
+    
+    comparison_data = []
+    for strategy, data in results['strategies'].items():
+        row = {'Estrategia': strategy}
+        
+        for metric in results['initial_metrics'].keys():
+            if metric in data:
+                # Calcular área bajo la curva (AUC) como medida de resiliencia
+                auc = np.trapz(data[metric], data['steps']) / max(data['steps'])
+                row[f"{metric} (AUC)"] = f"{auc:.4f}"
+                
+                # Calcular punto de colapso (cuando la métrica cae a la mitad)
+                initial_value = results['initial_metrics'][metric]
+                if initial_value != 0:
+                    threshold = initial_value * 0.5
+                    collapse_point = next((step for step, val in zip(data['steps'], data[metric]) 
+                                        if val <= threshold), "No alcanzado")
+                    row[f"{metric} Colapso"] = collapse_point
+        
+        comparison_data.append(row)
+    
+    st.dataframe(pd.DataFrame(comparison_data), use_container_width=True)
 def perform_resilience_analysis_fast(graph, strategies, max_removal_pct):
     """Análisis de resiliencia para grafos"""
     n_nodes = len(graph.nodes())
@@ -1316,37 +1604,43 @@ def show_community_diffusion_analysis(graph, graph_type):
     
     if st.button("🔍 Detectar Comunidades", type="primary"):
         with st.spinner("🌐 Detectando comunidades..."):
-            results = perform_community_analysis_fast(graph, algorithm, min_community_size)
-            display_community_results_cached(results)
-
+            try:
+                results = perform_community_analysis_fast(graph, algorithm, min_community_size)
+                display_community_results_cached(results,graph)
+            except:
+                st.error("No es posible detectar comunidades en este grafo")
 def perform_community_analysis_fast(graph, algorithm, min_size):
-    """Detección de comunidades"""
     try:
         if algorithm == "Greedy Modularity":
-            communities = list(nx.community.greedy_modularity_communities(graph))
-        else:  
-            communities = list(nx.community.label_propagation_communities(graph))
-        
-        large_communities = [comm for comm in communities if len(comm) >= min_size]
-        
-        if large_communities:
-            modularity = nx.community.modularity(graph, large_communities)
-            sizes = [len(comm) for comm in large_communities]
-            
-            return {
-                'communities': large_communities,
-                'modularity': modularity,
-                'sizes': sizes,
-                'n_communities': len(large_communities),
-                'coverage': sum(sizes) / len(graph.nodes()) if len(graph.nodes()) > 0 else 0
-            }
+            all_communities = list(nx.community.greedy_modularity_communities(graph))
         else:
-            return {'error': 'No se encontraron comunidades del tamaño mínimo especificado'}
+            all_communities = list(nx.community.label_propagation_communities(graph))
+        
+        # Filtrar sólo para visualización
+        large_comms = [c for c in all_communities if len(c) >= min_size]
+        
+        # Asegurarse de tener al menos una comunidad para modularidad
+        if not all_communities:
+            return {'error': 'No se detectaron comunidades'}
+        
+        # Calcular modularidad sobre la partición completa
+        modularity_val = nx.community.modularity(graph, all_communities)
+        
+        return {
+            'communities': large_comms,
+            'modularity': modularity_val,
+            'sizes': [len(c) for c in large_comms],
+            'n_communities': len(large_comms),
+            'coverage': sum(len(c) for c in large_comms) / graph.number_of_nodes()
+        }
+    except Exception as e:
+        return {'error': f'Error en detección de comunidades: {str(e)}'}
+
             
     except Exception as e:
         return {'error': f'Error en detección de comunidades: {str(e)}'}
 
-def display_community_results_cached(results):
+def display_community_results_cached(results, graph ):
     """Muestra resultados de análisis de comunidades"""
     if 'error' in results:
         st.error(results['error'])
@@ -1375,17 +1669,30 @@ def display_community_results_cached(results):
         st.plotly_chart(fig_communities, use_container_width=True)
 
     st.markdown("#### 🔄 Simulación de Difusión Entre Comunidades")
-    
-    if st.button("🚀 Simular Difusión Rápida"):
-        diffusion_results = simulate_diffusion_fast(results)
+
+  
+    diffusion_results = simulate_diffusion_fast(results)
         
-        col_a, col_b, col_c = st.columns(3)
-        with col_a:
+    col_a, col_b, col_c = st.columns(3)
+    with col_a:
             st.metric("🎯 Comunidades Semilla", diffusion_results['seed_communities'])
-        with col_b:
+    with col_b:
             st.metric("📈 Cobertura Estimada", f"{diffusion_results['estimated_coverage']:.1%}")
-        with col_c:
+    with col_c:
             st.metric("⚡ Velocidad Difusión", diffusion_results['diffusion_speed'])
+
+    st.markdown("#### 🔝 Top Nodos Difusores (por tamaño de comunidad)")
+    top_communities = sorted(results['communities'], key=len, reverse=True)[:diffusion_results['seed_communities']]
+    top_nodes = []
+    
+    for i, comm in enumerate(top_communities):
+            sorted_nodes = sorted(list(comm))[:5]  
+            for node in sorted_nodes:
+                name = graph.nodes[node].get("display_name",node)
+                top_nodes.append({'Comunidad': i + 1, 'Nodo': name})
+
+    if top_nodes:
+            st.dataframe(top_nodes, use_container_width=True)
 
 def simulate_diffusion_fast(community_results):
     """Simulación rápida de difusión entre comunidades"""
@@ -1440,7 +1747,7 @@ def show_advanced_metrics(graph, graph_type):
             results = calculate_advanced_metrics_optimized(
                 graph, graph_type, centrality_metrics
             )
-            display_advanced_metrics_results(results)
+            display_advanced_metrics_results(results,graph)
 
 def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
     """Calcula métricas avanzadas para el grafo completo"""
@@ -1488,7 +1795,7 @@ def calculate_advanced_metrics_optimized(graph, graph_type, centralities):
     
     return results
 
-def display_advanced_metrics_results(results):
+def display_advanced_metrics_results(results, graph):
     """Muestra resultados de métricas avanzadas"""
     st.markdown("#### 📊 Resultados de Métricas Avanzadas")
 
@@ -1517,7 +1824,7 @@ def display_advanced_metrics_results(results):
                 centrality_data.append({
                     'Centralidad': cent_name.title(),
                     'Ranking': rank,
-                    'Nodo': str(node)[:20],  
+                    'Nodo': graph.nodes[node].get("display_name", node), 
                     'Valor': f"{value:.4f}"
                 })
         

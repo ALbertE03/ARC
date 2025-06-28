@@ -389,31 +389,32 @@ def show_author_graph_overview(graph):
             st.metric("Máximo de Colaboraciones", max_collaborations)
             st.metric("Mínimo de Colaboraciones", min_collaborations)
             st.metric("Promedio de Colaboraciones", f"{avg_collaborations:.1f}")
-            if not graph.is_directed():
-                art_points = fast_articulation_points(graph, max_points=10)
-                if art_points:
-                    st.success(f"🌉 {len(art_points)} autores actúan como puentes críticos (muestra)")
-                    df_bridges = pd.DataFrame({
-                        'Autor': [graph.nodes[n].get('display_name', n) for n in art_points],
-                        'Colaboraciones': [degrees[n] for n in art_points]
-                    })
-                    st.dataframe(df_bridges, use_container_width=True, hide_index=True)
-                else:
-                    st.info("🔗 No hay autores puentes críticos identificados (o muestra vacía)")
-            isolated_count = int(np.sum(degree_values == 0))
-            if isolated_count > 0:
-                st.warning(f"⚠️ {isolated_count} autores están aislados")
+            with st.expander("utores actúan como puentes críticos (muestra)",expanded=False):
+                if not graph.is_directed():
+                    art_points = fast_articulation_points(graph, max_points=10)
+                    if art_points:
+                        df_bridges = pd.DataFrame({
+                            'Autor': [graph.nodes[n].get('display_name', n) for n in art_points],
+                            'Colaboraciones': [degrees[n] for n in art_points]
+                        })
+                        st.dataframe(df_bridges, use_container_width=True, hide_index=True)
+                    else:
+                        st.info("🔗 No hay autores puentes críticos identificados (o muestra vacía)")
+                isolated_count = int(np.sum(degree_values == 0))
+                if isolated_count > 0:
+                    st.warning(f"⚠️ {isolated_count} autores están aislados")
         with col2:
             st.subheader("🤝 Top Colaboradores")
+            
             top_collaborators = fast_top_k_degree_nodes(graph, 10)
             if top_collaborators:
-                df_collab = pd.DataFrame({
-                    'Autor': [graph.nodes[n].get('display_name', n) for n, _ in top_collaborators],
-                    'Colaboraciones': [d for _, d in top_collaborators]
-                })
-                st.dataframe(df_collab, use_container_width=True, hide_index=True)
+                    df_collab = pd.DataFrame({
+                        'Autor': [graph.nodes[n].get('display_name', n) for n, _ in top_collaborators],
+                        'Colaboraciones': [d for _, d in top_collaborators]
+                    })
+                    st.dataframe(df_collab, use_container_width=True, hide_index=True)
             else:
-                st.info("No hay datos de colaboración disponibles")
+                    st.info("No hay datos de colaboración disponibles")
     st.markdown("---")
 
     # Distribución de colaboraciones
