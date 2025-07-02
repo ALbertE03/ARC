@@ -8,6 +8,7 @@ from app.articles import show_article_management
 from app.conections import show_connection_management
 from app.network import show_network_analysis
 from app.filters import show_page_filter
+from app.pdf_processor import show_pdf_processor
 st.set_page_config(
     page_title="ARC Graph Editor",
     page_icon="🔗",
@@ -115,11 +116,34 @@ def main():
     st.markdown('<div class="main-header" style="font-size:2.2rem;font-weight:bold;color:#4B286D;letter-spacing:1px;">Red Académica de Colaboraciones y Publicaciones<span style="color:#764ba2;font-size:1.3rem;font-weight:normal;"></span> <span style="font-size:1.1rem;color:#888;"></span></div>', unsafe_allow_html=True)
     st.markdown("---")
 
-    if 'graph' not in st.session_state:
-        st.session_state.graph = load_graph()
+    if 'graph_type' not in st.session_state:
+        st.session_state.graph_type = None
     
-    if 'author_graph' not in st.session_state:
-        st.session_state.author_graph = load_author_graph()
+    if st.session_state.graph_type is None:
+        show_graph_selector()
+        return
+    
+    if 'graph' not in st.session_state or st.session_state.graph is None:
+        if st.session_state.graph_type == 'base':
+            st.session_state.graph = load_graph()
+        elif st.session_state.graph_type == 'pdf':
+            st.session_state.graph = load_pdf_graph()
+            if st.session_state.graph is None:
+                st.error("❌ No se pudo cargar el grafo de PDFs. Asegúrate de haber procesado PDFs primero.")
+                st.session_state.graph_type = None
+                st.rerun()
+                return
+    
+    if st.session_state.graph_type == 'base':
+        if 'author_graph' not in st.session_state:
+            st.session_state.author_graph = load_author_graph()
+        if 'article_graph' not in st.session_state:
+            st.session_state.article_graph = load_article_graph()
+    elif st.session_state.graph_type == 'pdf':
+        if 'author_graph' not in st.session_state and st.session_state.graph is not None:
+            st.session_state.author_graph = create_author_projection(st.session_state.graph)
+        if 'article_graph' not in st.session_state:
+            st.session_state.article_graph = None  
 
     if 'consolidation_history' not in st.session_state:
         st.session_state.consolidation_history = load_consolidation_history()
@@ -129,25 +153,50 @@ def main():
         return
     
     with st.sidebar:
-     
         st.markdown("### 🧭 Navegación")
+        
+        if st.button("🔄 Cambiar Tipo de Grafo", use_container_width=True):
+            keys_to_clear = ['graph_type', 'graph', 'author_graph', 'article_graph', 'main_graph']
+            for key in keys_to_clear:
+                if key in st.session_state:
+                    del st.session_state[key]
+            st.rerun()
+        
+        st.markdown("---")
+
+        if st.session_state.graph_type == 'pdf':
+            available_pages = ["📈 Explorar mi Red"]
+            st.info("🔍 **Modo PDF**: Solo exploración disponible")
+        else:
+            available_pages = [
+                "📈 Explorar mi Red", 
+                "👤 Gestionar Investigadores", 
+                "📄 Gestionar Publicaciones", 
+                "🔗 Conectar Colaboraciones", 
+                "🔍 Descubrir Patrones",
+                "🔍 filtros", 
+                "📑 Procesar PDFs"
+            ]
+        
         page = st.selectbox(
-            "¿Qué te gustaría hacer?",
-            ["📈 Explorar mi Red", "👤 Gestionar Investigadores", "📄 Gestionar Publicaciones", "🔗 Conectar Colaboraciones", "🔍 Descubrir Patrones",'🔍 filtros']
+            "¿Qué te gustarías hacer?",
+            available_pages
         )
         
     if page == "📈 Explorar mi Red":
         show_overview()
-    elif page == "🔍 filtros":
+    elif page == "🔍 filtros" and st.session_state.graph_type != 'pdf':
         show_page_filter()
-    elif page == "👤 Gestionar Investigadores":
+    elif page == "👤 Gestionar Investigadores" and st.session_state.graph_type != 'pdf':
         show_author_management()
-    elif page == "📄 Gestionar Publicaciones":
+    elif page == "📄 Gestionar Publicaciones" and st.session_state.graph_type != 'pdf':
         show_article_management()
-    elif page == "🔗 Conectar Colaboraciones":
+    elif page == "🔗 Conectar Colaboraciones" and st.session_state.graph_type != 'pdf':
         show_connection_management()
-    elif page == "🔍 Descubrir Patrones":
+    elif page == "🔍 Descubrir Patrones" and st.session_state.graph_type != 'pdf':
         show_network_analysis()
+    elif page == "📑 Procesar PDFs" and st.session_state.graph_type != 'pdf':
+        show_pdf_processor()
 
 
 
@@ -360,6 +409,62 @@ def create_author_graph_visualization(author_graph):
     
     return fig
         
+
+def show_graph_selector():
+    """Muestra el selector de tipo de grafo al inicio"""
+    st.markdown("### 🎯 Selecciona el tipo de grafo para analizar")
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("#### 🌐 Grafo Base")
+        st.markdown("""
+        - **Incluye**: Investigadores y sus publicaciones completas
+        - **Datos**: OpenAlex y fuentes académicas
+        - **Funcionalidades**: Todas las herramientas disponibles
+        """)
+        
+        if st.button("🚀 Usar Grafo Base", type="primary", use_container_width=True):
+        
+            try:
+                test_graph = load_graph()
+                if test_graph is not None:
+                    st.session_state.graph_type = 'base'
+                    st.rerun()
+                else:
+                    st.error("❌ No se pudo cargar el grafo base. Verifica que los archivos de datos existan.")
+            except Exception as e:
+                st.error(f"❌ Error al cargar el grafo base: {str(e)}")
+    
+    with col2:
+        pdf_exists = check_pdf_graph_exists()
+        
+        if pdf_exists:
+            st.markdown("#### 📄 Grafo de PDFs")
+            st.markdown("""
+            - **Incluye**: Solo datos extraídos de PDFs procesados
+            - **Datos**: Información local de documentos PDF
+            - **Vista**: Solo página de exploración disponible
+            """)
+            
+            if st.button("📑 Usar Grafo de PDFs", use_container_width=True):
+                try:
+                    test_pdf_graph = load_pdf_graph()
+                    if test_pdf_graph is not None:
+                        st.session_state.graph_type = 'pdf'
+                        st.rerun()
+                    else:
+                        st.error("❌ No se pudo cargar el grafo de PDFs. Procesa algunos PDFs primero.")
+                except Exception as e:
+                    st.error(f"❌ Error al cargar el grafo de PDFs: {str(e)}")
+        else:
+            st.markdown("#### 📄 Grafo de PDFs")
+            st.markdown("*No disponible - No se han procesado PDFs*")
+            st.button("📑 Grafo de PDFs", disabled=True, use_container_width=True)
+    
+    st.markdown("---")
+    st.info("💡 **Tip**: Puedes cambiar el tipo de grafo reiniciando la aplicación")
 
 if __name__ == "__main__":
     main()

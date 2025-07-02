@@ -33,6 +33,15 @@ def load_article_graph():
         st.warning("No se encontró el archivo 'data/grafo_articulo_articulo.graphml'. El análisis de artículos no estará disponible.")
         return None
 
+@st.cache_data
+def load_pdf_graph():
+    """Carga el grafo de solo PDFs"""
+    try:
+        graph = nx.read_graphml("data/grafo_solo_pdfs.graphml")
+        return graph
+    except FileNotFoundError:
+        return None
+
 
 def save_graph(graph, filename="subgrafo_con_articulos.graphml"):
     """Guarda el grafo en formato GraphML"""
@@ -175,4 +184,9 @@ def load_article_modification_history():
             return json.load(f)
     except Exception:
         return {}
+
+def check_pdf_graph_exists():
+    """Verifica si existe el archivo del grafo de PDFs"""
+    import os
+    return os.path.exists("data/grafo_solo_pdfs.graphml")
 

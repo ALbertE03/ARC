@@ -5,6 +5,7 @@ from datetime import datetime
 from improved_academic_extractor import ImprovedAcademicExtractor, process_pdf_improved
 from app.utils import save_graph, clear_centralities_cache
 import networkx as nx
+import re
 
 
 def get_progress_file_path():
@@ -18,7 +19,6 @@ def save_processing_progress(state):
         progress_file = get_progress_file_path()
         progress_file.parent.mkdir(parents=True, exist_ok=True)
         
-        # Preparar datos para guardar (convertir Path objects a strings)
         save_data = {
             'current_batch': state['current_batch'],
             'processed_pdfs': [str(p) for p in state['processed_pdfs']],
@@ -178,28 +178,44 @@ def add_pdf_to_registry(pdf_path, title, authors, processing_mode):
 
 def is_pdf_already_processed(pdf_path, current_mode):
     """Verifica si un PDF ya ha sido procesado en el modo actual"""
-    registry = load_processed_pdfs_registry()
-    pdf_key = str(pdf_path)
-    
-    if pdf_key not in registry:
-        return False
-    
-    pdf_info = registry[pdf_key]
-    
-    # Verificar si el archivo aún existe y no ha sido modificado
-    if Path(pdf_path).exists():
-        current_modified = datetime.fromtimestamp(Path(pdf_path).stat().st_mtime).isoformat()
-        if pdf_info.get('file_modified') != current_modified:
-            # El archivo ha sido modificado, considerarlo como no procesado
+    try:
+        registry = load_processed_pdfs_registry()
+        pdf_key = str(pdf_path)
+        
+        # Debug: Verificar si está en el registro
+        if pdf_key not in registry:
             return False
-    else:
-        # El archivo no existe, removerlo del registro
-        del registry[pdf_key]
-        save_processed_pdfs_registry(registry)
+        
+        pdf_info = registry[pdf_key]
+        
+        # Verificar si el archivo aún existe
+        if not Path(pdf_path).exists():
+            # Si el archivo no existe, eliminarlo del registro
+            del registry[pdf_key]
+            save_processed_pdfs_registry(registry)
+            return False
+        
+        # Verificar si el archivo ha sido modificado
+        try:
+            current_modified = datetime.fromtimestamp(Path(pdf_path).stat().st_mtime).isoformat()
+            registered_modified = pdf_info.get('file_modified')
+            
+            if registered_modified and current_modified != registered_modified:
+                # El archivo fue modificado, considerarlo como no procesado
+                return False
+        except Exception:
+            # Si hay error obteniendo la fecha de modificación, asumir que no ha sido modificado
+            pass
+        
+        # Verificar el modo de procesamiento
+        registered_mode = pdf_info.get('processing_mode', '')
+        
+        # Comparar modos de procesamiento
+        return registered_mode == current_mode
+        
+    except Exception as e:
+        # En caso de error, asumir que no ha sido procesado
         return False
-    
-    # Verificar si fue procesado en el mismo modo
-    return pdf_info.get('processing_mode') == current_mode
 
 
 def clean_processed_pdfs_registry():
@@ -224,15 +240,13 @@ def get_processed_pdfs_stats():
         'by_mode': {},
         'recent_processed': []
     }
-    
-    # Contar por modo
+
     for info in registry.values():
         mode = info.get('processing_mode', 'unknown')
         if mode not in stats['by_mode']:
             stats['by_mode'][mode] = 0
         stats['by_mode'][mode] += 1
-    
-    # Obtener los 5 más recientes
+
     recent = sorted(registry.values(), 
                    key=lambda x: x.get('processed_date', ''), 
                    reverse=True)[:5]
@@ -246,7 +260,8 @@ def show_pdf_processor():
     st.markdown("## 📄 Procesador de PDFs Académicos")
     st.markdown("Extrae automáticamente autores y títulos de PDFs para agregar a tu red.")
     
-    # Opción para elegir modo de procesamiento
+    st.markdown("---")
+    
     st.markdown("### 🎯 Modo de Procesamiento")
     mode_option = st.radio(
         "Elige cómo quieres procesar los PDFs:",
@@ -256,27 +271,22 @@ def show_pdf_processor():
         ],
         help="Puedes agregar los PDFs al grafo actual o crear un grafo completamente nuevo solo con los datos de los PDFs."
     )
-    
-    # Guardar la opción en el estado de sesión
+
     if 'pdf_processing_mode' not in st.session_state:
         st.session_state.pdf_processing_mode = mode_option
     elif st.session_state.pdf_processing_mode != mode_option:
         st.session_state.pdf_processing_mode = mode_option
-        # Limpiar estado del procesador si cambia el modo
         if 'pdf_processor_state' in st.session_state:
             del st.session_state.pdf_processor_state
         st.info("🔄 Modo cambiado. El progreso se reiniciará.")
         st.rerun()
-    
-    # Mostrar información del modo seleccionado
     if mode_option == "🆕 Crear grafo nuevo (solo PDFs)":
         st.info("🆕 **Modo: Grafo Nuevo** - Se creará un grafo completamente nuevo con solo los datos extraídos de los PDFs. El grafo actual no se modificará.")
     else:
         st.info("➕ **Modo: Agregar al Existente** - Los datos extraídos se agregarán al grafo actual.")
     
     st.markdown("---")
-    
-    # Verificar si hay PDFs para procesar
+
     pdf_directory = Path(r"c:\Users\Anabel\OneDrive\Desktop\ARC\pdfs_papers")
     
     if not pdf_directory.exists():
@@ -295,17 +305,14 @@ def show_pdf_processor():
         if st.button("🔄 Buscar PDFs nuevamente"):
             st.rerun()
         return
-    
-    # Inicializar estado de sesión con persistencia
+
     if 'pdf_processor_state' not in st.session_state:
-        # Intentar cargar progreso guardado
         loaded_state = load_processing_progress()
         
         if loaded_state:
             st.session_state.pdf_processor_state = loaded_state
             st.info("📂 Progreso previo cargado desde archivo.")
-            
-            # Validar y limpiar el progreso cargado
+
             new_files, removed_files, registry_info = validate_and_clean_progress(
                 st.session_state.pdf_processor_state, 
                 pdf_files
@@ -313,12 +320,11 @@ def show_pdf_processor():
             
             if new_files > 0:
                 st.success(f"✅ {new_files} archivos nuevos detectados y agregados.")
-            if removed_files < 0:  # Archivos eliminados
+            if removed_files < 0: 
                 st.warning(f"⚠️ {abs(removed_files)} archivos ya no están disponibles y fueron removidos del progreso.")
             if registry_info:
                 st.info(f"📂 PDFs recuperados desde registro: {registry_info}")
         else:
-            # Inicializar estado nuevo
             st.session_state.pdf_processor_state = {
                 'current_batch': 0,
                 'processed_pdfs': [],
@@ -331,7 +337,6 @@ def show_pdf_processor():
     
     state = st.session_state.pdf_processor_state
     
-    # Verificar si hay PDFs nuevos
     current_pdf_files = set(str(p) for p in pdf_files)
     pending_pdf_files = set(str(p) for p in state['pending_pdfs'])
     processed_pdf_files = set(str(p) for p in state['processed_pdfs'])
@@ -341,7 +346,7 @@ def show_pdf_processor():
         st.info(f"🆕 Se encontraron {len(new_pdfs)} PDFs nuevos!")
         if st.button("➕ Agregar PDFs nuevos a la cola"):
             state['pending_pdfs'].extend([Path(p) for p in new_pdfs])
-            save_processing_progress(state)  # Guardar progreso
+            save_processing_progress(state)  
             st.success(f"✅ {len(new_pdfs)} PDFs agregados a la cola de procesamiento.")
             st.rerun()
     
@@ -376,21 +381,18 @@ def show_pdf_processor():
     
     st.markdown("---")
     
-    # Opciones de configuración
     with st.expander("⚙️ Configuración", expanded=False):
         new_batch_size = st.slider("PDFs por lote", min_value=5, max_value=20, value=state['batch_size'])
         if new_batch_size != state['batch_size']:
             state['batch_size'] = new_batch_size
-            save_processing_progress(state)  # Guardar progreso
+            save_processing_progress(state)  
             st.success(f"✅ Tamaño de lote actualizado a {new_batch_size}")
         
         st.markdown("---")
-        
-        # Información y controles del progreso
+
         col1, col2 = st.columns(2)
         
         with col1:
-            # Mostrar información del progreso guardado
             progress_file = get_progress_file_path()
             if progress_file.exists():
                 try:
@@ -403,8 +405,7 @@ def show_pdf_processor():
                     st.error(f"❌ Error leyendo progreso: {e}")
             else:
                 st.info("💾 No hay progreso guardado")
-            
-            # Mostrar estadísticas del registro de PDFs
+
             stats = get_processed_pdfs_stats()
             if stats['total_processed'] > 0:
                 st.success(f"📂 **Registro de PDFs**")
@@ -414,30 +415,49 @@ def show_pdf_processor():
                     st.write(f"{mode_emoji} {mode}: {count}")
         
         with col2:
-            # Botón para guardar progreso manualmente
             if st.button("💾 Guardar Progreso Ahora"):
                 if save_processing_progress(state):
                     st.success("✅ Progreso guardado exitosamente")
                 else:
                     st.error("❌ Error al guardar progreso")
-            
-            # Botón para limpiar progreso guardado
+
             if st.button("🗑️ Limpiar Progreso Guardado"):
                 if clear_processing_progress():
                     st.success("✅ Progreso limpiado")
                 else:
                     st.error("❌ Error al limpiar progreso")
-            
-            # Botón para limpiar registro de PDFs
+
             if st.button("🗑️ Limpiar Registro de PDFs"):
                 registry_file = get_processed_pdfs_file_path()
                 if registry_file.exists():
                     registry_file.unlink()
                     st.success("✅ Registro de PDFs limpiado")
+                    st.rerun()
                 else:
                     st.info("💭 No hay registro que limpiar")
-            
-            # Botón para recrear grafo autor-autor (solo en modo PDFs)
+                    
+            if st.button("🔍 Revisar Registro de PDFs"):
+                registry = load_processed_pdfs_registry()
+                current_mode = st.session_state.get('pdf_processing_mode', "➕ Agregar al grafo existente")
+                
+                if registry:
+                    st.write("**📂 PDFs en el registro:**")
+                    pdfs_in_mode = 0
+                    for pdf_path, info in registry.items():
+                        if Path(pdf_path).exists():
+                            mode_match = info.get('processing_mode') == current_mode
+                            mode_emoji = "✅" if mode_match else "❌"
+                            if mode_match:
+                                pdfs_in_mode += 1
+                            
+                            st.write(f"{mode_emoji} `{Path(pdf_path).name}` - {info.get('processing_mode', 'Modo desconocido')}")
+                        else:
+                            st.write(f"🗑️ `{Path(pdf_path).name}` - Archivo no existe")
+                    
+                    st.info(f"📊 **Resumen:** {pdfs_in_mode} PDFs registrados en modo actual '{current_mode}'")
+                else:
+                    st.info("📂 No hay PDFs registrados")
+         
             if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
                 if st.button("🤝 Recrear Grafo Autor-Autor"):
                     if 'pdf_only_graph' in st.session_state and st.session_state.pdf_only_graph.number_of_nodes() > 0:
@@ -529,24 +549,15 @@ def extract_batch_data(pdf_files, batch_key):
             status_text.text(f"Procesando: {pdf_path.name} ({i+1}/{len(pdf_files)})")
             
             try:
-                result = process_pdf_improved(str(pdf_path))
-                
-                # Extraer título del PDF si es posible
-                title = extract_title_from_result(result, pdf_path.name)
-                
-                # Validar que los datos extraídos sean válidos
-                persons = result.get('persons_found', [])
-                if persons:
-                    # Filtrar nombres muy cortos o inválidos
-                    persons = [p for p in persons if len(p.strip()) > 2 and ' ' in p.strip()]
+                result = process_pdf_with_improved_extractor(pdf_path)
                 
                 batch_results[str(pdf_path)] = {
-                    'filename': pdf_path.name,
-                    'title': title,
-                    'persons': persons,
-                    'text_preview': result.get('text_before_abstract', '')[:500] + "..." if result.get('text_before_abstract') else "Sin texto extraído",
+                    'filename': result['filename'],
+                    'title': result.get('title', pdf_path.stem),
+                    'persons': result.get('authors', []),
+                    'text_preview': result.get('raw_text', '')[:500] + "..." if result.get('raw_text') else "Sin texto extraído",
                     'error': result.get('error', None),
-                    'success': 'error' not in result
+                    'success': result.get('success', False)
                 }
                 
             except Exception as e:
@@ -559,7 +570,6 @@ def extract_batch_data(pdf_files, batch_key):
                     'success': False
                 }
                 
-                # Log del error para debugging
                 st.write(f"⚠️ Error procesando {pdf_path.name}: {e}")
             
             progress_bar.progress((i + 1) / len(pdf_files))
@@ -568,7 +578,6 @@ def extract_batch_data(pdf_files, batch_key):
         progress_bar.empty()
         status_text.empty()
         
-        # Mostrar resumen del lote
         successful = sum(1 for r in batch_results.values() if r['success'])
         failed = len(batch_results) - successful
         
@@ -586,15 +595,12 @@ def extract_title_from_result(result, filename):
     text = result.get('text_before_abstract', '')
     lines = text.split('\n')
     
-    # Buscar líneas que podrían ser títulos
-    for line in lines[:10]:  # Solo las primeras 10 líneas
+    for line in lines[:10]:  
         line = line.strip()
-        if len(line) > 10 and len(line) < 200:  # Longitud razonable para un título
-            # Filtrar líneas que obviamente no son títulos
+        if len(line) > 10 and len(line) < 200:
             if not any(word in line.lower() for word in ['abstract', 'resumen', 'universidad', 'department']):
                 return line
     
-    # Si no se encuentra, usar el nombre del archivo
     return filename.replace('.pdf', '')
 
 
@@ -605,21 +611,31 @@ def show_batch_results(pdf_files, batch_key):
     
     st.markdown("#### 🔍 Revisa los datos extraídos:")
     
-    # Formulario para el lote completo
     with st.form(f"batch_form_{batch_key}"):
         decisions = {}
         
         for pdf_path in pdf_files:
             pdf_data = batch_data[str(pdf_path)]
             
-            # Verificar si el PDF ya fue procesado según el registro
             current_mode = st.session_state.get('pdf_processing_mode', "➕ Agregar al grafo existente")
-            if is_pdf_already_processed(pdf_path, current_mode):
-                st.info(f"📂 **{pdf_data['filename']}** - Este PDF ya fue procesado anteriormente en este modo, se omitirá.")
+            
+            # Verificar si el PDF ya fue procesado
+            already_processed = is_pdf_already_processed(pdf_path, current_mode)
+            if already_processed:
+                # Obtener información del registro para mostrar al usuario
+                registry = load_processed_pdfs_registry()
+                pdf_info = registry.get(str(pdf_path), {})
+                processed_date = pdf_info.get('processed_date', 'Fecha desconocida')
+                if processed_date != 'Fecha desconocida':
+                    try:
+                        processed_date = datetime.fromisoformat(processed_date).strftime("%Y-%m-%d %H:%M")
+                    except:
+                        pass
+                
+                st.info(f"📂 **{pdf_data['filename']}** - Ya procesado en modo '{current_mode}' el {processed_date}. Se omitirá.")
                 decisions[str(pdf_path)] = {'action': 'skip', 'reason': 'already_processed'}
                 continue
-            
-            # Verificar si el artículo ya existe en el grafo
+
             article_exists = check_article_exists(pdf_data['title'])
             
             if article_exists:
@@ -636,14 +652,12 @@ def show_batch_results(pdf_files, batch_key):
                 col1, col2 = st.columns([2, 1])
                 
                 with col1:
-                    # Título editable
                     edited_title = st.text_input(
                         "Título del artículo:",
                         value=pdf_data['title'],
                         key=f"title_{pdf_path}_{batch_key}"
                     )
-                    
-                    # Vista previa del texto
+
                     st.text_area(
                         "Vista previa del texto:",
                         value=pdf_data['text_preview'],
@@ -653,17 +667,14 @@ def show_batch_results(pdf_files, batch_key):
                     )
                 
                 with col2:
-                    # Decisión del usuario
                     action = st.radio(
                         "Acción:",
                         ["✅ Procesar", "❌ Omitir"],
                         key=f"action_{pdf_path}_{batch_key}"
                     )
                     
-                    # Información adicional
                     st.write(f"**Autores encontrados:** {len(pdf_data['persons'])}")
-                
-                # Autores encontrados (editables)
+
                 if pdf_data['persons']:
                     st.write("👥 **Autores detectados:**")
                     selected_authors = []
@@ -704,7 +715,6 @@ def show_batch_results(pdf_files, batch_key):
                         'filename': pdf_data['filename']
                     }
         
-        # Botones de acción
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -727,33 +737,27 @@ def show_batch_results(pdf_files, batch_key):
 def check_article_exists(title):
     """Verifica si un artículo ya existe en el grafo"""
     processing_mode = st.session_state.get('pdf_processing_mode', "➕ Agregar al grafo existente")
-    
-    # Determinar qué grafo verificar según el modo
+
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
         if 'pdf_only_graph' not in st.session_state:
             st.session_state.pdf_only_graph = load_pdf_only_graph()
         graph = st.session_state.pdf_only_graph
     else:
         graph = st.session_state.graph
-    
-    # Normalizar título para comparación
+
     normalized_title = title.lower().strip()
-    
-    # Buscar por título exacto o similar
+
     for node, data in graph.nodes(data=True):
         if data.get('node_type') == 'article':
             existing_title = data.get('title', data.get('display_name', ''))
             normalized_existing = existing_title.lower().strip()
-            
-            # Comparación exacta
+
             if normalized_existing == normalized_title:
                 return True
-            
-            # Comparación de similitud (palabras en común)
+
             title_words = set(normalized_title.split())
             existing_words = set(normalized_existing.split())
             
-            # Si tienen más del 80% de palabras en común, considerarlo duplicado
             if len(title_words) > 0 and len(existing_words) > 0:
                 common_words = title_words.intersection(existing_words)
                 similarity = len(common_words) / max(len(title_words), len(existing_words))
@@ -768,10 +772,8 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
     """Procesa las decisiones del usuario para el lote actual"""
     state = st.session_state.pdf_processor_state
     processing_mode = st.session_state.get('pdf_processing_mode', "➕ Agregar al grafo existente")
-    
-    # Determinar qué grafo usar según el modo
+
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
-        # Verificar si ya existe un grafo de solo PDFs en el estado
         if 'pdf_only_graph' not in st.session_state:
             st.session_state.pdf_only_graph = nx.Graph()
         graph = st.session_state.pdf_only_graph
@@ -787,9 +789,7 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
         
         for pdf_path_str, decision in decisions.items():
             if decision['action'] == 'process':
-                # Agregar artículo
                 article_id = f"article_{decision['title'].replace(' ', '_').lower()}"
-                # Verificar si el autor ya existe
                 article_exists = False
                 for node, data in graph.nodes(data=True):
                     if (data.get('node_type') == 'article' and 
@@ -797,7 +797,7 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
                             article_id = node
                             article_exists = True
                             break
-                if  article_exists:
+                if not article_exists:
                     article_data = {
                         'node_type': 'article',
                         'title': decision['title'],
@@ -809,12 +809,10 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
                     
                     graph.add_node(article_id, **article_data)
                     added_articles += 1
-                
-                # Agregar autores y conexiones
+
                 for author_name in decision['authors']:
                     author_id = f"author_{author_name.replace(' ', '_').lower()}"
-                    
-                    # Verificar si el autor ya existe
+
                     author_exists = False
                     for node, data in graph.nodes(data=True):
                         if (data.get('node_type') == 'author' and 
@@ -823,7 +821,6 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
                             author_exists = True
                             break
                     
-                    # Agregar autor si no existe
                     if not author_exists:
                         author_data = {
                             'node_type': 'author',
@@ -837,25 +834,21 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
                         graph.add_node(author_id, **author_data)
                         added_authors += 1
                     
-                    # Agregar conexión autor-artículo
                     if not graph.has_edge(author_id, article_id):
                         graph.add_edge(author_id, article_id, relationship='authored')
-    
-    # Guardar el grafo actualizado
+
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
-        # Guardar el grafo de PDFs por separado
+
         save_pdf_only_graph(graph)
         st.info(f"💾 Grafo de PDFs guardado con {graph.number_of_nodes()} nodos y {graph.number_of_edges()} conexiones.")
     else:
-        # Guardar el grafo principal
         save_graph(graph)
         clear_centralities_cache()
     
-    # Actualizar estado y registrar PDFs procesados
+    # Registrar solo los PDFs que fueron realmente procesados
     processed_in_batch = []
     for pdf_path_str, decision in decisions.items():
         if decision['action'] == 'process':
-            # Registrar el PDF como procesado
             add_pdf_to_registry(
                 pdf_path_str, 
                 decision['title'], 
@@ -864,36 +857,35 @@ def process_batch_decisions(decisions, pdf_files, batch_key):
             )
             processed_in_batch.append(pdf_path_str)
     
+    # Registrar también los PDFs que fueron omitidos para evitar que se procesen de nuevo
+    for pdf_path_str, decision in decisions.items():
+        if decision['action'] == 'skip':
+            add_pdf_to_registry(
+                pdf_path_str, 
+                decision.get('title', ''), 
+                decision.get('authors', []), 
+                processing_mode
+            )
+    
     state['processed_pdfs'].extend(pdf_files)
     for pdf_path in pdf_files:
         if pdf_path in state['pending_pdfs']:
             state['pending_pdfs'].remove(pdf_path)
-    
-    # Guardar progreso después de procesar el lote
+
     save_processing_progress(state)
     
     state['current_batch'] += 1
-    
-    # Guardar progreso con el nuevo batch
+
     save_processing_progress(state)
     
-    # Mostrar resumen
     st.success(f"✅ Lote procesado exitosamente en el {graph_name}!")
     st.info(f"📊 **Resumen:** {added_articles} artículos y {added_authors} autores agregados.")
     
     if processed_in_batch:
         st.info(f"📂 **Registro:** {len(processed_in_batch)} PDFs registrados como procesados.")
     
-    # Limpiar datos del lote para liberar memoria
     if batch_key in state['extracted_data']:
         del state['extracted_data'][batch_key]
-    
-    # Registrar los PDFs procesados en el registro
-    for pdf_path in pdf_files:
-        pdf_key = str(pdf_path)
-        if not is_pdf_already_processed(pdf_path, processing_mode):
-            # Agregar al registro solo si no está ya procesado
-            add_pdf_to_registry(pdf_path, "", [], processing_mode)
     
     st.rerun()
 
@@ -908,8 +900,7 @@ def skip_current_batch(pdf_files):
             state['pending_pdfs'].remove(pdf_path)
     
     state['current_batch'] += 1
-    
-    # Guardar progreso después de omitir el lote
+
     save_processing_progress(state)
     
     st.info(f"⏭️ Lote omitido. Continuando con el siguiente lote...")
@@ -923,7 +914,6 @@ def show_final_summary():
     state = st.session_state.pdf_processor_state
     processing_mode = st.session_state.get('pdf_processing_mode', "➕ Agregar al grafo existente")
     
-    # Determinar qué grafo mostrar según el modo
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
         graph = st.session_state.get('pdf_only_graph', nx.Graph())
         mode_info = "🆕 **Grafo Nuevo de PDFs** - Datos extraídos en un grafo independiente"
@@ -933,7 +923,6 @@ def show_final_summary():
     
     st.info(mode_info)
     
-    # Contar elementos agregados via PDF
     articles_from_pdf = len([n for n, d in graph.nodes(data=True) 
                            if d.get('node_type') == 'article' and d.get('added_via_pdf', False)])
     
@@ -949,13 +938,12 @@ def show_final_summary():
         st.metric("📁 PDFs Procesados", len(state['processed_pdfs']))
     with col4:
         st.metric("🔗 Total Nodos", graph.number_of_nodes())
-    
-    # Mostrar opciones específicas del modo
+
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)":
         st.markdown("#### 🎯 Opciones del Grafo de PDFs")
-        
-        # Verificar si existe el grafo autor-autor
-        pdf_author_graph = st.session_state.get('pdf_author_graph', load_pdf_author_graph())
+
+        # Solo cargar el grafo autor-autor si ya existe, no crearlo automáticamente
+        pdf_author_graph_exists = Path("data/grafo_autor_autor_pdfs.graphml").exists()
         
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -970,42 +958,48 @@ def show_final_summary():
         with col2:
             if st.button("🔄 Usar este Grafo como Principal"):
                 st.session_state.graph = graph
-                # También actualizar el grafo autor-autor principal si existe
-                if pdf_author_graph.number_of_nodes() > 0:
-                    st.session_state.author_graph = pdf_author_graph
                 save_graph(graph)
                 st.success("✅ El grafo de PDFs ahora es el grafo principal de la aplicación")
                 st.rerun()
         
         with col3:
-            if pdf_author_graph.number_of_nodes() > 0:
-                if st.button("📊 Ver Red de Colaboración"):
-                    st.info(f"🤝 Red autor-autor: {pdf_author_graph.number_of_nodes()} autores, {pdf_author_graph.number_of_edges()} colaboraciones")
-                    # Aquí podrías agregar visualización si quieres
+            if pdf_author_graph_exists:
+                pdf_author_graph = load_pdf_author_graph()
+                if pdf_author_graph.number_of_nodes() > 0:
+                    if st.button("📊 Ver Red de Colaboración"):
+                        st.info(f"🤝 Red autor-autor: {pdf_author_graph.number_of_nodes()} autores, {pdf_author_graph.number_of_edges()} colaboraciones")
+                else:
+                    st.info("🤝 Red de colaboración vacía")
             else:
-                st.info("🤝 No hay colaboraciones suficientes para mostrar")
+                st.info("🤝 No hay red de colaboración creada")
     
     # Mostrar estadísticas adicionales para modo PDFs
     if processing_mode == "🆕 Crear grafo nuevo (solo PDFs)" and graph.number_of_nodes() > 0:
-        with st.expander("🤝 Estadísticas de Colaboración (PDFs)"):
-            pdf_author_graph = st.session_state.get('pdf_author_graph', load_pdf_author_graph())
-            if pdf_author_graph.number_of_nodes() > 0:
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.write(f"**Autores que colaboran:** {pdf_author_graph.number_of_nodes()}")
-                    st.write(f"**Colaboraciones totales:** {pdf_author_graph.number_of_edges()}")
-                with col2:
-                    if pdf_author_graph.number_of_nodes() > 1:
-                        density = nx.density(pdf_author_graph)
-                        st.write(f"**Densidad de colaboración:** {density:.3f}")
-                        
-                        # Encontrar el autor más colaborativo
-                        if pdf_author_graph.number_of_edges() > 0:
-                            degrees = dict(pdf_author_graph.degree())
-                            most_collaborative = max(degrees, key=degrees.get)
-                            st.write(f"**Autor más colaborativo:** {most_collaborative} ({degrees[most_collaborative]} colaboraciones)")
-            else:
-                st.info("No hay suficientes datos para mostrar estadísticas de colaboración")
+        # Solo mostrar estadísticas si el grafo autor-autor existe
+        pdf_author_graph_path = Path("data/grafo_autor_autor_pdfs.graphml")
+        if pdf_author_graph_path.exists():
+            with st.expander("🤝 Estadísticas de Colaboración (PDFs)"):
+                pdf_author_graph = load_pdf_author_graph()
+                if pdf_author_graph.number_of_nodes() > 0:
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.write(f"**Autores que colaboran:** {pdf_author_graph.number_of_nodes()}")
+                        st.write(f"**Colaboraciones totales:** {pdf_author_graph.number_of_edges()}")
+                    with col2:
+                        if pdf_author_graph.number_of_nodes() > 1:
+                            density = nx.density(pdf_author_graph)
+                            st.write(f"**Densidad de colaboración:** {density:.3f}")
+                            
+                            # Encontrar el autor más colaborativo
+                            if pdf_author_graph.number_of_edges() > 0:
+                                degrees = dict(pdf_author_graph.degree())
+                                most_collaborative = max(degrees, key=degrees.get)
+                                st.write(f"**Autor más colaborativo:** {most_collaborative} ({degrees[most_collaborative]} colaboraciones)")
+                else:
+                    st.info("El grafo autor-autor existe pero está vacío")
+        else:
+            with st.expander("🤝 Información de Colaboración"):
+                st.info("💡 **Consejo:** Puedes crear un grafo autor-autor desde la configuración usando el botón '🤝 Recrear Grafo Autor-Autor'")
     
     # Mostrar lista de artículos agregados
     if articles_from_pdf > 0:
@@ -1055,6 +1049,11 @@ def show_final_summary():
 def save_pdf_only_graph(graph):
     """Guarda el grafo que contiene solo datos de PDFs"""
     try:
+        # Verificar que el grafo no esté vacío
+        if graph.number_of_nodes() == 0:
+            st.warning("⚠️ No se puede guardar un grafo vacío")
+            return False
+        
         # Guardar como archivo GraphML para compatibilidad
         graph_path = Path("data/grafo_solo_pdfs.graphml")
         graph_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1064,12 +1063,7 @@ def save_pdf_only_graph(graph):
         # También guardarlo en session_state para persistencia
         st.session_state.pdf_only_graph = graph
         
-        # Crear y guardar automáticamente el grafo autor-autor
-        if graph.number_of_nodes() > 0:
-            author_graph = create_author_graph_from_pdf_graph(graph)
-            if author_graph.number_of_nodes() > 0:
-                save_pdf_author_graph(author_graph)
-                st.info(f"🤝 Grafo autor-autor creado automáticamente con {author_graph.number_of_nodes()} autores y {author_graph.number_of_edges()} colaboraciones.")
+        # Nota: El grafo autor-autor se puede crear manualmente desde la configuración si se necesita
         
         return True
     except Exception as e:
@@ -1082,7 +1076,20 @@ def load_pdf_only_graph():
     try:
         graph_path = Path("data/grafo_solo_pdfs.graphml")
         if graph_path.exists():
-            return nx.read_graphml(graph_path)
+            # Verificar que el archivo no esté vacío
+            if graph_path.stat().st_size == 0:
+                st.warning("⚠️ Archivo de grafo de PDFs está vacío, eliminando...")
+                graph_path.unlink()
+                return nx.Graph()
+            
+            try:
+                graph = nx.read_graphml(graph_path)
+                return graph
+            except Exception as read_error:
+                st.error(f"❌ Archivo de grafo de PDFs corrupto: {read_error}")
+                st.info("🔄 Eliminando archivo corrupto...")
+                graph_path.unlink()
+                return nx.Graph()
         else:
             return nx.Graph()
     except Exception as e:
@@ -1131,8 +1138,23 @@ def create_author_graph_from_pdf_graph(pdf_graph):
 def save_pdf_author_graph(author_graph):
     """Guarda el grafo autor-autor creado desde PDFs"""
     try:
+        # Verificar que el grafo no esté vacío
+        if author_graph.number_of_nodes() == 0:
+            st.warning("⚠️ No se puede guardar un grafo autor-autor vacío")
+            return False
+        
         graph_path = Path("data/grafo_autor_autor_pdfs.graphml")
         graph_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Eliminar archivo existente si está corrupto
+        if graph_path.exists():
+            try:
+                # Verificar si el archivo existente es válido
+                test_graph = nx.read_graphml(graph_path)
+            except:
+                # Si no se puede leer, eliminarlo
+                graph_path.unlink()
+                st.info("🔄 Archivo corrupto eliminado, creando nuevo grafo autor-autor")
         
         nx.write_graphml(author_graph, graph_path)
         
@@ -1150,9 +1172,118 @@ def load_pdf_author_graph():
     try:
         graph_path = Path("data/grafo_autor_autor_pdfs.graphml")
         if graph_path.exists():
-            return nx.read_graphml(graph_path)
+            # Verificar que el archivo no esté vacío
+            if graph_path.stat().st_size == 0:
+                st.warning("⚠️ Archivo de grafo autor-autor está vacío, eliminando...")
+                graph_path.unlink()
+                return nx.Graph()
+            
+            try:
+                graph = nx.read_graphml(graph_path)
+                return graph
+            except Exception as read_error:
+                st.error(f"❌ Archivo de grafo autor-autor corrupto: {read_error}")
+                st.info("🔄 Eliminando archivo corrupto...")
+                graph_path.unlink()
+                return nx.Graph()
         else:
             return nx.Graph()
     except Exception as e:
         st.error(f"❌ Error al cargar grafo autor-autor de PDFs: {e}")
         return nx.Graph()
+
+
+def process_pdf_with_improved_extractor(pdf_path):
+    """
+    Procesa un PDF usando el extractor académico mejorado y retorna información estructurada
+    """
+    try:
+        # Usar el extractor mejorado
+        result = process_pdf_improved(str(pdf_path))
+        
+        if 'error' in result:
+            return {
+                'success': False,
+                'error': result['error'],
+                'filename': Path(pdf_path).name
+            }
+        
+        persons_found = result.get('persons_found', [])
+        text_before_abstract = result.get('text_before_abstract', '')
+
+        title = extract_paper_title(text_before_abstract)
+        
+        cleaned_persons = clean_and_filter_persons(persons_found)
+        
+        return {
+            'success': True,
+            'filename': Path(pdf_path).name,
+            'title': title,
+            'authors': cleaned_persons,
+            'raw_text': text_before_abstract,
+            'total_persons_found': len(persons_found),
+            'processed_date': datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            'success': False,
+            'error': str(e),
+            'filename': Path(pdf_path).name
+        }
+
+
+def extract_paper_title(text):
+    """
+    Extrae el título del paper del texto
+    """
+    lines = text.split('\n')
+    
+    # Buscar líneas que podrían ser títulos
+    potential_titles = []
+    
+    for i, line in enumerate(lines[:10]):  # Solo las primeras 10 líneas
+        line = line.strip()
+        if line and len(line) > 10:  # Líneas no vacías y con contenido suficiente
+            # Filtrar líneas que claramente NO son títulos
+            if not any(word.lower() in line.lower() for word in [
+                'universidad', 'departamento', 'facultad', 'email', '@',
+                'revista', 'vol', 'issn', 'doi', 'abstract', 'resumen'
+            ]):
+                potential_titles.append(line)
+    
+    # Retornar el primer candidato válido
+    if potential_titles:
+        return potential_titles[0]
+    
+    return "Título no detectado"
+
+
+def clean_and_filter_persons(persons):
+    """
+    Limpia y filtra la lista de personas encontradas
+    """
+    cleaned_persons = []
+    
+    for person in persons:
+        # Limpiar espacios y caracteres especiales
+        clean_person = re.sub(r'[^\w\sáéíóúñÁÉÍÓÚÑ]', '', person).strip()
+        
+        # Filtrar nombres muy cortos o que contienen palabras no válidas
+        if len(clean_person) >= 4 and len(clean_person.split()) >= 2:
+            # Filtrar palabras comunes que no son nombres
+            invalid_words = [
+                'universidad', 'departamento', 'facultad', 'ciencias', 
+                'matemáticas', 'computación', 'ingeniería', 'revista',
+                'cuba', 'central', 'villa', 'abstract', 'resumen'
+            ]
+            
+            if not any(word.lower() in clean_person.lower() for word in invalid_words):
+                # Capitalizar correctamente
+                clean_person = ' '.join(word.capitalize() for word in clean_person.split())
+                
+                if clean_person not in cleaned_persons:
+                    cleaned_persons.append(clean_person)
+    
+    return cleaned_persons
+

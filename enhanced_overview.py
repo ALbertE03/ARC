@@ -231,29 +231,41 @@ def show_overview():
     st.title("📊 Vista General")
     st.markdown("---")
 
-    if 'main_graph' not in st.session_state or st.session_state.main_graph is None:
-        st.session_state.main_graph = load_graph()
-    if 'author_graph' not in st.session_state or st.session_state.author_graph is None:
-        st.session_state.author_graph = load_author_graph()
-    if 'article_graph' not in st.session_state or st.session_state.article_graph is None:
-        st.session_state.article_graph = load_article_graph()
-
-    main_graph = st.session_state.main_graph
-    author_graph = st.session_state.author_graph
-    article_graph = st.session_state.article_graph
-
-    tab1, tab2, tab3 = st.tabs([
-        "🔗 Grafo Principal (Autores-Artículos)", 
-        "👥 Grafo Autor-Autor",
-        "📄 Grafo Artículo-Artículo"
-    ])
+    # Verificar el tipo de grafo seleccionado
+    graph_type = st.session_state.get('graph_type', 'base')
     
-    with tab1:
-        show_main_graph_overview(main_graph)
-    with tab2:
-        show_author_graph_overview(author_graph)
-    with tab3:
-        show_article_graph_overview(article_graph)
+    if graph_type == 'pdf':
+        # Modo PDF: solo mostrar el grafo principal (que es el de PDFs)
+        main_graph = st.session_state.get('graph')
+        if main_graph is None:
+            st.error("❌ No se pudo cargar el grafo de PDFs")
+            return
+        
+        st.info("🔍 **Modo PDF**: Mostrando solo datos extraídos de documentos PDF procesados")
+        show_pdf_graph_overview(main_graph)
+    
+    else:
+        # Modo base: mostrar todos los grafos
+        main_graph = st.session_state.get('graph')
+        author_graph = st.session_state.get('author_graph')
+        article_graph = st.session_state.get('article_graph')
+        
+        if main_graph is None:
+            st.error("❌ No se pudo cargar el grafo principal")
+            return
+
+        tab1, tab2, tab3 = st.tabs([
+            "🔗 Grafo Principal (Autores-Artículos)", 
+            "👥 Grafo Autor-Autor",
+            "📄 Grafo Artículo-Artículo"
+        ])
+        
+        with tab1:
+            show_main_graph_overview(main_graph)
+        with tab2:
+            show_author_graph_overview(author_graph)
+        with tab3:
+            show_article_graph_overview(article_graph)
 
 def show_main_graph_overview(graph):
     """Muestra información general del grafo principal (autores-artículos)"""
@@ -389,7 +401,7 @@ def show_author_graph_overview(graph):
             st.metric("Máximo de Colaboraciones", max_collaborations)
             st.metric("Mínimo de Colaboraciones", min_collaborations)
             st.metric("Promedio de Colaboraciones", f"{avg_collaborations:.1f}")
-            with st.expander("utores actúan como puentes críticos (muestra)",expanded=False):
+            with st.expander("Autores actúan como puentes críticos (muestra)",expanded=False):
                 if not graph.is_directed():
                     art_points = fast_articulation_points(graph, max_points=10)
                     if art_points:
@@ -565,4 +577,107 @@ def show_article_graph_overview(graph):
         )
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
+
+def show_pdf_graph_overview(graph):
+    """Muestra información general del grafo de PDFs procesados"""
+    if graph is None:
+        st.error("❌ No se pudo cargar el grafo de PDFs")
+        return
+
+    st.header("📑 Grafo de PDFs: Datos Extraídos de Documentos")
+    st.markdown("Este grafo representa las relaciones entre autores y artículos extraídos de documentos PDF procesados localmente.")
+    st.markdown("---")
+
+    metrics_cache = GraphMetricsCache(graph)
+    basic_stats = metrics_cache.get_basic_stats()
+
+    with st.container():
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total de Nodos", basic_stats['num_nodes'])
+        with col2:
+            st.metric("Autores", basic_stats['num_authors'])
+        with col3:
+            st.metric("Artículos (PDFs)", basic_stats['num_articles'])
+        with col4:
+            st.metric("Conexiones", basic_stats['num_edges'])
+    
+    st.markdown("---")
+
+    # Estadísticas y Top autores específicas para PDFs
+    with st.container():
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("📈 Estadísticas del Grafo PDF")
+            st.metric("Densidad del Grafo", f"{basic_stats['density']:.4f}")
+            st.metric("Grado Promedio", f"{basic_stats['avg_degree']:.2f}")
+            components_info = metrics_cache.get_components_info()
+            if graph.is_directed():
+                st.metric("Componentes Débilmente Conectados", components_info['num_components'])
+            else:
+                st.metric("Componentes Conectados", components_info['num_components'])
+                
+            # Mostrar información específica de PDFs
+            st.info("📄 **Fuente de datos**: Documentos PDF procesados localmente")
+            
+        with col2:
+            st.subheader("🏆 Top Autores en PDFs")
+            top_authors = metrics_cache.get_top_nodes_by_degree('author', 10)
+            if top_authors:
+                df_data = []
+                for author_id, connections in top_authors:
+                    if author_id in graph.nodes():
+                        author_data = graph.nodes[author_id]
+                        display_name = author_data.get('display_name', author_id)
+                        df_data.append({'Autor': display_name, 'Conexiones': connections})
+                df_top = pd.DataFrame(df_data)
+                st.dataframe(df_top, use_container_width=True, hide_index=True)
+            else:
+                st.info("No hay datos de autores disponibles en los PDFs")
+    
+    st.markdown("---")
+
+    # Distribución de grados específica para PDFs
+    with st.container():
+        st.subheader("📊 Distribución de Grados en PDFs")
+        if basic_stats['num_nodes'] > 0:
+            degree_dist = metrics_cache.get_degree_distribution()
+            degree_values = metrics_cache.degree_values
+            fig = px.histogram(
+                x=degree_values,
+                nbins=min(20, degree_dist['unique_degrees']),
+                title="Distribución de Grados en Documentos PDF",
+                labels={'x': 'Grado', 'y': 'Frecuencia'}
+            )
+            fig.update_layout(showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("No hay suficientes enlaces para mostrar la distribución")
+    
+    # Información adicional específica de PDFs
+    with st.container():
+        st.subheader("📑 Información de Procesamiento de PDFs")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("**🔍 Características del Grafo PDF:**")
+            st.markdown(f"• **{basic_stats['num_articles']}** documentos PDF procesados")
+            st.markdown(f"• **{basic_stats['num_authors']}** autores identificados")
+            st.markdown(f"• **{basic_stats['num_edges']}** relaciones autor-documento")
+            
+        with col2:
+            st.markdown("**📊 Métricas de Calidad:**")
+            if basic_stats['num_nodes'] > 0:
+                articles_per_author = basic_stats['num_articles'] / max(basic_stats['num_authors'], 1)
+                st.markdown(f"• **{articles_per_author:.1f}** artículos promedio por autor")
+                
+                if basic_stats['avg_degree'] > 0:
+                    st.markdown(f"• **{basic_stats['avg_degree']:.1f}** conexiones promedio")
+                
+                if components_info['num_components'] == 1:
+                    st.markdown("• ✅ Grafo completamente conectado")
+                else:
+                    st.markdown(f"• ⚠️ {components_info['num_components']} componentes separados")
+            else:
+                st.markdown("• No hay métricas disponibles")
 
