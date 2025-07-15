@@ -1,0 +1,1 @@
+docker run -t --rm -p 8070:8070 -v c:\Users\Anabel\OneDrive\Desktop\ARC:/opt/grobid/input lfoppiano/grobid:0.8.0
