@@ -126,7 +126,7 @@ class Worker(Thread):
 
 def get_unique_authors(input_file):
     """Gets unique authors from the data file"""
-    with open(input_file, "r") as f:
+    with open(input_file, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     authors = set()

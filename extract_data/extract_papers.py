@@ -6,8 +6,8 @@ import re
 
 
 max_results = 100
-output_folder = "pdfs_papers"
-queries= ["history of mathematics","history of technology","history of engineering","history of medicine","history of biology","history of astronomy",'social sciences','physics','mathematics']
+output_folder = "./pdfs_papers"
+queries= ['bioquimica','comunicacion','programacion','arte']
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
