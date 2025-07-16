@@ -51,6 +51,7 @@ ipython==9.0.2
 ipython_pygments_lexers==1.1.1
 jedi==0.19.2
 Jinja2==3.1.6
+jellyfish==0.9.0
 joblib==1.4.2
 jsonpickle==4.0.2
 jsonschema==4.23.0
@@ -191,3 +192,16 @@ scikit-learn>=1.0.0
 # Dependencias para Graph Editor
 plotly>=5.15.0
 lxml>=4.9.0
+
+# Streamlit app dependencies
+streamlit>=1.45.0
+plotly>=5.15.0
+pyvis>=0.3.2
+
+# Additional visualization dependencies
+matplotlib>=3.5.0
+seaborn>=0.12.0
+
+# Enhanced graph analysis
+python-louvain>=0.16
+community>=0.13.0
