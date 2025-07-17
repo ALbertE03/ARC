@@ -10,7 +10,6 @@ import pickle
 import time
 from datetime import datetime
 
-
 class ModelPerformanceTracker:
     def __init__(self):
         self.predictions = []
@@ -37,7 +36,6 @@ class ModelPerformanceTracker:
         
         self.predictions.append(prediction_data)
         
-        # Considerar casos difíciles si la probabilidad está cerca del umbral
         if abs(probability - threshold) < 0.5:
             self.difficult_cases.append(prediction_data)
             
@@ -76,14 +74,15 @@ class ModelPerformanceTracker:
 
 
 class Graph:
-    def __init__(self,path):
+    def __init__(self,path,with_keywords=False):
         self.graph = nx.Graph()
         self.path = path
         self.dict = defaultdict(set)
         self.data = self._load_data()
         self.model = self._load_model()
         self.threshold = 0.85
-        self.performance_tracker = ModelPerformanceTracker()  
+        self.performance_tracker = ModelPerformanceTracker() 
+        self.with_keywords= with_keywords 
 
 
     def _load_model(self):
@@ -171,35 +170,43 @@ class Graph:
             proba = self.model.predict_proba(features_df)[0][1]
             prediction = proba >= self.threshold
  
-            is_difficult = abs(proba - self.threshold) < 0.5
+            is_difficult = abs(proba - self.threshold) < 0.3
 
             self.performance_tracker.add_prediction(
                 name1, name2, proba, prediction, self.threshold, is_difficult
             )
-            
+            if is_difficult:
+                return 0,is_difficult
             print(f"Probabilidad de ser el mismo autor: {proba:.2f} (umbral: {self.threshold})")
-            return prediction
+            return prediction,is_difficult
         except Exception as e:
             print(f"Error en predicción: {e}")
-            return False
+            return False,True
     
     def build_graph(self):
         """Construye el grafo de autores"""
         print("Construyendo grafo de autores...")
-
+        if self.load_graph():
+            return self.graph
         self.performance_tracker.start_tracking()
-        
         all_authors = []
         author_to_papers = defaultdict(set)
-        
+        author_to_keyword = defaultdict(set)
         for pdf_key, pdf_data in self.data.items():
             if 'authors' in pdf_data:
                 for author in pdf_data['authors']:
                     if author.get('name'):
                         author_name = author['name'].strip()
+                        #normalized_name = self.normalize_name(author_name)
                         if author_name:
                             all_authors.append(author_name)
                             author_to_papers[author_name].add(pdf_key)
+                    if 'keywords' in pdf_data and self.with_keywords:
+                       ss=pdf_data['keywords']
+                       if not ss:
+                           author_to_keyword[author_name].add('unknown')
+                       for keyw in ss:
+                          author_to_keyword[author_name].add(keyw)
         
         print(f"Total de autores encontrados: {len(all_authors)}")
         
@@ -218,8 +225,12 @@ class Graph:
             
             for j, author2 in enumerate(unique_authors[i+1:], i+1):
                 if author2 not in author_clusters:
-                    
-                    if self.predict_if_same_author(author1, author2):
+                    a,b=self.predict_if_same_author(author1, author2)
+
+                    if b:
+                        author_clusters[author2]=cluster_counter
+                        cluster_counter+=1
+                    elif a:
                         author_clusters[author2] = author_clusters[author1]
                         print(f"Autores agrupados: '{author1}' y '{author2}'")
                     else:
@@ -231,10 +242,12 @@ class Graph:
 
         cluster_to_authors = defaultdict(set)
         cluster_to_papers = defaultdict(set)
+        cluster_to_keyw = defaultdict(set)
         
         for author, cluster_id in author_clusters.items():
             cluster_to_authors[cluster_id].add(author)
             cluster_to_papers[cluster_id].update(author_to_papers[author])
+            cluster_to_keyw[cluster_id].update(author_to_keyword[author])
         
         for cluster_id, authors in cluster_to_authors.items():
             representative_name = max(authors, key=len)
@@ -246,10 +259,20 @@ class Graph:
                 papers=list(cluster_to_papers[cluster_id]),
                 paper_count=len(cluster_to_papers[cluster_id])
             )
-        
+            
+            if self.with_keywords:
+                for _,key in cluster_to_keyw.items():
+                    if self.graph.has_node(key):
+                        self.graph.add_node(key,type='keywords')
+                    
+                    if self.graph.add_edge(key,cluster_id):
+                        self.graph.add_edge(key,cluster_id)
+
         for pdf_key, pdf_data in self.data.items():
             if 'authors' in pdf_data and len(pdf_data['authors']) > 1:
                 paper_clusters = set()
+                paper_title = pdf_data.get('title', pdf_key)
+                
                 for author in pdf_data['authors']:
                     if author.get('name'):
                         author_name = author['name'].strip()
@@ -263,12 +286,12 @@ class Graph:
                         
                         if self.graph.has_edge(cluster1, cluster2):
                             self.graph[cluster1][cluster2]['weight'] += 1
-                            self.graph[cluster1][cluster2]['papers'].append(pdf_key)
+                            self.graph[cluster1][cluster2]['papers'].append(paper_title)
                         else:
                             self.graph.add_edge(
                                 cluster1, cluster2,
                                 weight=1,
-                                papers=[pdf_key]
+                                papers=[paper_title]
                             )
         
         self.performance_tracker.end_tracking()
@@ -323,16 +346,24 @@ class Graph:
         
         for node_id, node_data in graph_copy.nodes(data=True):
             if 'all_names' in node_data and isinstance(node_data['all_names'], list):
-                node_data['all_names'] = '|'.join(node_data['all_names'])
+                node_data['all_names'] = '|'.join(str(name) for name in node_data['all_names'])
             if 'papers' in node_data and isinstance(node_data['papers'], list):
-                node_data['papers'] = '|'.join(node_data['papers'])
+                node_data['papers'] = '|'.join(str(paper) for paper in node_data['papers'])
         
         for u, v, edge_data in graph_copy.edges(data=True):
             if 'papers' in edge_data and isinstance(edge_data['papers'], list):
-                edge_data['papers'] = '|'.join(edge_data['papers'])
+                flattened_papers = []
+                for paper in edge_data['papers']:
+                    if isinstance(paper, list):
+                        flattened_papers.extend(str(p) for p in paper)
+                    else:
+                        flattened_papers.append(str(paper))
+                edge_data['papers'] = '|'.join(flattened_papers)
         
         nx.write_graphml(graph_copy, filename)
         print(f"Grafo guardado en {filename}")
+        
+
     
     def load_graph(self, filename):
         """Carga el grafo desde un archivo GraphML"""
@@ -349,12 +380,19 @@ class Graph:
                 edge_data['papers'] = edge_data['papers'].split('|')
         
         print(f"Grafo cargado desde {filename}")
+        return True
     
     def get_statistics(self):
         """Obtiene estadísticas del grafo"""
+        unique_papers = set()
+        for _, data in self.graph.nodes(data=True):
+            papers = data.get('papers', [])
+            unique_papers.update(papers)
+        
         return {
             'total_authors': self.graph.number_of_nodes(),
             'total_collaborations': self.graph.number_of_edges(),
+            'total_unique_papers': len(unique_papers),
             'average_collaborators': sum(dict(self.graph.degree()).values()) / self.graph.number_of_nodes() if self.graph.number_of_nodes() > 0 else 0,
             'most_prolific_authors': sorted(
                 [(data['name'], data['paper_count']) for _, data in self.graph.nodes(data=True)],
@@ -373,7 +411,100 @@ class Graph:
             self.performance_tracker.save_performance()
             return True
         return False
+
+    def apply_manual_decision(self, case_index, manual_decision):
         
+        """Aplica una decisión manual al grafo y actualiza las estadísticas"""
+        if case_index >= len(self.performance_tracker.difficult_cases):
+            print("hola")
+            return False
+        
+        case = self.performance_tracker.difficult_cases[case_index]
+        name1 = case['name1']
+        name2 = case['name2']
+        
+        case['manual_decision'] = manual_decision
+        case['manual_timestamp'] = datetime.now().isoformat()
+
+        if manual_decision == "Sí, mismo autor":
+            self._merge_authors_in_graph(name1, name2)
+        elif manual_decision == "No, diferente autor":
+            self._separate_authors_in_graph(name1, name2)
+        
+        self.save_graph()
+        
+        self.performance_tracker.save_performance()
+        
+        return True
+    
+    def _merge_authors_in_graph(self, name1, name2):
+        """Fusiona dos autores en el grafo"""
+        node1 = self._find_node_by_name(name1)
+        node2 = self._find_node_by_name(name2)
+        
+        if not node1 or not node2 or node1 == node2:
+            return
+        
+        data1 = self.graph.nodes[node1]
+        data2 = self.graph.nodes[node2]
+
+        merged_data = self._merge_node_data(data1, data2)
+
+        edges_to_transfer = list(self.graph.edges(node2, data=True))
+        
+        for _, neighbor, edge_data in edges_to_transfer:
+            if neighbor != node1:  
+                if self.graph.has_edge(node1, neighbor):
+
+                    current_weight = self.graph[node1][neighbor].get('weight', 1)
+                    new_weight = edge_data.get('weight', 1)
+                    self.graph[node1][neighbor]['weight'] = current_weight + new_weight
+                else:
+                    self.graph.add_edge(node1, neighbor, **edge_data)
+        
+
+        self.graph.remove_node(node2)
+
+        self.graph.nodes[node1].update(merged_data)
+    
+    def _separate_authors_in_graph(self, name1, name2):
+        """Separa dos autores en el grafo (elimina cualquier conexión directa)"""
+        node1 = self._find_node_by_name(name1)
+        node2 = self._find_node_by_name(name2)
+        
+        if node1 and node2 and self.graph.has_edge(node1, node2):
+            self.graph.remove_edge(node1, node2)
+    
+    def _find_node_by_name(self, name):
+        """Encuentra un nodo por su nombre"""
+        for node, data in self.graph.nodes(data=True):
+            if data.get('name') == name or name in data.get('all_names', []):
+                return node
+        return None
+    
+    def _merge_node_data(self, data1, data2):
+        """Fusiona los datos de dos nodos"""
+        merged_data = data1.copy()
+
+        all_names1 = set(data1.get('all_names', []))
+        all_names2 = set(data2.get('all_names', []))
+        merged_names = all_names1.union(all_names2)
+
+        if len(data1.get('name', '')) >= len(data2.get('name', '')):
+            merged_data['name'] = data1.get('name', '')
+        else:
+            merged_data['name'] = data2.get('name', '')
+        
+        merged_data['all_names'] = list(merged_names)
+
+        papers1 = set(data1.get('papers', []))
+        papers2 = set(data2.get('papers', []))
+        merged_papers = papers1.union(papers2)
+        merged_data['papers'] = list(merged_papers)
+        merged_data['paper_count'] = len(merged_papers)
+        
+        return merged_data
+
     def get_performance_stats(self):
         """Obtiene estadísticas de rendimiento del modelo"""
         return self.performance_tracker.get_performance_stats()
@@ -382,13 +513,33 @@ class Graph:
         """Determina si dos nombres pertenecen al mismo autor"""
         return self.predict_if_same_author(name1, name2)
 
+    def debug_graph_structure(self):
+        """Función de depuración para verificar la estructura del grafo"""   
+        print(f"Número de nodos: {self.graph.number_of_nodes()}")
+        for node_id, node_data in list(self.graph.nodes(data=True))[:3]:
+            print(f"Nodo {node_id}:")
+            for key, value in node_data.items():
+                print(f"  {key}: {type(value)} - {value if not isinstance(value, list) or len(value) <= 3 else f'Lista con {len(value)} elementos'}")
+        
+        print(f"\nNúmero de aristas: {self.graph.number_of_edges()}")
+        for u, v, edge_data in list(self.graph.edges(data=True))[:3]:  
+            print(f"Arista {u}-{v}:")
+            for key, value in edge_data.items():
+                if isinstance(value, list):
+                    print(f"  {key}: Lista con {len(value)} elementos")
+                    for i, item in enumerate(value[:3]): 
+                        print(f"    [{i}]: {type(item)} - {item}")
+                else:
+                    print(f"  {key}: {type(value)} - {value}")
+        print("=" * 50)
+
 
 
 if __name__ == "__main__":
-    graph = Graph('data/extract_result.json')
+    graph = Graph('data/extract_result.json',with_keywords=False)
     
     graph.build_graph()
-    
+    graph.debug_graph_structure()
     stats = graph.get_statistics()
     print("Estadísticas del grafo:")
     print(f"Total de autores: {stats['total_authors']}")
