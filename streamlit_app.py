@@ -13,8 +13,7 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-st.title("📊 Visualizador de Grafo de Colaboración de Autores")
-st.markdown("Sistema de resolución y consolidación de autores (ARC)")
+st.title("🌐 Plataforma de Análisis de Redes de Investigación")
 
 
 def main():
@@ -30,7 +29,7 @@ def main():
     if page =='Predicción de Colaboraciones':
         analyzer = GraphAnalyzer(graph)
         keyword_analyzer1 = KeywordAnalyzer()
-        st.subheader("🤖 Predicción de Futuras Colaboraciones")
+        st.subheader("Predicción de Futuras Colaboraciones")
         st.markdown("""
         Este sistema recomienda potenciales colaboradores para un investigador basándose en **intereses de investigación compartidos**. 
         Analiza las palabras clave de las publicaciones para encontrar expertos en temas similares que aún no han colaborado directamente.
@@ -40,7 +39,7 @@ def main():
         if keyword_analyzer1.keywords_graph:
             # Obtener lista de autores del grafo de keywords
             author_nodes = [
-                data.get('name', 'Desconocido') 
+                data.get('name', 'Desconocido').replace(")","").replace("(", "").replace(".", "") 
                 for node, data in keyword_analyzer1.keywords_graph.nodes(data=True) 
                 if data.get('type') == 'author'
             ]
@@ -107,7 +106,7 @@ def main():
                             st.markdown("---")
 
                     else:
-                        st.info(f"No se encontraron nuevas recomendaciones para **{selected_author}**. Esto puede deberse a que ya colabora con la mayoría de los expertos en su campo o a que tiene un perfil de investigación muy único.")
+                        st.info(f"No se encontraron nuevas recomendaciones para {selected_author}")
                 else:
                     st.warning("Por favor, selecciona un autor de la lista.")
         else:
@@ -586,20 +585,28 @@ def main():
                     st.subheader("Temas de Investigación Más Relevantes")
                     st.info("Visualización de los temas más frecuentes y cómo se agrupan en clústeres de investigación.")
 
-                    # --- INICIALIZACIÓN DEL ESTADO (MUY IMPORTANTE) ---
-                    # Si la clave no existe en la memoria, la creamos con un valor inicial.
+                    clusters = keyword_analyzer.get_keyword_clusters()
+
+                    def get_largest_cluster(clusters):
+                        if not clusters:
+                            return None
+                        return max(clusters, key=lambda x: x['size'])
+  
                     if 'selected_cluster_id' not in st.session_state:
-                        # Busca el primer clúster disponible para usarlo como valor por defecto.
-                        clusters = keyword_analyzer.get_keyword_clusters()
-                        st.session_state.selected_cluster_id = clusters[0]['cluster_id'] if clusters else 0
-                    
+                        largest_cluster = get_largest_cluster(clusters)
+                        st.session_state.selected_cluster_id = largest_cluster['cluster_id'] if largest_cluster else None
 
                     def update_selected_cluster():
-                        # Simplemente actualiza el valor en la memoria de la sesión.
-                        # Streamlit pasa el valor del widget a través de su propia clave en session_state.
-                        st.session_state.selected_cluster_id = st.session_state.cluster_selector_key
 
-                    # Gráfico y tabla principal (sin cambios)
+                        selected_id = st.session_state.cluster_selector_key
+                        valid_clusters = [c['cluster_id'] for c in clusters]
+                        if selected_id in valid_clusters:
+                            st.session_state.selected_cluster_id = selected_id
+                        else:
+
+                            largest_cluster = get_largest_cluster(clusters)
+                            st.session_state.selected_cluster_id = largest_cluster['cluster_id'] if largest_cluster else None
+
                     keyword_viz = create_keyword_analysis_visualization(keyword_stats)
                     if keyword_viz:
                         st.plotly_chart(keyword_viz, use_container_width=True)
@@ -614,33 +621,49 @@ def main():
 
                     st.markdown("---")
                     st.subheader("Agrupaciones Temáticas (Clústeres)")
-                    st.info("Algoritmos de comunidad detectan grupos de temas que suelen investigarse juntos. Selecciona un grupo para explorar sus temas clave.")
+                    st.info("Algoritmos de comunidad detectan grupos de temas que suelen investigarse juntos.")
 
-                    clusters = keyword_analyzer.get_keyword_clusters()
                     if clusters:
+                        sorted_clusters = sorted(clusters, key=lambda x: x['size'], reverse=True)
+                        
                         col1, col2 = st.columns([1, 2], gap="large")
                         with col1:
                             st.write("**Principales Grupos Temáticos:**")
                             cluster_data = [{
-                                'Grupo': f"Grupo {c['cluster_id']}", 'N° Temas': c['size'], 'Relevancia': c['total_frequency']
-                            } for c in clusters[:20]]
+                                'Grupo': f"Grupo {c['cluster_id']}", 
+                                'N° Temas': c['size'], 
+                                'Relevancia': c['total_frequency']
+                            } for c in sorted_clusters[:20]]
                             cluster_df = pd.DataFrame(cluster_data)
                             st.dataframe(cluster_df, hide_index=True, use_container_width=True)
 
                         with col2:
-                            cluster_options = [c['cluster_id'] for c in clusters[:20]]
+
+                            cluster_options = [c['cluster_id'] for c in sorted_clusters[:20]]
+                            options_labels = [
+                                f"Grupo {c['cluster_id']} ({c['size']} temas)" 
+                                for c in sorted_clusters[:20]
+                            ]
                             
-                            # --- WIDGET SELECTBOX CON EL CALLBACK APLICADO ---
-                            st.selectbox(
+
+                            current_value = (
+                                st.session_state.selected_cluster_id 
+                                if st.session_state.selected_cluster_id in cluster_options
+                                else cluster_options[0]  
+                            )
+
+                            selected_id = st.selectbox(
                                 "Explora un grupo temático:",
                                 options=cluster_options,
-                                key="cluster_selector_key",  # Clave interna del widget
-                                on_change=update_selected_cluster, # La función que se ejecuta al cambiar
-                                format_func=lambda x: f"Grupo {x} ({next(c['size'] for c in clusters if c['cluster_id'] == x)} temas)"
+                                index=cluster_options.index(current_value),
+                                format_func=lambda x: options_labels[cluster_options.index(x)],
+                                key="cluster_selector_key",
+                                on_change=update_selected_cluster
                             )
                             
-                            # La lógica ahora lee el valor que NUESTRA FUNCIÓN guardó en la memoria.
-                            selected_id = st.session_state.selected_cluster_id
+
+                            st.session_state.selected_cluster_id = selected_id
+
                             cluster_info = next((c for c in clusters if c['cluster_id'] == selected_id), None)
                             
                             if cluster_info:
@@ -715,7 +738,6 @@ def main():
                     trending = keyword_analyzer.get_trending_keywords()
                     if trending:
                         trending_df = pd.DataFrame(trending)
-                        # Renombrar columnas para claridad en la UI
                         trending_df_display = trending_df[['keyword', 'trending_score', 'frequency', 'author_connections']].rename(columns={
                             'keyword': 'Tema Emergente', 'trending_score': 'Puntuación de Tendencia',
                             'frequency': 'Frecuencia Actual', 'author_connections': 'N° Investigadores'

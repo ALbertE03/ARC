@@ -626,7 +626,92 @@ class KeywordAnalyzer:
             g.save()
             self.keywords_graph = nx.read_graphml(keywords_graph_path)
 
+    # En utils.py, dentro de la clase KeywordAnalyzer
 
+    def recommend_collaborators_advanced(self, author_name, main_graph, keywords_graph, communities, centralities, top_n=5):
+        """
+        Recomienda colaboradores utilizando un modelo multifactorial avanzado.
+        
+        Factores considerados:
+        1. Afinidad Temática (keywords compartidas)
+        2. Proximidad en la Red (colaboradores en común)
+        3. Potencial de Puenteo (conectar a nuevas comunidades)
+        4. Influencia (centralidad del candidato)
+        """
+        if not all([main_graph, keywords_graph, communities, centralities]):
+            return []
+
+        # --- 1. Obtener la información del autor principal ---
+        author_node_main = next((n for n, d in main_graph.nodes(data=True) if author_name.lower() in [name.lower() for name in d.get('all_names', [d.get('name', '')])]), None)
+        author_node_kw = next((n for n, d in keywords_graph.nodes(data=True) if d.get('type') == 'author' and d.get('name', '').lower() == author_name.lower()), None)
+
+        if not author_node_main or not author_node_kw:
+            return []
+
+        author_community = communities.get(author_node_main)
+        author_collaborators = set(main_graph.neighbors(author_node_main))
+        author_keywords = {n for n in keywords_graph.neighbors(author_node_kw) if keywords_graph.nodes[n].get('type') == 'keyword'}
+
+        # --- 2. Encontrar y puntuar candidatos ---
+        candidates = {}
+        all_author_nodes = {n for n, d in keywords_graph.nodes(data=True) if d.get('type') == 'author' and n != author_node_kw}
+
+        for candidate_node_kw in all_author_nodes:
+            candidate_data_kw = keywords_graph.nodes[candidate_node_kw]
+            candidate_name = candidate_data_kw.get('name')
+
+            candidate_node_main = next((n for n, d in main_graph.nodes(data=True) if d.get('name', '').lower() == candidate_name.lower()), None)
+
+            # Omitir si no se encuentra en el grafo principal o si ya es un colaborador
+            if not candidate_node_main or candidate_node_main in author_collaborators:
+                continue
+            
+            # --- 3. Calcular los scores para cada factor ---
+            
+            # Factor 1: Afinidad Temática
+            candidate_keywords = {n for n in keywords_graph.neighbors(candidate_node_kw) if keywords_graph.nodes[n].get('type') == 'keyword'}
+            shared_keywords = author_keywords.intersection(candidate_keywords)
+            keyword_score = len(shared_keywords)
+
+            # Si no hay intereses en común, no es un buen candidato
+            if keyword_score == 0:
+                continue
+
+            # Factor 2: Proximidad en la Red
+            candidate_collaborators = set(main_graph.neighbors(candidate_node_main))
+            mutual_collaborators = author_collaborators.intersection(candidate_collaborators)
+            proximity_score = len(mutual_collaborators)
+
+            # Factor 3: Potencial de Puenteo
+            candidate_community = communities.get(candidate_node_main)
+            bridging_score = 1 if (candidate_community is not None and candidate_community != author_community) else 0
+
+            # Factor 4: Influencia
+            influence_score = centralities.get('eigenvector_centrality', {}).get(candidate_node_main, 0)
+            
+            # --- 4. Puntuación Final Ponderada ---
+            total_score = (keyword_score * 1.5) + (proximity_score * 1.0) + (bridging_score * 2.0) + (influence_score * 10.0)
+
+            candidates[candidate_name] = {
+                "name": candidate_name,
+                "total_score": total_score,
+                "paper_count": main_graph.nodes[candidate_node_main].get('paper_count', 0),
+                "breakdown": {
+                    "Afinidad Temática": keyword_score,
+                    "Proximidad de Red": proximity_score,
+                    "Potencial de Puenteo": bridging_score,
+                    "Influencia": f"{influence_score:.3f}"
+                },
+                "details": {
+                    "shared_keywords": list(shared_keywords),
+                    "mutual_collaborators": [main_graph.nodes[n].get('name') for n in mutual_collaborators],
+                    "new_community": candidate_community if bridging_score > 0 else None
+                }
+            }
+        
+        # Ordenar por puntuación total y devolver el top N
+        sorted_recommendations = sorted(candidates.values(), key=lambda x: x['total_score'], reverse=True)
+        return sorted_recommendations[:top_n]
     def get_keyword_weights_within_cluster(self, cluster_keywords):
         """
         Calcula un score de importancia para cada keyword dentro de un clúster específico.
