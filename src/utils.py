@@ -7,7 +7,6 @@ import pandas as pd
 import numpy as np
 from src.build_graph import Graph, ModelPerformanceTracker
 
-
 @st.cache_data
 def load_graph_data():
     """Carga el grafo desde el archivo GraphML"""

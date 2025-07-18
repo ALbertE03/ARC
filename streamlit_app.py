@@ -1,7 +1,7 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-from src.graph_utils import GraphAnalyzer, create_advanced_graph_visualization, create_performance_dashboard, create_community_comparison_visualization, create_community_graph_visualization
+from src.graph_utils import GraphAnalyzer, create_advanced_graph_visualization, create_performance_dashboard, create_community_comparison_visualization, create_community_graph_visualization, create_wordcloud_visualization
 from src.utils import *
 
 st.set_page_config(
@@ -57,9 +57,9 @@ def main():
         
         if graph:
             analyzer = GraphAnalyzer(graph)
-            
-            tab1, tab2, tab3, tab4, tab5 = st.tabs(["Comunidades", "Centralidad", "Patrones de Colaboración", "Análisis de Pesos", "Análisis de Investigación"])
-            
+
+            tab1, tab2, tab5 = st.tabs(["Comunidades", "Centralidad", "Análisis de Investigación"])
+
             with tab1:
                 st.markdown("### Detección de Comunidades de Investigación")
                 st.markdown("---")
@@ -372,9 +372,17 @@ def main():
                                 fig_hist = px.histogram(
                                     x=centrality_values,
                                     nbins=30,
-                                    labels={'x': 'Valor de Centralidad', 'y': 'Número de Investigadores'}
+                                    labels={'x': 'Valor de Centralidad', 'y': 'Número de Investigadores'},
+                                    title="Distribución de Centralidad en la Red"
                                 )
-                                fig_hist.add_vline(x=avg_centrality, line_dash="dash", annotation_text="Promedio",line_color='red')
+                                fig_hist.add_vline(
+                                    x=avg_centrality, 
+                                    line_dash="dash", 
+                                    annotation_text=f"📊 Promedio: {avg_centrality:.4f}",
+                                    line_color='red',
+                                    annotation_bordercolor="red",
+                                    annotation_font_size=10
+                                )
                                 st.plotly_chart(fig_hist, use_container_width=True)
                             
                             with col2:
@@ -387,9 +395,8 @@ def main():
                       
                         
                         with analysis_tab3:
-                            st.subheader("🎯 Análisis de Casos Específicos")
-                            
-                            # Clasificar investigadores en categorías
+                            st.subheader("Análisis de Casos Específicos")
+
                             high_threshold = avg_centrality + std_centrality
                             low_threshold = avg_centrality - std_centrality
                             
@@ -399,8 +406,8 @@ def main():
                             col1, col2 = st.columns(2)
                             
                             with col1:
-                                st.markdown("#### 🌟 Investigadores de Alto Impacto")
-                                st.info(f"Investigadores con centralidad > {high_threshold:.4f}")
+                                st.markdown("#### Investigadores de Alto Impacto")
+                                st.info(f"Investigadores con centralidad > {high_threshold:.4f} (std + avg)")
                                 
                                 high_analysis = []
                                 for node_id, centrality_score in sorted(high_central, key=lambda x: x[1], reverse=True)[:10]:
@@ -415,7 +422,6 @@ def main():
                                     st.dataframe(pd.DataFrame(high_analysis), use_container_width=True)
                             
                             with col2:
-                                st.markdown("#### 🔍 Investigadores Emergentes")
                                 st.info("Investigadores con baja centralidad pero alta productividad")
                                 
                                 emerging = []
@@ -446,7 +452,7 @@ def main():
                         max_nodes_viz = st.slider(
                                 "Nodos a mostrar:",
                                 min_value=50,
-                                max_value=200,
+                                max_value=len(graph.graph.nodes()),
                                 value=100,
                                 step=25
                             )
@@ -462,67 +468,19 @@ def main():
                 else:
                     st.error("❌ No se pudieron calcular las centralidades. Verifica que el grafo esté correctamente cargado.")
             
-            with tab3:
-                st.subheader("Patrones de Colaboración")
-                
-                patterns = analyzer.get_collaboration_patterns()
-                
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
-                    st.metric("Colaboraciones Fuertes", len(patterns['strong_collaborations']))
-                
-                with col2:
-                    st.metric("Colaboraciones Débiles", len(patterns['weak_collaborations']))
-                
-                with col3:
-                    st.metric("Promedio de Colaboraciones", f"{patterns['avg_collaborations']:.2f}")
-                
-                st.subheader("Distribución de Colaboraciones")
-                
-                collab_counts = list(patterns['collaboration_distribution'].values())
-                fig_dist = px.histogram(
-                    x=collab_counts,
-                    nbins=20,
-                    title="Distribución del Número de Colaboraciones por Autor"
-                )
-                st.plotly_chart(fig_dist, use_container_width=True)
-                
-                if patterns['strong_collaborations']:
-                    st.subheader("Colaboraciones Más Fuertes")
-                    
-                    strong_collab_df = []
-                    for u, v, weight in patterns['strong_collaborations'][:10]:
-                        name_u = graph.graph.nodes[u].get('name', 'Desconocido')
-                        name_v = graph.graph.nodes[v].get('name', 'Desconocido')
-                        strong_collab_df.append({
-                            'Autor 1': name_u,
-                            'Autor 2': name_v,
-                            'Colaboraciones': weight
-                        })
-                    
-                    df_strong = pd.DataFrame(strong_collab_df)
-                    st.dataframe(df_strong)
-            
-            with tab4:
-                st.subheader("⚖️ Análisis de Pesos de Colaboración")
-                
-                # Aquí se puede añadir análisis específico de pesos
-                st.info("Funcionalidad en desarrollo - análisis detallado de pesos de colaboración")
-            
+          
             with tab5:
                 st.subheader("🔬 Análisis de Tendencias de Investigación")
-                
-                # Importar y usar el analizador de keywords
+
                 from src.graph_utils import KeywordAnalyzer, create_keyword_analysis_visualization, create_keyword_network_visualization
                 
                 keyword_analyzer = KeywordAnalyzer()
                 
                 if keyword_analyzer.keywords_graph:
-                    # Estadísticas generales
                     keyword_stats = keyword_analyzer.get_keyword_statistics()
                     
                     if keyword_stats:
+                        # Métricas principales
                         col1, col2, col3, col4 = st.columns(4)
                         
                         with col1:
@@ -536,41 +494,49 @@ def main():
                         
                         with col4:
                             st.metric("Promedio Frecuencia", f"{keyword_stats['avg_keyword_frequency']:.1f}")
-                        
-                        # Visualización principal
-                        st.subheader("📊 Panorama de Investigación")
-                        keyword_viz = create_keyword_analysis_visualization(keyword_stats)
-                        if keyword_viz:
-                            st.plotly_chart(keyword_viz, use_container_width=True)
-                        
-                        # Sub-tabs para diferentes análisis
+
                         subtab1, subtab2, subtab3, subtab4 = st.tabs([
                             "🏷️ Temas Principales", 
+                            "☁️ Nube de Palabras",
                             "🔗 Red Temática", 
-                            "📈 Tendencias", 
                             "👥 Perfiles de Investigación"
                         ])
                         
                         with subtab1:
                             st.subheader("Temas de Investigación Más Relevantes")
-                            
-                            # Top keywords
-                            top_keywords_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:20])
-                            top_keywords_df.columns = ['Tema', 'Frecuencia', 'Papers', 'Investigadores']
-                            
-                            col1, col2 = st.columns(2)
-                            
-                            with col1:
-                                st.dataframe(top_keywords_df, height=400)
-                            
-                            with col2:
-                                # Clustering de keywords
-                                clusters = keyword_analyzer.get_keyword_clusters()
-                                if clusters:
-                                    st.subheader("Agrupaciones Temáticas")
+
+                            try:
+                                if keyword_stats['keyword_frequencies']:
+                                    # Mostrar el panorama general primero
+                                    st.subheader("📊 Panorama General")
+                                    keyword_viz = create_keyword_analysis_visualization(keyword_stats)
+                                    if keyword_viz:
+                                        st.plotly_chart(keyword_viz, use_container_width=True)
                                     
-                                    cluster_data = []
-                                    for cluster in clusters[:10]:
+                                    st.markdown("---")
+                                    
+                                    # Tabla de temas principales
+                                    top_keywords_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:20])
+                                    top_keywords_df.columns = ['Tema', 'Frecuencia', 'Papers', 'Investigadores']
+                                    
+                                    
+                                    
+                                    st.subheader("🏆 Top 20 Temas")
+                                    st.dataframe(top_keywords_df, height=400)
+                                else:
+                                    st.warning("No hay datos de keywords disponibles")
+                                    col1, col2 = st.columns(2)
+                            except Exception as e:
+                                st.error(f"Error al procesar keywords: {e}")
+                                col1, col2 = st.columns(2)
+                            
+                            
+                            clusters = keyword_analyzer.get_keyword_clusters()
+                            if clusters:
+                                st.subheader("Agrupaciones Temáticas")
+                                    
+                                cluster_data = []
+                                for cluster in clusters[:20]:
                                         cluster_data.append({
                                             'Cluster': f"Grupo {cluster['cluster_id']}",
                                             'Temas': cluster['size'],
@@ -578,44 +544,132 @@ def main():
                                             'Cohesión': f"{cluster['avg_weight']:.2f}"
                                         })
                                     
-                                    cluster_df = pd.DataFrame(cluster_data)
-                                    st.dataframe(cluster_df)
-                                    
-                                    # Mostrar detalles del cluster seleccionado
-                                    selected_cluster = st.selectbox(
+                                cluster_df = pd.DataFrame(cluster_data)
+                                st.dataframe(cluster_df)
+
+                                selected_cluster = st.selectbox(
                                         "Ver detalles del grupo:",
                                         range(min(len(clusters), 10)),
                                         format_func=lambda x: f"Grupo {clusters[x]['cluster_id']} ({clusters[x]['size']} temas)"
                                     )
                                     
-                                    if selected_cluster is not None:
+                                if selected_cluster is not None:
                                         cluster_info = clusters[selected_cluster]
                                         st.write("**Temas en este grupo:**")
                                         st.write(", ".join(cluster_info['keywords'][:10]))
                                         if len(cluster_info['keywords']) > 10:
                                             st.info(f"Y {len(cluster_info['keywords']) - 10} temas más...")
                         
-                        with subtab2:
-                            st.subheader("Red de Conexiones Temáticas")
-                            
-                            max_nodes_network = st.slider(
-                                "Número máximo de elementos en la red:",
-                                min_value=50,
-                                max_value=200,
-                                value=100,
-                                step=25
-                            )
-                            
-                            network_fig = create_keyword_network_visualization(
-                                keyword_analyzer.keywords_graph, 
-                                max_nodes=max_nodes_network
-                            )
-                            
-                            if network_fig:
-                                st.plotly_chart(network_fig, use_container_width=True)
-                                st.info("💡 Los nodos azules representan temas de investigación, los coral representan investigadores. El tamaño indica la relevancia/productividad.")
-                        
                         with subtab3:
+                            st.subheader("☁️ Nube de Palabras Clave")
+                            st.markdown("Visualización interactiva de los temas de investigación más utilizados")
+                            
+                            col1, col2 = st.columns([3, 1])
+                            
+                            with col2:
+                                st.markdown("**⚙️ Configuración:**")
+                                
+                                max_words = st.slider(
+                                    "Número de palabras:",
+                                    min_value=20,
+                                    max_value=150,
+                                    value=80,
+                                    step=10,
+                                    help="Controla cuántos temas mostrar en la nube"
+                                )
+                                
+                                colormap_option = st.selectbox(
+                                    "Esquema de colores:",
+                                    ["viridis", "plasma", "inferno", "magma", "Blues", "Reds", "YlOrRd"],
+                                    help="Diferentes paletas de colores para la visualización"
+                                )
+                                
+                                st.markdown("**📊 Estadísticas rápidas:**")
+                                total_unique_keywords = len(keyword_stats['keyword_frequencies'])
+                                st.info(f"🏷️ **{total_unique_keywords}** temas únicos en total")
+                                
+                                if keyword_stats['keyword_frequencies'] and len(keyword_stats['keyword_frequencies']) > 0:
+                                    try:
+                                        top_keyword = keyword_stats['keyword_frequencies'][0]
+                                        if isinstance(top_keyword, (list, tuple)) and len(top_keyword) >= 2:
+                                            st.success(f"👑 Tema más frecuente: **{top_keyword[0]}** ({top_keyword[1]} apariciones)")
+                                        else:
+                                            st.warning("Estructura de datos de keywords no válida")
+                                    except (IndexError, TypeError) as e:
+                                        st.warning(f"Error al acceder a los datos de keywords: {e}")
+                            
+
+                            with col1:
+                                with st.spinner("🎨 Generando nube de palabras..."):
+                                    
+                                    wordcloud_fig = create_wordcloud_visualization(
+                                        keyword_stats, 
+                                        max_words=max_words,
+                                        colormap=colormap_option
+                                    )
+                                    
+                                    if wordcloud_fig:
+                                        st.plotly_chart(wordcloud_fig, use_container_width=True)
+                                        
+                                        # Información adicional sobre la nube de palabras
+                                        st.markdown("---")
+                                        col_a, col_b, col_c = st.columns(3)
+                                        
+                                        with col_a:
+                                            st.metric(
+                                                "Palabras mostradas", 
+                                                min(max_words, len(keyword_stats['keyword_frequencies'])),
+                                                help="Número de temas incluidos en la visualización"
+                                            )
+                                        
+                                        with col_b:
+                                            if keyword_stats['keyword_frequencies']:
+                                                try:
+                                                    coverage = sum(kw[1] for kw in keyword_stats['keyword_frequencies'][:max_words] if isinstance(kw, (list, tuple)) and len(kw) >= 2)
+                                                    total_freq = sum(kw[1] for kw in keyword_stats['keyword_frequencies'] if isinstance(kw, (list, tuple)) and len(kw) >= 2)
+                                                    coverage_pct = (coverage / total_freq * 100) if total_freq > 0 else 0
+                                                    st.metric(
+                                                        "Cobertura", 
+                                                        f"{coverage_pct:.1f}%",
+                                                        help="Porcentaje de frecencia total representada"
+                                                    )
+                                                except (IndexError, TypeError):
+                                                    st.metric("Cobertura", "N/A", help="Error en datos")
+                                        
+                                        with col_c:
+                                            if keyword_stats['keyword_frequencies']:
+                                                try:
+                                                    valid_keywords = [kw for kw in keyword_stats['keyword_frequencies'][:max_words] if isinstance(kw, (list, tuple)) and len(kw) >= 2]
+                                                    if valid_keywords:
+                                                        avg_freq_shown = sum(kw[1] for kw in valid_keywords) / len(valid_keywords)
+                                                        st.metric(
+                                                            "Freq. promedio", 
+                                                            f"{avg_freq_shown:.1f}",
+                                                            help="Frecuencia promedio de los temas mostrados"
+                                                        )
+                                                    else:
+                                                        st.metric("Freq. promedio", "N/A", help="No hay datos válidos")
+                                                except (IndexError, TypeError, ZeroDivisionError):
+                                                    st.metric("Freq. promedio", "N/A", help="Error en datos")
+                                    else:
+                                        st.error("❌ No se pudo generar la nube de palabras. Instala la librería 'wordcloud' para una mejor experiencia.")
+                                        st.code("pip install wordcloud", language="bash")
+                            
+
+                            # Tabla de los temas más frecuentes para referencia
+                            with st.expander("📋 Ver lista detallada de temas"):
+                                try:
+                                    if keyword_stats['keyword_frequencies']:
+                                        detailed_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:max_words])
+                                        detailed_df.columns = ['🏷️ Tema', '📊 Frecuencia', '📄 Papers', '👥 Investigadores']
+                                        detailed_df.index = range(1, len(detailed_df) + 1)
+                                        st.dataframe(detailed_df, use_container_width=True)
+                                    else:
+                                        st.warning("No hay datos de keywords disponibles")
+                                except Exception as e:
+                                    st.error(f"Error al mostrar la tabla: {e}")
+                        
+                        with subtab4:
                             st.subheader("Tendencias Emergentes")
                             
                             trending = keyword_analyzer.get_trending_keywords()
@@ -623,8 +677,7 @@ def main():
                                 trending_df = pd.DataFrame(trending[:15])
                                 trending_df.columns = ['Tema', 'Puntuación', 'Frecuencia', 'Investigadores', 'Intensidad', 'Papers']
                                 trending_df = trending_df[['Tema', 'Puntuación', 'Frecuencia', 'Investigadores']]
-                                
-                                # Gráfico de tendencias
+
                                 fig_trending = px.scatter(
                                     trending_df,
                                     x='Frecuencia',
@@ -642,100 +695,6 @@ def main():
                                 
                                 st.subheader("Ranking de Tendencias")
                                 st.dataframe(trending_df)
-                        
-                        with subtab4:
-                            st.subheader("Perfiles de Investigación")
-                            
-                            author_analysis = keyword_analyzer.get_author_keyword_analysis()
-                            if author_analysis:
-                                # Buscar investigador específico
-                                search_author = st.text_input("Buscar investigador:", placeholder="Ingresa el nombre del investigador")
-                                
-                                if search_author:
-                                    # Filtrar por nombre
-                                    filtered_authors = [
-                                        auth for auth in author_analysis 
-                                        if search_author.lower() in auth['author'].lower()
-                                    ]
-                                    
-                                    if filtered_authors:
-                                        st.subheader(f"Resultados para '{search_author}':")
-                                        for author in filtered_authors[:5]:
-                                            with st.expander(f"👨‍🔬 {author['author']}"):
-                                                col1, col2 = st.columns(2)
-                                                
-                                                with col1:
-                                                    st.metric("Diversidad Temática", author['keyword_diversity'])
-                                                    st.metric("Papers", author['papers_count'])
-                                                
-                                                with col2:
-                                                    st.write("**Temas principales:**")
-                                                    for kw in author['top_keywords']:
-                                                        st.write(f"• {kw['keyword']} (relevancia: {kw['weight']})")
-                                    else:
-                                        st.warning("No se encontraron investigadores con ese nombre")
-                                
-                                # Top investigadores por diversidad
-                                st.subheader("Investigadores con Mayor Diversidad Temática")
-                                
-                                diversity_data = []
-                                for author in author_analysis[:15]:
-                                    diversity_data.append({
-                                        'Investigador': author['author'],
-                                        'Diversidad': author['keyword_diversity'],
-                                        'Total Temas': author['total_keywords'],
-                                        'Papers': author['papers_count']
-                                    })
-                                
-                                diversity_df = pd.DataFrame(diversity_data)
-                                st.dataframe(diversity_df)
-                                
-                                # Gráfico de diversidad vs productividad
-                                fig_diversity = px.scatter(
-                                    diversity_df,
-                                    x='Papers',
-                                    y='Diversidad',
-                                    size='Total Temas',
-                                    hover_name='Investigador',
-                                    title="Diversidad Temática vs Productividad",
-                                    labels={
-                                        'Papers': 'Número de Papers',
-                                        'Diversidad': 'Diversidad Temática'
-                                    }
-                                )
-                                
-                                st.plotly_chart(fig_diversity, use_container_width=True)
-                        
-                        # Buscador de temas relacionados
-                        st.markdown("---")
-                        st.subheader("🔍 Explorador Temático")
-                        
-                        search_query = st.text_input(
-                            "Buscar temas relacionados:",
-                            placeholder="Ej: machine learning, neural networks, etc."
-                        )
-                        
-                        if search_query:
-                            related_results = keyword_analyzer.search_related_keywords(search_query)
-                            
-                            if related_results:
-                                st.success(f"Temas encontrados para '{search_query}':")
-                                
-                                if related_results['matching_keywords']:
-                                    st.write("**Coincidencias exactas:**")
-                                    for match in related_results['matching_keywords']:
-                                        st.write(f"• {match}")
-                                
-                                if related_results['related_keywords']:
-                                    st.write("**Temas relacionados:**")
-                                    
-                                    related_df = pd.DataFrame(related_results['related_keywords'])
-                                    related_df.columns = ['Tema', 'Peso Total', 'Conexiones', 'Frecuencia', 'Relevancia']
-                                    related_df = related_df[['Tema', 'Relevancia', 'Frecuencia', 'Conexiones']]
-                                    
-                                    st.dataframe(related_df)
-                            else:
-                                st.warning("No se encontraron temas relacionados con esa búsqueda")
                     
                     else:
                         st.warning("No se pudieron cargar las estadísticas de investigación")
@@ -764,7 +723,7 @@ def main():
     elif page == "Buscar Autores":
         if graph:
             search_authors(graph)
-        else:
+       
             st.error("No se pudo cargar el grafo.")
     
 if __name__ == "__main__":

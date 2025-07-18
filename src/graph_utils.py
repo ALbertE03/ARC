@@ -409,7 +409,7 @@ def create_advanced_graph_visualization(graph, communities=None, centrality_meas
 
     fig = go.Figure(data=edge_trace + [node_trace])
     fig.update_layout(
-        title="Grafo de Colaboración Avanzado",
+        title="Grafo de Colaboración",
         showlegend=False,
         hovermode='closest',
         margin=dict(b=20,l=5,r=5,t=40),
@@ -610,7 +610,7 @@ def create_weight_distribution_analysis(graph):
         'total_edges': len(weights)
     }
 
-
+from src.build_keywords_graph import KeywordGraph
 class KeywordAnalyzer:
     """Analizador para el grafo de palabras clave y conexiones autor-keyword"""
     
@@ -618,11 +618,13 @@ class KeywordAnalyzer:
         """Inicializa el analizador cargando el grafo de keywords"""
         try:
             self.keywords_graph = nx.read_graphml(keywords_graph_path)
-            # Convertir strings de vuelta a listas para facilitar el análisis
             self._convert_strings_to_lists()
         except Exception as e:
             print(f"Error cargando grafo de keywords: {e}")
-            self.keywords_graph = None
+            g = KeywordGraph('../data/extract_result.json')
+            g.build()
+            g.save()
+            self.keywords_graph = nx.read_graphml(keywords_graph_path)
     
     def _convert_strings_to_lists(self):
         """Convierte strings separados por comas de vuelta a listas"""
@@ -643,8 +645,7 @@ class KeywordAnalyzer:
         
         keyword_nodes = [n for n, d in self.keywords_graph.nodes(data=True) if d.get('type') == 'keyword']
         author_nodes = [n for n, d in self.keywords_graph.nodes(data=True) if d.get('type') == 'author']
-        
-        # Análisis de frecuencias
+
         keyword_frequencies = []
         for node in keyword_nodes:
             data = self.keywords_graph.nodes[node]
@@ -658,11 +659,9 @@ class KeywordAnalyzer:
         
         keyword_frequencies.sort(key=lambda x: x['frequency'], reverse=True)
         
-        # Análisis de co-ocurrencias
         cooccurrence_edges = [(u, v, d) for u, v, d in self.keywords_graph.edges(data=True) 
                              if d.get('type') == 'keyword_cooccurrence']
         
-        # Top co-ocurrencias
         top_cooccurrences = sorted(cooccurrence_edges, key=lambda x: x[2].get('weight', 0), reverse=True)[:20]
         
         return {
@@ -683,7 +682,6 @@ class KeywordAnalyzer:
         
         for node, data in self.keywords_graph.nodes(data=True):
             if data.get('type') == 'author':
-                # Obtener keywords conectadas a este autor
                 connected_keywords = []
                 for neighbor in self.keywords_graph.neighbors(node):
                     if self.keywords_graph.nodes[neighbor].get('type') == 'keyword':
@@ -699,12 +697,11 @@ class KeywordAnalyzer:
                 author_keyword_data.append({
                     'author': data.get('name', 'Unknown'),
                     'total_keywords': len(connected_keywords),
-                    'top_keywords': connected_keywords[:5],  # Top 5 keywords
+                    'top_keywords': connected_keywords[:5],  
                     'papers_count': len(data.get('papers', [])),
                     'keyword_diversity': len(set(kw['keyword'] for kw in connected_keywords))
                 })
         
-        # Ordenar por diversidad de keywords
         author_keyword_data.sort(key=lambda x: x['keyword_diversity'], reverse=True)
         
         return author_keyword_data[:top_n]
@@ -713,26 +710,22 @@ class KeywordAnalyzer:
         """Identifica clusters de palabras clave basados en co-ocurrencia"""
         if not self.keywords_graph:
             return None
-        
-        # Crear subgrafo solo con keywords y sus co-ocurrencias
+
         keyword_nodes = [n for n, d in self.keywords_graph.nodes(data=True) if d.get('type') == 'keyword']
         keyword_subgraph = self.keywords_graph.subgraph(keyword_nodes).copy()
         
-        # Detectar comunidades en el subgrafo de keywords
         try:
             import networkx.algorithms.community as nx_comm
             communities = nx_comm.louvain_communities(keyword_subgraph, weight='weight')
             
             clusters = []
             for i, community in enumerate(communities):
-                if len(community) > 1:  # Solo clusters con más de una keyword
+                if len(community) > 1:  
                     cluster_keywords = list(community)
-                    
-                    # Calcular peso promedio del cluster
+
                     cluster_edges = keyword_subgraph.subgraph(cluster_keywords).edges(data=True)
                     avg_weight = sum(d.get('weight', 1) for u, v, d in cluster_edges) / len(cluster_edges) if cluster_edges else 0
-                    
-                    # Obtener frecuencias
+
                     cluster_frequencies = [self.keywords_graph.nodes[kw].get('frequency', 0) for kw in cluster_keywords]
                     
                     clusters.append({
@@ -744,7 +737,6 @@ class KeywordAnalyzer:
                         'avg_frequency': sum(cluster_frequencies) / len(cluster_frequencies)
                     })
             
-            # Ordenar por tamaño
             clusters.sort(key=lambda x: x['size'], reverse=True)
             return clusters
             
@@ -760,12 +752,10 @@ class KeywordAnalyzer:
         
         for node, data in self.keywords_graph.nodes(data=True):
             if data.get('type') == 'keyword' and data.get('frequency', 0) >= min_frequency:
-                # Calcular "trending score" basado en múltiples factores
                 frequency = data.get('frequency', 0)
                 author_connections = len([n for n in self.keywords_graph.neighbors(node) 
                                         if self.keywords_graph.nodes[n].get('type') == 'author'])
-                
-                # Peso promedio de conexiones con autores
+
                 author_weights = []
                 for neighbor in self.keywords_graph.neighbors(node):
                     if self.keywords_graph.nodes[neighbor].get('type') == 'author':
@@ -773,8 +763,7 @@ class KeywordAnalyzer:
                         author_weights.append(weight)
                 
                 avg_author_weight = sum(author_weights) / len(author_weights) if author_weights else 0
-                
-                # Score compuesto
+
                 trending_score = (frequency * 0.4) + (author_connections * 0.4) + (avg_author_weight * 0.2)
                 
                 trending_data.append({
@@ -793,11 +782,9 @@ class KeywordAnalyzer:
         """Busca keywords relacionadas basándose en co-ocurrencia"""
         if not self.keywords_graph:
             return None
-        
-        # Normalizar query
+
         query_normalized = keyword_query.lower().strip()
-        
-        # Buscar keywords que contengan el query
+
         matching_keywords = []
         for node, data in self.keywords_graph.nodes(data=True):
             if data.get('type') == 'keyword' and query_normalized in node.lower():
@@ -805,8 +792,7 @@ class KeywordAnalyzer:
         
         if not matching_keywords:
             return None
-        
-        # Para cada keyword encontrada, obtener keywords relacionadas
+
         related_keywords = {}
         
         for keyword in matching_keywords:
@@ -826,12 +812,10 @@ class KeywordAnalyzer:
                     else:
                         related_keywords[neighbor]['total_weight'] += weight
                         related_keywords[neighbor]['connections'] += 1
-        
-        # Calcular relevancia
+
         for data in related_keywords.values():
             data['relevance'] = (data['total_weight'] * 0.6) + (data['frequency'] * 0.4)
         
-        # Ordenar por relevancia
         related_list = list(related_keywords.values())
         related_list.sort(key=lambda x: x['relevance'], reverse=True)
         
@@ -850,10 +834,8 @@ def create_keyword_analysis_visualization(keyword_stats):
     from plotly.subplots import make_subplots
     import plotly.express as px
     
-    # Top keywords por frecuencia
-    top_keywords = keyword_stats['keyword_frequencies'][:12]  # Mostrar top 12 para mejor legibilidad
+    top_keywords = keyword_stats['keyword_frequencies'][:12]  
     
-    # Crear subplots solo con los gráficos que tienen datos reales
     fig = make_subplots(
         rows=1, cols=2,
         subplot_titles=(
@@ -863,7 +845,6 @@ def create_keyword_analysis_visualization(keyword_stats):
         specs=[[{"type": "bar"}, {"type": "histogram"}]]
     )
     
-    # Gráfico 1: Top keywords (mejorado para evitar barras pegadas)
     fig.add_trace(
         go.Bar(
             y=[kw['keyword'][:30] + "..." if len(kw['keyword']) > 30 else kw['keyword'] for kw in top_keywords],
@@ -884,8 +865,7 @@ def create_keyword_analysis_visualization(keyword_stats):
         ),
         row=1, col=1
     )
-    
-    # Gráfico 2: Distribución de frecuencias
+
     frequencies = [kw['frequency'] for kw in keyword_stats['keyword_frequencies']]
     fig.add_trace(
         go.Histogram(
@@ -901,11 +881,10 @@ def create_keyword_analysis_visualization(keyword_stats):
         ),
         row=1, col=2
     )
-    
-    # Configurar layout sin leyendas innecesarias
+
     fig.update_layout(
-        height=500,  # Altura más compacta
-        showlegend=False,  # Quitar leyendas para limpieza visual
+        height=500,  
+        showlegend=False,  
         title=dict(
             text="Panorama de Investigación - Análisis de Temas",
             font=dict(size=16),
@@ -914,7 +893,7 @@ def create_keyword_analysis_visualization(keyword_stats):
         margin=dict(l=20, r=20, t=80, b=20)
     )
     
-    # Mejorar formato de ejes
+
     fig.update_xaxes(
         title_text="Frecuencia en Literatura",
         row=1, col=1,
@@ -946,16 +925,13 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
     import plotly.graph_objects as go
     import networkx as nx
     
-    # Filtrar a las keywords más frecuentes y sus conexiones
     keyword_nodes = [(n, d) for n, d in keywords_graph.nodes(data=True) if d.get('type') == 'keyword']
     keyword_nodes.sort(key=lambda x: x[1].get('frequency', 0), reverse=True)
     
     top_keywords = [n for n, d in keyword_nodes[:max_nodes//2]]
     
-    # Crear subgrafo con keywords principales y algunos autores conectados
     nodes_to_include = set(top_keywords)
     
-    # Añadir algunos autores conectados a estas keywords
     author_count = 0
     for keyword in top_keywords:
         for neighbor in keywords_graph.neighbors(keyword):
@@ -966,10 +942,8 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
     
     subgraph = keywords_graph.subgraph(nodes_to_include)
     
-    # Calcular posiciones usando layout de spring
     pos = nx.spring_layout(subgraph, k=3, iterations=50)
-    
-    # Preparar datos para plotly
+
     edge_x = []
     edge_y = []
     edge_weights = []
@@ -981,7 +955,6 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
         edge_y.extend([y0, y1, None])
         edge_weights.append(edge[2].get('weight', 1))
     
-    # Crear trace para las aristas
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=0.5, color='#888'),
@@ -989,7 +962,6 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
         mode='lines'
     )
     
-    # Preparar datos para nodos
     node_x = []
     node_y = []
     node_text = []
@@ -1011,7 +983,7 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
             freq = node_data.get('frequency', 0)
             node_size.append(max(10, freq * 3))
             node_info.append(f"Tema: {node}<br>Frecuencia: {freq}<br>Papers: {len(node_data.get('papers', []))}")
-        else:  # author
+        else:  
             name = node_data.get('name', 'Unknown')
             node_text.append(name[:20] + '...' if len(name) > 20 else name)
             node_color.append('lightcoral')
@@ -1019,7 +991,6 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
             node_size.append(max(8, papers * 2))
             node_info.append(f"Investigador: {name}<br>Papers: {papers}")
     
-    # Crear trace para los nodos
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers+text',
@@ -1034,8 +1005,7 @@ def create_keyword_network_visualization(keywords_graph, max_nodes=100):
             line=dict(width=2, color='white')
         )
     )
-    
-    # Crear figura
+
     fig = go.Figure(data=[edge_trace, node_trace],
                    layout=go.Layout(
                         title=dict(text='Red de Temas de Investigación', font=dict(size=16)),
@@ -1066,22 +1036,18 @@ def create_community_graph_visualization(graph, communities_dict, max_nodes=200,
     
     G = graph.graph.copy()
     
-    # Filtrar por comunidades de tamaño mínimo
     filtered_communities = {
         comm_id: stats for comm_id, stats in communities_dict.items()
         if stats['size'] >= min_community_size
     }
     
-    # Crear mapeo de nodos a comunidades
     node_to_community = {}
     for comm_id, stats in filtered_communities.items():
         for node in stats['nodes']:
             node_to_community[node] = comm_id
-    
-    # Filtrar grafo para incluir solo nodos de comunidades relevantes
+
     relevant_nodes = set(node_to_community.keys())
-    
-    # Si hay demasiados nodos, priorizar por grado y pertenencia a comunidades grandes
+ 
     if len(relevant_nodes) > max_nodes:
         node_scores = {}
         for node in relevant_nodes:
@@ -1142,16 +1108,14 @@ def create_community_graph_visualization(graph, communities_dict, max_nodes=200,
         if node not in pos:
             pos[node] = pos_initial[node]
     
-    # Generar colores automáticamente para cada comunidad
     def generate_community_colors(num_communities):
         """Genera colores distintivos automáticamente usando HSV"""
         import colorsys
         colors = []
         for i in range(num_communities):
-            # Usar HSV para generar colores bien distribuidos
             hue = i / num_communities
-            saturation = 0.7 + (i % 3) * 0.1  # Variar saturación
-            value = 0.8 + (i % 2) * 0.15       # Variar brillo
+            saturation = 0.7 + (i % 3) * 0.1  
+            value = 0.8 + (i % 2) * 0.15    
             rgb = colorsys.hsv_to_rgb(hue, saturation, value)
             hex_color = '#{:02x}{:02x}{:02x}'.format(
                 int(rgb[0] * 255),
@@ -1262,6 +1226,171 @@ def create_community_graph_visualization(graph, communities_dict, max_nodes=200,
             borderwidth=1,
             font=dict(size=11)
         )
+    )
+    
+    return fig
+
+def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='viridis'):
+    """Crea una nube de palabras con las palabras clave más frecuentes"""
+    try:
+        from wordcloud import WordCloud
+        import plotly.graph_objects as go
+        import io
+        import base64
+        from PIL import Image
+        
+        if not keyword_stats or 'keyword_frequencies' not in keyword_stats:
+            return None
+        
+        # Preparar los datos para la nube de palabras
+        word_freq = {}
+        try:
+            for keyword_data in keyword_stats['keyword_frequencies'][:max_words]:
+                if isinstance(keyword_data, (list, tuple)) and len(keyword_data) >= 2:
+                    keyword = keyword_data[0]  # Nombre del tema
+                    frequency = keyword_data[1]  # Frecuencia
+                    if isinstance(keyword, str) and isinstance(frequency, (int, float)):
+                        word_freq[keyword] = frequency
+        except (TypeError, IndexError) as e:
+            print(f"Error procesando keyword_frequencies: {e}")
+            return None
+        
+        if not word_freq:
+            return None
+        
+        # Configurar la nube de palabras
+        wordcloud = WordCloud(
+            width=800, 
+            height=400,
+            background_color='white',
+            max_words=max_words,
+            colormap=colormap,
+            relative_scaling=0.5,
+            font_path=None,
+            prefer_horizontal=0.7,
+            min_font_size=10,
+            max_font_size=80,
+            random_state=42
+        ).generate_from_frequencies(word_freq)
+        
+        # Convertir a imagen para mostrar en Plotly
+        img = wordcloud.to_image()
+        img_buffer = io.BytesIO()
+        img.save(img_buffer, format='PNG')
+        img_buffer.seek(0)
+        img_base64 = base64.b64encode(img_buffer.getvalue()).decode()
+        
+        # Crear figura de Plotly con la imagen
+        fig = go.Figure()
+        
+        fig.add_layout_image(
+            dict(
+                source=f"data:image/png;base64,{img_base64}",
+                xref="x",
+                yref="y",
+                x=0,
+                y=1,
+                sizex=1,
+                sizey=1,
+                sizing="stretch",
+                opacity=1,
+                layer="below"
+            )
+        )
+        
+        # Configurar el layout
+        fig.update_layout(
+            title=dict(
+                text="🏷️ Nube de Palabras Clave Más Utilizadas",
+                font=dict(size=18),
+                x=0.5
+            ),
+            xaxis=dict(
+                showgrid=False,
+                showticklabels=False,
+                zeroline=False,
+                range=[0, 1]
+            ),
+            yaxis=dict(
+                showgrid=False,
+                showticklabels=False,
+                zeroline=False,
+                range=[0, 1]
+            ),
+            height=450,
+            margin=dict(l=20, r=20, t=50, b=20),
+            showlegend=False,
+            annotations=[
+                dict(
+                    text=f"Mostrando los {len(word_freq)} temas más frecuentes",
+                    showarrow=False,
+                    xref="paper", 
+                    yref="paper",
+                    x=0.5, 
+                    y=-0.1,
+                    xanchor='center', 
+                    yanchor='top',
+                    font=dict(color='gray', size=12)
+                )
+            ]
+        )
+        
+        return fig
+        
+    except ImportError:
+        # Si wordcloud no está instalada, crear una visualización alternativa
+        return create_alternative_wordcloud_visualization(keyword_stats, max_words)
+    except Exception as e:
+        print(f"Error creando nube de palabras: {e}")
+        return create_alternative_wordcloud_visualization(keyword_stats, max_words)
+
+def create_alternative_wordcloud_visualization(keyword_stats, max_words=50):
+    """Visualización alternativa cuando wordcloud no está disponible"""
+    import plotly.graph_objects as go
+    import plotly.express as px
+    import pandas as pd
+    import numpy as np
+    
+    if not keyword_stats or 'keyword_frequencies' not in keyword_stats:
+        return None
+    
+    # Preparar datos
+    keywords_data = keyword_stats['keyword_frequencies'][:max_words]
+    
+    df = pd.DataFrame(keywords_data, columns=['Tema', 'Frecuencia', 'Papers', 'Investigadores'])
+    
+    # Crear gráfico de burbujas como alternativa
+    fig = px.scatter(
+        df.head(30),
+        x=np.random.uniform(0, 10, len(df.head(30))),  # Posiciones aleatorias
+        y=np.random.uniform(0, 10, len(df.head(30))),
+        size='Frecuencia',
+        color='Investigadores',
+        hover_name='Tema',
+        hover_data={'Frecuencia': True, 'Papers': True, 'Investigadores': True},
+        title="📊 Visualización de Temas de Investigación (Alternativa)",
+        color_continuous_scale='viridis',
+        size_max=60
+    )
+    
+    # Agregar etiquetas de texto
+    for i, row in df.head(15).iterrows():  # Solo los 15 principales para evitar sobreposición
+        fig.add_annotation(
+            x=np.random.uniform(1, 9),
+            y=np.random.uniform(1, 9),
+            text=row['Tema'][:20] + '...' if len(row['Tema']) > 20 else row['Tema'],
+            showarrow=False,
+            font=dict(size=max(8, min(16, row['Frecuencia'])), color='white'),
+            bgcolor=f'rgba(0,0,0,0.5)',
+            bordercolor='white',
+            borderwidth=1
+        )
+    
+    fig.update_layout(
+        xaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
+        yaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
+        height=450,
+        showlegend=False
     )
     
     return fig
