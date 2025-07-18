@@ -625,7 +625,36 @@ class KeywordAnalyzer:
             g.build()
             g.save()
             self.keywords_graph = nx.read_graphml(keywords_graph_path)
-    
+
+
+    def get_keyword_weights_within_cluster(self, cluster_keywords):
+        """
+        Calcula un score de importancia para cada keyword dentro de un clúster específico.
+        El score se basa en la suma de los pesos de sus conexiones con otras keywords del mismo clúster.
+        """
+        if not self.keywords_graph or not cluster_keywords:
+            return {}
+
+        # Crear un subgrafo que contenga únicamente los nodos y aristas del clúster
+        cluster_subgraph = self.keywords_graph.subgraph(cluster_keywords).copy()
+        
+        # Eliminar aristas que no sean de co-ocurrencia de keywords si las hubiera
+        edges_to_remove = [
+            (u, v) for u, v, data in cluster_subgraph.edges(data=True) 
+            if data.get('type') != 'keyword_cooccurrence'
+        ]
+        cluster_subgraph.remove_edges_from(edges_to_remove)
+
+        weights = {}
+        for node in cluster_subgraph.nodes():
+            # El score es la suma de los pesos de todas las aristas conectadas a este nodo
+            # DENTRO del subgrafo del clúster.
+            total_weight = sum(data.get('weight', 1) for _, _, data in cluster_subgraph.edges(node, data=True))
+            
+            # Añadimos un valor base para que los nodos sin conexiones internas igual aparezcan
+            weights[node] = total_weight if total_weight > 0 else 1
+        
+        return weights
     def _convert_strings_to_lists(self):
         """Convierte strings separados por comas de vuelta a listas"""
         for node, data in self.keywords_graph.nodes(data=True):
@@ -672,7 +701,88 @@ class KeywordAnalyzer:
             'top_cooccurrences': top_cooccurrences,
             'avg_keyword_frequency': sum(kf['frequency'] for kf in keyword_frequencies) / len(keyword_frequencies) if keyword_frequencies else 0
         }
-    
+
+    def recommend_collaborators(self, author_name, main_graph, top_n=5):
+        """
+        Recomienda colaboradores para un autor basándose en intereses compartidos (keywords)
+        y conexiones de segundo grado en la red de colaboración.
+        """
+        if not self.keywords_graph or not main_graph:
+            return None
+
+        # 1. Encontrar el nodo del autor en ambos grafos
+        author_node_kw = None
+        for node, data in self.keywords_graph.nodes(data=True):
+            if data.get('type') == 'author' and data.get('name', '').lower() == author_name.lower():
+                author_node_kw = node
+                break
+        
+        author_node_main = None
+        for node, data in main_graph.nodes(data=True):
+             if author_name.lower() in [name.lower() for name in data.get('all_names', [data.get('name', '')])]:
+                author_node_main = node
+                break
+
+        if not author_node_kw or not author_node_main:
+            print(f"Autor '{author_name}' no encontrado en los grafos.")
+            return []
+
+        # 2. Obtener colaboradores actuales para excluirlos
+        current_collaborators = set(main_graph.neighbors(author_node_main))
+        current_collaborator_names = set()
+        for collab_node in current_collaborators:
+            current_collaborator_names.add(main_graph.nodes[collab_node].get('name', '').lower())
+
+
+        # 3. Encontrar candidatos a través de palabras clave compartidas
+        target_keywords = {n for n in self.keywords_graph.neighbors(author_node_kw) if self.keywords_graph.nodes[n].get('type') == 'keyword'}
+        
+        candidates = {}
+
+        for keyword in target_keywords:
+            # Autores que también usaron esta palabra clave
+            authors_for_keyword = {n for n in self.keywords_graph.neighbors(keyword) if self.keywords_graph.nodes[n].get('type') == 'author'}
+            
+            for candidate_node in authors_for_keyword:
+                if candidate_node == author_node_kw:
+                    continue
+
+                candidate_data = self.keywords_graph.nodes[candidate_node]
+                candidate_name = candidate_data.get('name')
+
+                if not candidate_name or candidate_name.lower() in current_collaborator_names:
+                    continue
+
+                if candidate_name not in candidates:
+                    candidates[candidate_name] = {
+                        "shared_keywords": set(),
+                        "score": 0,
+                        "node_id_kw": candidate_node,
+                        "paper_count": len(candidate_data.get('papers', [])),
+                    }
+                
+                candidates[candidate_name]["shared_keywords"].add(keyword)
+
+        # 4. Puntuar a los candidatos
+        recommendations = []
+        for name, data in candidates.items():
+            # Puntuación base: número de keywords compartidas
+            score = len(data['shared_keywords']) * 1.5
+            
+            # Bonus por la productividad del candidato
+            score += data['paper_count'] * 0.1
+            
+            recommendations.append({
+                "name": name,
+                "score": score,
+                "reason_keywords": list(data['shared_keywords']),
+                "paper_count": data['paper_count'],
+            })
+
+        # 5. Ordenar por puntuación y devolver el top N
+        recommendations.sort(key=lambda x: x['score'], reverse=True)
+        
+        return recommendations[:top_n]
     def get_author_keyword_analysis(self, top_n=20):
         """Analiza las conexiones entre autores y palabras clave"""
         if not self.keywords_graph:
@@ -1242,14 +1352,13 @@ def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='virid
         if not keyword_stats or 'keyword_frequencies' not in keyword_stats:
             return None
         
-        # Preparar los datos para la nube de palabras
         word_freq = {}
         try:
             for keyword_data in keyword_stats['keyword_frequencies'][:max_words]:
-                if isinstance(keyword_data, (list, tuple)) and len(keyword_data) >= 2:
-                    keyword = keyword_data[0]  # Nombre del tema
-                    frequency = keyword_data[1]  # Frecuencia
-                    if isinstance(keyword, str) and isinstance(frequency, (int, float)):
+                if isinstance(keyword_data, dict):
+                    keyword = keyword_data.get('keyword')
+                    frequency = keyword_data.get('frequency')
+                    if keyword and isinstance(frequency, (int, float)):
                         word_freq[keyword] = frequency
         except (TypeError, IndexError) as e:
             print(f"Error procesando keyword_frequencies: {e}")
@@ -1258,7 +1367,7 @@ def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='virid
         if not word_freq:
             return None
         
-        # Configurar la nube de palabras
+
         wordcloud = WordCloud(
             width=800, 
             height=400,
@@ -1273,14 +1382,12 @@ def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='virid
             random_state=42
         ).generate_from_frequencies(word_freq)
         
-        # Convertir a imagen para mostrar en Plotly
         img = wordcloud.to_image()
         img_buffer = io.BytesIO()
         img.save(img_buffer, format='PNG')
         img_buffer.seek(0)
         img_base64 = base64.b64encode(img_buffer.getvalue()).decode()
-        
-        # Crear figura de Plotly con la imagen
+
         fig = go.Figure()
         
         fig.add_layout_image(
@@ -1298,7 +1405,6 @@ def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='virid
             )
         )
         
-        # Configurar el layout
         fig.update_layout(
             title=dict(
                 text="🏷️ Nube de Palabras Clave Más Utilizadas",
@@ -1338,7 +1444,6 @@ def create_wordcloud_visualization(keyword_stats, max_words=100, colormap='virid
         return fig
         
     except ImportError:
-        # Si wordcloud no está instalada, crear una visualización alternativa
         return create_alternative_wordcloud_visualization(keyword_stats, max_words)
     except Exception as e:
         print(f"Error creando nube de palabras: {e}")

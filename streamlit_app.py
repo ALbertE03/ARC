@@ -4,6 +4,8 @@ import pandas as pd
 from src.graph_utils import GraphAnalyzer, create_advanced_graph_visualization, create_performance_dashboard, create_community_comparison_visualization, create_community_graph_visualization, create_wordcloud_visualization
 from src.utils import *
 
+from src.graph_utils import KeywordAnalyzer, create_keyword_analysis_visualization, create_keyword_network_visualization
+                
 st.set_page_config(
     page_title="Visualizador de Grafo de Colaboración de Autores",
     page_icon="📊",
@@ -21,12 +23,97 @@ def main():
     st.sidebar.title("📋 Navegación")
     page = st.sidebar.selectbox(
         "Selecciona una página:",
-        ["Visualización del Grafo", "Análisis Avanzado", "Rendimiento del Modelo", "Buscar Autores"]
+        ["Visualización del Grafo", "Análisis Avanzado", "Predicción de Colaboraciones", "Rendimiento del Modelo", "Buscar Autores"]
     )
     
     graph = load_graph_data()
-    
+    if page =='Predicción de Colaboraciones':
+        analyzer = GraphAnalyzer(graph)
+        keyword_analyzer1 = KeywordAnalyzer()
+        st.subheader("🤖 Predicción de Futuras Colaboraciones")
+        st.markdown("""
+        Este sistema recomienda potenciales colaboradores para un investigador basándose en **intereses de investigación compartidos**. 
+        Analiza las palabras clave de las publicaciones para encontrar expertos en temas similares que aún no han colaborado directamente.
+        """)
+        st.markdown("---")
+
+        if keyword_analyzer1.keywords_graph:
+            # Obtener lista de autores del grafo de keywords
+            author_nodes = [
+                data.get('name', 'Desconocido') 
+                for node, data in keyword_analyzer1.keywords_graph.nodes(data=True) 
+                if data.get('type') == 'author'
+            ]
+            author_nodes = sorted(list(set(author_nodes)))
+
+            col1, col2 = st.columns([3, 1])
+
+            with col1:
+                selected_author = st.selectbox(
+                    "Selecciona un investigador para obtener recomendaciones:",
+                    options=author_nodes,
+                    help="Elige un autor para ver con quién podría colaborar en el futuro."
+                )
+            
+            with col2:
+                top_n = st.slider(
+                    "Número de recomendaciones:",
+                    min_value=3,
+                    max_value=15,
+                    value=5,
+                    help="¿Cuántos colaboradores potenciales deseas ver?"
+                )
+
+            if st.button("🔍 Encontrar Colaboradores Potenciales", use_container_width=True):
+                if selected_author:
+                    with st.spinner(f"Buscando recomendaciones para {selected_author}..."):
+                        
+                        # Pasamos el grafo principal para excluir colaboradores existentes
+                        recommendations = keyword_analyzer1.recommend_collaborators(
+                            selected_author,
+                            graph.graph, # El grafo de colaboración principal
+                            top_n=top_n
+                        )
+
+                    st.markdown("---")
+                    
+                    if recommendations:
+                        st.success(f"**Top {len(recommendations)} recomendaciones para {selected_author}:**")
+                        
+                        for i, rec in enumerate(recommendations):
+                            st.markdown(f"### **{i+1}. {rec['name']}**")
+                            
+                            col_a, col_b = st.columns(2)
+                            
+                            with col_a:
+                                st.metric(
+                                    label="Puntuación de Relevancia",
+                                    value=f"{rec['score']:.2f}",
+                                    help="Puntuación basada en intereses compartidos y productividad."
+                                )
+                            
+                            with col_b:
+                                st.metric(
+                                    label="Papers Publicados",
+                                    value=rec['paper_count']
+                                )
+                            
+                            with st.expander("🔬 **Intereses de investigación compartidos (Palabras Clave)**"):
+                                st.info(f"Ambos investigadores han trabajado en temas como:")
+                                # Usamos markdown para una lista más compacta
+                                keywords_list = " | ".join(f"`{kw}`" for kw in rec['reason_keywords'])
+                                st.markdown(keywords_list)
+                            
+                            st.markdown("---")
+
+                    else:
+                        st.info(f"No se encontraron nuevas recomendaciones para **{selected_author}**. Esto puede deberse a que ya colabora con la mayoría de los expertos en su campo o a que tiene un perfil de investigación muy único.")
+                else:
+                    st.warning("Por favor, selecciona un autor de la lista.")
+        else:
+            st.error("No se pudo cargar el grafo de palabras clave necesario para las recomendaciones.")
     if page == "Visualización del Grafo":
+       
         st.header("Visualización del Grafo de Colaboración")
         
         if graph:
@@ -468,238 +555,189 @@ def main():
                 else:
                     st.error("❌ No se pudieron calcular las centralidades. Verifica que el grafo esté correctamente cargado.")
             
-          
-            with tab5:
-                st.subheader("🔬 Análisis de Tendencias de Investigación")
+            with tab5: 
+                st.subheader(" Análisis de Tendencias de Investigación")
+                st.markdown("Un análisis profundo de los temas, conexiones y futuras direcciones de la investigación basado en las palabras clave de las publicaciones.")
 
-                from src.graph_utils import KeywordAnalyzer, create_keyword_analysis_visualization, create_keyword_network_visualization
-                
-                keyword_analyzer = KeywordAnalyzer()
-                
-                if keyword_analyzer.keywords_graph:
+                try:
+                    keyword_analyzer = KeywordAnalyzer()
+                    if not keyword_analyzer.keywords_graph:
+                        st.error("No se pudo cargar el grafo de keywords. El análisis no puede continuar.")
+                        st.stop() 
+                    
                     keyword_stats = keyword_analyzer.get_keyword_statistics()
+                    if not keyword_stats:
+                        st.warning("No se pudieron generar las estadísticas de keywords.")
+                        st.stop()
+                except Exception as e:
+                    st.error(f"Ocurrió un error crítico al inicializar el análisis de keywords: {e}")
+                    st.stop()
+
+                subtab1, subtab2, subtab3, subtab4 = st.tabs([
+                    "**Panorama General**", 
+                    "**Nube de Palabras**",
+                    "**Red de Co-ocurrencia**", 
+                    "**Tendencias Emergentes**"
+                ])
+                
+
+
+                with subtab1:
+                    st.subheader("Temas de Investigación Más Relevantes")
+                    st.info("Visualización de los temas más frecuentes y cómo se agrupan en clústeres de investigación.")
+
+                    # --- INICIALIZACIÓN DEL ESTADO (MUY IMPORTANTE) ---
+                    # Si la clave no existe en la memoria, la creamos con un valor inicial.
+                    if 'selected_cluster_id' not in st.session_state:
+                        # Busca el primer clúster disponible para usarlo como valor por defecto.
+                        clusters = keyword_analyzer.get_keyword_clusters()
+                        st.session_state.selected_cluster_id = clusters[0]['cluster_id'] if clusters else 0
                     
-                    if keyword_stats:
-                        # Métricas principales
-                        col1, col2, col3, col4 = st.columns(4)
-                        
+
+                    def update_selected_cluster():
+                        # Simplemente actualiza el valor en la memoria de la sesión.
+                        # Streamlit pasa el valor del widget a través de su propia clave en session_state.
+                        st.session_state.selected_cluster_id = st.session_state.cluster_selector_key
+
+                    # Gráfico y tabla principal (sin cambios)
+                    keyword_viz = create_keyword_analysis_visualization(keyword_stats)
+                    if keyword_viz:
+                        st.plotly_chart(keyword_viz, use_container_width=True)
+                    
+                    with st.expander("🏆 Ver el Top 20 de Temas en una tabla"):
+                        top_keywords_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:20])
+                        df_display = top_keywords_df.rename(columns={
+                            'keyword': 'Tema', 'frequency': 'Frecuencia', 
+                            'papers': 'N° Papers', 'author_connections': 'N° Investigadores'
+                        })
+                        st.dataframe(df_display, use_container_width=True)
+
+                    st.markdown("---")
+                    st.subheader("Agrupaciones Temáticas (Clústeres)")
+                    st.info("Algoritmos de comunidad detectan grupos de temas que suelen investigarse juntos. Selecciona un grupo para explorar sus temas clave.")
+
+                    clusters = keyword_analyzer.get_keyword_clusters()
+                    if clusters:
+                        col1, col2 = st.columns([1, 2], gap="large")
                         with col1:
-                            st.metric("Temas de Investigación", keyword_stats['total_keywords'])
-                        
+                            st.write("**Principales Grupos Temáticos:**")
+                            cluster_data = [{
+                                'Grupo': f"Grupo {c['cluster_id']}", 'N° Temas': c['size'], 'Relevancia': c['total_frequency']
+                            } for c in clusters[:20]]
+                            cluster_df = pd.DataFrame(cluster_data)
+                            st.dataframe(cluster_df, hide_index=True, use_container_width=True)
+
                         with col2:
-                            st.metric("Investigadores Activos", keyword_stats['total_authors'])
-                        
-                        with col3:
-                            st.metric("Conexiones Temáticas", keyword_stats['total_connections'])
-                        
-                        with col4:
-                            st.metric("Promedio Frecuencia", f"{keyword_stats['avg_keyword_frequency']:.1f}")
+                            cluster_options = [c['cluster_id'] for c in clusters[:20]]
+                            
+                            # --- WIDGET SELECTBOX CON EL CALLBACK APLICADO ---
+                            st.selectbox(
+                                "Explora un grupo temático:",
+                                options=cluster_options,
+                                key="cluster_selector_key",  # Clave interna del widget
+                                on_change=update_selected_cluster, # La función que se ejecuta al cambiar
+                                format_func=lambda x: f"Grupo {x} ({next(c['size'] for c in clusters if c['cluster_id'] == x)} temas)"
+                            )
+                            
+                            # La lógica ahora lee el valor que NUESTRA FUNCIÓN guardó en la memoria.
+                            selected_id = st.session_state.selected_cluster_id
+                            cluster_info = next((c for c in clusters if c['cluster_id'] == selected_id), None)
+                            
+                            if cluster_info:
+                                st.write(f"**Importancia de los temas dentro del Grupo {selected_id}:**")
+                                
+                                cluster_weights = keyword_analyzer.get_keyword_weights_within_cluster(cluster_info['keywords'])
 
-                        subtab1, subtab2, subtab3, subtab4 = st.tabs([
-                            "🏷️ Temas Principales", 
-                            "☁️ Nube de Palabras",
-                            "🔗 Red Temática", 
-                            "👥 Perfiles de Investigación"
-                        ])
-                        
-                        with subtab1:
-                            st.subheader("Temas de Investigación Más Relevantes")
+                                with st.expander("🕵️‍♂️ Ver Panel"):
+                                    st.write(f"**Número de temas en este clúster:** `{len(cluster_weights)}`")
+                                    st.write("**Pesos calculados para la nube de palabras**")
+                                    st.json({k: v for i, (k, v) in enumerate(cluster_weights.items())})
 
-                            try:
-                                if keyword_stats['keyword_frequencies']:
-                                    # Mostrar el panorama general primero
-                                    st.subheader("📊 Panorama General")
-                                    keyword_viz = create_keyword_analysis_visualization(keyword_stats)
-                                    if keyword_viz:
-                                        st.plotly_chart(keyword_viz, use_container_width=True)
+                                if cluster_weights:
+                                    cluster_keywords_data = [{'keyword': kw, 'frequency': weight} for kw, weight in cluster_weights.items()]
+                                    cluster_stats_for_wc = {'keyword_frequencies': cluster_keywords_data}
                                     
-                                    st.markdown("---")
-                                    
-                                    # Tabla de temas principales
-                                    top_keywords_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:20])
-                                    top_keywords_df.columns = ['Tema', 'Frecuencia', 'Papers', 'Investigadores']
-                                    
-                                    
-                                    
-                                    st.subheader("🏆 Top 20 Temas")
-                                    st.dataframe(top_keywords_df, height=400)
-                                else:
-                                    st.warning("No hay datos de keywords disponibles")
-                                    col1, col2 = st.columns(2)
-                            except Exception as e:
-                                st.error(f"Error al procesar keywords: {e}")
-                                col1, col2 = st.columns(2)
-                            
-                            
-                            clusters = keyword_analyzer.get_keyword_clusters()
-                            if clusters:
-                                st.subheader("Agrupaciones Temáticas")
-                                    
-                                cluster_data = []
-                                for cluster in clusters[:20]:
-                                        cluster_data.append({
-                                            'Cluster': f"Grupo {cluster['cluster_id']}",
-                                            'Temas': cluster['size'],
-                                            'Relevancia': cluster['total_frequency'],
-                                            'Cohesión': f"{cluster['avg_weight']:.2f}"
-                                        })
-                                    
-                                cluster_df = pd.DataFrame(cluster_data)
-                                st.dataframe(cluster_df)
-
-                                selected_cluster = st.selectbox(
-                                        "Ver detalles del grupo:",
-                                        range(min(len(clusters), 10)),
-                                        format_func=lambda x: f"Grupo {clusters[x]['cluster_id']} ({clusters[x]['size']} temas)"
-                                    )
-                                    
-                                if selected_cluster is not None:
-                                        cluster_info = clusters[selected_cluster]
-                                        st.write("**Temas en este grupo:**")
-                                        st.write(", ".join(cluster_info['keywords'][:10]))
-                                        if len(cluster_info['keywords']) > 10:
-                                            st.info(f"Y {len(cluster_info['keywords']) - 10} temas más...")
-                        
-                        with subtab3:
-                            st.subheader("☁️ Nube de Palabras Clave")
-                            st.markdown("Visualización interactiva de los temas de investigación más utilizados")
-                            
-                            col1, col2 = st.columns([3, 1])
-                            
-                            with col2:
-                                st.markdown("**⚙️ Configuración:**")
-                                
-                                max_words = st.slider(
-                                    "Número de palabras:",
-                                    min_value=20,
-                                    max_value=150,
-                                    value=80,
-                                    step=10,
-                                    help="Controla cuántos temas mostrar en la nube"
-                                )
-                                
-                                colormap_option = st.selectbox(
-                                    "Esquema de colores:",
-                                    ["viridis", "plasma", "inferno", "magma", "Blues", "Reds", "YlOrRd"],
-                                    help="Diferentes paletas de colores para la visualización"
-                                )
-                                
-                                st.markdown("**📊 Estadísticas rápidas:**")
-                                total_unique_keywords = len(keyword_stats['keyword_frequencies'])
-                                st.info(f"🏷️ **{total_unique_keywords}** temas únicos en total")
-                                
-                                if keyword_stats['keyword_frequencies'] and len(keyword_stats['keyword_frequencies']) > 0:
-                                    try:
-                                        top_keyword = keyword_stats['keyword_frequencies'][0]
-                                        if isinstance(top_keyword, (list, tuple)) and len(top_keyword) >= 2:
-                                            st.success(f"👑 Tema más frecuente: **{top_keyword[0]}** ({top_keyword[1]} apariciones)")
+                                    with st.spinner(f"🎨 Generando nube de palabras para el Grupo {selected_id}..."):
+                                        cluster_wc_fig = create_wordcloud_visualization(
+                                            cluster_stats_for_wc,
+                                            max_words=len(cluster_info['keywords']),
+                                            colormap='cividis'
+                                        )
+                                        if cluster_wc_fig:
+                                            st.plotly_chart(cluster_wc_fig, use_container_width=True, config={'displayModeBar': False})
                                         else:
-                                            st.warning("Estructura de datos de keywords no válida")
-                                    except (IndexError, TypeError) as e:
-                                        st.warning(f"Error al acceder a los datos de keywords: {e}")
-                            
-
-                            with col1:
-                                with st.spinner("🎨 Generando nube de palabras..."):
-                                    
-                                    wordcloud_fig = create_wordcloud_visualization(
-                                        keyword_stats, 
-                                        max_words=max_words,
-                                        colormap=colormap_option
-                                    )
-                                    
-                                    if wordcloud_fig:
-                                        st.plotly_chart(wordcloud_fig, use_container_width=True)
-                                        
-                                        # Información adicional sobre la nube de palabras
-                                        st.markdown("---")
-                                        col_a, col_b, col_c = st.columns(3)
-                                        
-                                        with col_a:
-                                            st.metric(
-                                                "Palabras mostradas", 
-                                                min(max_words, len(keyword_stats['keyword_frequencies'])),
-                                                help="Número de temas incluidos en la visualización"
-                                            )
-                                        
-                                        with col_b:
-                                            if keyword_stats['keyword_frequencies']:
-                                                try:
-                                                    coverage = sum(kw[1] for kw in keyword_stats['keyword_frequencies'][:max_words] if isinstance(kw, (list, tuple)) and len(kw) >= 2)
-                                                    total_freq = sum(kw[1] for kw in keyword_stats['keyword_frequencies'] if isinstance(kw, (list, tuple)) and len(kw) >= 2)
-                                                    coverage_pct = (coverage / total_freq * 100) if total_freq > 0 else 0
-                                                    st.metric(
-                                                        "Cobertura", 
-                                                        f"{coverage_pct:.1f}%",
-                                                        help="Porcentaje de frecencia total representada"
-                                                    )
-                                                except (IndexError, TypeError):
-                                                    st.metric("Cobertura", "N/A", help="Error en datos")
-                                        
-                                        with col_c:
-                                            if keyword_stats['keyword_frequencies']:
-                                                try:
-                                                    valid_keywords = [kw for kw in keyword_stats['keyword_frequencies'][:max_words] if isinstance(kw, (list, tuple)) and len(kw) >= 2]
-                                                    if valid_keywords:
-                                                        avg_freq_shown = sum(kw[1] for kw in valid_keywords) / len(valid_keywords)
-                                                        st.metric(
-                                                            "Freq. promedio", 
-                                                            f"{avg_freq_shown:.1f}",
-                                                            help="Frecuencia promedio de los temas mostrados"
-                                                        )
-                                                    else:
-                                                        st.metric("Freq. promedio", "N/A", help="No hay datos válidos")
-                                                except (IndexError, TypeError, ZeroDivisionError):
-                                                    st.metric("Freq. promedio", "N/A", help="Error en datos")
-                                    else:
-                                        st.error("❌ No se pudo generar la nube de palabras. Instala la librería 'wordcloud' para una mejor experiencia.")
-                                        st.code("pip install wordcloud", language="bash")
-                            
-
-                            # Tabla de los temas más frecuentes para referencia
-                            with st.expander("📋 Ver lista detallada de temas"):
-                                try:
-                                    if keyword_stats['keyword_frequencies']:
-                                        detailed_df = pd.DataFrame(keyword_stats['keyword_frequencies'][:max_words])
-                                        detailed_df.columns = ['🏷️ Tema', '📊 Frecuencia', '📄 Papers', '👥 Investigadores']
-                                        detailed_df.index = range(1, len(detailed_df) + 1)
-                                        st.dataframe(detailed_df, use_container_width=True)
-                                    else:
-                                        st.warning("No hay datos de keywords disponibles")
-                                except Exception as e:
-                                    st.error(f"Error al mostrar la tabla: {e}")
-                        
-                        with subtab4:
-                            st.subheader("Tendencias Emergentes")
-                            
-                            trending = keyword_analyzer.get_trending_keywords()
-                            if trending:
-                                trending_df = pd.DataFrame(trending[:15])
-                                trending_df.columns = ['Tema', 'Puntuación', 'Frecuencia', 'Investigadores', 'Intensidad', 'Papers']
-                                trending_df = trending_df[['Tema', 'Puntuación', 'Frecuencia', 'Investigadores']]
-
-                                fig_trending = px.scatter(
-                                    trending_df,
-                                    x='Frecuencia',
-                                    y='Investigadores',
-                                    size='Puntuación',
-                                    hover_name='Tema',
-                                    title="Mapa de Tendencias de Investigación",
-                                    labels={
-                                        'Frecuencia': 'Frecuencia en Literatura',
-                                        'Investigadores': 'Número de Investigadores'
-                                    }
-                                )
-                                
-                                st.plotly_chart(fig_trending, use_container_width=True)
-                                
-                                st.subheader("Ranking de Tendencias")
-                                st.dataframe(trending_df)
-                    
+                                            st.warning("No se pudo generar la nube de palabras para este clúster.")
+                                else:
+                                    st.warning("No se pudieron calcular los pesos internos para este clúster.")
                     else:
-                        st.warning("No se pudieron cargar las estadísticas de investigación")
-                else:
-                    st.error("No se pudo acceder al análisis de tendencias de investigación. Verifica que el sistema esté correctamente configurado.")
+                        st.warning("No se pudieron generar clústeres temáticos.")
+                with subtab2:
+                    st.subheader("Visualización Intuitiva de Temas Populares")
+                    st.info("Una forma rápida de identificar los temas más dominantes en el campo de investigación. El tamaño de la palabra es proporcional a su frecuencia.")
+                    
+                    col1, col2 = st.columns([3, 1])
+                    with col2:
+                        st.markdown("##### Configuración")
+                        max_words = st.slider("Máximo de palabras:", 20, 200, 75, 5)
+                        colormap = st.selectbox("Esquema de color:", ["viridis", "plasma", "cividis", "Blues", "YlOrRd"])
+
+                    with col1:
+                        with st.spinner("🎨 Generando nube de palabras..."):
+                            wordcloud_fig = create_wordcloud_visualization(keyword_stats, max_words=max_words, colormap=colormap)
+                            if wordcloud_fig:
+                                st.plotly_chart(wordcloud_fig, use_container_width=True, config={'displayModeBar': False})
+                            else:
+                                st.error("No se pudo generar la nube de palabras. Asegúrate de que la librería 'wordcloud' esté instalada.")
+                with subtab3:
+                    st.subheader("Conexiones Entre Temas de Investigación")
+                    
+                    col1, col2 = st.columns([3, 1])
+                    with col2:
+                        st.markdown("##### Configuración")
+                        net_max_nodes = st.slider("Nodos a mostrar:", 25, 200, 75, 5, key="net_nodes")
+                        weight_threshold = st.slider("Umbral de conexión:", 1, 10, 1, key="net_weight", help="Mostrar solo conexiones con un peso mayor o igual a este valor.")
+
+                    with col1:
+                        with st.spinner("🕸️ Construyendo la red de temas..."):
+                            # Filtrar el grafo para la visualización
+                            kw_graph = keyword_analyzer.keywords_graph.copy()
+                            edges_to_remove = [(u, v) for u, v, data in kw_graph.edges(data=True) if data.get('weight', 0) < weight_threshold]
+                            kw_graph.remove_edges_from(edges_to_remove)
+                            
+                            network_fig = create_keyword_network_visualization(kw_graph, max_nodes=net_max_nodes)
+                            if network_fig:
+                                st.plotly_chart(network_fig, use_container_width=True, height=700)
+                            else:
+                                st.warning("No se pudo generar la red temática.")
+
+                with subtab4:
+                    st.subheader("Identificación de Temas en Ascenso")
+                    trending = keyword_analyzer.get_trending_keywords()
+                    if trending:
+                        trending_df = pd.DataFrame(trending)
+                        # Renombrar columnas para claridad en la UI
+                        trending_df_display = trending_df[['keyword', 'trending_score', 'frequency', 'author_connections']].rename(columns={
+                            'keyword': 'Tema Emergente', 'trending_score': 'Puntuación de Tendencia',
+                            'frequency': 'Frecuencia Actual', 'author_connections': 'N° Investigadores'
+                        })
+
+                        fig_trending = px.scatter(
+                            trending_df_display,
+                            x='Frecuencia Actual',
+                            y='N° Investigadores',
+                            size='Puntuación de Tendencia',
+                            color='Puntuación de Tendencia',
+                            hover_name='Tema Emergente',
+                            color_continuous_scale='viridis',
+                            size_max=60,
+                            title="Mapa de Tendencias de Investigación"
+                        )
+                        st.plotly_chart(fig_trending, use_container_width=True)
+
+                        with st.expander("🏆 Ver Ranking Detallado de Tendencias"):
+                            st.dataframe(trending_df_display, use_container_width=True, hide_index=True)
+                    else:
+                        st.warning("No se pudieron calcular las tendencias emergentes.")
         else:
             st.error("No se pudo cargar el grafo.")
     
@@ -724,6 +762,7 @@ def main():
         if graph:
             search_authors(graph)
        
+        else:
             st.error("No se pudo cargar el grafo.")
     
 if __name__ == "__main__":
