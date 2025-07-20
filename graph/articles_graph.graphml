@@ -1,0 +1,2502 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d0" for="node" attr.name="type" attr.type="string"/>
+<graph edgedefault="undirected"><node id="Max Belitsky"/>
+<node id="KV Cache Steering for Inducing Reasoning in Small Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Marco Tazzari"/>
+<node id="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains">
+  <data key="d0">papers</data>
+</node>
+<node id="Fang Wu"/>
+<node id="Predicting mutational effects on protein binding from folding energy">
+  <data key="d0">papers</data>
+</node>
+<node id="Avishek Nag"/>
+<node id="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance">
+  <data key="d0">papers</data>
+</node>
+<node id="Feijiang Li"/>
+<node id="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds">
+  <data key="d0">papers</data>
+</node>
+<node id="Jada Garofalo"/>
+<node id="Potential science with GW250114 -the loudest binary black hole merger detected to date">
+  <data key="d0">papers</data>
+</node>
+<node id="Rong Zhu"/>
+<node id="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="Zhihui Lin"/>
+<node id="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective">
+  <data key="d0">papers</data>
+</node>
+<node id="G Öksel Mısırlı"/>
+<node id="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology">
+  <data key="d0">papers</data>
+</node>
+<node id="D Exposito"/>
+<node id="Discontinuity-aware KAN-based physics-informed neural networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Shuang Liang"/>
+<node id="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances">
+  <data key="d0">papers</data>
+</node>
+<node id="Chengqing Zong"/>
+<node id="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities">
+  <data key="d0">papers</data>
+</node>
+<node id="Brian D Athey"/>
+<node id="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling">
+  <data key="d0">papers</data>
+</node>
+<node id="Yun Chen"/>
+<node id="Label-free microscope for rheological imaging of cells">
+  <data key="d0">papers</data>
+</node>
+<node id="A G Riess"/>
+<node id="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE">
+  <data key="d0">papers</data>
+</node>
+<node id="Chintan Chitroda"/>
+<node id="Interpretability-Aware Pruning for Efficient Medical Image Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Qige Li"/>
+<node id="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment">
+  <data key="d0">papers</data>
+</node>
+<node id="Giulia Galli"/>
+<node id="Probing aqueous interfaces with spin defects">
+  <data key="d0">papers</data>
+</node>
+<node id="Giovanni Masala"/>
+<node id="Machine Learning for Evolutionary Graph Theory">
+  <data key="d0">papers</data>
+</node>
+<node id="Anh-Nhat Nguyen"/>
+<node id="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Tianyou Jiang"/>
+<node id="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes">
+  <data key="d0">papers</data>
+</node>
+<node id="Alibaba Group"/>
+<node id="Yuekun Wu"/>
+<node id="Learning human-to-robot handovers through 3D scene reconstruction">
+  <data key="d0">papers</data>
+</node>
+<node id="Jose Dolz"/>
+<node id="SGPMIL: Sparse Gaussian Process Multiple Instance Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Stephanie Monty"/>
+<node id="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12">
+  <data key="d0">papers</data>
+</node>
+<node id="Hupan Lab"/>
+<node id="Zainy M Malakan"/>
+<node id="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps">
+  <data key="d0">papers</data>
+</node>
+<node id="Maja Wasiluk"/>
+<node id="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect">
+  <data key="d0">papers</data>
+</node>
+<node id="Diogo Sousa"/>
+<node id="A Dopamine-Serotonin Theory of Consciousness">
+  <data key="d0">papers</data>
+</node>
+<node id="Dimitrios M Thilikos"/>
+<node id="H-Planarity and Parametric Extensions: when Modulators Act Globally *">
+  <data key="d0">papers</data>
+</node>
+<node id="K Christopher"/>
+<node id="Julia Stoyanovich"/>
+<node id="ONION: A Multi-Layered Framework for Participatory ER Design">
+  <data key="d0">papers</data>
+</node>
+<node id="Michal Vavrečka"/>
+<node id="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer">
+  <data key="d0">papers</data>
+</node>
+<node id="Mufan Qiu"/>
+<node id="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes">
+  <data key="d0">papers</data>
+</node>
+<node id="Haitao Mi"/>
+<node id="One Token to Fool LLM-as-a-Judge">
+  <data key="d0">papers</data>
+</node>
+<node id="Falk M Howar"/>
+<node id="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling">
+  <data key="d0">papers</data>
+</node>
+<node id="R Lunnan"/>
+<node id="Yanzi Zhang"/>
+<node id="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives">
+  <data key="d0">papers</data>
+</node>
+<node id="H A Thi"/>
+<node id="ASSOCIATED PRIMES OF THE SECOND POWER OF CLOSED NEIGHBORHOOD IDEALS OF GRAPHS">
+  <data key="d0">papers</data>
+</node>
+<node id="Manuel Gil P Érez"/>
+<node id="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN">
+  <data key="d0">papers</data>
+</node>
+<node id="Hongyu Guo"/>
+<node id="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Pol Alemany"/>
+<node id="Changjae Oh"/>
+<node id="Xia Cui"/>
+<node id="PromotionGo at SemEval-2025 Task 11: A Feature-Centric Framework for Cross-Lingual Multi-Emotion Detection in Short Texts">
+  <data key="d0">papers</data>
+</node>
+<node id="W S Burgett"/>
+<node id="Jiyao Zhang"/>
+<node id="Guannan Qu"/>
+<node id="Abdelkader Outtagarts"/>
+<node id="Daphna Weinshall"/>
+<node id="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation">
+  <data key="d0">papers</data>
+</node>
+<node id="Daniel K Freeman"/>
+<node id="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception">
+  <data key="d0">papers</data>
+</node>
+<node id="Jinri Huang"/>
+<node id="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization">
+  <data key="d0">papers</data>
+</node>
+<node id="Apollonio Lorenzo"/>
+<node id="Update on the intermediate arrival-direction analyses of the Pierre Auger Observatory">
+  <data key="d0">papers</data>
+</node>
+<node id="Chengli Zhong"/>
+<node id="Leevan Ling"/>
+<node id="Minimum-norm interpolation for unknown surface reconstruction">
+  <data key="d0">papers</data>
+</node>
+<node id="Hengyu Gao"/>
+<node id="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting">
+  <data key="d0">papers</data>
+</node>
+<node id="Pau Escofet"/>
+<node id="Sascha Hänzi"/>
+<node id="A document is worth a structured record: Principled inductive bias design for document recognition">
+  <data key="d0">papers</data>
+</node>
+<node id="Ramit Debnath"/>
+<node id="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING">
+  <data key="d0">papers</data>
+</node>
+<node id="Vikas Jadhav"/>
+<node id="Maximilian C Hübl"/>
+<node id="Stochastic size control of self-assembled filaments">
+  <data key="d0">papers</data>
+</node>
+<node id="Xuejian Shen"/>
+<node id="Zhongrui Wang"/>
+<node id="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network">
+  <data key="d0">papers</data>
+</node>
+<node id="Jonathan P Williams"/>
+<node id="Miguel A Martinez-Beneito"/>
+<node id="A proposal for homoscedastic modelling with conditional auto-regressive distributions">
+  <data key="d0">papers</data>
+</node>
+<node id="China Teleai"/>
+<node id="Deep Hashing with Semantic Hash Centers for Image Retrieval">
+  <data key="d0">papers</data>
+</node>
+<node id=". ) Geng"/>
+<node id="William Mcclymont"/>
+<node id="Carl P Goodrich"/>
+<node id="Radu Marinescu"/>
+<node id="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Tianlong Chen"/>
+<node id="Hangjie Yuan"/>
+<node id="Tiffany Yu"/>
+<node id="ML-Based Automata Simplification for Symbolic Accelerators">
+  <data key="d0">papers</data>
+</node>
+<node id="Engin Turetken"/>
+<node id="Unified People Tracking with Graph Neural Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Thomas †2"/>
+<node id="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB">
+  <data key="d0">papers</data>
+</node>
+<node id="Luke A Brown"/>
+<node id="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="Jorge M Cruz-Duarte"/>
+<node id="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="Prashant Vaidyanathan"/>
+<node id="Xiang Lin"/>
+<node id="J Tonry"/>
+<node id="Yehoshua Y Zeevi"/>
+<node id="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study">
+  <data key="d0">papers</data>
+</node>
+<node id="Benjamin D Smith"/>
+<node id="Microwave-optical double-resonance vector magnetometry with warm Rb atoms">
+  <data key="d0">papers</data>
+</node>
+<node id="Yuefan Wu"/>
+<node id="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering">
+  <data key="d0">papers</data>
+</node>
+<node id="Jiacheng Chen"/>
+<node id="Ashraf Amir"/>
+<node id="Paula Llanos"/>
+<node id="Zhifeng Gao"/>
+<node id="R Kotak"/>
+<node id="Xinyu Wang"/>
+<node id="K Fenech"/>
+<node id="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance">
+  <data key="d0">papers</data>
+</node>
+<node id="Victor C M Leung"/>
+<node id="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method">
+  <data key="d0">papers</data>
+</node>
+<node id="Andrea Cerasa"/>
+<node id="Robust inference under Benford's law">
+  <data key="d0">papers</data>
+</node>
+<node id="C W Stubbs"/>
+<node id="Xiansong Xu"/>
+<node id="Continuous-time parametrization of neural quantum states for quantum dynamics">
+  <data key="d0">papers</data>
+</node>
+<node id="Bolun Li"/>
+<node id="Stefano Markidis"/>
+<node id="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Lukas Tuggener"/>
+<node id="Andrzej Tomski"/>
+<node id="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="Anna Klemm"/>
+<node id="GloBIAS: strengthening the foundations of BioImage Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Andreas Keller"/>
+<node id="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery">
+  <data key="d0">papers</data>
+</node>
+<node id="Yuntian Deng"/>
+<node id="Zhenli Kwan"/>
+<node id="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)">
+  <data key="d0">papers</data>
+</node>
+<node id="Tung-Son Ngo"/>
+<node id="Azimov Sherkhon"/>
+<node id="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series">
+  <data key="d0">papers</data>
+</node>
+<node id="Aleyna Akyüz"/>
+<node id="Liuya Zhang"/>
+<node id="W P M H Heemels"/>
+<node id="A Dissipativity Framework for Constructing Scaled Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Akshay Jain"/>
+<node id="Chuanqi Chen"/>
+<node id="Biswajit Pandey"/>
+<node id="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?">
+  <data key="d0">papers</data>
+</node>
+<node id="José Emilio"/>
+<node id="xpSHACL: Explainable SHACL Validation using Retrieval-Augmented Generation and Large Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Juraj Gavura"/>
+<node id="Maria Vakalopoulou"/>
+<node id="Christian A Naesseth"/>
+<node id="Monitoring Risks in Test-Time Adaptation">
+  <data key="d0">papers</data>
+</node>
+<node id="Matthias Michel"/>
+<node id="Yves Robert"/>
+<node id="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint">
+  <data key="d0">papers</data>
+</node>
+<node id="Aixi Yang"/>
+<node id="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer">
+  <data key="d0">papers</data>
+</node>
+<node id="Jianglong Qin"/>
+<node id="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *">
+  <data key="d0">papers</data>
+</node>
+<node id="Pawe L Kurzyński"/>
+<node id="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems">
+  <data key="d0">papers</data>
+</node>
+<node id="Waqar Muhammad"/>
+<node id="Sanne Abeln"/>
+<node id="Beyond Olfaction: New Insights into Human Odorant Binding Proteins">
+  <data key="d0">papers</data>
+</node>
+<node id="Ali Mohammadi"/>
+<node id="Enhanced molecular diffusion near a soft fluctuating membrane">
+  <data key="d0">papers</data>
+</node>
+<node id="Ningyi Xu"/>
+<node id="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization">
+  <data key="d0">papers</data>
+</node>
+<node id="Cornelia B Landersdorfer"/>
+<node id="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?">
+  <data key="d0">papers</data>
+</node>
+<node id="Juan Parras"/>
+<node id="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS">
+  <data key="d0">papers</data>
+</node>
+<node id="Mpi Moritz"/>
+<node id="To buy or not to buy: deterministic rent-or-buy problems on node-weighted graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Alejandro Estrada-Moreno"/>
+<node id="On the (k, ℓ)-multiset anonymity measure for social graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Gerrit Farren"/>
+<node id="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4">
+  <data key="d0">papers</data>
+</node>
+<node id="Satyam Kumar"/>
+<node id="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="R P Kirshner"/>
+<node id="Alex Correia"/>
+<node id="Álvaro Ribas"/>
+<node id="Dell 2025 Zhang"/>
+<node id="María Jorquera Valero"/>
+<node id="Pietro Curo"/>
+<node id="Hung Tan"/>
+<node id="Parag Dutta"/>
+<node id="Emergent Natural Language with Communication Games for Improving Image Captioning Capabilities without Additional Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Fenglong Ma"/>
+<node id="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift">
+  <data key="d0">papers</data>
+</node>
+<node id="Song Kim"/>
+<node id="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Dinesh Singh"/>
+<node id="Cross-Domain Identity Representation for Skull to Face Matching with Benchmark DataSet">
+  <data key="d0">papers</data>
+</node>
+<node id="Marco Vitti"/>
+<node id="Infra-red enhanced loops in quadratic gravity">
+  <data key="d0">papers</data>
+</node>
+<node id="Boris Bolliet"/>
+<node id="Sungwoo Ahn"/>
+<node id="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG">
+  <data key="d0">papers</data>
+</node>
+<node id="Teja Kattenborn"/>
+<node id="Haitao Lin"/>
+<node id="El-Ghazali Talbi"/>
+<node id="Ryan J Murphy"/>
+<node id="A cautionary tale of model misspecification and identifiability">
+  <data key="d0">papers</data>
+</node>
+<node id="Jiyan He"/>
+<node id="Sparse Autoencoders Reveal Interpretable Structure in Small Gene Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Manuel Muñoz-Márquez"/>
+<node id="Anna Mpanti"/>
+<node id="Beer Path Problems in Temporal Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Zhe Zhang"/>
+<node id="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING">
+  <data key="d0">papers</data>
+</node>
+<node id="Avrajit Bandyopadhyay"/>
+<node id="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems">
+  <data key="d0">papers</data>
+</node>
+<node id="Anne Benoit"/>
+<node id="Xinhai Hou"/>
+<node id="Aditi Golder"/>
+<node id="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing">
+  <data key="d0">papers</data>
+</node>
+<node id="Aaron Smith"/>
+<node id="Peter Haring Bolívar"/>
+<node id="Connor Burbridge"/>
+<node id="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Yeqiang Liu"/>
+<node id="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking">
+  <data key="d0">papers</data>
+</node>
+<node id="Rasha Karakchi"/>
+<node id="Kyle Myers"/>
+<node id="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification">
+  <data key="d0">papers</data>
+</node>
+<node id="Gerhard Wess"/>
+<node id="El-Sayed A El-Dahshan"/>
+<node id="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Microsoft Quantum"/>
+<node id="Distinct Lifetimes for X and Z Loop Measurements in a Majorana Tetron Device">
+  <data key="d0">papers</data>
+</node>
+<node id="Sarra Alaqahtani"/>
+<node id="Ben Rached"/>
+<node id="Andres Santiago Espinosa-Moreno"/>
+<node id="Computational Modelling of Thixotropic Multiphase Fluids">
+  <data key="d0">papers</data>
+</node>
+<node id="Laura Saavedra"/>
+<node id="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion">
+  <data key="d0">papers</data>
+</node>
+<node id="Alexander Van Engelen"/>
+<node id="Hui Xu"/>
+<node id="Xingguang Ji"/>
+<node id="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Likun Zhang"/>
+<node id="Junho Koh"/>
+<node id="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception">
+  <data key="d0">papers</data>
+</node>
+<node id="Quannan Qu"/>
+<node id="Carlos B Westphall"/>
+<node id="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects">
+  <data key="d0">papers</data>
+</node>
+<node id="Pranta Saha"/>
+<node id="G Narayan"/>
+<node id="Eli Shlizerman"/>
+<node id="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding">
+  <data key="d0">papers</data>
+</node>
+<node id="Xinzhe Zheng"/>
+<node id="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="V Paul Pauca"/>
+<node id="Aravind Elanjimattathil"/>
+<node id="Multi-critic Learning for Whole-body End-effector Twist Tracking">
+  <data key="d0">papers</data>
+</node>
+<node id="Yihang Wu"/>
+<node id="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT">
+  <data key="d0">papers</data>
+</node>
+<node id="Rui Xue"/>
+<node id="Ovidiu Csillik"/>
+<node id="Hyewon Kim"/>
+<node id="Cristiana Diaconu"/>
+<node id="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Xiang Wan"/>
+<node id="Enrico Garaldi"/>
+<node id="Dagomir Kaszlikowski"/>
+<node id="E Schlafly"/>
+<node id="M Jehanzeb Mirza"/>
+<node id="Cedric Brügmann"/>
+<node id="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security">
+  <data key="d0">papers</data>
+</node>
+<node id="Arthur Ouaknine"/>
+<node id="Yakun Wang"/>
+<node id="The stability of bi-polarization on dynamical directed graphs: an emergent game perspective">
+  <data key="d0">papers</data>
+</node>
+<node id="Yongjae Shin"/>
+<node id="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Lola Ugarte"/>
+<node id="Tao Yan"/>
+<node id="Daniel Herr"/>
+<node id="Caitlin F Harrigan"/>
+<node id="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab">
+  <data key="d0">papers</data>
+</node>
+<node id="Eduard Alarcón"/>
+<node id="Makai Mann"/>
+<node id="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations">
+  <data key="d0">papers</data>
+</node>
+<node id="Steven Rayan"/>
+<node id="Yuxiang Zhou"/>
+<node id="Emilio A Mendiola"/>
+<node id="Seung-Schik Yoo"/>
+<node id="Jun Won Choi"/>
+<node id="E Johnson"/>
+<node id="Calin Belta"/>
+<node id="Jungho Kim"/>
+<node id="Yaping Zhang"/>
+<node id="Nikita Malik"/>
+<node id="Haonan Duan"/>
+<node id="Enrique Macías"/>
+<node id="Xiaofei Xu"/>
+<node id="Wenxuan Zhang"/>
+<node id="Tina Šfiligoj"/>
+<node id="Access graph: a novel graph representation of public transport networks for accessibility analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Hemant Kumar"/>
+<node id="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys">
+  <data key="d0">papers</data>
+</node>
+<node id="Rui Shi"/>
+<node id="Zihang Song"/>
+<node id="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing">
+  <data key="d0">papers</data>
+</node>
+<node id="Elena Fernández"/>
+<node id="Andrea D ' Ascenzo"/>
+<node id="Elizabeth Daly"/>
+<node id="Soufyan Lakbir"/>
+<node id="Saverio Rossi"/>
+<node id="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings">
+  <data key="d0">papers</data>
+</node>
+<node id="M Drout"/>
+<node id="Jiacheng Wang"/>
+<node id="Mingda Zhang"/>
+<node id="Vinay Kumar Sankarapu"/>
+<node id="Evangelos Chasanis"/>
+<node id="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations">
+  <data key="d0">papers</data>
+</node>
+<node id="Batuhan Keskin"/>
+<node id="Armaan Ahmed"/>
+<node id="Expected and minimal values of a universal tree balance index">
+  <data key="d0">papers</data>
+</node>
+<node id="J Skaf"/>
+<node id="Awadhesh Kumar"/>
+<node id="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering">
+  <data key="d0">papers</data>
+</node>
+<node id="Andreas Lolos"/>
+<node id="Weiran Li"/>
+<node id="Guilin Qi"/>
+<node id="KG-Attention: Knowledge Graph-Guided Attention at Test-Time via Bidirectional Information Aggregation">
+  <data key="d0">papers</data>
+</node>
+<node id="Beihang University"/>
+<node id="Frank J Qu"/>
+<node id="Daniel Yan"/>
+<node id="Manh-Duc Hoang"/>
+<node id="Rafael Rabelo"/>
+<node id="Alfredo Costa"/>
+<node id="OPEN MULTIPLICATION IN RELATIVELY FREE PROFINITE SEMIGROUPOIDS">
+  <data key="d0">papers</data>
+</node>
+<node id="Francesco Verdiani"/>
+<node id="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios">
+  <data key="d0">papers</data>
+</node>
+<node id="Amy Orsborn"/>
+<node id="Achuth Chandrasekhar"/>
+<node id="Automating MD simulations for Proteins using Large language Models: NAMD-Agent">
+  <data key="d0">papers</data>
+</node>
+<node id="Hao Luo"/>
+<node id="Luis Müller"/>
+<node id="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs">
+  <data key="d0">papers</data>
+</node>
+<node id="Marino Lara Alva"/>
+<node id="Seyedeh Sahar"/>
+<node id="F3-Net: Foundation Model for Full Abnormality Segmentation of Medical Images with Flexible Input Modality Requirement">
+  <data key="d0">papers</data>
+</node>
+<node id="Ismael G Yero"/>
+<node id="Bin Wu"/>
+<node id="Nidhi Rastogi"/>
+<node id="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection">
+  <data key="d0">papers</data>
+</node>
+<node id="Bryan Bartley"/>
+<node id="Vojta Mazur"/>
+<node id="Yi Yang"/>
+<node id="Amnon Balanov"/>
+<node id="Structure from Noise: Confirmation Bias in Particle Picking in Structural Biology">
+  <data key="d0">papers</data>
+</node>
+<node id="Henning Meyerhenke"/>
+<node id="Crist Óbal"/>
+<node id="Michael Benjamin"/>
+<node id="Andrea Cerioli"/>
+<node id="Haoyu Wang"/>
+<node id="Fusen He"/>
+<node id="LLMCup: Ranking-Enhanced Comment Updating with LLMs">
+  <data key="d0">papers</data>
+</node>
+<node id="Valentinian Mihai Lungu"/>
+<node id="Ennio Salvioni"/>
+<node id="Denis Antipov"/>
+<node id="Enhancing Parameter Control Policies with State Information">
+  <data key="d0">papers</data>
+</node>
+<node id="Jun Cen"/>
+<node id="Jiarui Lu"/>
+<node id="Luke Rivard"/>
+<node id="W M Wood-Vasey"/>
+<node id="Camille Dang"/>
+<node id="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Aritz Adin"/>
+<node id="Lu Xiang"/>
+<node id="Huong Phan"/>
+<node id="Enhanced knowledge retention through MedScrab: an interactive mobile game">
+  <data key="d0">papers</data>
+</node>
+<node id="Xiangrui Zou"/>
+<node id="Rodrigo Abadia-Heredia"/>
+<node id="Hua Ge"/>
+<node id="Jiazheng Xing"/>
+<node id="Francesco Zagar"/>
+<node id="Chenyang Song"/>
+<node id="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity">
+  <data key="d0">papers</data>
+</node>
+<node id="Fan Yang"/>
+<node id="David Alonso"/>
+<node id="Nan Li"/>
+<node id="Tom Tirer"/>
+<node id="Catastrophic Forgetting Mitigation Through Plateau Phase Activity Profiling">
+  <data key="d0">papers</data>
+</node>
+<node id="Mengjiao Rao"/>
+<node id="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES">
+  <data key="d0">papers</data>
+</node>
+<node id="A Farooq"/>
+<node id="A Hybrid Multi-Well Hopfield-CNN with Feature Extraction and K-Means for MNIST Classification">
+  <data key="d0">papers</data>
+</node>
+<node id="Han Liu"/>
+<node id="Nan Chen"/>
+<node id="György Fazekas"/>
+<node id="Youngwoo Lee"/>
+<node id="Zilu Dong"/>
+<node id="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains">
+  <data key="d0">papers</data>
+</node>
+<node id="Matthew J O'meara"/>
+<node id="J Comp Physiol"/>
+<node id="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Eric Nalisnick"/>
+<node id="Sean A Hartnoll"/>
+<node id="Wheeler-DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases">
+  <data key="d0">papers</data>
+</node>
+<node id="Stephen Zhewen"/>
+<node id="Á Fóthi"/>
+<node id="Xin Ma"/>
+<node id="Maosong Sun"/>
+<node id="Florian Sammüller"/>
+<node id="Learning the bulk and interfacial physics of liquid-liquid phase separation">
+  <data key="d0">papers</data>
+</node>
+<node id="Patricia A Apellániz"/>
+<node id="Lu Mi"/>
+<node id="Sokratis Barmpounakis"/>
+<node id="Venzin Bocconi"/>
+<node id="Junjie Wang"/>
+<node id="Alon Zabatani"/>
+<node id="Kim Mu Young"/>
+<node id="H S Modirzadeh"/>
+<node id="Non-relativistic effective theories for fields with general potentials and their implications for cosmology">
+  <data key="d0">papers</data>
+</node>
+<node id="Yunzhuo Wang"/>
+<node id="Tree-Structured Parzen Estimator Can Solve Black-Box Combinatorial Optimization More Efficiently">
+  <data key="d0">papers</data>
+</node>
+<node id="A Preprint"/>
+<node id="Lehan Wang"/>
+<node id="Gonzalo Vidal"/>
+<node id="Fuzheng Zhang"/>
+<node id="Labani Roy"/>
+<node id="Ziyang Liu"/>
+<node id="Lizhong Chu"/>
+<node id="Depth of the 3-path Ideal of Square of a Path">
+  <data key="d0">papers</data>
+</node>
+<node id="Sander Borst"/>
+<node id="Damo Academy"/>
+<node id="Mifen Chen"/>
+<node id="Rana Raza Mehdi"/>
+<node id="Dario Bocchi"/>
+<node id="Joyce Reimer"/>
+<node id="Praveen Kumar"/>
+<node id="Junichi Yamagishi"/>
+<node id="Larissa Paul"/>
+<node id="Weigang Feng"/>
+<node id="Yaodong Su"/>
+<node id="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval">
+  <data key="d0">papers</data>
+</node>
+<node id="Maximilian Wendlinger"/>
+<node id="Guoli Yang"/>
+<node id="Mingtao Zhang"/>
+<node id="Surendra Kumar Makineni"/>
+<node id="Mona Schirmer"/>
+<node id="Tianrun Yu"/>
+<node id="Xu Han"/>
+<node id="Krishnendu Das"/>
+<node id="Ricard Vilalta"/>
+<node id="Georgios Balanos"/>
+<node id="Debashis Gupta"/>
+<node id="Maiju Karjalainen"/>
+<node id="Hashing for Fast Pattern Set Selection">
+  <data key="d0">papers</data>
+</node>
+<node id="Giovanni Sestini"/>
+<node id="Hélène Bouvrais"/>
+<node id="Ethan Tam"/>
+<node id="Taheri Otaghsara"/>
+<node id="Rui Xia"/>
+<node id="Mikhail Galkin"/>
+<node id="Sakthivel Sadayappan"/>
+<node id="Ambedkar Dukkipati"/>
+<node id="Riccardo Nicolicchia"/>
+<node id="Alfonso Castillo"/>
+<node id="Jingyuan Li"/>
+<node id="Santiago González-Gaitán"/>
+<node id="Statistical Analysis of Early Spectra in Type II and IIb Supernovae">
+  <data key="d0">papers</data>
+</node>
+<node id="Micheline Abbas"/>
+<node id="Florian Grötschla"/>
+<node id="Bryan Perozzi"/>
+<node id="Nicolas Rivron"/>
+<node id="Yutong He"/>
+<node id="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees">
+  <data key="d0">papers</data>
+</node>
+<node id="Carmen G Almudéver"/>
+<node id="Giulio Fabbian"/>
+<node id="Dingzu Wang"/>
+<node id="Denmark K Schöttner"/>
+<node id="Shuning Chang"/>
+<node id="Brian Odegaard"/>
+<node id="Beth Cimini"/>
+<node id="Sophie Marbach"/>
+<node id="Haoran Zhou"/>
+<node id="Content-Oblivious Leader Election in 2-Edge-Connected Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Alba Garrido"/>
+<node id="Jacob Beal"/>
+<node id="† Tao Chen"/>
+<node id="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Byounhyun Yoo"/>
+<node id="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting">
+  <data key="d0">papers</data>
+</node>
+<node id="Jiaqi Wang"/>
+<node id="Christian Gehring"/>
+<node id="Jonathan Z Sexton"/>
+<node id="Collin D Capano"/>
+<node id="Tiffany Khao A&amp;"/>
+<node id="Yi Zhou"/>
+<node id="Zachary Serlin"/>
+<node id="Susana López-Moreno"/>
+<node id="Yi-Jun Chang"/>
+<node id="Itai Mondshine"/>
+<node id="Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization">
+  <data key="d0">papers</data>
+</node>
+<node id="Fedor V Fomin"/>
+<node id="Cristina Aggazzotti"/>
+<node id="The Impact of Automatic Speech Transcription on Speaker Attribution">
+  <data key="d0">papers</data>
+</node>
+<node id="Viktoriia Makovska"/>
+<node id="Lindsay J Leblanc"/>
+<node id="Christos Pergaminelis"/>
+<node id="Leonardo Testi"/>
+<node id="Fabio Sebastiano"/>
+<node id="Zinong Yang"/>
+<node id="Marco Hutter"/>
+<node id="D Finkbeiner"/>
+<node id="Dongyoung Lee"/>
+<node id="G Bard Ermentrout"/>
+<node id="Francesco De Cristofaro"/>
+<node id="Guoqiang Lei"/>
+<node id="Andrei Tretiakov"/>
+<node id="Peter Crowley"/>
+<node id="Sungsu Lim"/>
+<node id="Jingyun Liang"/>
+<node id="Tanvirul Alam"/>
+<node id="N E Sanders"/>
+<node id="Jana Ma Ří"/>
+<node id="A MODEL THEORETIC VERSION OF TARSKI'S THEOREM">
+  <data key="d0">papers</data>
+</node>
+<node id="Kumar Singh"/>
+<node id="Nicolás Moreno"/>
+<node id="N Kaiser"/>
+<node id="Hao Du"/>
+<node id="Benjamin Meyer"/>
+<node id="Robert Noble"/>
+<node id="Ajmal Mian"/>
+<node id="Giovanni P Rosotti"/>
+<node id="Yuhua Qian"/>
+<node id="Manh Thang"/>
+<node id="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures">
+  <data key="d0">papers</data>
+</node>
+<node id="Yan-Kay Ho"/>
+<node id="J Overgaard Zoophysiology"/>
+<node id="Sukwon Yun"/>
+<node id="Sumit Gupta"/>
+<node id="Xiangqing Shen"/>
+<node id="Danilo S Carvalho"/>
+<node id="elsciRL: Integrating Language Solutions into Reinforcement Learning Problem Settings">
+  <data key="d0">papers</data>
+</node>
+<node id="Li I Chen"/>
+<node id="Evaggelia Pitoura"/>
+<node id="Ingrid Ljungvall"/>
+<node id="Alessandro A Felder"/>
+<node id="Xin Wang"/>
+<node id="Tao Feng"/>
+<node id="Ji Xiaohong"/>
+<node id="Suchanda Roy"/>
+<node id="Word-Representability of Split Graphs with Independent Set of Size 4">
+  <data key="d0">papers</data>
+</node>
+<node id="Sizhe Qiu"/>
+<node id="Thanh Vu"/>
+<node id="Gordon Broderick"/>
+<node id="S Pineda"/>
+<node id="Robust Contextual State Estimation with Limited Measurement Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Yong Chen"/>
+<node id="S J A M Van Den Eijnden"/>
+<node id="Daniel Mederer"/>
+<node id="Henrik Turbell"/>
+<node id="Image Translation with Kernel Prediction Networks for Semantic Segmentation">
+  <data key="d0">papers</data>
+</node>
+<node id="Phuong D Dao"/>
+<node id="Aris Moustakas"/>
+<node id="Changyuan Zhao"/>
+<node id="Labra Gayo"/>
+<node id="Google Research"/>
+<node id="Gabriel Ruffolo"/>
+<node id="Guanghui Wang"/>
+<node id="Wenhao Zheng"/>
+<node id="Kilian Tscharke"/>
+<node id="Don Roosan"/>
+<node id="Maider González-Bañuelos"/>
+<node id="Ming Yang"/>
+<node id="Oded Cats"/>
+<node id="Guolin Ke"/>
+<node id="Baptiste Gault"/>
+<node id="Jingjing Tang"/>
+<node id="Ioannis Koutis"/>
+<node id="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Jiasheng Tang"/>
+<node id="Sieun Lee"/>
+<node id="Oren Glickman"/>
+<node id="Bartosz Bryg"/>
+<node id="Jorge Almeida"/>
+<node id="Nanqing Dong"/>
+<node id="Matteo Negri"/>
+<node id="H Keshavarzzadeh"/>
+<node id="Whiyoung Jung"/>
+<node id="Mohamed Benyoucef"/>
+<node id="Reza Rahmanzadeh"/>
+<node id="Chris J Myers"/>
+<node id="Lun Chu"/>
+<node id="R J Foley"/>
+<node id="Marinka Zitnik"/>
+<node id="Kishu Gupta"/>
+<node id="Phuong-Chi Le"/>
+<node id="Zihao Wang"/>
+<node id="Pascal Fua"/>
+<node id="Chunhui Liu"/>
+<node id="Zurich † Anybotics"/>
+<node id="Ruy M Ribeiro"/>
+<node id="Roadmap for using large language models (LLMs) to accelerate cross-disciplinary research with an example from computational biology">
+  <data key="d0">papers</data>
+</node>
+<node id="David A Bader"/>
+<node id="A Lőrincz"/>
+<node id="Jing Zhao"/>
+<node id="Martin Schätz"/>
+<node id="Beth A Cimini"/>
+<node id="Marine De Clerck"/>
+<node id="Lukas Buecherl"/>
+<node id="Alexandr A Kalinin"/>
+<node id="N Metcalfe"/>
+<node id="Cathie J Clar"/>
+<node id="Arno Eichberger"/>
+<node id="Erik Kubaczka"/>
+<node id="Pengrui Li"/>
+<node id="Benjamin F Grewe"/>
+<node id="Reza Avazmohammadi"/>
+<node id="Rocco D'antuono"/>
+<node id="Lin Sun"/>
+<node id="Pauli Miettinen"/>
+<node id="Artur Garcia-Sáez"/>
+<node id="Yi Wang"/>
+<node id="Hu Yu"/>
+<node id="D J Brout"/>
+<node id="Eric Dolores-Cuenca"/>
+<node id="Haitian Wang"/>
+<node id="Johann P Reithmaier"/>
+<node id="Marco Ellero"/>
+<node id="Florian Levet"/>
+<node id="Hossam Taha"/>
+<node id="Yuki M Asano"/>
+<node id="S Smartt"/>
+<node id="Konrad Schöttner"/>
+<node id="Shantanu Singh"/>
+<node id="Alexander H Nitz"/>
+<node id="Pei Li"/>
+<node id="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection">
+  <data key="d0">papers</data>
+</node>
+<node id="Khai Nguyen"/>
+<node id="Marcin Pietro"/>
+<node id="Zemin Sun"/>
+<node id="W R Bezerra"/>
+<node id="Minseok Kim"/>
+<node id="Jennifer A Flegg"/>
+<node id="Tom Strube"/>
+<node id="Cristóbal Sifón"/>
+<node id="Wojciech Rudno-Rudziński"/>
+<node id="Ahmed Abdulkadir"/>
+<node id="Dorota Kuziak"/>
+<node id="Elena Blokhina"/>
+<node id="Mohammad Hossein Moghaddam"/>
+<node id="Paula Sampaio"/>
+<node id="Sujal Gupta"/>
+<node id="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator">
+  <data key="d0">papers</data>
+</node>
+<node id="Yasutaka Furukawa"/>
+<node id="Qi Zhang"/>
+<node id="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost">
+  <data key="d0">papers</data>
+</node>
+<node id="Wenkang Wang"/>
+<node id="Ewald Puchwein"/>
+<node id="Alessandro Parente"/>
+<node id="Ashutosh Kumar Singh"/>
+<node id="Jo Dunkley"/>
+<node id="Anne E Carpenter"/>
+<node id="Anthony Challinor"/>
+<node id="Anna Kishida"/>
+<node id="Wanbing Wang"/>
+<node id="Rei Tamaru"/>
+<node id="Fiona Mccarthy"/>
+<node id="Fanding Xu"/>
+<node id="Georgie Hau Sørensen"/>
+<node id="Fabian Petsch"/>
+<node id="Mattia Risiglione"/>
+<node id="Paolo Marcandelli"/>
+<node id="K C Chambers"/>
+<node id="Zhengqing Wang"/>
+<node id="Jingyuan Zhang"/>
+<node id="Kun Yuan"/>
+<node id="Igor Farkaš"/>
+<node id="Lluís Galbany"/>
+<node id="Petr A Golovach"/>
+<node id="Felipe X Buson"/>
+<node id="Gia-Huy Nguyen"/>
+<node id="Zhiyuan Liu"/>
+<node id="Yik Lung Pang"/>
+<node id="Christian Meisel"/>
+<node id="Critical dynamics governs deep learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Goodfire Ai"/>
+<node id="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists">
+  <data key="d0">papers</data>
+</node>
+<node id="Rohan Teasdale"/>
+<node id="Robert Evans"/>
+<node id="Mila Michał Koziarski"/>
+<node id="Sandi Klavžar"/>
+<node id="Bounds on the game isolation number and exact values for paths and cycles">
+  <data key="d0">papers</data>
+</node>
+<node id="Veselin Manojlović"/>
+<node id="Juris Ulmanis"/>
+<node id="Darssan Eswaramoorthi"/>
+<node id="Jolly Xavier"/>
+<node id="Chaojun Xiao"/>
+<node id="Woohyung Lim"/>
+<node id="E Gall"/>
+<node id="D M Scolnic"/>
+<node id="Arjun Banerjee"/>
+<node id="Kanchan Soni"/>
+<node id="Jieting Wang"/>
+<node id="Chenbang Liu"/>
+<node id="Jie Zhang"/>
+<node id="Matthew Wiesner"/>
+<node id="Samuel Daudin"/>
+<node id="GENERICITY OF POLYAK-LOJASIEWICZ INEQUALITIES FOR ENTROPIC MEAN-FIELD NEURAL ODES">
+  <data key="d0">papers</data>
+</node>
+<node id="Zhenbo Li"/>
+<node id="Patrik Rugeland"/>
+<node id="John Boesen"/>
+<node id="Kanghoon Lee"/>
+<node id="Mehdi D Davari"/>
+<node id="Gerard Jounghyun Kim"/>
+<node id="Jeongkyu Lee"/>
+<node id="An Efficient Approach for Muscle Segmentation and 3D Reconstruction Using Keypoint Tracking in MRI Scan">
+  <data key="d0">papers</data>
+</node>
+<node id="Deepika Saxena"/>
+<node id="Sotiris Kanellopoulos"/>
+<node id="Nicolás Sanhueza-Matamala"/>
+<node id="Hwa Liang Leo"/>
+<node id="Jakub Gomułka"/>
+<node id="Christos Perivolaropoulos"/>
+<node id="Shuhei Watanabe"/>
+<node id="Carolus Vitalis"/>
+<node id="Songlin Zhai"/>
+<node id="𝑎𝑏"/>
+<node id="Santiago Zazo"/>
+<node id="Thilo Stadelmann"/>
+<node id="François Delarue"/>
+<node id="Guoyu Ye"/>
+<node id="Xudong Ma"/>
+<node id="Tamir Bendory"/>
+<node id="Mingquan Lin"/>
+<node id="Sameem Abdul Kareem"/>
+<node id="Philip Osborne"/>
+<node id="Josh Borrow"/>
+<node id="Pinar Bisgin"/>
+<node id="Geraint Wiggins"/>
+<node id="James Requeima"/>
+<node id="A Rest"/>
+<node id="Nguyen Cao"/>
+<node id="Domenico Perrotta"/>
+<node id="Nelson S Yee"/>
+<node id="Stefan Wendt"/>
+<node id="Jackson D Lucas"/>
+<node id="Hao Fang"/>
+<node id="Thomas E Gorochowski"/>
+<node id="Jordi Domingo"/>
+<node id="Richard A Booth"/>
+<node id="Jiefu Zhang"/>
+<node id="Timothy C Beers"/>
+<node id="Jan Tönshoff"/>
+<node id="Laura R De La Ballina"/>
+<node id="Tzuf Paz-Argaman"/>
+<node id="Lyuting Chen"/>
+<node id="Laura Keating"/>
+<node id="Philipp Flotho"/>
+<node id="Gustavo Correa Publio"/>
+<node id="Nicolas P Mauranyapin"/>
+<node id="Tao Chen"/>
+<node id="Roberto Maiolino"/>
+<node id="Nishkrit Desai"/>
+<node id="Na Zhao"/>
+<node id="Jin-Long Wu"/>
+<node id="Owen Lewis"/>
+<node id="Chuyan Chen"/>
+<node id="Jan Felix Kleuker"/>
+<node id="On the Effect of Regularization in Policy Mirror Descent">
+  <data key="d0">papers</data>
+</node>
+<node id="Haoxiang Guan"/>
+<node id="Sun Sun"/>
+<node id="Rafał Olszowski"/>
+<node id="Xihan Ji"/>
+<node id="Kodamai"/>
+<node id="Niall Maccrann"/>
+<node id="Santiago Rodrigo"/>
+<node id="Julian Minder"/>
+<node id="The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?">
+  <data key="d0">papers</data>
+</node>
+<node id="Deunsol Yoon"/>
+<node id="Stan Z Li"/>
+<node id="Dian Yu"/>
+<node id="Dzmitry Matsukevich"/>
+<node id="Haolin Liu"/>
+<node id="Thomas Moerland"/>
+<node id="Yuan Liu"/>
+<node id="M H Namjoo"/>
+<node id="Mihyeon Jeon"/>
+<node id="Amir Barati Farimani"/>
+<node id="Muhammad Ibrahim"/>
+<node id="Anish Dhir"/>
+<node id="Pengwei Liu"/>
+<node id="Abdulelah S Alshehri"/>
+<node id="Zezhen Xiang"/>
+<node id="Tanja Dravec"/>
+<node id="Shaodong Ding"/>
+<node id="Qiannan Guo"/>
+<node id="Michael Ryoo"/>
+<node id="S Rodney"/>
+<node id="Brian Trippe"/>
+<node id="Konstantinos Skianis"/>
+<node id="Sinem Coleri"/>
+<node id="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees">
+  <data key="d0">papers</data>
+</node>
+<node id="Blake Sherwin"/>
+<node id="Andrei Cramariuc"/>
+<node id="Hezam Albaqami"/>
+<node id="Tyler Paine"/>
+<node id="Paul Bastide"/>
+<node id="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation">
+  <data key="d0">papers</data>
+</node>
+<node id="Soheyl Massoudi"/>
+<node id="AGENTIC LARGE LANGUAGE MODELS FOR CONCEPTUAL SYSTEMS ENGINEERING AND DESIGN A PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="Ravi Shankar Prasad"/>
+<node id="Jeonghye Kim"/>
+<node id="Sven Meister"/>
+<node id="Uygar Sümbül"/>
+<node id="Eya Cherif"/>
+<node id="Dusit Niyato"/>
+<node id="Johannes Overgaard"/>
+<node id="Herman Goulet-Ouellet"/>
+<node id="Sunghoon Hong"/>
+<node id="Wei Zhang"/>
+<node id="Sebastian Thrun"/>
+<node id="F Bresolin"/>
+<node id="M Mccrum"/>
+<node id="Kangning Cui"/>
+<node id="John Kennedy"/>
+<node id="Hannes Feilhauer"/>
+<node id="Nicholas D Condon"/>
+<node id="Oliver Alvarado Rodriguez"/>
+<node id="Ruian Ke"/>
+<node id="Emiliano Sefusatti"/>
+<node id="Uri Stern"/>
+<node id="Unaizah Obaidellah"/>
+<node id="Lorenzo Apollonio"/>
+<node id="Reut Tsarfaty"/>
+<node id="Jing Jing"/>
+<node id="Giuseppe F Italiano"/>
+<node id="Rolando Trujillo-Rasua"/>
+<node id="Edoardo Charbon"/>
+<node id="Julien Stoehr"/>
+<node id="Leidy-Alejandra G Molano"/>
+<node id="Yuki Isobe"/>
+<node id="Vivek Dua"/>
+<node id="Yaojia Wang"/>
+<node id="J M Morales"/>
+<node id="Fan Wang"/>
+<node id="M Foley"/>
+<node id="Vincenzo Dentamaro"/>
+<node id="Scaling Attention to Very Long Sequences in Linear Time with Wavelet-Enhanced Random Spectral Attention (WERSA)">
+  <data key="d0">papers</data>
+</node>
+<node id="Junghoon Kim"/>
+<node id="Elizabeth Allyn Smith"/>
+<node id="Panagiotis Demestichas"/>
+<node id="Masoud Babaie"/>
+<node id="Yan Lu"/>
+<node id="Aljoša Peperko"/>
+<node id="Wenjuan Dong"/>
+<node id="Julien Pilet"/>
+<node id="Karsten Householder"/>
+<node id="Bahar Babaei"/>
+<node id="Friedrich Wilke Grosche"/>
+<node id="Huaxiu Yao"/>
+<node id="Weilin Zhao"/>
+<node id="Kenshin Abe"/>
+<node id="Helena Janowska"/>
+<node id="Wanli Ouyang"/>
+<node id="Zs Gaál"/>
+<node id="Kun Gai"/>
+<node id="Francesco D'eugenio"/>
+<node id="Mohammed H Alghamdi"/>
+<node id="Felix Hofbaur"/>
+<node id="Manolis Kellis"/>
+<node id="Michael A Henning"/>
+<node id="Kyle R Kovach"/>
+<node id="Warwick P Bowen"/>
+<node id="Natalia Bottaioli"/>
+<node id="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates">
+  <data key="d0">papers</data>
+</node>
+<node id="Yang Yue"/>
+<node id="Yuanchun He"/>
+<node id="Maurizio Palesi"/>
+<node id="Chris J Maddison"/>
+<node id="Arthur Deng"/>
+<node id="Arthur Schmidt"/>
+<node id="Dinh Thai Bui"/>
+<node id="Jens Häggström"/>
+<node id="Ian Ferenc Diks"/>
+<node id="Youngchul Sung"/>
+<node id="Karthik Upadhya"/>
+<node id="Kavilan Moodley"/>
+<node id="Maximilian Fecke"/>
+<node id="Anna Musiał"/>
+<node id="Connor Gäde"/>
+<node id="Yan Li"/>
+<node id="Thu Hien"/>
+<node id="Bogdan Staszewski"/>
+<node id="Mark Van Der Wilk"/>
+<node id="Matthias Flotho"/>
+<node id="Stergios Christodoulidis"/>
+<node id="Claudia P Gutiérrez"/>
+<node id="Mengzhu Wang"/>
+<node id="Mark Vogelsberger"/>
+<node id="Simon Vock"/>
+<node id="Seongyun Choi"/>
+<node id="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge">
+  <data key="d0">papers</data>
+</node>
+<node id="Bing Lu"/>
+<node id="Abdullah M Algamdi"/>
+<node id="Songhua Li"/>
+<node id="Raul Mu Ñoz"/>
+<node id="Carmen Émbil Villagrá"/>
+<node id="Yijia Zhang"/>
+<node id="Dierk Raabe"/>
+<node id="Wei Tang"/>
+<node id="George Fletcher"/>
+<node id="Stefano Facchi"/>
+<node id="Jing Gao"/>
+<node id="Guy Gilboa"/>
+<node id="Niklas Tschorn"/>
+<node id="Maria Del Luca"/>
+<node id="Ko Sugawara"/>
+<node id="Matteo Martin"/>
+<node id="Sergi Abadal"/>
+<node id="Denis Sutter"/>
+<node id="Leonardo Cotta"/>
+<node id="Mengyuan Liu"/>
+<node id="Tao Liu"/>
+<node id="Yang Zhao"/>
+<node id="Irene Abril-Cabezas"/>
+<node id="Zs Csibi"/>
+<node id="Google Deepmind"/>
+<node id="P W Draper"/>
+<node id="Ziyue Tan"/>
+<node id="Rahul Kannan"/>
+<node id="Christoph Schummer"/>
+<node id="Neeraj Kumar Singh"/>
+<node id="Metod Jazbec"/>
+<node id="R P Kudritzki"/>
+<node id="Zhengyang Wang"/>
+<node id="Qi Wang"/>
+<node id="Alex Shiu"/>
+<node id="David Rolnick"/>
+<node id="Yijie Wei"/>
+<node id="Ramesh Hariharasubramanian"/>
+<node id="Yulai Zhao"/>
+<node id="St Md"/>
+<node id="Sylvaine Kerboeuf"/>
+<node id="Dominik Schweisgut"/>
+<node id="Mohammad Dindoost"/>
+<node id="Yue Gao"/>
+<node id="Clara Prats"/>
+<node id="Fuyang Zhang"/>
+<node id="Mark Fuge"/>
+<node id="D O Jones"/>
+<node id="Silas Robitschko"/>
+<node id="Bin Ran"/>
+<node id="Aris Pagourtzis"/>
+<node id="Nigel Benjamin Lee Junsheng"/>
+<node id="Petar Veličković"/>
+<node id="Yingfa Chen"/>
+<node id="Jean-Michel Marin"/>
+<node id="Cyril Branciard"/>
+<node id="Routing Quantum Control of Causal Order">
+  <data key="d0">papers</data>
+</node>
+<node id="Dahee Kim"/>
+<node id="Peijun Ma"/>
+<node id="Leonid L Rubchinsky"/>
+<node id="Carmen Embil Villagra"/>
+<node id="S Elgammal"/>
+<node id="Cristina Mata"/>
+<node id="Martin Engilberge"/>
+<node id="Aske Plaat"/>
+<node id="Alberto Salvio"/>
+<node id="Daniel Ohl De Mello"/>
+<node id="Andrew Dudzik"/>
+<node id="Zhiwu An"/>
+<node id="Jiahui Li"/>
+<node id="Razvan Pascanu"/>
+<node id="Qiang Li"/>
+<node id="Gustavo R Pérez-Lemus"/>
+<node id="Dario Poletti"/>
+<node id="Denmark"/>
+<node id="Sunder Neelakantan"/>
+<node id="Rongkhun Zhu"/>
+<node id="Ka Chun Cheung"/>
+<node id="Francesco D'amico"/>
+<node id="Agustin A Corbat"/>
+<node id="Tung Nguyen"/>
+<node id="Carl M J Kirkpatrick"/>
+<node id="Linfeng Zhang"/>
+<node id="Joshua Kim"/>
+<node id="Alexander P Browning"/>
+<node id="Adam Miles"/>
+<node id="Berire Gunes"/>
+<node id="Martin Holmstrup"/>
+<node id="Wenjie Ma"/>
+<node id="Dawid J Kopiczko"/>
+<node id="Li Wang"/>
+<node id="M E Huber"/>
+<node id="J G De La Varga"/>
+<node id="Evie A Malaia"/>
+<node id="Geng Sun"/>
+<node id="M A Rasel"/>
+<node id="Michael A Taylor"/>
+<node id="Bono"/>
+<node id="Rui Liu"/>
+<node id="Weihua Chen"/>
+<node id="Pierre Le Doussal"/>
+<node id="Dynamic scaling of growing interfaces">
+  <data key="d0">papers</data>
+</node>
+<node id="Daniel Adanza"/>
+<node id="Karina Vincents Fisker"/>
+<node id="Ziyi Huang"/>
+<node id="Wenhu Chen"/>
+<node id="Minxue Pan"/>
+<node id="P J Challis"/>
+<node id="Pratinav Seth"/>
+<node id="Alessandro Strumia"/>
+<node id="David Martinez"/>
+<node id="Daniel Schmid"/>
+<node id="J Hand"/>
+<node id="L M Bezerra"/>
+<node id="Chenxi Sun"/>
+<node id="Erdal Ayfer"/>
+<node id="Shin Shen"/>
+<node id="Y C Pan"/>
+<node id="Laure Morelle"/>
+<node id="Cees G M Snoek"/>
+<node id="Pascal Debus"/>
+<node id="Zhe Yang"/>
+<node id="Qi Sun"/>
+<node id="Michael Dorkenwald"/>
+<node id="R Chornock"/>
+<node id="Yeon-Chang Lee"/>
+<node id="Ivana Dusparic"/>
+<node id="Filip Gampel"/>
+<node id="John H Ipsen"/>
+<node id="Yang Zhang"/>
+<node id="Kota Miura"/>
+<node id="Robotic Systems"/>
+<node id="Lu * Sickkids"/>
+<node id="Mykyta Onizhuk"/>
+<node id="E A Magnier"/>
+<node id="Augustin Vanrietvelde"/>
+<node id="Alexander Erhard"/>
+<node id="Zohar Keidar"/>
+<node id="Sukanya Sahoo"/>
+<node id="Stefano Mariani"/>
+<node id="André Freitas"/>
+<node id="Anna Rosenberg"/>
+<node id="Alex Terrasson"/>
+<node id="Andrea Cavallaro"/>
+<node id="Dong Yu"/>
+<node id="Jitendra Kumar"/>
+<node id="Richard E Turner"/>
+<node id="Emanuele Castorina"/>
+<node id="Abhijit Das"/>
+<node id="Martina Siena"/>
+<node id="K W Hodapp"/>
+<node id="Trung Le"/>
+<node id="Sandro Tacchella"/>
+<node id="Jinzhe Li"/>
+<node id="Yuxuan Li"/>
+<node id="Weichen Jia"/>
+<node id="Yuhong Huang"/>
+<node id="Soledad Le Clainche"/>
+<node id="Wenling Zhou"/>
+<node id="Brook Byrns"/>
+<node id="Ruixiang Tang"/>
+<node id="Mikko A Uusitalo"/>
+<node id="Christian Tischer"/>
+<node id="S Y Kung"/>
+<node id="Yannick Viossat"/>
+<node id="Zekun Wang"/>
+<node id="Alejandro Almodóvar"/>
+<node id="Tomás Goicoa"/>
+<node id="Zhen Li"/>
+<node id="Neil Ghani"/>
+<node id="Minh-Sang Nguyen"/>
+<node id="James Mccarthy"/>
+<node id="Vasily Belokurov"/>
+<node id="Sangil Kim"/>
+<node id="Andal Narayanan"/>
+<node id="Csilla Bujtás"/>
+<node id="G Baranyi"/>
+<node id="Georgi Yordanov Georgiev"/>
+<node id="Average Action Efficiency Rises Monotonically in Self-Organizing Systems via Stochastic Least-Action Dynamics">
+  <data key="d0">papers</data>
+</node>
+<node id="Jing Wu"/>
+<node id="K W Smith"/>
+<node id="Bettina Schmerl"/>
+<node id="Robert Haase"/>
+<node id="Michael Pantförder"/>
+<node id="Eli Corn"/>
+<node id="Juan Zhai"/>
+<node id="Felix Moorhoff"/>
+<node id="Matteo Cavaliere"/>
+<node id="R Moti"/>
+<node id="Bich Van Nguyen"/>
+<node id="Keisi Kacanja"/>
+<node id="Liuqing Yang"/>
+<node id="T De Groot"/>
+<node id="Yahui Liu"/>
+<node id="R Kessler"/>
+<node id="Ji Hyun Seo"/>
+<node id="David Medina-Ortiz"/>
+<node id="E Berger"/>
+<node id="Pascal Hirsch"/>
+<node id="Zhenglun Kong"/>
+<node id="Nicholas Andrews"/>
+<node id="Apashanka Das"/>
+<node id="Jiawei Zhou"/>
+<node id="Lucio Barabesi"/>
+<node id="Guorui Zhou"/>
+<node id="Arnaud Estoup"/>
+<node id="Dani Korpi"/>
+<node id="Xuerui Mao"/>
+<node id="Idan Mashiach"/>
+<node id="Theresa Maria Sommer"/>
+<node id="Matthias Schmidt"/>
+<node id="Zhongtao Hu"/>
+<node id="Neeraj Dhar"/>
+<node id="Yubo Fan"/>
+<node id="Ngoc-Anh Bui"/>
+<node id="Oliver Zier"/>
+<node id="Ivo Dinov"/>
+<node id="Christa G Walther"/>
+<node id="Yuan Meng"/>
+<node id="Halima Mouhib"/>
+<node id="Jeffrey Chen"/>
+<node id="Ivan Vrkic"/>
+<edge source="Max Belitsky" target="KV Cache Steering for Inducing Reasoning in Small Language Models"/>
+<edge source="KV Cache Steering for Inducing Reasoning in Small Language Models" target="M Jehanzeb Mirza"/>
+<edge source="KV Cache Steering for Inducing Reasoning in Small Language Models" target="Yuki M Asano"/>
+<edge source="KV Cache Steering for Inducing Reasoning in Small Language Models" target="Dawid J Kopiczko"/>
+<edge source="KV Cache Steering for Inducing Reasoning in Small Language Models" target="Cees G M Snoek"/>
+<edge source="KV Cache Steering for Inducing Reasoning in Small Language Models" target="Michael Dorkenwald"/>
+<edge source="Marco Tazzari" target="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Jonathan P Williams"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Álvaro Ribas"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Pietro Curo"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Enrique Macías"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Francesco Zagar"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Leonardo Testi"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Giovanni P Rosotti"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Cathie J Clar"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Richard A Booth"/>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Stefano Facchi"/>
+<edge source="Fang Wu" target="Predicting mutational effects on protein binding from folding energy"/>
+<edge source="Predicting mutational effects on protein binding from folding energy" target="K Christopher"/>
+<edge source="Predicting mutational effects on protein binding from folding energy" target="Brian Trippe"/>
+<edge source="Predicting mutational effects on protein binding from folding energy" target="Sebastian Thrun"/>
+<edge source="Predicting mutational effects on protein binding from folding energy" target="Karsten Householder"/>
+<edge source="Predicting mutational effects on protein binding from folding energy" target="Arthur Deng"/>
+<edge source="Avishek Nag" target="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Pau Escofet"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Peter Haring Bolívar"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Ben Rached"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Eduard Alarcón"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Batuhan Keskin"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Carmen G Almudéver"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Fabio Sebastiano"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Artur Garcia-Sáez"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Elena Blokhina"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Jordi Domingo"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Santiago Rodrigo"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Edoardo Charbon"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Masoud Babaie"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Maurizio Palesi"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Bogdan Staszewski"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Sergi Abadal"/>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Abhijit Das"/>
+<edge source="Feijiang Li" target="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds"/>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Liuya Zhang"/>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Tao Yan"/>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Yuhua Qian"/>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Jieting Wang"/>
+<edge source="Jada Garofalo" target="Potential science with GW250114 -the loudest binary black hole merger detected to date"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Vikas Jadhav"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Aleyna Akyüz"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Alex Correia"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Hung Tan"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Labani Roy"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Collin D Capano"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Alexander H Nitz"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Kanchan Soni"/>
+<edge source="Potential science with GW250114 -the loudest binary black hole merger detected to date" target="Keisi Kacanja"/>
+<edge source="Rong Zhu" target="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Zhifeng Gao"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Haitao Lin"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Junjie Wang"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Ji Xiaohong"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Guolin Ke"/>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Linfeng Zhang"/>
+<edge source="Zhihui Lin" target="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Alibaba Group"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Hupan Lab"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Hangjie Yuan"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Hao Luo"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Yi Yang"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Jun Cen"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Jiazheng Xing"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Damo Academy"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Shuning Chang"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Jingyun Liang"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Tao Feng"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Jiasheng Tang"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Hu Yu"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Pengwei Liu"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Fan Wang"/>
+<edge source="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective" target="Weihua Chen"/>
+<edge source="G Öksel Mısırlı" target="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Prashant Vaidyanathan"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Bryan Bartley"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Gonzalo Vidal"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Jacob Beal"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Yan-Kay Ho"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Chris J Myers"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Lukas Buecherl"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Erik Kubaczka"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Georgie Hau Sørensen"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Felipe X Buson"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Carolus Vitalis"/>
+<edge source="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology" target="Thomas E Gorochowski"/>
+<edge source="D Exposito" target="Discontinuity-aware KAN-based physics-informed neural networks"/>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Guoqiang Lei"/>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Xuerui Mao"/>
+<edge source="Shuang Liang" target="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Guannan Qu"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target=". ) Geng"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Quannan Qu"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Jiacheng Wang"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Changyuan Zhao"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Chenbang Liu"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Dusit Niyato"/>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="Jiahui Li"/>
+<edge source="Chengqing Zong" target="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities"/>
+<edge source="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities" target="Yaping Zhang"/>
+<edge source="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities" target="Lu Xiang"/>
+<edge source="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities" target="Yang Zhao"/>
+<edge source="Brian D Athey" target="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Paula Llanos"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Xinhai Hou"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Xiang Wan"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Matthew J O'meara"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Giovanni Sestini"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Nicolas Rivron"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Beth Cimini"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Jonathan Z Sexton"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Alexandr A Kalinin"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Shantanu Singh"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Anne E Carpenter"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Theresa Maria Sommer"/>
+<edge source="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling" target="Ivo Dinov"/>
+<edge source="Yun Chen" target="Label-free microscope for rheological imaging of cells"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Daniel Yan"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Marino Lara Alva"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Rohan Teasdale"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Jackson D Lucas"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Nicolas P Mauranyapin"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Warwick P Bowen"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Michael A Taylor"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Zhe Yang"/>
+<edge source="Label-free microscope for rheological imaging of cells" target="Alex Terrasson"/>
+<edge source="A G Riess" target="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R Lunnan"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="W S Burgett"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="J Tonry"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R Kotak"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="C W Stubbs"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R P Kirshner"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="G Narayan"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="E Schlafly"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="E Johnson"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="M Drout"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="W M Wood-Vasey"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="D Finkbeiner"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="N E Sanders"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="N Kaiser"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R J Foley"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="N Metcalfe"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="D J Brout"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="S Smartt"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="K C Chambers"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="E Gall"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="D M Scolnic"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="A Rest"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="S Rodney"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="F Bresolin"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="M Mccrum"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="M Foley"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="P W Draper"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R P Kudritzki"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="D O Jones"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="M E Huber"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="P J Challis"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="J Hand"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="Y C Pan"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R Chornock"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="E A Magnier"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="K W Hodapp"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="K W Smith"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="R Kessler"/>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="E Berger"/>
+<edge source="Chintan Chitroda" target="Interpretability-Aware Pruning for Efficient Medical Image Analysis"/>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Nikita Malik"/>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Vinay Kumar Sankarapu"/>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Neeraj Kumar Singh"/>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Pratinav Seth"/>
+<edge source="Qige Li" target="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment"/>
+<edge source="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment" target="Jiyao Zhang"/>
+<edge source="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment" target="Chengli Zhong"/>
+<edge source="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment" target="Hui Xu"/>
+<edge source="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment" target="Yi Zhou"/>
+<edge source="Giulia Galli" target="Probing aqueous interfaces with spin defects"/>
+<edge source="Probing aqueous interfaces with spin defects" target="Alfonso Castillo"/>
+<edge source="Probing aqueous interfaces with spin defects" target="Gustavo R Pérez-Lemus"/>
+<edge source="Probing aqueous interfaces with spin defects" target="Mykyta Onizhuk"/>
+<edge source="Giovanni Masala" target="Machine Learning for Evolutionary Graph Theory"/>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Guoli Yang"/>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Mingtao Zhang"/>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Mengzhu Wang"/>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Adam Miles"/>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Matteo Cavaliere"/>
+<edge source="Anh-Nhat Nguyen" target="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Tung-Son Ngo"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Manh-Duc Hoang"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Phuong-Chi Le"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Khai Nguyen"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Gia-Huy Nguyen"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Minh-Sang Nguyen"/>
+<edge source="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks" target="Ngoc-Anh Bui"/>
+<edge source="Tianyou Jiang" target="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes"/>
+<edge source="Yuekun Wu" target="Learning human-to-robot handovers through 3D scene reconstruction"/>
+<edge source="Learning human-to-robot handovers through 3D scene reconstruction" target="Changjae Oh"/>
+<edge source="Learning human-to-robot handovers through 3D scene reconstruction" target="Yik Lung Pang"/>
+<edge source="Learning human-to-robot handovers through 3D scene reconstruction" target="Andrea Cavallaro"/>
+<edge source="Jose Dolz" target="SGPMIL: Sparse Gaussian Process Multiple Instance Learning"/>
+<edge source="SGPMIL: Sparse Gaussian Process Multiple Instance Learning" target="Maria Vakalopoulou"/>
+<edge source="SGPMIL: Sparse Gaussian Process Multiple Instance Learning" target="Andreas Lolos"/>
+<edge source="SGPMIL: Sparse Gaussian Process Multiple Instance Learning" target="Aris Moustakas"/>
+<edge source="SGPMIL: Sparse Gaussian Process Multiple Instance Learning" target="Stergios Christodoulidis"/>
+<edge source="Stephanie Monty" target="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Xuejian Shen"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="William Mcclymont"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Aaron Smith"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Enrico Garaldi"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Zihao Wang"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Ewald Puchwein"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Josh Borrow"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Laura Keating"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Roberto Maiolino"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Xihan Ji"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Yuki Isobe"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Francesco D'eugenio"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Mark Vogelsberger"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Rahul Kannan"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Sandro Tacchella"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Vasily Belokurov"/>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="Oliver Zier"/>
+<edge source="Zainy M Malakan" target="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Xinyu Wang"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Ajmal Mian"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Haitian Wang"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Muhammad Ibrahim"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Hezam Albaqami"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Mohammed H Alghamdi"/>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Abdullah M Algamdi"/>
+<edge source="Maja Wasiluk" target="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect"/>
+<edge source="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect" target="Mohamed Benyoucef"/>
+<edge source="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect" target="Johann P Reithmaier"/>
+<edge source="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect" target="Wojciech Rudno-Rudziński"/>
+<edge source="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect" target="Helena Janowska"/>
+<edge source="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect" target="Anna Musiał"/>
+<edge source="Diogo Sousa" target="A Dopamine-Serotonin Theory of Consciousness"/>
+<edge source="Dimitrios M Thilikos" target="H-Planarity and Parametric Extensions: when Modulators Act Globally *"/>
+<edge source="H-Planarity and Parametric Extensions: when Modulators Act Globally *" target="Fedor V Fomin"/>
+<edge source="H-Planarity and Parametric Extensions: when Modulators Act Globally *" target="Petr A Golovach"/>
+<edge source="H-Planarity and Parametric Extensions: when Modulators Act Globally *" target="Laure Morelle"/>
+<edge source="Julia Stoyanovich" target="ONION: A Multi-Layered Framework for Participatory ER Design"/>
+<edge source="ONION: A Multi-Layered Framework for Participatory ER Design" target="Viktoriia Makovska"/>
+<edge source="ONION: A Multi-Layered Framework for Participatory ER Design" target="George Fletcher"/>
+<edge source="Michal Vavrečka" target="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer"/>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Juraj Gavura"/>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Igor Farkaš"/>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Connor Gäde"/>
+<edge source="Mufan Qiu" target="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Tianlong Chen"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Xiang Lin"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Sukwon Yun"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Marinka Zitnik"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="John Boesen"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Manolis Kellis"/>
+<edge source="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes" target="Zhenglun Kong"/>
+<edge source="Haitao Mi" target="One Token to Fool LLM-as-a-Judge"/>
+<edge source="One Token to Fool LLM-as-a-Judge" target="Dian Yu"/>
+<edge source="One Token to Fool LLM-as-a-Judge" target="Haolin Liu"/>
+<edge source="One Token to Fool LLM-as-a-Judge" target="Yulai Zhao"/>
+<edge source="One Token to Fool LLM-as-a-Judge" target="Dong Yu"/>
+<edge source="One Token to Fool LLM-as-a-Judge" target="S Y Kung"/>
+<edge source="Falk M Howar" target="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Gerhard Wess"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Ingrid Ljungvall"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Tom Strube"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Pinar Bisgin"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Sven Meister"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Jens Häggström"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Maximilian Fecke"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Niklas Tschorn"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Christoph Schummer"/>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="Michael Pantförder"/>
+<edge source="Yanzi Zhang" target="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="Sizhe Qiu"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="Jing Zhao"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="Mehdi D Davari"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="Wenjuan Dong"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="Felix Moorhoff"/>
+<edge source="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives" target="David Medina-Ortiz"/>
+<edge source="H A Thi" target="ASSOCIATED PRIMES OF THE SECOND POWER OF CLOSED NEIGHBORHOOD IDEALS OF GRAPHS"/>
+<edge source="ASSOCIATED PRIMES OF THE SECOND POWER OF CLOSED NEIGHBORHOOD IDEALS OF GRAPHS" target="Thanh Vu"/>
+<edge source="ASSOCIATED PRIMES OF THE SECOND POWER OF CLOSED NEIGHBORHOOD IDEALS OF GRAPHS" target="Thu Hien"/>
+<edge source="Manuel Gil P Érez" target="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Pol Alemany"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Abdelkader Outtagarts"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Akshay Jain"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="María Jorquera Valero"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Crist Óbal"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Sokratis Barmpounakis"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Ricard Vilalta"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Riccardo Nicolicchia"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Mohammad Hossein Moghaddam"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Patrik Rugeland"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Stefan Wendt"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Panagiotis Demestichas"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Dinh Thai Bui"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Karthik Upadhya"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Raul Mu Ñoz"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Sylvaine Kerboeuf"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Daniel Adanza"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Mikko A Uusitalo"/>
+<edge source="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN" target="Dani Korpi"/>
+<edge source="Hongyu Guo" target="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models"/>
+<edge source="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models" target="Yuntian Deng"/>
+<edge source="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models" target="Luke Rivard"/>
+<edge source="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models" target="Sun Sun"/>
+<edge source="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models" target="Wenhu Chen"/>
+<edge source="Xia Cui" target="PromotionGo at SemEval-2025 Task 11: A Feature-Centric Framework for Cross-Lingual Multi-Emotion Detection in Short Texts"/>
+<edge source="PromotionGo at SemEval-2025 Task 11: A Feature-Centric Framework for Cross-Lingual Multi-Emotion Detection in Short Texts" target="Ziyi Huang"/>
+<edge source="Daphna Weinshall" target="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation"/>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Uri Stern"/>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Eli Corn"/>
+<edge source="Daniel K Freeman" target="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception"/>
+<edge source="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception" target="Matthias Michel"/>
+<edge source="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception" target="Seung-Schik Yoo"/>
+<edge source="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception" target="Brian Odegaard"/>
+<edge source="Jinri Huang" target="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Xiaofei Xu"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Nan Li"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Lehan Wang"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Chunhui Liu"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Jing Gao"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Qi Sun"/>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="Yuhong Huang"/>
+<edge source="Apollonio Lorenzo" target="Update on the intermediate arrival-direction analyses of the Pierre Auger Observatory"/>
+<edge source="Update on the intermediate arrival-direction analyses of the Pierre Auger Observatory" target="𝑎𝑏"/>
+<edge source="Update on the intermediate arrival-direction analyses of the Pierre Auger Observatory" target="Lorenzo Apollonio"/>
+<edge source="Leevan Ling" target="Minimum-norm interpolation for unknown surface reconstruction"/>
+<edge source="Minimum-norm interpolation for unknown surface reconstruction" target="Lun Chu"/>
+<edge source="Minimum-norm interpolation for unknown surface reconstruction" target="Alex Shiu"/>
+<edge source="Minimum-norm interpolation for unknown surface reconstruction" target="Ka Chun Cheung"/>
+<edge source="Hengyu Gao" target="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Bolun Li"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Ziyang Liu"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Jiefu Zhang"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Shaodong Ding"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Jing Jing"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Tao Liu"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Zhiwu An"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Li Wang"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Zhongtao Hu"/>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Yubo Fan"/>
+<edge source="Sascha Hänzi" target="A document is worth a structured record: Principled inductive bias design for document recognition"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Lukas Tuggener"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Benjamin Meyer"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Benjamin F Grewe"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Ahmed Abdulkadir"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Thilo Stadelmann"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Daniel Schmid"/>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="Erdal Ayfer"/>
+<edge source="Ramit Debnath" target="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING"/>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Ashraf Amir"/>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Waqar Muhammad"/>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="H Keshavarzzadeh"/>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Abdulelah S Alshehri"/>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Vivek Dua"/>
+<edge source="Maximilian C Hübl" target="Stochastic size control of self-assembled filaments"/>
+<edge source="Stochastic size control of self-assembled filaments" target="Carl P Goodrich"/>
+<edge source="Zhongrui Wang" target="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network"/>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Chuanqi Chen"/>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Nan Chen"/>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Jin-Long Wu"/>
+<edge source="Miguel A Martinez-Beneito" target="A proposal for homoscedastic modelling with conditional auto-regressive distributions"/>
+<edge source="A proposal for homoscedastic modelling with conditional auto-regressive distributions" target="Lola Ugarte"/>
+<edge source="A proposal for homoscedastic modelling with conditional auto-regressive distributions" target="Aritz Adin"/>
+<edge source="A proposal for homoscedastic modelling with conditional auto-regressive distributions" target="A Preprint"/>
+<edge source="A proposal for homoscedastic modelling with conditional auto-regressive distributions" target="Tomás Goicoa"/>
+<edge source="China Teleai" target="Deep Hashing with Semantic Hash Centers for Image Retrieval"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Dell 2025 Zhang"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Yuxiang Zhou"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Beihang University"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Li I Chen"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Yong Chen"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Xudong Ma"/>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Rui Liu"/>
+<edge source="Radu Marinescu" target="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning"/>
+<edge source="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning" target="Elizabeth Daly"/>
+<edge source="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning" target="Ivana Dusparic"/>
+<edge source="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning" target="James Mccarthy"/>
+<edge source="Tiffany Yu" target="ML-Based Automata Simplification for Symbolic Accelerators"/>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="Rasha Karakchi"/>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="Darssan Eswaramoorthi"/>
+<edge source="Engin Turetken" target="Unified People Tracking with Graph Neural Networks"/>
+<edge source="Unified People Tracking with Graph Neural Networks" target="Pascal Fua"/>
+<edge source="Unified People Tracking with Graph Neural Networks" target="Julien Pilet"/>
+<edge source="Unified People Tracking with Graph Neural Networks" target="Friedrich Wilke Grosche"/>
+<edge source="Unified People Tracking with Graph Neural Networks" target="Martin Engilberge"/>
+<edge source="Unified People Tracking with Graph Neural Networks" target="Ivan Vrkic"/>
+<edge source="Thomas †2" target="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB"/>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="G Bard Ermentrout"/>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="Anna Kishida"/>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="Matteo Martin"/>
+<edge source="Luke A Brown" target="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Teja Kattenborn"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Arthur Ouaknine"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Daniel Mederer"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Phuong D Dao"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Eya Cherif"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Hannes Feilhauer"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Kyle R Kovach"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="Bing Lu"/>
+<edge source="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction" target="David Rolnick"/>
+<edge source="Jorge M Cruz-Duarte" target="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT"/>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="El-Ghazali Talbi"/>
+<edge source="Yehoshua Y Zeevi" target="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study"/>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="John Kennedy"/>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Guy Gilboa"/>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Zohar Keidar"/>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Anna Rosenberg"/>
+<edge source="Benjamin D Smith" target="Microwave-optical double-resonance vector magnetometry with warm Rb atoms"/>
+<edge source="Microwave-optical double-resonance vector magnetometry with warm Rb atoms" target="Lindsay J Leblanc"/>
+<edge source="Microwave-optical double-resonance vector magnetometry with warm Rb atoms" target="Andrei Tretiakov"/>
+<edge source="Microwave-optical double-resonance vector magnetometry with warm Rb atoms" target="Bahar Babaei"/>
+<edge source="Microwave-optical double-resonance vector magnetometry with warm Rb atoms" target="Andal Narayanan"/>
+<edge source="Yuefan Wu" target="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering"/>
+<edge source="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering" target="Jiacheng Chen"/>
+<edge source="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering" target="Yasutaka Furukawa"/>
+<edge source="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering" target="Zhengqing Wang"/>
+<edge source="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering" target="Fuyang Zhang"/>
+<edge source="K Fenech" target="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="J Skaf"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Á Fóthi"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="A Lőrincz"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Zs Gaál"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Zs Csibi"/>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="G Baranyi"/>
+<edge source="Victor C M Leung" target="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Likun Zhang"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Jiacheng Wang"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Changyuan Zhao"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Zemin Sun"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Jiahui Li"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Geng Sun"/>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Jing Wu"/>
+<edge source="Andrea Cerasa" target="Robust inference under Benford's law"/>
+<edge source="Robust inference under Benford's law" target="Andrea Cerioli"/>
+<edge source="Robust inference under Benford's law" target="Domenico Perrotta"/>
+<edge source="Robust inference under Benford's law" target="Lucio Barabesi"/>
+<edge source="Xiansong Xu" target="Continuous-time parametrization of neural quantum states for quantum dynamics"/>
+<edge source="Continuous-time parametrization of neural quantum states for quantum dynamics" target="Wenxuan Zhang"/>
+<edge source="Continuous-time parametrization of neural quantum states for quantum dynamics" target="Dingzu Wang"/>
+<edge source="Continuous-time parametrization of neural quantum states for quantum dynamics" target="Dario Poletti"/>
+<edge source="Stefano Markidis" target="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning"/>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Paolo Marcandelli"/>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Yuanchun He"/>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Stefano Mariani"/>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Martina Siena"/>
+<edge source="Andrzej Tomski" target="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT"/>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Marcin Pietro"/>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Jakub Gomułka"/>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Rafał Olszowski"/>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Filip Gampel"/>
+<edge source="Anna Klemm" target="GloBIAS: strengthening the foundations of BioImage Analysis"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Alessandro A Felder"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Martin Schätz"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Beth A Cimini"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Rocco D'antuono"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Florian Levet"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Paula Sampaio"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Laura R De La Ballina"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Nicholas D Condon"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Ko Sugawara"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Clara Prats"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Agustin A Corbat"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Kota Miura"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Christian Tischer"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Bettina Schmerl"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Robert Haase"/>
+<edge source="GloBIAS: strengthening the foundations of BioImage Analysis" target="Christa G Walther"/>
+<edge source="Andreas Keller" target="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery"/>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="Philipp Flotho"/>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="Leidy-Alejandra G Molano"/>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="Ian Ferenc Diks"/>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="Matthias Flotho"/>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="Pascal Hirsch"/>
+<edge source="Zhenli Kwan" target="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)"/>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="Sameem Abdul Kareem"/>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="Unaizah Obaidellah"/>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="M A Rasel"/>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="Shin Shen"/>
+<edge source="Azimov Sherkhon" target="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series"/>
+<edge source="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series" target="Susana López-Moreno"/>
+<edge source="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series" target="Sieun Lee"/>
+<edge source="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series" target="Eric Dolores-Cuenca"/>
+<edge source="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series" target="Sangil Kim"/>
+<edge source="W P M H Heemels" target="A Dissipativity Framework for Constructing Scaled Graphs"/>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="S J A M Van Den Eijnden"/>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="T De Groot"/>
+<edge source="Biswajit Pandey" target="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?"/>
+<edge source="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?" target="Apashanka Das"/>
+<edge source="José Emilio" target="xpSHACL: Explainable SHACL Validation using Retrieval-Augmented Generation and Large Language Models"/>
+<edge source="xpSHACL: Explainable SHACL Validation using Retrieval-Augmented Generation and Large Language Models" target="Labra Gayo"/>
+<edge source="xpSHACL: Explainable SHACL Validation using Retrieval-Augmented Generation and Large Language Models" target="Gustavo Correa Publio"/>
+<edge source="Christian A Naesseth" target="Monitoring Risks in Test-Time Adaptation"/>
+<edge source="Monitoring Risks in Test-Time Adaptation" target="Eric Nalisnick"/>
+<edge source="Monitoring Risks in Test-Time Adaptation" target="Mona Schirmer"/>
+<edge source="Monitoring Risks in Test-Time Adaptation" target="Metod Jazbec"/>
+<edge source="Yves Robert" target="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint"/>
+<edge source="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint" target="Anne Benoit"/>
+<edge source="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint" target="Henning Meyerhenke"/>
+<edge source="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint" target="Dominik Schweisgut"/>
+<edge source="Aixi Yang" target="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer"/>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="Francesco De Cristofaro"/>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="Arno Eichberger"/>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="Felix Hofbaur"/>
+<edge source="Jianglong Qin" target="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *"/>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Mingda Zhang"/>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Guoyu Ye"/>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Na Zhao"/>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Ruixiang Tang"/>
+<edge source="Pawe L Kurzyński" target="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Dagomir Kaszlikowski"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Rafael Rabelo"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Kim Mu Young"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Gabriel Ruffolo"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Dzmitry Matsukevich"/>
+<edge source="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems" target="Nigel Benjamin Lee Junsheng"/>
+<edge source="Sanne Abeln" target="Beyond Olfaction: New Insights into Human Odorant Binding Proteins"/>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Soufyan Lakbir"/>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Vojta Mazur"/>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Mifen Chen"/>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Mihyeon Jeon"/>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Halima Mouhib"/>
+<edge source="Ali Mohammadi" target="Enhanced molecular diffusion near a soft fluctuating membrane"/>
+<edge source="Enhanced molecular diffusion near a soft fluctuating membrane" target="Micheline Abbas"/>
+<edge source="Enhanced molecular diffusion near a soft fluctuating membrane" target="Sophie Marbach"/>
+<edge source="Enhanced molecular diffusion near a soft fluctuating membrane" target="Zhen Li"/>
+<edge source="Ningyi Xu" target="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Weigang Feng"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Yi Wang"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Yijia Zhang"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Zhengyang Wang"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Peijun Ma"/>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Zekun Wang"/>
+<edge source="Cornelia B Landersdorfer" target="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?"/>
+<edge source="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?" target="Wenhao Zheng"/>
+<edge source="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?" target="Wanbing Wang"/>
+<edge source="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?" target="Huaxiu Yao"/>
+<edge source="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?" target="Carl M J Kirkpatrick"/>
+<edge source="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?" target="Jiawei Zhou"/>
+<edge source="Juan Parras" target="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS"/>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Patricia A Apellániz"/>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Alba Garrido"/>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Santiago Zazo"/>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Alejandro Almodóvar"/>
+<edge source="Mpi Moritz" target="To buy or not to buy: deterministic rent-or-buy problems on node-weighted graphs"/>
+<edge source="To buy or not to buy: deterministic rent-or-buy problems on node-weighted graphs" target="Venzin Bocconi"/>
+<edge source="To buy or not to buy: deterministic rent-or-buy problems on node-weighted graphs" target="Sander Borst"/>
+<edge source="Alejandro Estrada-Moreno" target="On the (k, ℓ)-multiset anonymity measure for social graphs"/>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="Manuel Muñoz-Márquez"/>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="Elena Fernández"/>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="Ismael G Yero"/>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="Dorota Kuziak"/>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="Rolando Trujillo-Rasua"/>
+<edge source="Gerrit Farren" target="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Boris Bolliet"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Alexander Van Engelen"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Frank J Qu"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="David Alonso"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Giulio Fabbian"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Cristóbal Sifón"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Jo Dunkley"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Anthony Challinor"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Fiona Mccarthy"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Niall Maccrann"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Blake Sherwin"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Kavilan Moodley"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Carmen Émbil Villagrá"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Irene Abril-Cabezas"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Carmen Embil Villagra"/>
+<edge source="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4" target="Joshua Kim"/>
+<edge source="Satyam Kumar" target="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction"/>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Kumar Singh"/>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Kishu Gupta"/>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Ashutosh Kumar Singh"/>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Deepika Saxena"/>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Jitendra Kumar"/>
+<edge source="Parag Dutta" target="Emergent Natural Language with Communication Games for Improving Image Captioning Capabilities without Additional Data"/>
+<edge source="Emergent Natural Language with Communication Games for Improving Image Captioning Capabilities without Additional Data" target="Ambedkar Dukkipati"/>
+<edge source="Fenglong Ma" target="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Haoyu Wang"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Han Liu"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Tianrun Yu"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Jiaqi Wang"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Mingquan Lin"/>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="Nelson S Yee"/>
+<edge source="Song Kim" target="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Hyewon Kim"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Sungsu Lim"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Minseok Kim"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Junghoon Kim"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Dahee Kim"/>
+<edge source="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs" target="Yeon-Chang Lee"/>
+<edge source="Dinesh Singh" target="Cross-Domain Identity Representation for Skull to Face Matching with Benchmark DataSet"/>
+<edge source="Cross-Domain Identity Representation for Skull to Face Matching with Benchmark DataSet" target="Ravi Shankar Prasad"/>
+<edge source="Marco Vitti" target="Infra-red enhanced loops in quadratic gravity"/>
+<edge source="Infra-red enhanced loops in quadratic gravity" target="Alberto Salvio"/>
+<edge source="Infra-red enhanced loops in quadratic gravity" target="Alessandro Strumia"/>
+<edge source="Sungwoo Ahn" target="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG"/>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="Leonid L Rubchinsky"/>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="Evie A Malaia"/>
+<edge source="Ryan J Murphy" target="A cautionary tale of model misspecification and identifiability"/>
+<edge source="A cautionary tale of model misspecification and identifiability" target="Jennifer A Flegg"/>
+<edge source="A cautionary tale of model misspecification and identifiability" target="Alexander P Browning"/>
+<edge source="Jiyan He" target="Sparse Autoencoders Reveal Interpretable Structure in Small Gene Language Models"/>
+<edge source="Sparse Autoencoders Reveal Interpretable Structure in Small Gene Language Models" target="Jie Zhang"/>
+<edge source="Sparse Autoencoders Reveal Interpretable Structure in Small Gene Language Models" target="Haoxiang Guan"/>
+<edge source="Anna Mpanti" target="Beer Path Problems in Temporal Graphs"/>
+<edge source="Beer Path Problems in Temporal Graphs" target="Andrea D ' Ascenzo"/>
+<edge source="Beer Path Problems in Temporal Graphs" target="Christos Pergaminelis"/>
+<edge source="Beer Path Problems in Temporal Graphs" target="Sotiris Kanellopoulos"/>
+<edge source="Beer Path Problems in Temporal Graphs" target="Giuseppe F Italiano"/>
+<edge source="Beer Path Problems in Temporal Graphs" target="Aris Pagourtzis"/>
+<edge source="Zhe Zhang" target="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING"/>
+<edge source="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING" target="György Fazekas"/>
+<edge source="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING" target="Junichi Yamagishi"/>
+<edge source="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING" target="Xin Wang"/>
+<edge source="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING" target="Jingjing Tang"/>
+<edge source="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING" target="Geraint Wiggins"/>
+<edge source="Avrajit Bandyopadhyay" target="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems"/>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="Timothy C Beers"/>
+<edge source="Aditi Golder" target="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Sarra Alaqahtani"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="V Paul Pauca"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Ovidiu Csillik"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Fan Yang"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Debashis Gupta"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Kangning Cui"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Wei Tang"/>
+<edge source="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing" target="Rongkhun Zhu"/>
+<edge source="Connor Burbridge" target="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Pranta Saha"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Steven Rayan"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Joyce Reimer"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Gordon Broderick"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Brook Byrns"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Neeraj Dhar"/>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="Jeffrey Chen"/>
+<edge source="Yeqiang Liu" target="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking"/>
+<edge source="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking" target="Weiran Li"/>
+<edge source="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking" target="Zhenbo Li"/>
+<edge source="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking" target="Hwa Liang Leo"/>
+<edge source="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking" target="Qiannan Guo"/>
+<edge source="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking" target="Yijie Wei"/>
+<edge source="Kyle Myers" target="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Emilio A Mendiola"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Rana Raza Mehdi"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Sakthivel Sadayappan"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Reza Avazmohammadi"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Sunder Neelakantan"/>
+<edge source="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification" target="Sukanya Sahoo"/>
+<edge source="El-Sayed A El-Dahshan" target="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis"/>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Hossam Taha"/>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="S Elgammal"/>
+<edge source="Microsoft Quantum" target="Distinct Lifetimes for X and Z Loop Measurements in a Majorana Tetron Device"/>
+<edge source="Andres Santiago Espinosa-Moreno" target="Computational Modelling of Thixotropic Multiphase Fluids"/>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Nicolás Moreno"/>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Marco Ellero"/>
+<edge source="Laura Saavedra" target="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion"/>
+<edge source="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion" target="Rui Xue"/>
+<edge source="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion" target="Xiangrui Zou"/>
+<edge source="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion" target="Rodrigo Abadia-Heredia"/>
+<edge source="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion" target="Alessandro Parente"/>
+<edge source="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion" target="Soledad Le Clainche"/>
+<edge source="Xingguang Ji" target="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Rui Shi"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Fuzheng Zhang"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Jingyuan Zhang"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Kun Gai"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Yang Yue"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Qi Wang"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Chenxi Sun"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Yahui Liu"/>
+<edge source="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning" target="Guorui Zhou"/>
+<edge source="Junho Koh" target="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception"/>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Jun Won Choi"/>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Jungho Kim"/>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Youngwoo Lee"/>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Dongyoung Lee"/>
+<edge source="Carlos B Westphall" target="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects"/>
+<edge source="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects" target="W R Bezerra"/>
+<edge source="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects" target="L M Bezerra"/>
+<edge source="Eli Shlizerman" target="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Amy Orsborn"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Lu Mi"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Jingyuan Li"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Hao Fang"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Uygar Sümbül"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Tung Nguyen"/>
+<edge source="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding" target="Trung Le"/>
+<edge source="Xinzhe Zheng" target="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Hao Du"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Nanqing Dong"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Wenkang Wang"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Fanding Xu"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Zhiyuan Liu"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Tao Chen"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Stan Z Li"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Yan Lu"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Wanli Ouyang"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Yang Zhang"/>
+<edge source="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs" target="Jinzhe Li"/>
+<edge source="Aravind Elanjimattathil" target="Multi-critic Learning for Whole-body End-effector Twist Tracking"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Christian Gehring"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Marco Hutter"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Zurich † Anybotics"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Mattia Risiglione"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Andrei Cramariuc"/>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Robotic Systems"/>
+<edge source="Yihang Wu" target="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Xin Ma"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Wei Zhang"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Songhua Li"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Qi Wang"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Qiang Li"/>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Wenjie Ma"/>
+<edge source="Cristiana Diaconu" target="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning"/>
+<edge source="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning" target="Valentinian Mihai Lungu"/>
+<edge source="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning" target="James Requeima"/>
+<edge source="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning" target="Anish Dhir"/>
+<edge source="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning" target="Mark Van Der Wilk"/>
+<edge source="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning" target="Richard E Turner"/>
+<edge source="Cedric Brügmann" target="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Daniel Herr"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Maximilian Wendlinger"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Kilian Tscharke"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Fabian Petsch"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Juris Ulmanis"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Arthur Schmidt"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Daniel Ohl De Mello"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Pascal Debus"/>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="Alexander Erhard"/>
+<edge source="Yakun Wang" target="The stability of bi-polarization on dynamical directed graphs: an emergent game perspective"/>
+<edge source="The stability of bi-polarization on dynamical directed graphs: an emergent game perspective" target="Bin Wu"/>
+<edge source="The stability of bi-polarization on dynamical directed graphs: an emergent game perspective" target="Yuan Liu"/>
+<edge source="Yongjae Shin" target="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Whiyoung Jung"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Woohyung Lim"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Kanghoon Lee"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Deunsol Yoon"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Jeonghye Kim"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Sunghoon Hong"/>
+<edge source="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data" target="Youngchul Sung"/>
+<edge source="Caitlin F Harrigan" target="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Haonan Duan"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Jiarui Lu"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Stephen Zhewen"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Mila Michał Koziarski"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Nishkrit Desai"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Chris J Maddison"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Leonardo Cotta"/>
+<edge source="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab" target="Lu * Sickkids"/>
+<edge source="Makai Mann" target="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations"/>
+<edge source="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations" target="Calin Belta"/>
+<edge source="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations" target="Michael Benjamin"/>
+<edge source="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations" target="Zachary Serlin"/>
+<edge source="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations" target="Peter Crowley"/>
+<edge source="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations" target="Tyler Paine"/>
+<edge source="Tina Šfiligoj" target="Access graph: a novel graph representation of public transport networks for accessibility analysis"/>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="Oded Cats"/>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="Aljoša Peperko"/>
+<edge source="Hemant Kumar" target="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys"/>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Praveen Kumar"/>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Surendra Kumar Makineni"/>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Baptiste Gault"/>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Dierk Raabe"/>
+<edge source="Zihang Song" target="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing"/>
+<edge source="Saverio Rossi" target="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings"/>
+<edge source="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings" target="Dario Bocchi"/>
+<edge source="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings" target="Matteo Negri"/>
+<edge source="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings" target="Maria Del Luca"/>
+<edge source="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings" target="Francesco D'amico"/>
+<edge source="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings" target="Bono"/>
+<edge source="Evangelos Chasanis" target="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations"/>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Georgios Balanos"/>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Evaggelia Pitoura"/>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Konstantinos Skianis"/>
+<edge source="Armaan Ahmed" target="Expected and minimal values of a universal tree balance index"/>
+<edge source="Expected and minimal values of a universal tree balance index" target="Robert Noble"/>
+<edge source="Expected and minimal values of a universal tree balance index" target="Veselin Manojlović"/>
+<edge source="Expected and minimal values of a universal tree balance index" target="Yannick Viossat"/>
+<edge source="Awadhesh Kumar" target="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering"/>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Krishnendu Das"/>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Sumit Gupta"/>
+<edge source="Guilin Qi" target="KG-Attention: Knowledge Graph-Guided Attention at Test-Time via Bidirectional Information Aggregation"/>
+<edge source="KG-Attention: Knowledge Graph-Guided Attention at Test-Time via Bidirectional Information Aggregation" target="Songlin Zhai"/>
+<edge source="KG-Attention: Knowledge Graph-Guided Attention at Test-Time via Bidirectional Information Aggregation" target="Yuan Meng"/>
+<edge source="Alfredo Costa" target="OPEN MULTIPLICATION IN RELATIVELY FREE PROFINITE SEMIGROUPOIDS"/>
+<edge source="OPEN MULTIPLICATION IN RELATIVELY FREE PROFINITE SEMIGROUPOIDS" target="Jorge Almeida"/>
+<edge source="OPEN MULTIPLICATION IN RELATIVELY FREE PROFINITE SEMIGROUPOIDS" target="Herman Goulet-Ouellet"/>
+<edge source="Francesco Verdiani" target="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios"/>
+<edge source="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios" target="Ennio Salvioni"/>
+<edge source="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios" target="Emiliano Sefusatti"/>
+<edge source="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios" target="Emanuele Castorina"/>
+<edge source="Achuth Chandrasekhar" target="Automating MD simulations for Proteins using Large language Models: NAMD-Agent"/>
+<edge source="Automating MD simulations for Proteins using Large language Models: NAMD-Agent" target="Amir Barati Farimani"/>
+<edge source="Luis Müller" target="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs"/>
+<edge source="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs" target="Mikhail Galkin"/>
+<edge source="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs" target="Florian Grötschla"/>
+<edge source="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs" target="Bryan Perozzi"/>
+<edge source="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs" target="Google Research"/>
+<edge source="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs" target="Jan Tönshoff"/>
+<edge source="Seyedeh Sahar" target="F3-Net: Foundation Model for Full Abnormality Segmentation of Medical Images with Flexible Input Modality Requirement"/>
+<edge source="F3-Net: Foundation Model for Full Abnormality Segmentation of Medical Images with Flexible Input Modality Requirement" target="Taheri Otaghsara"/>
+<edge source="F3-Net: Foundation Model for Full Abnormality Segmentation of Medical Images with Flexible Input Modality Requirement" target="Reza Rahmanzadeh"/>
+<edge source="Nidhi Rastogi" target="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection"/>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="Tanvirul Alam"/>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="St Md"/>
+<edge source="Amnon Balanov" target="Structure from Noise: Confirmation Bias in Particle Picking in Structural Biology"/>
+<edge source="Structure from Noise: Confirmation Bias in Particle Picking in Structural Biology" target="Alon Zabatani"/>
+<edge source="Structure from Noise: Confirmation Bias in Particle Picking in Structural Biology" target="Tamir Bendory"/>
+<edge source="Fusen He" target="LLMCup: Ranking-Enhanced Comment Updating with LLMs"/>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Hua Ge"/>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Ziyue Tan"/>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Minxue Pan"/>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Juan Zhai"/>
+<edge source="Denis Antipov" target="Enhancing Parameter Control Policies with State Information"/>
+<edge source="Camille Dang" target="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models"/>
+<edge source="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models" target="Ethan Tam"/>
+<edge source="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models" target="Arjun Banerjee"/>
+<edge source="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models" target="David Martinez"/>
+<edge source="Huong Phan" target="Enhanced knowledge retention through MedScrab: an interactive mobile game"/>
+<edge source="Enhanced knowledge retention through MedScrab: an interactive mobile game" target="Tiffany Khao A&amp;"/>
+<edge source="Enhanced knowledge retention through MedScrab: an interactive mobile game" target="Don Roosan"/>
+<edge source="Enhanced knowledge retention through MedScrab: an interactive mobile game" target="Yan Li"/>
+<edge source="Chenyang Song" target="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Maosong Sun"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Xu Han"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Zhiyuan Liu"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Chaojun Xiao"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Weilin Zhao"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Yingfa Chen"/>
+<edge source="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity" target="Yuxuan Li"/>
+<edge source="Tom Tirer" target="Catastrophic Forgetting Mitigation Through Plateau Phase Activity Profiling"/>
+<edge source="Catastrophic Forgetting Mitigation Through Plateau Phase Activity Profiling" target="Oren Glickman"/>
+<edge source="Catastrophic Forgetting Mitigation Through Plateau Phase Activity Profiling" target="Idan Mashiach"/>
+<edge source="Mengjiao Rao" target="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES"/>
+<edge source="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES" target="Guanghui Wang"/>
+<edge source="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES" target="Lin Sun"/>
+<edge source="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES" target="Nicolás Sanhueza-Matamala"/>
+<edge source="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES" target="Wenling Zhou"/>
+<edge source="A Farooq" target="A Hybrid Multi-Well Hopfield-CNN with Feature Extraction and K-Means for MNIST Classification"/>
+<edge source="Zilu Dong" target="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains"/>
+<edge source="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains" target="Rui Xia"/>
+<edge source="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains" target="Zinong Yang"/>
+<edge source="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains" target="Xiangqing Shen"/>
+<edge source="J Comp Physiol" target="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Hélène Bouvrais"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Denmark K Schöttner"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="J Overgaard Zoophysiology"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Konrad Schöttner"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Johannes Overgaard"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Denmark"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Martin Holmstrup"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Karina Vincents Fisker"/>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="John H Ipsen"/>
+<edge source="Sean A Hartnoll" target="Wheeler-DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases"/>
+<edge source="Wheeler-DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases" target="Ming Yang"/>
+<edge source="Wheeler-DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases" target="Marine De Clerck"/>
+<edge source="Florian Sammüller" target="Learning the bulk and interfacial physics of liquid-liquid phase separation"/>
+<edge source="Learning the bulk and interfacial physics of liquid-liquid phase separation" target="Robert Evans"/>
+<edge source="Learning the bulk and interfacial physics of liquid-liquid phase separation" target="Silas Robitschko"/>
+<edge source="Learning the bulk and interfacial physics of liquid-liquid phase separation" target="Matthias Schmidt"/>
+<edge source="H S Modirzadeh" target="Non-relativistic effective theories for fields with general potentials and their implications for cosmology"/>
+<edge source="Non-relativistic effective theories for fields with general potentials and their implications for cosmology" target="M H Namjoo"/>
+<edge source="Non-relativistic effective theories for fields with general potentials and their implications for cosmology" target="R Moti"/>
+<edge source="Yunzhuo Wang" target="Tree-Structured Parzen Estimator Can Solve Black-Box Combinatorial Optimization More Efficiently"/>
+<edge source="Tree-Structured Parzen Estimator Can Solve Black-Box Combinatorial Optimization More Efficiently" target="Shuhei Watanabe"/>
+<edge source="Tree-Structured Parzen Estimator Can Solve Black-Box Combinatorial Optimization More Efficiently" target="Kenshin Abe"/>
+<edge source="Lizhong Chu" target="Depth of the 3-path Ideal of Square of a Path"/>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="Liuqing Yang"/>
+<edge source="Yaodong Su" target="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval"/>
+<edge source="Maiju Karjalainen" target="Hashing for Fast Pattern Set Selection"/>
+<edge source="Hashing for Fast Pattern Set Selection" target="Pauli Miettinen"/>
+<edge source="Santiago González-Gaitán" target="Statistical Analysis of Early Spectra in Type II and IIb Supernovae"/>
+<edge source="Statistical Analysis of Early Spectra in Type II and IIb Supernovae" target="Maider González-Bañuelos"/>
+<edge source="Statistical Analysis of Early Spectra in Type II and IIb Supernovae" target="Lluís Galbany"/>
+<edge source="Statistical Analysis of Early Spectra in Type II and IIb Supernovae" target="Claudia P Gutiérrez"/>
+<edge source="Yutong He" target="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees"/>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Pengrui Li"/>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Kun Yuan"/>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Chuyan Chen"/>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Weichen Jia"/>
+<edge source="Haoran Zhou" target="Content-Oblivious Leader Election in 2-Edge-Connected Networks"/>
+<edge source="Content-Oblivious Leader Election in 2-Edge-Connected Networks" target="Yi-Jun Chang"/>
+<edge source="Content-Oblivious Leader Election in 2-Edge-Connected Networks" target="Lyuting Chen"/>
+<edge source="† Tao Chen" target="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning"/>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="Tao Chen"/>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="Zezhen Xiang"/>
+<edge source="Byounhyun Yoo" target="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting"/>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="Gerard Jounghyun Kim"/>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="Ji Hyun Seo"/>
+<edge source="Itai Mondshine" target="Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization"/>
+<edge source="Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization" target="Tzuf Paz-Argaman"/>
+<edge source="Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization" target="Reut Tsarfaty"/>
+<edge source="Cristina Aggazzotti" target="The Impact of Automatic Speech Transcription on Speaker Attribution"/>
+<edge source="The Impact of Automatic Speech Transcription on Speaker Attribution" target="Matthew Wiesner"/>
+<edge source="The Impact of Automatic Speech Transcription on Speaker Attribution" target="Elizabeth Allyn Smith"/>
+<edge source="The Impact of Automatic Speech Transcription on Speaker Attribution" target="Nicholas Andrews"/>
+<edge source="Jana Ma Ří" target="A MODEL THEORETIC VERSION OF TARSKI'S THEOREM"/>
+<edge source="Manh Thang" target="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures"/>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="Nguyen Cao"/>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="Bich Van Nguyen"/>
+<edge source="Danilo S Carvalho" target="elsciRL: Integrating Language Solutions into Reinforcement Learning Problem Settings"/>
+<edge source="elsciRL: Integrating Language Solutions into Reinforcement Learning Problem Settings" target="Philip Osborne"/>
+<edge source="elsciRL: Integrating Language Solutions into Reinforcement Learning Problem Settings" target="André Freitas"/>
+<edge source="Suchanda Roy" target="Word-Representability of Split Graphs with Independent Set of Size 4"/>
+<edge source="Word-Representability of Split Graphs with Independent Set of Size 4" target="Ramesh Hariharasubramanian"/>
+<edge source="S Pineda" target="Robust Contextual State Estimation with Limited Measurement Data"/>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="J M Morales"/>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="J G De La Varga"/>
+<edge source="Henrik Turbell" target="Image Translation with Kernel Prediction Networks for Semantic Segmentation"/>
+<edge source="Image Translation with Kernel Prediction Networks for Semantic Segmentation" target="Michael Ryoo"/>
+<edge source="Image Translation with Kernel Prediction Networks for Semantic Segmentation" target="Cristina Mata"/>
+<edge source="Ioannis Koutis" target="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs"/>
+<edge source="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs" target="Bartosz Bryg"/>
+<edge source="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs" target="David A Bader"/>
+<edge source="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs" target="Oliver Alvarado Rodriguez"/>
+<edge source="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs" target="Mohammad Dindoost"/>
+<edge source="Ruy M Ribeiro" target="Roadmap for using large language models (LLMs) to accelerate cross-disciplinary research with an example from computational biology"/>
+<edge source="Roadmap for using large language models (LLMs) to accelerate cross-disciplinary research with an example from computational biology" target="Ruian Ke"/>
+<edge source="Pei Li" target="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection"/>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Rei Tamaru"/>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Bin Ran"/>
+<edge source="Sujal Gupta" target="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator"/>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="Jolly Xavier"/>
+<edge source="Qi Zhang" target="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost"/>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Yaojia Wang"/>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Yue Gao"/>
+<edge source="Christian Meisel" target="Critical dynamics governs deep learning"/>
+<edge source="Critical dynamics governs deep learning" target="Simon Vock"/>
+<edge source="Goodfire Ai" target="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Christos Perivolaropoulos"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Owen Lewis"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Kodamai"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Google Deepmind"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Petar Veličković"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Andrew Dudzik"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Razvan Pascanu"/>
+<edge source="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists" target="Neil Ghani"/>
+<edge source="Sandi Klavžar" target="Bounds on the game isolation number and exact values for paths and cycles"/>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="Tanja Dravec"/>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="Michael A Henning"/>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="Csilla Bujtás"/>
+<edge source="Samuel Daudin" target="GENERICITY OF POLYAK-LOJASIEWICZ INEQUALITIES FOR ENTROPIC MEAN-FIELD NEURAL ODES"/>
+<edge source="GENERICITY OF POLYAK-LOJASIEWICZ INEQUALITIES FOR ENTROPIC MEAN-FIELD NEURAL ODES" target="François Delarue"/>
+<edge source="Jeongkyu Lee" target="An Efficient Approach for Muscle Segmentation and 3D Reconstruction Using Keypoint Tracking in MRI Scan"/>
+<edge source="An Efficient Approach for Muscle Segmentation and 3D Reconstruction Using Keypoint Tracking in MRI Scan" target="Mengyuan Liu"/>
+<edge source="Jan Felix Kleuker" target="On the Effect of Regularization in Policy Mirror Descent"/>
+<edge source="On the Effect of Regularization in Policy Mirror Descent" target="Thomas Moerland"/>
+<edge source="On the Effect of Regularization in Policy Mirror Descent" target="Aske Plaat"/>
+<edge source="Julian Minder" target="The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?"/>
+<edge source="The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?" target="Denis Sutter"/>
+<edge source="Sinem Coleri" target="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees"/>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="Berire Gunes"/>
+<edge source="Paul Bastide" target="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation"/>
+<edge source="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation" target="Julien Stoehr"/>
+<edge source="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation" target="Jean-Michel Marin"/>
+<edge source="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation" target="Arnaud Estoup"/>
+<edge source="Soheyl Massoudi" target="AGENTIC LARGE LANGUAGE MODELS FOR CONCEPTUAL SYSTEMS ENGINEERING AND DESIGN A PREPRINT"/>
+<edge source="AGENTIC LARGE LANGUAGE MODELS FOR CONCEPTUAL SYSTEMS ENGINEERING AND DESIGN A PREPRINT" target="Mark Fuge"/>
+<edge source="Vincenzo Dentamaro" target="Scaling Attention to Very Long Sequences in Linear Time with Wavelet-Enhanced Random Spectral Attention (WERSA)"/>
+<edge source="Natalia Bottaioli" target="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates"/>
+<edge source="Seongyun Choi" target="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge"/>
+<edge source="Cyril Branciard" target="Routing Quantum Control of Causal Order"/>
+<edge source="Routing Quantum Control of Causal Order" target="Augustin Vanrietvelde"/>
+<edge source="Pierre Le Doussal" target="Dynamic scaling of growing interfaces"/>
+<edge source="Georgi Yordanov Georgiev" target="Average Action Efficiency Rises Monotonically in Self-Organizing Systems via Stochastic Least-Action Dynamics"/>
+</graph></graphml>

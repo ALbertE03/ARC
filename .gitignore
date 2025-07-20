@@ -13,3 +13,4 @@ lib/
 .ipynb_checkpoints
 # Ignore virtual environment directories
 venv/   
+pdfs_papers/
