@@ -41,7 +41,7 @@ def main():
             st.header("Análisis de Temas de Investigación", anchor=False, divider='gray')
             render_topic_page(keyword_metrics)
         with tab3:
-            render_papers_page()
+            render_papers_page(author_graph,keyword_graph)
            
         with tab4:
             st.header("Análisis Individual y de Co-ocurrencia", anchor=False, divider='gray')

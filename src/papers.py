@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
 from networkx.algorithms import community
+from collections import defaultdict
+import json
 def calculate_centrality(_g):
     """Calcula un diccionario con diferentes métricas de centralidad."""
     if _g is None:
@@ -44,14 +46,33 @@ def detect_author_communities(_g):
     author_to_community = {author: i for i, comm in enumerate(communities_list) for author in comm}
     return author_to_community
 
+@st.cache_data
+def load_pdf():
+    try:
+        with open("./data/extract_result.json",'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        st.error("No se encontró el archivo extract_result.json")
+        return None
+@st.cache_data
+def load_key_autor():
+    try:
+        return nx.read_graphml('./graph/author_collaboration_graph_keywords.graphml')
+    except:
+        st.error("ruta incorrecta")
+        st.stop()
 
 
-def render_papers_page():
+def render_papers_page(author_graph,keyword_graph):
     G_article = load_article_grap('./graph/articles_graph.graphml')
     min_grade = [G_article.degree(x) for x,d in G_article.nodes(data=True) if d and d['type']=='papers']
     paper_nodes = [n for n, d in G_article.nodes(data=True) if d.get('type') == 'papers']
     centrality_metrics = calculate_centrality(G_article)
     author_community_map = detect_author_communities(G_article)
+    pdf_data = load_pdf()
+    key_autor = load_key_autor()
+    communities1 = list(community.louvain_communities(key_autor, weight='weight', seed=42))
+    author_community_map = {author: i for i, comm in enumerate(communities1) for author in comm}
 
     with st.expander("Filtros"):
             col1,col2 = st.columns(2)
@@ -142,7 +163,7 @@ def render_papers_page():
 
             st.plotly_chart(fig, use_container_width=True)
     
-    with st.expander("📊 Distribución de Autores por Artículo"):
+    with st.expander("Distribución de Autores por Artículo"):
         author_counts = [G_article.degree(p) for p in paper_nodes]
         df_counts = pd.DataFrame(author_counts, columns=['Nº de Autores'])
         
@@ -151,74 +172,73 @@ def render_papers_page():
                            labels={'x': 'Número de Autores', 'y': 'Cantidad de Artículos'},
                            nbins=max(author_counts))
         st.plotly_chart(fig, use_container_width=True)
-        st.markdown(f"""
-        - **Promedio de autores por artículo:** `{df_counts['Nº de Autores'].mean():.2f}`
-        - **Máximo de autores en un solo artículo:** `{df_counts['Nº de Autores'].max()}`
-        - **Total de artículos con un solo autor:** `{len(df_counts[df_counts['Nº de Autores'] == 1])}`
-        """)
-
-    with st.expander("🏆 Artículos con Mayor Impacto y Centralidad"):
-        st.info("Aquí se clasifican los artículos según diferentes métricas de importancia en la red de colaboración.")
-        # Preparar dataframes para los rankings
-        paper_metrics = []
-        for paper in paper_nodes:
-            paper_metrics.append({
-                'Artículo': paper,
-                'Nº Autores (Grado)': G_article.degree(paper),
-                'Interconexión (Betweenness)': centrality_metrics['betweenness_centrality'].get(paper, 0),
-                'Influencia (PageRank)': centrality_metrics['pagerank'].get(paper, 0)
-            })
-        df_metrics = pd.DataFrame(paper_metrics)
-
-        col1, col2, col3 = st.columns(3)
+        col1,col2,col3 = st.columns(3)
         with col1:
-            st.subheader("Más Colaborativos")
-            st.dataframe(df_metrics[['Artículo', 'Nº Autores (Grado)']].sort_values('Nº Autores (Grado)', ascending=False).head(10), hide_index=True)
+            st.metric("Promedio de autores por artículo:",round(df_counts['Nº de Autores'].mean()))
         with col2:
-            st.subheader("Más Interconectores")
-            st.dataframe(df_metrics[['Artículo', 'Interconexión (Betweenness)']].sort_values('Interconexión (Betweenness)', ascending=False).head(10), hide_index=True, use_container_width=True)
+            st.metric("Máximo de autores:",round(df_counts['Nº de Autores'].max(),2))
         with col3:
-            st.subheader("Más Influyentes")
-            st.dataframe(df_metrics[['Artículo', 'Influencia (PageRank)']].sort_values('Influencia (PageRank)', ascending=False).head(10), hide_index=True, use_container_width=True)
+            st.metric("Artículos con un solo autor:",len(df_counts[df_counts['Nº de Autores'] == 1]))
 
-    with st.expander("🤝 Artículos con Mayor Interdisciplinariedad"):
-        st.markdown("""
-        Se mide la interdisciplinariedad de un artículo contando de **cuántas comunidades de investigación diferentes provienen sus autores**. 
-        Un puntaje alto sugiere que el artículo es un punto de encuentro para diversas áreas del conocimiento.
-        """)
-        interdisciplinary_scores = []
-        for paper in paper_nodes:
-            authors = G_article.neighbors(paper)
-            communities_involved = {author_community_map.get(author) for author in authors if author in author_community_map}
-            score = len(communities_involved)
-            interdisciplinary_scores.append({'Artículo': paper, 'Puntaje Interdisciplinario': score, 'Nº Autores': G_article.degree(paper)})
-        
-        df_interdisciplinary = pd.DataFrame(interdisciplinary_scores).sort_values('Puntaje Interdisciplinario', ascending=False)
-        st.dataframe(df_interdisciplinary.head(15), hide_index=True, use_container_width=True)
+    with st.expander("Artículos Clave"):
+        tabs = st.tabs(["Puentes entre Comunidades", "Más Autores", "Más Temas"])
 
-        st.markdown("Selecciona un artículo para encontrar otros que compartan la mayor cantidad de autores.")
-        selected_paper = st.selectbox("Elige un artículo de referencia:", options=sorted(paper_nodes))
+        with tabs[0]:
+            paper_bridges = defaultdict(set)
+            for author_id, comm_idx in author_community_map.items():
+                author_id = author_id.replace("author_", "").strip()
+                papers = author_graph.nodes[author_id].get('papers', [])
+                for paper in papers:
+                    paper_bridges[paper].add(comm_idx)
 
-        if selected_paper:
-            target_authors = set(G_article.neighbors(selected_paper))
-            similarities = []
-            for other_paper in paper_nodes:
-                if other_paper != selected_paper:
-                    other_authors = set(G_article.neighbors(other_paper))
-                    # Jaccard Similarity
-                    intersection = len(target_authors.intersection(other_authors))
-                    union = len(target_authors.union(other_authors))
-                    if union > 0:
-                        similarity = intersection / union
-                        if similarity > 0:
-                            similarities.append({
-                                'Artículo Similar': other_paper,
-                                'Similitud (Jaccard)': f"{similarity:.2%}",
-                                'Autores en Común': intersection
-                            })
-            
-            if similarities:
-                df_similar = pd.DataFrame(similarities).sort_values('Autores en Común', ascending=False)
-                st.dataframe(df_similar.head(10), hide_index=True, use_container_width=True)
+            if paper_bridges:
+                df_bridge = pd.DataFrame({
+                    'ID Artículo': paper_bridges.keys(),
+                    'Comunidades Conectadas': [len(v) for v in paper_bridges.values()]
+                }).sort_values('Comunidades Conectadas', ascending=False)
+
+                df_bridge['Título'] = df_bridge['ID Artículo'].apply(
+                    lambda x: pdf_data.get(x, {}).get('title', ['Desconocido'])[0] if pdf_data.get(x).get('title') else 'Desconocido'
+                )
+
+                st.dataframe(df_bridge[['Título', 'Comunidades Conectadas']].head(10), hide_index=True)
+
+        with tabs[1]:
+            paper_authors = defaultdict(set)
+            for node in author_graph.nodes:
+                for paper in author_graph.nodes[node].get('papers', []):
+                    paper_authors[paper].add(node)
+
+            if paper_authors:
+                df_authors = pd.DataFrame({
+                    'ID Artículo': paper_authors.keys(),
+                    'Cantidad de Autores': [len(v) for v in paper_authors.values()]
+                }).sort_values('Cantidad de Autores', ascending=False)
+
+                df_authors['Título'] = df_authors['ID Artículo'].apply(
+                    lambda x: pdf_data.get(x, {}).get('title', ['Desconocido'])[0] if pdf_data.get(x).get('title') else 'Desconocido'
+                )
+
+                st.dataframe(df_authors[['Título', 'Cantidad de Autores']].head(10), hide_index=True)
+
+        with tabs[2]:
+            if pdf_data:
+                df_topics = []
+                for paper_id, metadata in pdf_data.items():
+                    keywords = metadata.get('keywords', [])
+                    num_keywords = len(keywords)
+                    title = metadata.get('title', ['Desconocido'])[0] if pdf_data.get(paper_id).get('title') else 'Desconocido'
+                    df_topics.append({
+                        'ID Artículo': paper_id,
+                        'Título': title,
+                        'Cantidad de Temas': num_keywords
+                    })
+
+                df_topics = pd.DataFrame(df_topics).sort_values('Cantidad de Temas', ascending=False)
+                st.dataframe(df_topics[['Título', 'Cantidad de Temas']].head(10), hide_index=True)
             else:
-                st.info("No se encontraron otros artículos que compartan autores con el seleccionado.")
+                st.info("No hay información de temas disponible.")
+
+
+
+    

@@ -59,6 +59,8 @@ def load_key_autor():
     except:
         st.error("ruta incorrecta")
         st.stop()
+
+
 def render_authors_page(author_analytics, keyword_graph):
     """
     Renderiza la página de análisis de autores
@@ -113,8 +115,55 @@ def render_authors_page(author_analytics, keyword_graph):
                     filtered_df[['Autor', 'Nº Colaboradores']].nlargest(top_n, 'Nº Colaboradores'),
                     use_container_width=True, hide_index=True
                 )
-
     
+    with st.expander("Comparador de Autores"):
+        author_list = [(d.get("name"), n) for n, d in keyword_graph.nodes(data=True) if d.get('type') == 'author']
+        names1 = [name for name, _ in author_list]
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            author1_name = st.selectbox("Selecciona el primer autor:", names1, index=None, key="comp_author1")
+        with col2:
+            author2_name = st.selectbox("Selecciona el segundo autor:", names1, index=None, key="comp_author2")
+
+        if author1_name and author2_name and author1_name != author2_name:
+            author1_id = next((node_id for name, node_id in author_list if name == author1_name), None)
+            author2_id = next((node_id for name, node_id in author_list if name == author2_name), None)
+            
+            if not author1_id or not author2_id:
+                st.error("No se encontraron los datos completos de los autores seleccionados")
+                return
+
+            data1 = master_df[master_df['Autor'] == author1_name].iloc[0]
+            data2 = master_df[master_df['Autor'] == author2_name].iloc[0]
+
+            node1_id = next((n for n, d in author_graph.nodes(data=True) if d.get('name') == author1_name), None)
+            node2_id = next((n for n, d in author_graph.nodes(data=True) if d.get('name') == author2_name), None)
+            
+            if node1_id and node2_id:
+                collabs1 = set(author_graph.neighbors(node1_id))
+                collabs2 = set(author_graph.neighbors(node2_id))
+                shared_collabs = {author_graph.nodes[n].get('name') for n in collabs1.intersection(collabs2)}
+                
+                topics1 = {n for n in keyword_graph.neighbors(author1_id) if keyword_graph.nodes[n].get('type') == 'keyword'}
+                topics2 = {n for n in keyword_graph.neighbors(author2_id) if keyword_graph.nodes[n].get('type') == 'keyword'}
+                shared_topics = topics1.intersection(topics2)
+
+                st.subheader("Conexiones y Temas Compartidos")
+                st.metric("Colaboradores en Común", len(shared_collabs))
+                if shared_collabs:
+                    st.multiselect("Colaboradores compartidos:", 
+                                options=list(shared_collabs), 
+                                default=list(shared_collabs), 
+                                disabled=True)
+                
+                st.metric("Temas de Investigación en Común", len(shared_topics))
+                if shared_topics:
+                    st.multiselect("Temas compartidos:", 
+                                options=list(shared_topics), 
+                                default=list(shared_topics), 
+                                disabled=True)
+
     with st.expander("Autores más Influyentes", expanded=False):
         if author_graph is not None and author_graph.number_of_nodes() > 0 and keyword_graph is not None and keyword_graph.number_of_nodes() > 0:
             
@@ -282,32 +331,52 @@ def render_authors_page(author_analytics, keyword_graph):
             )
         else:
             st.warning("No hay autores que cumplan los criterios de filtrado")
-            
+
     with st.expander("Puentes Temáticos entre Comunidades", expanded=False):
-        inter_community_edges = defaultdict(int)
+        inter_community_edges = defaultdict(lambda: {'count': 0, 'shared_topics': set()})
+    
+        author_topics = {}
+        for author in key_autor.nodes():
+            topics = {n for n in keyword_graph.neighbors(author) if keyword_graph.nodes[n].get('type') == 'keyword'}
+            if topics:
+                author_topics[author] = topics
+
         for u, v in key_autor.edges():
             c1 = author_community_map.get(u)
             c2 = author_community_map.get(v)
             if c1 is not None and c2 is not None and c1 != c2:
-                edge = tuple(sorted((c1, c2)))
-                inter_community_edges[edge] += 1
+                topics_u = author_topics.get(u, set())
+                topics_v = author_topics.get(v, set())
+                shared = topics_u & topics_v
                 
+                if shared:
+                    edge = tuple(sorted((c1, c2)))
+                  
+                    before = len(inter_community_edges[edge]['shared_topics'])
+                    inter_community_edges[edge]['shared_topics'].update(shared)
+                    after = len(inter_community_edges[edge]['shared_topics'])
+
+                    if after > before:
+                        inter_community_edges[edge]['count'] += 1
         if not inter_community_edges:
             st.warning("No se encontraron conexiones temáticas entre las diferentes comunidades.")
         else:
             collaboration_data = []
-            for (c1, c2), weight in inter_community_edges.items():
+            for (c1, c2), data in inter_community_edges.items():
                 collaboration_data.append({
                     'Comunidad A': f"Comunidad {c1+1}",
                     'Comunidad B': f"Comunidad {c2+1}",
-                    'Nº Conexiones Temáticas': weight, 
-                    'indices': (c1, c2)
+                    'Conexiones Temáticas': data['count'],
+                    'Temas Compartidos': len(data['shared_topics']),
+                    'indices': (c1, c2),
+                    'topics_list': list(data['shared_topics'])
                 })
             
-            df_collab = pd.DataFrame(collaboration_data).sort_values('Nº Conexiones Temáticas', ascending=False)
+            df_collab = pd.DataFrame(collaboration_data).sort_values('Conexiones Temáticas', ascending=False)
             
-            st.subheader("Comunidades con Mayor Conexión Temática")
-            st.dataframe(df_collab[['Comunidad A', 'Comunidad B', 'Nº Conexiones Temáticas']].head(10), hide_index=True, use_container_width=True)
+            qqq = st.slider("cantidad a mostrar",1,len(df_collab),min(3,len(df_collab)),key="collab_slider")
+            st.subheader(f"Top {qqq} Comunidades con Mayor Conexión Temática")
+            st.dataframe(df_collab[['Comunidad A', 'Comunidad B', 'Conexiones Temáticas','topics_list']].head(qqq), hide_index=True, use_container_width=True)
 
             st.divider()
 
@@ -337,27 +406,42 @@ def render_authors_page(author_analytics, keyword_graph):
                     st.warning("No se encontraron temas compartidos directos entre estas dos comunidades.")
                 if bridge_topics:    
                     st.divider()    
-                    st.markdown("##### Autores que Trabajan en los Temas Puente")
+                    st.markdown("##### Análisis por Tema Puente")
+
+                    selected_topic = st.selectbox("Selecciona un tema puente para ver los autores involucrados:", options=sorted(bridge_topics))
+
                     col1, col2 = st.columns(2)
 
-                    def display_bridge_authors(comm_idx, community_name, bridge_topics, column):
-                        with column:
-                            st.markdown(f"**De {community_name}:**")
-                            bridge_authors_in_comm = []
-                            for author_id in communities1[comm_idx]:
-                                author_topics = {n for n in keyword_graph.neighbors(author_id) if keyword_graph.nodes[n].get('type') == 'keyword'}
-                                if author_topics.intersection(bridge_topics):
-                                    author_name = key_autor.nodes[author_id].get('name', author_id)
-                                    bridge_authors_in_comm.append(author_name)
-                            lim = st.slider("Cantidad a mostrar",1,len(bridge_authors_in_comm),min(3,len(bridge_authors_in_comm)),key=f"bridge_authors_{comm_idx}")
-                            if bridge_authors_in_comm:
-                                for name in sorted(bridge_authors_in_comm)[:lim]: 
-                                    st.write(f" • {name}")
-                            else:
-                                st.info("Ningún autor de esta comunidad trabaja en los temas puente.")
-                    
-                    display_bridge_authors(c1_idx, selected_row['Comunidad A'], bridge_topics, col1)
-                    display_bridge_authors(c2_idx, selected_row['Comunidad B'], bridge_topics, col2)
+                    def get_authors_for_topic(comm_idx, topic):
+                        authors = []
+                        for author_id in communities1[comm_idx]:
+                            topics_author = {n for n in keyword_graph.neighbors(author_id) if keyword_graph.nodes[n].get('type') == 'keyword'}
+                            if topic in topics_author:
+                                name = key_autor.nodes[author_id].get('name', author_id)
+                                authors.append(name)
+                        return sorted(authors)
+
+                    with col1:
+                        st.markdown(f"**{selected_row['Comunidad A']}**")
+                        authors_a = get_authors_for_topic(c1_idx, selected_topic)
+                       
+                        if authors_a:
+                            ww = st.slider("cantidad a mostrar",0,len(authors_a),min(3,len(authors_a)),key=f"authors_a_{selected_topic}")
+                            for a in authors_a[:ww]:
+                                st.write(f"• {a}")
+                        else:
+                            st.info("Ningún autor en esta comunidad trabaja este tema.")
+
+                    with col2:
+                        st.markdown(f"**{selected_row['Comunidad B']}**")
+                        authors_b = get_authors_for_topic(c2_idx, selected_topic)
+                        if authors_b:
+                            ww1 = st.slider("cantidad a mostrar",0,len(authors_b),min(3,len(authors_b)),key=f"authors_b_{selected_topic}")
+                            for b in authors_b[:ww1]:
+                                st.write(f"• {b}")
+                        else:
+                            st.info("Ningún autor en esta comunidad trabaja este tema.")
+
 
     with st.expander("Especialistas y Temas de Nicho", expanded=False):
     
@@ -401,7 +485,7 @@ def render_authors_page(author_analytics, keyword_graph):
         else:
             st.warning("No se encontraron temas de nicho o especialistas asociados.")
 
-    with st.expander("Pares de Autores que más Colaboran",expanded=False):
+    with st.expander("Pares de Autores",expanded=False):
         if author_graph is not None:
             top_k = st.slider("Mostrar el Top N de Pares de Autores:", 1, 20, 10, key="top_pairs_slider")
             edge_weights = nx.get_edge_attributes(author_graph, 'weight')
@@ -443,6 +527,40 @@ def render_authors_page(author_analytics, keyword_graph):
         else:
             st.warning("No hay datos de colaboración entre autores disponibles.")
     
+  
+    with st.expander("Oportunidades de Colaboración"):
+        potential_pairs = []
+        
+        for u, v, data in key_autor.edges(data=True):
+            if not author_graph.has_edge(u, v):
+                potential_pairs.append({
+                    'Autor A': key_autor.nodes[u].get('name', u),
+                    'Autor B': key_autor.nodes[v].get('name', v),
+                    'Temas en común': data.get('weight', 1)
+                })
+
+        if potential_pairs:
+            mos = st.slider("Mostrar",1,max_value=len(potential_pairs),value=min(10,len(potential_pairs)),key="potential_collab_slider")
+            df_potential = pd.DataFrame(potential_pairs).sort_values('Temas en común', ascending=False)
+            df_potential['Par de Autores'] = df_potential['Autor A'] + " & " + df_potential['Autor B']
+
+            fig = px.bar(
+                df_potential.head(mos),
+                x='Temas en común',
+                y='Par de Autores',
+                orientation='h',
+                title=f'Top {mos} Oportunidades de Colaboración No Explotadas',
+                labels={'Temas en común': 'Coincidencia Temática'},
+                height=400
+            )
+            fig.update_layout(yaxis={'categoryorder':'total ascending'})
+            st.plotly_chart(fig, use_container_width=True)
+
+            st.dataframe(df_potential[['Autor A', 'Autor B', 'Temas en común']].head(mos), hide_index=True, use_container_width=True)
+
+        else:
+            st.warning("No se encontraron oportunidades claras de colaboración.")
+
 
     with st.expander("Comunidades más Productivas", expanded=False):
         if communities:
@@ -598,3 +716,124 @@ def render_authors_page(author_analytics, keyword_graph):
                 st.info("No se encontraron relaciones de colaboración exclusiva", icon="ℹ️")
         else:
             st.warning("Red de colaboración no disponible", icon="⚠️")
+
+
+    
+
+    with st.expander("Tríadas de Colaboración", expanded=False):
+
+        triad_edges = set()
+        triad_strength = defaultdict(int)
+
+        for clique in nx.find_cliques(author_graph): 
+            if len(clique) == 3: 
+                u, v, w = clique
+
+                if author_graph.has_edge(u, v) and author_graph.has_edge(v, w) and author_graph.has_edge(u, w):
+                    edges = [(u, v), (v, w), (u, w)]
+                    triad_edges.update(tuple(sorted(edge)) for edge in edges)
+
+                    strength = (
+                        author_graph[u][v].get('weight', 1) +
+                        author_graph[v][w].get('weight', 1) +
+                        author_graph[u][w].get('weight', 1)
+                    )
+                    authors = tuple(sorted([
+                        author_graph.nodes[u].get('name', u),
+                        author_graph.nodes[v].get('name', v),
+                        author_graph.nodes[w].get('name', w)
+                    ]))
+                    triad_strength[authors] = strength
+
+        total_graph_strength = sum(data.get('weight', 1) for u, v, data in author_graph.edges(data=True))
+        triad_edge_strength = sum(author_graph[u][v].get('weight', 1) for u, v in triad_edges)
+
+        with st.expander("Proporción de la Colaboración en Tríadas", expanded=False):
+            data = {
+                'Tipo': ['En Tríadas', 'Fuera de Tríadas'],
+                'Fuerza': [triad_edge_strength, total_graph_strength - triad_edge_strength]
+            }
+            df_pie = pd.DataFrame(data)
+            fig = px.pie(
+                df_pie,
+                values='Fuerza',
+                names='Tipo',
+                title='Proporción de Colaboraciones en Tríadas vs Total',
+                color_discrete_sequence=['#6a5acd', '#cccccc']
+            )
+            fig.update_traces(textinfo='percent+label')
+            st.plotly_chart(fig, use_container_width=True)
+
+        with st.expander("Diversidad Temática por Tríada", expanded=False):
+            triad_topic_diversity = []
+            for triad in triad_strength:
+                author_ids = [n for n, d in keyword_graph.nodes(data=True) if d.get('name') in triad]
+                all_topics = set()
+                for aid in author_ids:
+                    all_topics.update(
+                        n for n in keyword_graph.neighbors(aid)
+                        if keyword_graph.nodes[n].get('type') == 'keyword'
+                    )
+                triad_topic_diversity.append({
+                    'Tríada': " & ".join(triad),
+                    'Fuerza de Colaboración': triad_strength[triad],
+                    'Temas Distintos': len(all_topics),
+                    'Temas': all_topics
+                })
+
+            df_diversidad = pd.DataFrame(triad_topic_diversity).sort_values(by='Temas Distintos', ascending=False)
+
+            fig = px.scatter(
+                df_diversidad.head(15),
+                x="Fuerza de Colaboración",
+                y="Temas Distintos",
+                hover_name="Tríada",
+                color="Temas Distintos",
+                size="Fuerza de Colaboración",
+                title="Diversidad Temática vs. Fuerza de Colaboración en Tríadas"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with st.expander("Tabla de Tríadas y Exploración de Temas", expanded=True):
+            df_triads = pd.DataFrame(triad_strength.items(), columns=['Tríada', 'Fuerza de Colaboración'])
+            df_triads['Tríada'] = df_triads['Tríada'].apply(lambda x: " & ".join(x))
+            df_triads = df_triads.sort_values('Fuerza de Colaboración', ascending=False)
+
+            tri = st.slider("Cantidad a mostrar", 1, len(df_triads), min(10, len(df_triads)), key="triads_slider")
+            st.dataframe(df_triads.head(tri), hide_index=True)
+
+            selected_triad = st.selectbox("Selecciona una Tríada para ver sus temas únicos", df_triads['Tríada'].unique())
+            if selected_triad:
+                autores = selected_triad.split(" & ")
+                author_ids = [n for n, d in keyword_graph.nodes(data=True) if d.get('name') in autores]
+
+                unique_topics = set()
+                for aid in author_ids:
+                    unique_topics.update(
+                        n for n in keyword_graph.neighbors(aid)
+                        if keyword_graph.nodes[n].get('type') == 'keyword'
+                    )
+
+                st.markdown(f"### Temas únicos asociados a **{selected_triad}**")
+                if unique_topics:
+                    st.write(sorted(unique_topics))
+                else:
+                    st.info("No se encontraron temas asociados.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
