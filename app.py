@@ -7,6 +7,7 @@ from src.utils import load_author_graph, load_keyword_graph, save_graph_state, c
 from src.authors import render_authors_page
 from src.topics import render_topic_page
 from src.papers import render_papers_page
+
 def main():
    
     PATH_TO_AUTHOR_GRAPH = './graph/author_collaboration_graph.graphml'
@@ -24,13 +25,12 @@ def main():
     author_graph = st.session_state['author_graph']
     keyword_graph = st.session_state['keyword_graph']
     
-    author_metrics = calculate_author_metrics(author_graph)
+    
     keyword_metrics = calculate_keyword_metrics(keyword_graph)
     if 'author_analytics' not in st.session_state:
         st.session_state.author_analytics = calculate_advanced_author_metrics(author_graph)
     
-    st.title("🔬 Dashboard de Inteligencia en Investigación", anchor=False)
-    st.markdown("Análisis de la red de colaboración y producción científica de la institución.")
+    st.title("Análisis de la red científica de la UH", anchor=False)
 
     with st.container(border=True):
         tab1, tab2, tab3,tab4= st.tabs(["Autores", "Temas",'Articulos', "Co-ocurrencia"])

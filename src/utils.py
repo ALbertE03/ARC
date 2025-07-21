@@ -126,14 +126,16 @@ def load_papers_data():
         return data
     except:
         return None
-
+from networkx.algorithms import community
 @st.cache_data
 def calculate_advanced_author_metrics(_author_graph):
     e = {}
     for n,d in _author_graph.nodes(data=True):
         e[d['name']] =  d['papers']
     """Calcula y devuelve un diccionario con métricas avanzadas y una tabla."""
-    communities = list(nx.community.louvain_communities(_author_graph, weight='weight'))
+    if _author_graph.number_of_edges() > 0:
+        communities  = list(community.louvain_communities(_author_graph, weight='weight', seed=42))
+    #communities = list(nx.community.louvain_communities(_author_graph, weight='weight'))
     node_to_community = {node: i for i, comm in enumerate(communities) for node in comm}
     betweenness = nx.betweenness_centrality(_author_graph, weight='weight', k=min(100, len(_author_graph)))
     eigenvector = nx.eigenvector_centrality(_author_graph, weight='weight', max_iter=1000, tol=1e-04)

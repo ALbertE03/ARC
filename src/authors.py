@@ -3,144 +3,311 @@ import pandas as pd
 import networkx as nx
 import plotly.express as px
 import plotly.graph_objects as go 
-import matplotlib.pyplot as plt
+from collections import defaultdict
 import json
-from src.utils import load_article_grap
-from nxviz import ArcPlot
+
 @st.cache_data
 def load_pdf():
     try:
         with open("./data/extract_result.json",'r') as f:
             return json.load(f)
-    except:
+    except FileNotFoundError:
+        st.error("No se encontró el archivo extract_result.json")
         return None
-    
-
-def render_authors_page(author_analytics,keyword_graph):
+@st.cache_data
+def process_niche_topics(_keyword_graph):
     """
-    Renderiza la página de análisis de autores con filtros, tablas y visualizaciones avanzadas.
+    Analiza el grafo para encontrar autores y sus temas de nicho.
+    """
+    specialist_to_topics = defaultdict(list)
+
+    niche_topics_set = set()
+    for keyword_node, data in _keyword_graph.nodes(data=True):
+        if data.get('type') == 'keyword':
+            authors = [n for n in _keyword_graph.neighbors(keyword_node) if _keyword_graph.nodes[n].get('type') == 'author']
+            if 1 <= len(authors) <= 2:
+                niche_topics_set.add(keyword_node)
+
+    
+    for author_node, data in _keyword_graph.nodes(data=True):
+        if data.get('type') == 'author':
+            author_name = data.get('name', 'N/A')
+            specialized_topics = [
+                neighbor for neighbor in _keyword_graph.neighbors(author_node)
+                if neighbor in niche_topics_set
+            ]
+            if specialized_topics:
+                specialist_to_topics[author_name] = specialized_topics
+    
+    if not specialist_to_topics:
+        return pd.DataFrame(), {}
+
+    df_data = {
+        'Especialista': specialist_to_topics.keys(),
+        'Nº de Temas de Nicho': [len(topics) for topics in specialist_to_topics.values()]
+    }
+    df = pd.DataFrame(df_data).sort_values('Nº de Temas de Nicho', ascending=False)
+    
+    return df, specialist_to_topics
+
+
+def render_authors_page(author_analytics, keyword_graph):
+    """
+    Renderiza la página de análisis de autores
     """
     if 'master_table' not in author_analytics or author_analytics['master_table'].empty:
         st.error("No hay datos de autores para analizar.")
         return
+    
     pdf_data = load_pdf()
     if pdf_data is None:
-        st.error("Error al cargar los datos del PDF.")
         return
-    master_df = author_analytics['master_table']
-    communities = author_analytics['communities']
-    papers = author_analytics.get('papers', {})
-    article_graph = load_article_grap('./graph/articles_graph.graphml')
-    author_graph = st.session_state.get('author_graph') 
 
-    # representar en una tabla 
-    with st.expander("**Filtros**", expanded=True):
+    master_df = author_analytics['master_table']
+    communities = author_analytics.get('communities', [])
+    author_graph = st.session_state.get('author_graph')
+
+    author_community_map = {author: i for i, comm in enumerate(communities) for author in comm}
+
+
+    with st.expander("Explorador de Autores y Rankings", expanded=False):
         col1, col2 = st.columns(2)
         with col1:
-            a=int(master_df['Artículos'].min())
-            m=int(master_df['Artículos'].max())
-            min_papers = st.slider("Mínimo de Artículos Publicados:", a, m, m//2)
+            a = int(master_df['Artículos'].min())
+            m = int(master_df['Artículos'].max())
+            min_papers = st.slider("Mínimo de Artículos Publicados:", a, m, a, key="min_papers_filter")
         with col2:
-            b=int(master_df['Nº Colaboradores'].min())
-            m2=int(master_df['Nº Colaboradores'].max())
-            min_collabs = st.slider("Mínimo de Colaboradores:", b,m2 , m2//2)
+            b = int(master_df['Nº Colaboradores'].min())
+            m2 = int(master_df['Nº Colaboradores'].max())
+            min_collabs = st.slider("Mínimo de Colaboradores:", b, m2, b, key="min_collabs_filter")
         
-
         filtered_df = master_df[(master_df['Artículos'] >= min_papers) & (master_df['Nº Colaboradores'] >= min_collabs)]
+        
         if filtered_df.empty:
             st.warning("No hay autores que cumplan con los criterios de filtrado.")
-            return
-        st.info(f"Mostrando **{len(filtered_df)}** de **{len(master_df)}** autores que cumplen los criterios.")
-        top_n = st.slider("Mostrar el Top N en los rankings:", 1, len(filtered_df), len(filtered_df)//2, key="author_rank_slider")
-               
-        filtered_df = filtered_df[['Autor', 'Artículos']].sort_values('Artículos', ascending=False).head(top_n)
-        P = nx.Graph()
-        for i, j in papers.items():
-            if i in filtered_df['Autor'].values:
-                if not P.has_node(i):
-                    P.add_node(i)
-                for k in j:
-                    article = pdf_data.get(k, {}).get('title', k) 
-                    try:
-                        article = article[0] if isinstance(article, list) else article
-                    except:
-                        article = k
-                    if not P.has_node(article):
-                        P.add_node(article)
-                    if not P.has_edge(i, article):
-                        P.add_edge(i, article)
-
-        fig, ax = plt.subplots(figsize=(5, 3))
-
-        pos = nx.spring_layout(P)
-
-        node_colors = []
-        node_sizes=[]
-        node_labels = {}
-        for node in P.nodes():
-            if node in filtered_df['Autor'].values:
-                node_colors.append(0) 
-                node_sizes.append(10) 
-            else:
-                node_colors.append(1) 
-                node_sizes.append(20) 
-            node_labels[node] = node 
-
-
-
-        edge_x = []
-        edge_y = []
-        for edge in P.edges():
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            edge_x.extend([x0, x1, None])
-            edge_y.extend([y0, y1, None])
-
-        node_x = []
-        node_y = []
-        node_text = []
-        for node in P.nodes():
-            x, y = pos[node]
-            node_x.append(x)
-            node_y.append(y)
-            node_text.append(node)  
-
-        fig = go.Figure(
-            data=[
-                go.Scatter(
-                    x=edge_x, y=edge_y,
-                    line=dict(width=0.5, color='#888'),
-                    hoverinfo='none',
-                    mode='lines'
-                ),
-                go.Scatter(
-                    x=node_x, y=node_y,
-                    mode='markers',
-                    hoverinfo='text',
-                    text=node_text,
-                    marker=dict(
-                        size=node_sizes,
-                        color=node_colors,
-                        colorscale='Bluered',  
-                        colorbar=dict(
-                            title='Node Type',
-                            tickvals=[0, 1],
-                            ticktext=['Author', 'Article']
-                        ),
-                        line_width=1)
+        else:
+            st.info(f"Mostrando **{len(filtered_df)}** de **{len(master_df)}** autores que cumplen los criterios.")
+            top_n = st.slider("Mostrar el Top N en los rankings:", 1, max(1, len(filtered_df)), min(10, len(filtered_df)), key="author_rank_slider")
+            
+            st.divider()
+            
+            col_rank1, col_rank2 = st.columns(2)
+            with col_rank1:
+                st.subheader("Top por Artículos")
+                st.dataframe(
+                    filtered_df[['Autor', 'Artículos']].nlargest(top_n, 'Artículos'),
+                    use_container_width=True, hide_index=True
                 )
-            ],
-            layout=go.Layout(
-                showlegend=False,
-                hovermode='closest',
-                margin=dict(b=0, l=0, r=0, t=0),
-                title="Network of Authors and Articles"
+            with col_rank2:
+                st.subheader("Top por Colaboradores")
+                st.dataframe(
+                    filtered_df[['Autor', 'Nº Colaboradores']].nlargest(top_n, 'Nº Colaboradores'),
+                    use_container_width=True, hide_index=True
+                )
+
+    
+    with st.expander("Autores más Influyentes", expanded=False):
+        if author_graph is not None and author_graph.number_of_nodes() > 0 and keyword_graph is not None and keyword_graph.number_of_nodes() > 0:
+            
+            degree_centrality = nx.degree_centrality(author_graph)
+            betweenness_centrality = nx.betweenness_centrality(keyword_graph, k=min(100, len(keyword_graph.nodes)-1) , seed=42) 
+            pagerank = nx.pagerank(author_graph, weight='weight')
+            tab1, tab2, tab3 = st.tabs([
+                "Hubs de Colaboración", 
+                "Puentes del Conocimiento", 
+                "Ecosistema de Influencia"
+            ])
+
+            with tab1:
+                top_hubs = sorted(degree_centrality.items(), key=lambda x: x[1], reverse=True)
+                u = st.slider("Mostrar el Top N de Autores Influyentes:", 1, len(top_hubs), min(5,len(top_hubs)), key="top_influential_slider2")
+                for author_id, score in top_hubs[:u]:
+                    author_data = author_graph.nodes[author_id]
+                    num_connections = author_graph.degree(author_id)
+                    neighbors = list(author_graph.neighbors(author_id))
+                    top_collaborators = sorted(neighbors, key=lambda n: pagerank.get(n, 0), reverse=True)
+                    top_collaborator_names = [author_graph.nodes[n].get('name', n) for n in top_collaborators]
+                    with st.container(border=True):
+                            st.subheader(author_data.get('name', author_id))
+                            st.write(f"Colabora directamente con **{num_connections}** investigadores.")
+                            with st.expander("Colaboradores:"):
+                                q1 = st.slider("Mostrar los principales colaboradores:", 1, len(top_collaborator_names), min(3, len(top_collaborator_names)), key=f"top_collaborators_slider{author_id}")
+                                for collaborator in top_collaborator_names[:q1]:
+                                    st.write(f"- {collaborator}")
+  
+            with tab2: 
+                key_scores = {
+                    node: score for node, score in betweenness_centrality.items()
+                    if keyword_graph.nodes[node].get('type') == 'keyword'
+                }
+                top_theme_bridges = sorted(key_scores.items(), key=lambda x: x[1], reverse=True)
+
+                u2 = st.slider(
+                    "Mostrar el Top N de Temas Puente:",
+                    min_value=1,
+                    max_value=len(top_theme_bridges),
+                    value=min(5, len(top_theme_bridges)),
+                    key="bridges_slider"
+                )
+
+                if not top_theme_bridges:
+                    st.warning("No se encontraron temas puente en el grafo.")
+                else:
+                    for theme_name, score in top_theme_bridges[:u2]:
+                        with st.container(border=True):
+                          
+                            st.subheader(theme_name.capitalize(),anchor=False)
+                            st.write("Este tema actúa como un nexo fundamental, conectando diferentes dominios de investigación.")
+                            
+                            author_neighbors_ids = [
+                                node_id for node_id in keyword_graph.neighbors(theme_name)
+                                if keyword_graph.nodes[node_id].get('type') == 'author'
+                            ]
+                            
+                            if not author_neighbors_ids:
+                                st.info("No hay autores directamente asociados a este tema.")
+                                continue
+
+                            author_details = [keyword_graph.nodes[node_id] for node_id in author_neighbors_ids]
+                            author_names = sorted([data.get('name', 'N/A') for data in author_details])
+
+                            with st.expander(f"Ver los {len(author_names)} autores que impulsan este tema"):
+                                r1 = st.slider("Mostar los N autores:", 1, len(author_names), min(3, len(author_names)), key=f"top_authors_slider{theme_name}")
+                                num_cols = 3
+                                author_chunks = [author_names[i:i + num_cols] for i in range(0, len(author_names), num_cols)][:r1]
+                                
+                                for chunk in author_chunks:
+                                    cols = st.columns(num_cols)
+                                    for i, author_name in enumerate(chunk):
+                                        cols[i].write(f" • {author_name}")
+
+            with tab3:
+                top_pagerank = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)
+                u3 = st.slider("Mostrar el Top N de Autores Influyentes:", 1, len(top_pagerank), min(5,len(top_pagerank)), key="top_influential_slide3r")
+                for author_id, score in top_pagerank[:u3]:
+                    author_data = author_graph.nodes[author_id]
+
+                    neighbors = list(author_graph.neighbors(author_id))
+                    top_collaborators = sorted(neighbors, key=lambda n: pagerank.get(n, 0), reverse=True)[:3]
+                    top_collaborator_names = [author_graph.nodes[n].get('name', n) for n in top_collaborators]
+
+                    with st.container(border=True):
+                       
+                        
+                        st.subheader(author_data.get('name', author_id),anchor=False)
+                        if top_collaborator_names:
+                            st.caption("Colabora con: " + ", ".join(top_collaborator_names))
+
+        else:
+            st.warning("No hay datos de red disponibles para analizar la influencia.")
+
+    with st.expander("Autores más Prolíficos", expanded=False):
+        t = st.slider("top N",1,len(master_df),10)
+        prolific_data = master_df[['Autor', 'Artículos', 'Nº Colaboradores']].copy()
+        prolific_data['Artículos'] = prolific_data['Artículos'].astype(int)
+        
+        filtered_prolific = prolific_data.nlargest(t, 'Artículos')
+
+        if not filtered_prolific.empty:
+            fig = px.scatter(
+                filtered_prolific,
+                x='Nº Colaboradores',
+                y='Artículos',
+                size='Artículos',
+                color='Nº Colaboradores',
+                hover_name='Autor',
+                title=f'Top {t} Autores más Prolíficos',
+                labels={'Artículos': 'Número de Artículos', 'Nº Colaboradores': 'Colaboradores'}
             )
-        )
+            fig.update_layout(showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
 
-        st.plotly_chart(fig, use_container_width=True)
+            st.dataframe(
+                filtered_prolific,
+                column_config={
+                    "Autor": st.column_config.TextColumn("Autor"),
+                    "Artículos": st.column_config.NumberColumn(
+                        "Artículos",
+                        format="%d",
+                        min_value=0
+                    ),
+                    "Nº Colaboradores": st.column_config.NumberColumn(
+                        "Colaboradores",
+                        format="%d",
+                        min_value=0
+                    )
+                },
+                hide_index=True,
+                use_container_width=True
+            )
+        else:
+            st.warning("No hay autores que cumplan los criterios de filtrado")
 
-    with st.expander("🤝 Pares de Autores que más Colaboran"):
+    with st.expander("Colaboración entre Comunidades de Investigación",expanded=False):
+        inter_community_edges = defaultdict(int)
+        for u, v in author_graph.edges():
+            c1 = author_community_map.get(u)
+            c2 = author_community_map.get(v)
+            if c1 is not None and c2 is not None and c1 != c2:
+                edge = tuple(sorted((c1, c2)))
+                inter_community_edges[edge] += 1
+        
+        if inter_community_edges:
+            collaboration_data = []
+            for (c1, c2), weight in inter_community_edges.items():
+                collaboration_data.append({
+                    'Comunidad A': f"Comunidad {c1+1}",
+                    'Comunidad B': f"Comunidad {c2+1}",
+                    'Nº Colaboraciones': weight
+                })
+            df_collab = pd.DataFrame(collaboration_data).sort_values('Nº Colaboraciones', ascending=False)
+            st.dataframe(df_collab.head(10), hide_index=True, use_container_width=True)
+        else:
+            st.warning("No se detectaron colaboraciones entre las diferentes comunidades.")
+
+    with st.expander("Especialistas y Temas de Nicho", expanded=False):
+    
+        df_specialists, specialist_to_topics_map = process_niche_topics(keyword_graph)
+
+        if not df_specialists.empty:
+            st.subheader("Ranking de Especialistas por N° de Temas de Nicho")
+            
+            top_n_slider = st.slider(
+                "Mostrar el Top N de Especialistas:",
+                min_value=1,
+                max_value=len(df_specialists),
+                value=min(10, len(df_specialists)), 
+                key="niche_barchart_slider"
+            )
+            top_specialists_df = df_specialists.head(top_n_slider)
+            fig = px.bar(
+                df_specialists.head(top_n_slider),
+                x='Nº de Temas de Nicho',
+                y='Especialista',
+                orientation='h',
+                title=f"Top {top_n_slider} Especialistas con más Temas de Nicho",
+                labels={'Nº de Temas de Nicho': 'Cantidad de Temas Únicos', 'Especialista': 'Nombre del Especialista'},
+                text='Nº de Temas de Nicho', 
+                color='Nº de Temas de Nicho',
+                color_continuous_scale=px.colors.sequential.Plasma
+            )
+            fig.update_layout(yaxis={'categoryorder':'total ascending'})
+            st.plotly_chart(fig, use_container_width=True)
+            st.subheader("Análisis del Top N")
+            for ll, row in top_specialists_df.iterrows():
+                specialist_name = row['Especialista']
+                topics = specialist_to_topics_map.get(specialist_name, [])
+                
+                with st.expander(f"**{specialist_name}** - {len(topics)} temas de nicho"):
+                    qq=st.slider("Cantidad a mostrar",1,max_value=len(topics),value=min(3,len(topics)),key=f"{ll}{row}{row}")
+                    qwer = st.columns(2)
+                    for i,topic in enumerate(topics[:qq]):
+                        with qwer[i%2]:
+                            st.markdown(f"{i+1}. {topic.capitalize()}")
+        else:
+            st.warning("No se encontraron temas de nicho o especialistas asociados.")
+
+    with st.expander("Pares de Autores que más Colaboran",expanded=False):
         if author_graph is not None:
             top_k = st.slider("Mostrar el Top N de Pares de Autores:", 1, 20, 10, key="top_pairs_slider")
             edge_weights = nx.get_edge_attributes(author_graph, 'weight')
@@ -159,12 +326,12 @@ def render_authors_page(author_analytics,keyword_graph):
                 color_continuous_scale='Blues'
             )
             st.plotly_chart(fig, use_container_width=True)
-            st.markdown("#### Artículos en colaboración")
-                    
-            for i, (pair, weight) in enumerate(top_pairs, 1):
+            with st.expander("#### Artículos en colaboración",expanded=False):
+
+                for i, (pair, weight) in enumerate(top_pairs, 1):
                         author1 = author_graph.nodes[pair[0]].get('name', pair[0])
                         author2 = author_graph.nodes[pair[1]].get('name', pair[1])
-                        
+
                         with st.expander(f"**{i}. {author1} & {author2} - {weight} artículos**", expanded=(i==1)):
                             articles = set(author_graph.nodes[pair[0]]['papers']) & set(author_graph.nodes[pair[1]]['papers'])
 
@@ -181,42 +348,159 @@ def render_authors_page(author_analytics,keyword_graph):
                                 st.warning("No se encontraron detalles de los artículos")
         else:
             st.warning("No hay datos de colaboración entre autores disponibles.")
-
-    # Autores puente
-    with st.expander("🌉 Autores Puente"):
-        if author_graph is not None:
-            # Calcular betweenness centrality
-            betweenness = nx.betweenness_centrality(author_graph)
-            top_betweenness = sorted(betweenness.items(), key=lambda x: x[1], reverse=True)[:top_n]
-            
-            # Mostrar tabla con los autores puente
-            bridge_df = pd.DataFrame(top_betweenness, columns=['Autor', 'Centralidad de Intermediación'])
-            bridge_df['Centralidad de Intermediación'] = bridge_df['Centralidad de Intermediación'].apply(lambda x: round(x, 4))
-            
-            st.dataframe(
-                bridge_df.style.background_gradient(cmap='Blues', subset=['Centralidad de Intermediación']),
-                use_container_width=True
-            )
-            
-            # Explicación
-            st.info("""
-            **Autores Puente** son aquellos que conectan diferentes grupos o comunidades en la red. 
-            Su **Centralidad de Intermediación** mide cuánto actúan como puente entre otros autores.
-            """)
-        else:
-            st.warning("No hay datos de red de autores disponibles para este análisis.")
-
     
-        st.markdown("Explora, busca y ordena la tabla completa con todos los autores que cumplen los filtros.")
-        search_term = st.text_input("Buscar autor en la tabla filtrada:", key="author_search")
-        
-        display_df = filtered_df
-        if search_term:
-            display_df = display_df[display_df['Autor'].str.contains(search_term, case=False, na=False)]
+
+    with st.expander("Comunidades más Productivas", expanded=False):
+        if communities:
+            community_stats = []
+          
+            for i, comm in enumerate(communities):
+                a=set()
+                members = len(comm)
+                papers = sum(len(author_graph.nodes[node_id].get('papers', [])) for node_id in comm)
+                community_stats.append({
+                    'Comunidad': f"Comunidad {i+1}",
+                    'Miembros': members,
+                    'Artículos': papers,
+                    'Productividad': round(papers / members, 2) if members > 0 else 0,
+                    'community_index': i
+                })
             
-        st.dataframe(display_df.style.format({
-            'Intermediación': '{:.4f}',
-            'Influencia (Eigenvector)': '{:.4f}',
-            'Influencia (PageRank)': '{:.4f}',
-            'Cohesión (Clustering)': '{:.3f}'
-        }), use_container_width=True, hide_index=True)
+            comm_df = pd.DataFrame(community_stats).sort_values('Productividad', ascending=False)
+            p = st.slider("Mostrar el Top N de Comunidades:", 1, len(comm_df), min(5, len(comm_df)), key="top_communities_slider")
+            fig = px.bar(
+                comm_df.head(p), 
+                x='Comunidad',
+                y='Productividad',
+                color='Miembros',
+                title=f'Top {p} Comunidades por Productividad (Artículos/Miembro)',
+                labels={'Productividad': 'Artículos por miembro'}
+            )
+            st.plotly_chart(fig, use_container_width=True)
+            
+            st.markdown("#### Detalles por Comunidad")
+            selected_comm_name = st.selectbox(
+                "Selecciona una comunidad para ver sus miembros:", 
+                options=comm_df['Comunidad'][:p]
+            )
+            comm_data = comm_df[comm_df['Comunidad'] == selected_comm_name].iloc[0]
+            comm_index = comm_data['community_index']
+            member_nodes = communities[comm_index]
+            a =set()
+            mape = {}
+            for node_id in member_nodes:
+                node_data = author_graph.nodes[node_id]
+                a.update(x for x in node_data.get('papers', []))
+                mape[node_id] = a
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("Miembros", comm_data['Miembros'])
+            with col2:
+                st.metric("Artículos totales", len(a))
+            g =set()
+            st.markdown(f"**Artículos en la comunidad:**")
+            for id,pdf_id in mape.items():
+                for f in pdf_id:
+                    pdf_data1 = pdf_data.get(f, {})
+                    title = pdf_data1.get('title', 'Título no disponible')
+                    g.add(title[0] if title else title)
+            w ={}
+            for j,i in enumerate(g,start=1):
+                w[i]=j
+                st.markdown(f"{j}. {i}")
+            st.markdown(f"**Miembros de la {selected_comm_name}**")
+
+            comm_index = comm_data['community_index']
+            member_nodes = communities[comm_index]
+
+            member_details = []
+            for node_id in member_nodes:
+                node_data = author_graph.nodes[node_id]
+                papers = node_data.get('papers',[])
+                s=''
+                for j,i in enumerate(papers,start=1):
+                    if j+1<=len(papers):
+                        s+=f'{w[pdf_data[i].get("title", ["Título no disponible"])[0] if pdf_data[i].get("title") else "Título no disponible"]}, '
+                        continue
+                    s+=f'{w[pdf_data[i].get("title", ["Título no disponible"])[0] if pdf_data[i].get("title") else "Título no disponible"]}'
+                member_details.append({
+                    'Autor': node_data.get('name', 'Nombre no disponible'),
+                    'Artículos Publicados': len(node_data.get('papers', [])),
+                    'id de articulos': s
+                })
+
+            if member_details:
+                members_df = pd.DataFrame(member_details).sort_values('Artículos Publicados', ascending=False)
+                st.dataframe(members_df, use_container_width=True, hide_index=True)
+            else:
+                st.info("Esta comunidad no tiene miembros para mostrar.")
+
+        else:
+            st.warning("No se detectaron comunidades")
+
+    with st.expander("Colaboraciones Exclusivas", expanded=False):
+        if author_graph is not None:
+          
+            total_edges = len(author_graph.edges())
+            exclusive_pairs = []
+            
+            for node in author_graph.nodes():
+                neighbors = list(author_graph.neighbors(node))
+                if len(neighbors) == 1:
+                    collaborator = neighbors[0]
+                    edge_data = author_graph.get_edge_data(node, collaborator)
+                    weight = edge_data.get('weight', 1)
+                    percentage = (weight / total_edges) * 100 if total_edges > 0 else 0
+                    
+                    exclusive_pairs.append({
+                        'author1': author_graph.nodes[node].get('name', node),
+                        'author2': author_graph.nodes[collaborator].get('name', collaborator),
+                        'collaborations': weight,
+                        'percentage': percentage
+                    })
+
+            if exclusive_pairs:
+                st.subheader("Relaciones de Colaboración Única")
+                cols = st.columns(3)
+                cols[0].metric("Pares exclusivos", len(exclusive_pairs))
+                cols[1].metric("Colaboraciones totales", total_edges)
+                cols[2].metric("Representación", f"{sum(p['percentage'] for p in exclusive_pairs):.1f}%")
+                st.subheader("Distribución en la red")
+                  
+                fig = px.pie(
+                        names=["Exclusivas", "Otras"],
+                        values=[sum(p['percentage'] for p in exclusive_pairs), 
+                            100 - sum(p['percentage'] for p in exclusive_pairs)],
+                        hole=0.5,
+                        color_discrete_sequence=['#FF6B00', '#DDDDDD']
+                    )
+                fig.update_traces(textinfo='percent+label', 
+                                    marker=dict(line=dict(color='#FFFFFF', width=2)))
+                st.plotly_chart(fig, use_container_width=True)
+                with st.expander("Principales colaboraciones exclusivas",expanded=False):
+                    k = st.slider("Mostrar el Top N de Colaboraciones Exclusivas:", 1, len(exclusive_pairs), 5, key="exclusive_pairs_slider")
+                    top_pairs = sorted(exclusive_pairs, key=lambda x: x['collaborations'], reverse=True)[:k]
+
+                    for pair in top_pairs:           
+                        col1, col2, col3 = st.columns([1,2,1])
+                        with col1:
+                            st.markdown(f"### {pair['author1']}")
+                            st.caption("Autor principal")
+                        
+                        with col2:
+                            st.markdown(f"<div style='text-align: center; margin: 15px 0;'>"
+                                    f"<h2 style='color: #FF6B00;'>⇄ {pair['collaborations']} colaboraciones</h2>"
+                                    f"<small>Relación exclusiva</small></div>", 
+                                    unsafe_allow_html=True)
+                        
+                        with col3:
+                            st.markdown(f"### {pair['author2']}")
+                            st.caption("Único colaborador")
+
+                        st.write("")
+
+                
+            else:
+                st.info("No se encontraron relaciones de colaboración exclusiva", icon="ℹ️")
+        else:
+            st.warning("Red de colaboración no disponible", icon="⚠️")
