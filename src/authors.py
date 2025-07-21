@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import networkx as nx
@@ -5,6 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go 
 from collections import defaultdict
 import json
+from networkx.algorithms import community
 
 @st.cache_data
 def load_pdf():
@@ -50,7 +52,13 @@ def process_niche_topics(_keyword_graph):
     
     return df, specialist_to_topics
 
-
+@st.cache_data
+def load_key_autor():
+    try:
+        return nx.read_graphml('./graph/author_collaboration_graph_keywords.graphml')
+    except:
+        st.error("ruta incorrecta")
+        st.stop()
 def render_authors_page(author_analytics, keyword_graph):
     """
     Renderiza la página de análisis de autores
@@ -66,8 +74,9 @@ def render_authors_page(author_analytics, keyword_graph):
     master_df = author_analytics['master_table']
     communities = author_analytics.get('communities', [])
     author_graph = st.session_state.get('author_graph')
-
-    author_community_map = {author: i for i, comm in enumerate(communities) for author in comm}
+    key_autor = load_key_autor()
+    communities1 = list(community.louvain_communities(key_autor, weight='weight', seed=42))
+    author_community_map = {author: i for i, comm in enumerate(communities1) for author in comm}
 
 
     with st.expander("Explorador de Autores y Rankings", expanded=False):
@@ -157,8 +166,6 @@ def render_authors_page(author_analytics, keyword_graph):
                         with st.container(border=True):
                           
                             st.subheader(theme_name.capitalize(),anchor=False)
-                            st.write("Este tema actúa como un nexo fundamental, conectando diferentes dominios de investigación.")
-                            
                             author_neighbors_ids = [
                                 node_id for node_id in keyword_graph.neighbors(theme_name)
                                 if keyword_graph.nodes[node_id].get('type') == 'author'
@@ -171,16 +178,28 @@ def render_authors_page(author_analytics, keyword_graph):
                             author_details = [keyword_graph.nodes[node_id] for node_id in author_neighbors_ids]
                             author_names = sorted([data.get('name', 'N/A') for data in author_details])
 
-                            with st.expander(f"Ver los {len(author_names)} autores que impulsan este tema"):
-                                r1 = st.slider("Mostar los N autores:", 1, len(author_names), min(3, len(author_names)), key=f"top_authors_slider{theme_name}")
-                                num_cols = 3
-                                author_chunks = [author_names[i:i + num_cols] for i in range(0, len(author_names), num_cols)][:r1]
-                                
-                                for chunk in author_chunks:
-                                    cols = st.columns(num_cols)
-                                    for i, author_name in enumerate(chunk):
-                                        cols[i].write(f" • {author_name}")
+                            with st.expander(f"{len(author_names)} autores que impulsan este tema", expanded=False):
 
+                                    num_to_show = st.slider(
+                                        "Mostrar los N autores principales:", 
+                                        min_value=1, 
+                                        max_value=len(author_names), 
+                                        value=min(10, len(author_names)),  
+                                        key=f"top_authors_{theme_name}"
+                                    )
+                                    
+                                    num_cols = 3
+                                    rows_needed = (num_to_show + num_cols - 1) // num_cols  
+                                    
+                                    for row in range(rows_needed):
+                                        cols = st.columns(num_cols)
+                                        for col in range(num_cols):
+                                            idx = row * num_cols + col
+                                            if idx < num_to_show:
+                                                with cols[col]:
+                                                    st.markdown(f"""
+                                                    {author_names[idx]}""")
+                                                    
             with tab3:
                 top_pagerank = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)
                 u3 = st.slider("Mostrar el Top N de Autores Influyentes:", 1, len(top_pagerank), min(5,len(top_pagerank)), key="top_influential_slide3r")
@@ -188,15 +207,36 @@ def render_authors_page(author_analytics, keyword_graph):
                     author_data = author_graph.nodes[author_id]
 
                     neighbors = list(author_graph.neighbors(author_id))
-                    top_collaborators = sorted(neighbors, key=lambda n: pagerank.get(n, 0), reverse=True)[:3]
+                    top_collaborators = sorted(neighbors, key=lambda n: pagerank.get(n, 0), reverse=True)
                     top_collaborator_names = [author_graph.nodes[n].get('name', n) for n in top_collaborators]
 
                     with st.container(border=True):
                        
                         
-                        st.subheader(author_data.get('name', author_id),anchor=False)
+                        st.subheader(author_data.get('name', author_id), anchor=False)
                         if top_collaborator_names:
-                            st.caption("Colabora con: " + ", ".join(top_collaborator_names))
+                            with st.expander("Colaboradores Principales", expanded=False):
+                                num_to_show = st.slider(
+                                    "Mostrar los principales colaboradores:",
+                                    min_value=1,
+                                    max_value=len(top_collaborator_names),
+                                    value=min(3, len(top_collaborator_names)),
+                                    key=f"top_collaborators_{author_id}"
+                                )
+                                
+                                num_cols = 3
+                                rows_needed = (num_to_show + num_cols - 1) // num_cols  
+
+                                for row in range(rows_needed):
+                                    cols = st.columns(num_cols)
+                                    for col in range(num_cols):
+                                        idx = row * num_cols + col
+                                        if idx < num_to_show:
+                                            with cols[col]:
+                                                st.markdown(f"""     
+                                                 • {top_collaborator_names[idx]}
+                                                
+                                                """)
 
         else:
             st.warning("No hay datos de red disponibles para analizar la influencia.")
@@ -242,35 +282,89 @@ def render_authors_page(author_analytics, keyword_graph):
             )
         else:
             st.warning("No hay autores que cumplan los criterios de filtrado")
-
-    with st.expander("Colaboración entre Comunidades de Investigación",expanded=False):
+            
+    with st.expander("Puentes Temáticos entre Comunidades", expanded=False):
         inter_community_edges = defaultdict(int)
-        for u, v in author_graph.edges():
+        for u, v in key_autor.edges():
             c1 = author_community_map.get(u)
             c2 = author_community_map.get(v)
             if c1 is not None and c2 is not None and c1 != c2:
                 edge = tuple(sorted((c1, c2)))
                 inter_community_edges[edge] += 1
-        
-        if inter_community_edges:
+                
+        if not inter_community_edges:
+            st.warning("No se encontraron conexiones temáticas entre las diferentes comunidades.")
+        else:
             collaboration_data = []
             for (c1, c2), weight in inter_community_edges.items():
                 collaboration_data.append({
                     'Comunidad A': f"Comunidad {c1+1}",
                     'Comunidad B': f"Comunidad {c2+1}",
-                    'Nº Colaboraciones': weight
+                    'Nº Conexiones Temáticas': weight, 
+                    'indices': (c1, c2)
                 })
-            df_collab = pd.DataFrame(collaboration_data).sort_values('Nº Colaboraciones', ascending=False)
-            st.dataframe(df_collab.head(10), hide_index=True, use_container_width=True)
-        else:
-            st.warning("No se detectaron colaboraciones entre las diferentes comunidades.")
+            
+            df_collab = pd.DataFrame(collaboration_data).sort_values('Nº Conexiones Temáticas', ascending=False)
+            
+            st.subheader("Comunidades con Mayor Conexión Temática")
+            st.dataframe(df_collab[['Comunidad A', 'Comunidad B', 'Nº Conexiones Temáticas']].head(10), hide_index=True, use_container_width=True)
+
+            st.divider()
+
+            st.subheader("Análisis Detallado de los Puentes")
+            options_list = [f"{row['Comunidad A']} <-> {row['Comunidad B']}" for _, row in df_collab.iterrows()]
+            selected_pair_str = st.selectbox("Selecciona un par de comunidades para analizar:", options=options_list)
+
+            if selected_pair_str:
+                selected_row = df_collab[df_collab.apply(lambda r: f"{r['Comunidad A']} <-> {r['Comunidad B']}" == selected_pair_str, axis=1)].iloc[0]
+                c1_idx, c2_idx = selected_row['indices']
+                
+                topics_c1 = set()
+                for author_id in communities1[c1_idx]:
+                    topics_c1.update(n for n in keyword_graph.neighbors(author_id) if keyword_graph.nodes[n].get('type') == 'keyword')
+
+                topics_c2 = set()
+                for author_id in communities1[c2_idx]:
+                    topics_c2.update(n for n in keyword_graph.neighbors(author_id) if keyword_graph.nodes[n].get('type') == 'keyword')
+                
+
+                bridge_topics = topics_c1.intersection(topics_c2)
+
+                st.markdown("##### Temas Puente que Conectan Ambas Comunidades")
+                if bridge_topics:
+                    st.multiselect("Temas en común:", options=list(bridge_topics), default=list(bridge_topics), disabled=True)
+                else:
+                    st.warning("No se encontraron temas compartidos directos entre estas dos comunidades.")
+                if bridge_topics:    
+                    st.divider()    
+                    st.markdown("##### Autores que Trabajan en los Temas Puente")
+                    col1, col2 = st.columns(2)
+
+                    def display_bridge_authors(comm_idx, community_name, bridge_topics, column):
+                        with column:
+                            st.markdown(f"**De {community_name}:**")
+                            bridge_authors_in_comm = []
+                            for author_id in communities1[comm_idx]:
+                                author_topics = {n for n in keyword_graph.neighbors(author_id) if keyword_graph.nodes[n].get('type') == 'keyword'}
+                                if author_topics.intersection(bridge_topics):
+                                    author_name = key_autor.nodes[author_id].get('name', author_id)
+                                    bridge_authors_in_comm.append(author_name)
+                            lim = st.slider("Cantidad a mostrar",1,len(bridge_authors_in_comm),min(3,len(bridge_authors_in_comm)),key=f"bridge_authors_{comm_idx}")
+                            if bridge_authors_in_comm:
+                                for name in sorted(bridge_authors_in_comm)[:lim]: 
+                                    st.write(f" • {name}")
+                            else:
+                                st.info("Ningún autor de esta comunidad trabaja en los temas puente.")
+                    
+                    display_bridge_authors(c1_idx, selected_row['Comunidad A'], bridge_topics, col1)
+                    display_bridge_authors(c2_idx, selected_row['Comunidad B'], bridge_topics, col2)
 
     with st.expander("Especialistas y Temas de Nicho", expanded=False):
     
         df_specialists, specialist_to_topics_map = process_niche_topics(keyword_graph)
 
         if not df_specialists.empty:
-            st.subheader("Ranking de Especialistas por N° de Temas de Nicho")
+            st.subheader("Ranking de Especialistas por N° de Temas de Nicho",anchor=False)
             
             top_n_slider = st.slider(
                 "Mostrar el Top N de Especialistas:",
@@ -293,7 +387,7 @@ def render_authors_page(author_analytics, keyword_graph):
             )
             fig.update_layout(yaxis={'categoryorder':'total ascending'})
             st.plotly_chart(fig, use_container_width=True)
-            st.subheader("Análisis del Top N")
+            st.subheader(f"Análisis del Top {top_n_slider}",anchor=False)
             for ll, row in top_specialists_df.iterrows():
                 specialist_name = row['Especialista']
                 topics = specialist_to_topics_map.get(specialist_name, [])
