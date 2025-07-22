@@ -1,0 +1,2950 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d1" for="edge" attr.name="weight" attr.type="long"/>
+<key id="d0" for="node" attr.name="type" attr.type="string"/>
+<graph edgedefault="undirected"><node id="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE">
+  <data key="d0">papers</data>
+</node>
+<node id="cosmology">
+  <data key="d0">keywords</data>
+</node>
+<node id="observations -cosmology">
+  <data key="d0">keywords</data>
+</node>
+<node id="dark energy -supernovae">
+  <data key="d0">keywords</data>
+</node>
+<node id="general">
+  <data key="d0">keywords</data>
+</node>
+<node id="Access graph: a novel graph representation of public transport networks for accessibility analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="public transport">
+  <data key="d0">keywords</data>
+</node>
+<node id="accessibility">
+  <data key="d0">keywords</data>
+</node>
+<node id="network science">
+  <data key="d0">keywords</data>
+</node>
+<node id="metro network">
+  <data key="d0">keywords</data>
+</node>
+<node id="equity">
+  <data key="d0">keywords</data>
+</node>
+<node id="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance">
+  <data key="d0">papers</data>
+</node>
+<node id="Ambient Intelligence">
+  <data key="d0">keywords</data>
+</node>
+<node id="Physical Rehabilitation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Vision Language Models">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI framework">
+  <data key="d0">keywords</data>
+</node>
+<node id="3D Reconstruction">
+  <data key="d0">keywords</data>
+</node>
+<node id="Adaptive Nonlinear Vector Autoregression: Robust Forecasting for Noisy Chaotic Time Series">
+  <data key="d0">papers</data>
+</node>
+<node id="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection">
+  <data key="d0">papers</data>
+</node>
+<node id="malware detection">
+  <data key="d0">keywords</data>
+</node>
+<node id="concept drift">
+  <data key="d0">keywords</data>
+</node>
+<node id="semisupervised learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="pseudo-labeling">
+  <data key="d0">keywords</data>
+</node>
+<node id="pdf_6">
+  <data key="d0">papers</data>
+</node>
+<node id="AGENTIC LARGE LANGUAGE MODELS FOR CONCEPTUAL SYSTEMS ENGINEERING AND DESIGN A PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="AGENTSNET: Coordination and Collaborative Reasoning in Multi-Agent LLMs">
+  <data key="d0">papers</data>
+</node>
+<node id="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method">
+  <data key="d0">papers</data>
+</node>
+<node id="Age of information">
+  <data key="d0">keywords</data>
+</node>
+<node id="laser-powered UAV systems">
+  <data key="d0">keywords</data>
+</node>
+<node id="multi-agent reinforcement learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="and IoT data collection">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI for NONMEM Coding in Pharmacometrics Research and Education: Shortcut or Pitfall?">
+  <data key="d0">papers</data>
+</node>
+<node id="An Efficient Approach for Muscle Segmentation and 3D Reconstruction Using Keypoint Tracking in MRI Scan">
+  <data key="d0">papers</data>
+</node>
+<node id="ASSOCIATED PRIMES OF THE SECOND POWER OF CLOSED NEIGHBORHOOD IDEALS OF GRAPHS">
+  <data key="d0">papers</data>
+</node>
+<node id="Automated Neuron Labelling Enables Generative Steering and Interpretability in Protein Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Automating MD simulations for Proteins using Large language Models: NAMD-Agent">
+  <data key="d0">papers</data>
+</node>
+<node id="Average Action Efficiency Rises Monotonically in Self-Organizing Systems via Stochastic Least-Action Dynamics">
+  <data key="d0">papers</data>
+</node>
+<node id="A cautionary tale of model misspecification and identifiability">
+  <data key="d0">papers</data>
+</node>
+<node id="misspecification">
+  <data key="d0">keywords</data>
+</node>
+<node id="identifiability">
+  <data key="d0">keywords</data>
+</node>
+<node id="Gaussian processes">
+  <data key="d0">keywords</data>
+</node>
+<node id="logistic growth">
+  <data key="d0">keywords</data>
+</node>
+<node id="inference">
+  <data key="d0">keywords</data>
+</node>
+<node id="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="Cloud computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Variable sized-quantum neural network">
+  <data key="d0">keywords</data>
+</node>
+<node id="Comprehensive architectural optimization">
+  <data key="d0">keywords</data>
+</node>
+<node id="Resource">
+  <data key="d0">keywords</data>
+</node>
+<node id="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="Argument mining">
+  <data key="d0">keywords</data>
+</node>
+<node id="Transformers">
+  <data key="d0">keywords</data>
+</node>
+<node id="Large Language Models">
+  <data key="d0">keywords</data>
+</node>
+<node id="Cognitive intelligence">
+  <data key="d0">keywords</data>
+</node>
+<node id="NLP">
+  <data key="d0">keywords</data>
+</node>
+<node id="A decade of SBOL Visual: growing adoption of a diagram standard for engineering biology">
+  <data key="d0">papers</data>
+</node>
+<node id="A Dissipativity Framework for Constructing Scaled Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Scaled relative graphs">
+  <data key="d0">keywords</data>
+</node>
+<node id="Stability theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="switching controllers">
+  <data key="d0">keywords</data>
+</node>
+<node id="linear matrix inequalities">
+  <data key="d0">keywords</data>
+</node>
+<node id="A document is worth a structured record: Principled inductive bias design for document recognition">
+  <data key="d0">papers</data>
+</node>
+<node id="End-to-end document transcription">
+  <data key="d0">keywords</data>
+</node>
+<node id="learnable symbol assembly">
+  <data key="d0">keywords</data>
+</node>
+<node id="engineering drawing recognition">
+  <data key="d0">keywords</data>
+</node>
+<node id="document foundation models">
+  <data key="d0">keywords</data>
+</node>
+<node id="A Dopamine-Serotonin Theory of Consciousness">
+  <data key="d0">papers</data>
+</node>
+<node id="Neuromodulation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Brainstem Function">
+  <data key="d0">keywords</data>
+</node>
+<node id="Brain State Transitions">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dopamine">
+  <data key="d0">keywords</data>
+</node>
+<node id="Serotonin">
+  <data key="d0">keywords</data>
+</node>
+<node id="Mathematical Neuroscience">
+  <data key="d0">keywords</data>
+</node>
+<node id="Sleep">
+  <data key="d0">keywords</data>
+</node>
+<node id="Parkinson's Disease">
+  <data key="d0">keywords</data>
+</node>
+<node id="Seizures">
+  <data key="d0">keywords</data>
+</node>
+<node id="Death">
+  <data key="d0">keywords</data>
+</node>
+<node id="A Hybrid Multi-Well Hopfield-CNN with Feature Extraction and K-Means for MNIST Classification">
+  <data key="d0">papers</data>
+</node>
+<node id="A MODEL THEORETIC VERSION OF TARSKI'S THEOREM">
+  <data key="d0">papers</data>
+</node>
+<node id="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *">
+  <data key="d0">papers</data>
+</node>
+<node id="Rare disease diagnosis">
+  <data key="d0">keywords</data>
+</node>
+<node id="Knowledge graph">
+  <data key="d0">keywords</data>
+</node>
+<node id="Medical large language models">
+  <data key="d0">keywords</data>
+</node>
+<node id="Medical concept matching">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-granularity concept sparse activation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Hierarchical knowledge representation">
+  <data key="d0">keywords</data>
+</node>
+<node id="A proposal for homoscedastic modelling with conditional auto-regressive distributions">
+  <data key="d0">papers</data>
+</node>
+<node id="A Survey of Large Language Models in Discipline-specific Research: Challenges, Methods and Opportunities">
+  <data key="d0">papers</data>
+</node>
+<node id="Beer Path Problems in Temporal Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="phrases Beer path">
+  <data key="d0">keywords</data>
+</node>
+<node id="Shortest paths">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dynamic graph queries">
+  <data key="d0">keywords</data>
+</node>
+<node id="Temporal graphs">
+  <data key="d0">keywords</data>
+</node>
+<node id="Graph algorithms">
+  <data key="d0">keywords</data>
+</node>
+<node id="Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization">
+  <data key="d0">papers</data>
+</node>
+<node id="Beyond Olfaction: New Insights into Human Odorant Binding Proteins">
+  <data key="d0">papers</data>
+</node>
+<node id="Lipocalin superfamily">
+  <data key="d0">keywords</data>
+</node>
+<node id="Olfactory sense">
+  <data key="d0">keywords</data>
+</node>
+<node id="Hydrophobic ligand transport">
+  <data key="d0">keywords</data>
+</node>
+<node id="Protein function and classification">
+  <data key="d0">keywords</data>
+</node>
+<node id="Differential gene expression">
+  <data key="d0">keywords</data>
+</node>
+<node id="Bi-Contextuality: A Novel Non-Classical Phenomenon in Bipartite Quantum Systems">
+  <data key="d0">papers</data>
+</node>
+<node id="BlockFFN: Towards End-Side Acceleration-Friendly Mixtureof-Experts with Chunk-Level Activation Sparsity">
+  <data key="d0">papers</data>
+</node>
+<node id="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)">
+  <data key="d0">papers</data>
+</node>
+<node id="Melanoma">
+  <data key="d0">keywords</data>
+</node>
+<node id="bluish veil">
+  <data key="d0">keywords</data>
+</node>
+<node id="dermoscopic image">
+  <data key="d0">keywords</data>
+</node>
+<node id="DCNN">
+  <data key="d0">keywords</data>
+</node>
+<node id="LIME">
+  <data key="d0">keywords</data>
+</node>
+<node id="Bounds on the game isolation number and exact values for paths and cycles">
+  <data key="d0">papers</data>
+</node>
+<node id="isolating set">
+  <data key="d0">keywords</data>
+</node>
+<node id="isolation game">
+  <data key="d0">keywords</data>
+</node>
+<node id="paths and cycles">
+  <data key="d0">keywords</data>
+</node>
+<node id="trees AMS Subj. Class. (2020): 05C57">
+  <data key="d0">keywords</data>
+</node>
+<node id="Carbon-Aware Workflow Scheduling with Fixed Mapping and Deadline Constraint">
+  <data key="d0">papers</data>
+</node>
+<node id="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering">
+  <data key="d0">papers</data>
+</node>
+<node id="Clustering Algorithm">
+  <data key="d0">keywords</data>
+</node>
+<node id="Lowest Time Complexity">
+  <data key="d0">keywords</data>
+</node>
+<node id="K-Means Clustering">
+  <data key="d0">keywords</data>
+</node>
+<node id="Density Based">
+  <data key="d0">keywords</data>
+</node>
+<node id="Local Structure">
+  <data key="d0">keywords</data>
+</node>
+<node id="Gap Statistics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Silhouette Score">
+  <data key="d0">keywords</data>
+</node>
+<node id="Optimal K Value">
+  <data key="d0">keywords</data>
+</node>
+<node id="Catastrophic Forgetting Mitigation Through Plateau Phase Activity Profiling">
+  <data key="d0">papers</data>
+</node>
+<node id="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization">
+  <data key="d0">papers</data>
+</node>
+<node id="RTL simulation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Accelerator">
+  <data key="d0">keywords</data>
+</node>
+<node id="Graph Partition">
+  <data key="d0">keywords</data>
+</node>
+<node id="ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains">
+  <data key="d0">papers</data>
+</node>
+<node id="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes">
+  <data key="d0">papers</data>
+</node>
+<node id="Splicing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Genomics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Circular RNA Prediction">
+  <data key="d0">keywords</data>
+</node>
+<node id="Mixture of Experts">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-label Task">
+  <data key="d0">keywords</data>
+</node>
+<node id="Deep Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Machine Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="CLiFT: Compressive Light-Field Tokens for Compute-Efficient and Adaptive Neural Rendering">
+  <data key="d0">papers</data>
+</node>
+<node id="Computational Modelling of Thixotropic Multiphase Fluids">
+  <data key="d0">papers</data>
+</node>
+<node id="Smoothed Dissipative Particle Dynamics (SDPD)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multiphase flows">
+  <data key="d0">keywords</data>
+</node>
+<node id="Liquid-Liquid Phase Separation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Thixotropy">
+  <data key="d0">keywords</data>
+</node>
+<node id="Content-Oblivious Leader Election in 2-Edge-Connected Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Continuous-time parametrization of neural quantum states for quantum dynamics">
+  <data key="d0">papers</data>
+</node>
+<node id="Critical dynamics governs deep learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Cross-Domain Identity Representation for Skull to Face Matching with Benchmark DataSet">
+  <data key="d0">papers</data>
+</node>
+<node id="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval">
+  <data key="d0">papers</data>
+</node>
+<node id="Graph-based RAG">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-Partite Graph">
+  <data key="d0">keywords</data>
+</node>
+<node id="Query-Driven Iterative Retrieval">
+  <data key="d0">keywords</data>
+</node>
+<node id="Deep Hashing with Semantic Hash Centers for Image Retrieval">
+  <data key="d0">papers</data>
+</node>
+<node id="Learning to Hash">
+  <data key="d0">keywords</data>
+</node>
+<node id="Hash Center">
+  <data key="d0">keywords</data>
+</node>
+<node id="Quantization">
+  <data key="d0">keywords</data>
+</node>
+<node id="Representation Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Image Retrieval">
+  <data key="d0">keywords</data>
+</node>
+<node id="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS">
+  <data key="d0">papers</data>
+</node>
+<node id="Variational Autoencoders">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multimodality">
+  <data key="d0">keywords</data>
+</node>
+<node id="Survival Analysis">
+  <data key="d0">keywords</data>
+</node>
+<node id="Competing Risks">
+  <data key="d0">keywords</data>
+</node>
+<node id="Personalized Medicine">
+  <data key="d0">keywords</data>
+</node>
+<node id="DEGREE CONDITIONS FOR SPANNING EXPANSION HYPERTREES">
+  <data key="d0">papers</data>
+</node>
+<node id="Depth of the 3-path Ideal of Square of a Path">
+  <data key="d0">papers</data>
+</node>
+<node id="Monomial ideal">
+  <data key="d0">keywords</data>
+</node>
+<node id="edge ideal">
+  <data key="d0">keywords</data>
+</node>
+<node id="depth">
+  <data key="d0">keywords</data>
+</node>
+<node id="3-path ideal">
+  <data key="d0">keywords</data>
+</node>
+<node id="square of a path graph. 2020 Mathematics Subject Classification. 05E40">
+  <data key="d0">keywords</data>
+</node>
+<node id="13D02">
+  <data key="d0">keywords</data>
+</node>
+<node id="13F55">
+  <data key="d0">keywords</data>
+</node>
+<node id="Discontinuity-aware KAN-based physics-informed neural networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Discontinuous solutions">
+  <data key="d0">keywords</data>
+</node>
+<node id="Kolmogorov-Arnold network">
+  <data key="d0">keywords</data>
+</node>
+<node id="Physics-informed neural network">
+  <data key="d0">keywords</data>
+</node>
+<node id="Artificial viscosity">
+  <data key="d0">keywords</data>
+</node>
+<node id="Shock modeling">
+  <data key="d0">keywords</data>
+</node>
+<node id="Distinct Lifetimes for X and Z Loop Measurements in a Majorana Tetron Device">
+  <data key="d0">papers</data>
+</node>
+<node id="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG">
+  <data key="d0">papers</data>
+</node>
+<node id="Electroencephalography">
+  <data key="d0">keywords</data>
+</node>
+<node id="synchronization">
+  <data key="d0">keywords</data>
+</node>
+<node id="brain rhythm">
+  <data key="d0">keywords</data>
+</node>
+<node id="functional network">
+  <data key="d0">keywords</data>
+</node>
+<node id="Alzheimer's disease">
+  <data key="d0">keywords</data>
+</node>
+<node id="frontotemporal dementia">
+  <data key="d0">keywords</data>
+</node>
+<node id="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING">
+  <data key="d0">papers</data>
+</node>
+<node id="Data-centric Operation Excellence">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI Adoption">
+  <data key="d0">keywords</data>
+</node>
+<node id="Gas Power Plant">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI Guardrail">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI Safety">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="configuration performance modeling">
+  <data key="d0">keywords</data>
+</node>
+<node id="online learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="performance engineering">
+  <data key="d0">keywords</data>
+</node>
+<node id="configurable system">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dynamic scaling of growing interfaces">
+  <data key="d0">papers</data>
+</node>
+<node id="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator">
+  <data key="d0">papers</data>
+</node>
+<node id="integrated photonics">
+  <data key="d0">keywords</data>
+</node>
+<node id="ring resonators">
+  <data key="d0">keywords</data>
+</node>
+<node id="Joule heating">
+  <data key="d0">keywords</data>
+</node>
+<node id="thermo-optic effect">
+  <data key="d0">keywords</data>
+</node>
+<node id="on-chip computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="reconfigurable photonic components">
+  <data key="d0">keywords</data>
+</node>
+<node id="silicon photonics">
+  <data key="d0">keywords</data>
+</node>
+<node id="elsciRL: Integrating Language Solutions into Reinforcement Learning Problem Settings">
+  <data key="d0">papers</data>
+</node>
+<node id="Emergent Natural Language with Communication Games for Improving Image Captioning Capabilities without Additional Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Enhanced knowledge retention through MedScrab: an interactive mobile game">
+  <data key="d0">papers</data>
+</node>
+<node id="Enhanced molecular diffusion near a soft fluctuating membrane">
+  <data key="d0">papers</data>
+</node>
+<node id="Enhancing Parameter Control Policies with State Information">
+  <data key="d0">papers</data>
+</node>
+<node id="Parameter control">
+  <data key="d0">keywords</data>
+</node>
+<node id="black-box optimization">
+  <data key="d0">keywords</data>
+</node>
+<node id="evolutionary computation">
+  <data key="d0">keywords</data>
+</node>
+<node id="local search">
+  <data key="d0">keywords</data>
+</node>
+<node id="algorithm configuration">
+  <data key="d0">keywords</data>
+</node>
+<node id="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study">
+  <data key="d0">papers</data>
+</node>
+<node id="xxxxx">
+  <data key="d0">keywords</data>
+</node>
+<node id="xxxx Deep Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="PET-CT">
+  <data key="d0">keywords</data>
+</node>
+<node id="Skeletal Metastases">
+  <data key="d0">keywords</data>
+</node>
+<node id="Spectral Total-Variation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Radiomics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security">
+  <data key="d0">papers</data>
+</node>
+<node id="quantum computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="machine learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="quantum machine learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="IT security">
+  <data key="d0">keywords</data>
+</node>
+<node id="threat modeling">
+  <data key="d0">keywords</data>
+</node>
+<node id="kill chain">
+  <data key="d0">keywords</data>
+</node>
+<node id="Estimating Interventional Distributions with Uncertain Causal Graphs through Meta-Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Estimating Marginal Likelihoods in Likelihood-Free Inference via Neural Density Estimation">
+  <data key="d0">papers</data>
+</node>
+<node id="Expected and minimal values of a universal tree balance index">
+  <data key="d0">papers</data>
+</node>
+<node id="F3-Net: Foundation Model for Full Abnormality Segmentation of Medical Images with Flexible Input Modality Requirement">
+  <data key="d0">papers</data>
+</node>
+<node id="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge">
+  <data key="d0">papers</data>
+</node>
+<node id="one-class">
+  <data key="d0">keywords</data>
+</node>
+<node id="fluid sensor">
+  <data key="d0">keywords</data>
+</node>
+<node id="auto-encoder">
+  <data key="d0">keywords</data>
+</node>
+<node id="attention-">
+  <data key="d0">keywords</data>
+</node>
+<node id="Filter Equivariant Functions A symmetric account of length-general extrapolation on lists">
+  <data key="d0">papers</data>
+</node>
+<node id="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Membrane fluidity">
+  <data key="d0">keywords</data>
+</node>
+<node id="Fluorescence anisotropy">
+  <data key="d0">keywords</data>
+</node>
+<node id="Bending rigidity">
+  <data key="d0">keywords</data>
+</node>
+<node id="Freeze tolerance">
+  <data key="d0">keywords</data>
+</node>
+<node id="Invertebrates Communicated by I.D. Hume">
+  <data key="d0">keywords</data>
+</node>
+<node id="Foreground-aware Virtual Staining for Accurate 3D Cell Morphological Profiling">
+  <data key="d0">papers</data>
+</node>
+<node id="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation">
+  <data key="d0">papers</data>
+</node>
+<node id="Overfitting">
+  <data key="d0">keywords</data>
+</node>
+<node id="Double Descent">
+  <data key="d0">keywords</data>
+</node>
+<node id="Knowledge Distillation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Noisy Labels">
+  <data key="d0">keywords</data>
+</node>
+<node id="Ensemble Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Generative artificial intelligence and hybrid models to accelerate LES in reactive flows: Application to hydrogen/methane combustion">
+  <data key="d0">papers</data>
+</node>
+<node id="GENERICITY OF POLYAK-LOJASIEWICZ INEQUALITIES FOR ENTROPIC MEAN-FIELD NEURAL ODES">
+  <data key="d0">papers</data>
+</node>
+<node id="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection">
+  <data key="d0">papers</data>
+</node>
+<node id="Road Lane Detection">
+  <data key="d0">keywords</data>
+</node>
+<node id="Federated Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Meta Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Digital Twin">
+  <data key="d0">keywords</data>
+</node>
+<node id="GloBIAS: strengthening the foundations of BioImage Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees">
+  <data key="d0">papers</data>
+</node>
+<node id="Distributed Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Low-Rank Compression">
+  <data key="d0">keywords</data>
+</node>
+<node id="Communication-Efficient Optimization">
+  <data key="d0">keywords</data>
+</node>
+<node id="Error Feedback">
+  <data key="d0">keywords</data>
+</node>
+<node id="GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="H-Planarity and Parametric Extensions: when Modulators Act Globally *">
+  <data key="d0">papers</data>
+</node>
+<node id="Hashing for Fast Pattern Set Selection">
+  <data key="d0">papers</data>
+</node>
+<node id="pdf_83">
+  <data key="d0">papers</data>
+</node>
+<node id="HiPerMotif: Novel Parallel Subgraph Isomorphism in Large-Scale Property Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Human-Guided Feature Selection for Accurate Cardiomyocyte Dysfunction Classification">
+  <data key="d0">papers</data>
+</node>
+<node id="Image Translation with Kernel Prediction Networks for Semantic Segmentation">
+  <data key="d0">papers</data>
+</node>
+<node id="Image Translation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Semantic Segmentation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Kernel Prediction Networks">
+  <data key="d0">keywords</data>
+</node>
+<node id="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling">
+  <data key="d0">papers</data>
+</node>
+<node id="AI diagnosis">
+  <data key="d0">keywords</data>
+</node>
+<node id="canine heart disease">
+  <data key="d0">keywords</data>
+</node>
+<node id="heart sound classification">
+  <data key="d0">keywords</data>
+</node>
+<node id="label noise reduction">
+  <data key="d0">keywords</data>
+</node>
+<node id="XGBoost">
+  <data key="d0">keywords</data>
+</node>
+<node id="veterinary cardiology">
+  <data key="d0">keywords</data>
+</node>
+<node id="MMVD">
+  <data key="d0">keywords</data>
+</node>
+<node id="Infra-red enhanced loops in quadratic gravity">
+  <data key="d0">papers</data>
+</node>
+<node id="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys">
+  <data key="d0">papers</data>
+</node>
+<node id="Lightweight Aluminium Alloys">
+  <data key="d0">keywords</data>
+</node>
+<node id="Eutectic Alloys">
+  <data key="d0">keywords</data>
+</node>
+<node id="High-Temperature Strength">
+  <data key="d0">keywords</data>
+</node>
+<node id="Plasticity">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dislocation Walls">
+  <data key="d0">keywords</data>
+</node>
+<node id="Scanning Transmission Electron Microscopy">
+  <data key="d0">keywords</data>
+</node>
+<node id="Atom Probe Tomography">
+  <data key="d0">keywords</data>
+</node>
+<node id="Interpretability-Aware Pruning for Efficient Medical Image Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Model Pruning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Model Compression">
+  <data key="d0">keywords</data>
+</node>
+<node id="Explainable AI (XAI)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Trustworthy AI in Healthcare">
+  <data key="d0">keywords</data>
+</node>
+<node id="AI Alignment">
+  <data key="d0">keywords</data>
+</node>
+<node id="KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment">
+  <data key="d0">papers</data>
+</node>
+<node id="KG-Attention: Knowledge Graph-Guided Attention at Test-Time via Bidirectional Information Aggregation">
+  <data key="d0">papers</data>
+</node>
+<node id="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations">
+  <data key="d0">papers</data>
+</node>
+<node id="Knowledge-Graphs (KGs)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Retrieval-Augmented Generation (RAG)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Explainability">
+  <data key="d0">keywords</data>
+</node>
+<node id="Large Language Model (LLMs)">
+  <data key="d0">keywords</data>
+</node>
+<node id="KNOWLEDGE GRAPH-BASED APPROACH FOR SUSTAINABLE 6G END-TO-END SYSTEM DESIGN">
+  <data key="d0">papers</data>
+</node>
+<node id="KV Cache Steering for Inducing Reasoning in Small Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="Label-free microscope for rheological imaging of cells">
+  <data key="d0">papers</data>
+</node>
+<node id="Leanabell-Prover-V2: Verifier-integrated Reasoning for Formal Theorem Proving via Reinforcement Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Learning human-to-robot handovers through 3D scene reconstruction">
+  <data key="d0">papers</data>
+</node>
+<node id="Learning the bulk and interfacial physics of liquid-liquid phase separation">
+  <data key="d0">papers</data>
+</node>
+<node id="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps">
+  <data key="d0">papers</data>
+</node>
+<node id="Light Detection &amp; Ranging (LiDAR)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Point Cloud">
+  <data key="d0">keywords</data>
+</node>
+<node id="Global Navigation Satellite System">
+  <data key="d0">keywords</data>
+</node>
+<node id="Inertial Measurement Unit">
+  <data key="d0">keywords</data>
+</node>
+<node id="3D City Mapping">
+  <data key="d0">keywords</data>
+</node>
+<node id="LLMCup: Ranking-Enhanced Comment Updating with LLMs">
+  <data key="d0">papers</data>
+</node>
+<node id="Automatic Comment Updating">
+  <data key="d0">keywords</data>
+</node>
+<node id="Automatic Comment Generation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Code-Comment Co-Evolution">
+  <data key="d0">keywords</data>
+</node>
+<node id="Comment Ranking">
+  <data key="d0">keywords</data>
+</node>
+<node id="Lumos-1: On Autoregressive Video Generation from a Unified Model Perspective">
+  <data key="d0">papers</data>
+</node>
+<node id="Machine Learning-Driven Enzyme Mining: Opportunities, Challenges, and Future Perspectives">
+  <data key="d0">papers</data>
+</node>
+<node id="Machine Learning for Evolutionary Graph Theory">
+  <data key="d0">papers</data>
+</node>
+<node id="Evolutionary Graph Theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="Early Warnings">
+  <data key="d0">keywords</data>
+</node>
+<node id="Evolutionary Game Theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery">
+  <data key="d0">papers</data>
+</node>
+<node id="MCP">
+  <data key="d0">keywords</data>
+</node>
+<node id="database">
+  <data key="d0">keywords</data>
+</node>
+<node id="web server">
+  <data key="d0">keywords</data>
+</node>
+<node id="GEO">
+  <data key="d0">keywords</data>
+</node>
+<node id="API">
+  <data key="d0">keywords</data>
+</node>
+<node id="LLM">
+  <data key="d0">keywords</data>
+</node>
+<node id="Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab">
+  <data key="d0">papers</data>
+</node>
+<node id="Microwave-optical double-resonance vector magnetometry with warm Rb atoms">
+  <data key="d0">papers</data>
+</node>
+<node id="MIDI-VALLE: IMPROVING EXPRESSIVE PIANO PERFORMANCE SYNTHESIS THROUGH NEURAL CODEC LANGUAGE MODELLING">
+  <data key="d0">papers</data>
+</node>
+<node id="Minimum-norm interpolation for unknown surface reconstruction">
+  <data key="d0">papers</data>
+</node>
+<node id="ML-Based Automata Simplification for Symbolic Accelerators">
+  <data key="d0">papers</data>
+</node>
+<node id="Automata processing">
+  <data key="d0">keywords</data>
+</node>
+<node id="pattern matching">
+  <data key="d0">keywords</data>
+</node>
+<node id="random forest">
+  <data key="d0">keywords</data>
+</node>
+<node id="accelerator">
+  <data key="d0">keywords</data>
+</node>
+<node id="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network">
+  <data key="d0">papers</data>
+</node>
+<node id="Scientific machine learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Data assimilation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Spatiotemporal dynamical systems">
+  <data key="d0">keywords</data>
+</node>
+<node id="Computational mechanics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Uncertainty quantification">
+  <data key="d0">keywords</data>
+</node>
+<node id="Koopman theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="Monitoring Risks in Test-Time Adaptation">
+  <data key="d0">papers</data>
+</node>
+<node id="MoSAiC: Multi-Modal Multi-Label Supervision-Aware Contrastive Learning for Remote Sensing">
+  <data key="d0">papers</data>
+</node>
+<node id="Multi-critic Learning for Whole-body End-effector Twist Tracking">
+  <data key="d0">papers</data>
+</node>
+<node id="Loco-Manipulation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-critic Reinforcement Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Whole-Body Control">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains">
+  <data key="d0">papers</data>
+</node>
+<node id="Protoplanetary discs -Planets and satellites">
+  <data key="d0">keywords</data>
+</node>
+<node id="formation -Stars">
+  <data key="d0">keywords</data>
+</node>
+<node id="individual">
+  <data key="d0">keywords</data>
+</node>
+<node id="CI Tauri -Radiative transfer -Methods">
+  <data key="d0">keywords</data>
+</node>
+<node id="data analysis -Techniques">
+  <data key="d0">keywords</data>
+</node>
+<node id="interferometric">
+  <data key="d0">keywords</data>
+</node>
+<node id="NeuralOS: Towards Simulating Operating Systems via Neural Generative Models">
+  <data key="d0">papers</data>
+</node>
+<node id="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT">
+  <data key="d0">papers</data>
+</node>
+<node id="Neuromorphic Computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Event-Driven Asynchronous Optimisation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Neuromorphic Metaheuristics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Spiking Neural Networks">
+  <data key="d0">keywords</data>
+</node>
+<node id="Evolutionary Algorithms">
+  <data key="d0">keywords</data>
+</node>
+<node id="Non-relativistic effective theories for fields with general potentials and their implications for cosmology">
+  <data key="d0">papers</data>
+</node>
+<node id="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates">
+  <data key="d0">papers</data>
+</node>
+<node id="Automatic information extraction">
+  <data key="d0">keywords</data>
+</node>
+<node id="Handwritten text recognition">
+  <data key="d0">keywords</data>
+</node>
+<node id="Birth certificates transcription">
+  <data key="d0">keywords</data>
+</node>
+<node id="Normalized and diplomatic annotation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing">
+  <data key="d0">papers</data>
+</node>
+<node id="Split Computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Optical Inter-Satellite Links">
+  <data key="d0">keywords</data>
+</node>
+<node id="Remote Sensing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Energy Efficiency">
+  <data key="d0">keywords</data>
+</node>
+<node id="One Token to Fool LLM-as-a-Judge">
+  <data key="d0">papers</data>
+</node>
+<node id="ONION: A Multi-Layered Framework for Participatory ER Design">
+  <data key="d0">papers</data>
+</node>
+<node id="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception">
+  <data key="d0">papers</data>
+</node>
+<node id="3D Perception">
+  <data key="d0">keywords</data>
+</node>
+<node id="Camera-based Perception">
+  <data key="d0">keywords</data>
+</node>
+<node id="BEV Perception 3D Object Detection">
+  <data key="d0">keywords</data>
+</node>
+<node id="Recurrent Temporal Fusion">
+  <data key="d0">keywords</data>
+</node>
+<node id="On the (k, ℓ)-multiset anonymity measure for social graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="k-multiset antidimension">
+  <data key="d0">keywords</data>
+</node>
+<node id="k-multiset antiresolving sets">
+  <data key="d0">keywords</data>
+</node>
+<node id="(k, ℓ)-multiset anonymity">
+  <data key="d0">keywords</data>
+</node>
+<node id="k-metric antidimension">
+  <data key="d0">keywords</data>
+</node>
+<node id="On the Effect of Regularization in Policy Mirror Descent">
+  <data key="d0">papers</data>
+</node>
+<node id="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance">
+  <data key="d0">papers</data>
+</node>
+<node id="Quantum Computing Architecture">
+  <data key="d0">keywords</data>
+</node>
+<node id="Quantum Communication">
+  <data key="d0">keywords</data>
+</node>
+<node id="Distributed Quantum Computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="OPEN MULTIPLICATION IN RELATIVELY FREE PROFINITE SEMIGROUPOIDS">
+  <data key="d0">papers</data>
+</node>
+<node id="Optimistic Exploration for Risk-Averse Constrained Reinforcement Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Quantum Scientific Machine Learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Quantum Neural Networks">
+  <data key="d0">keywords</data>
+</node>
+<node id="Quantum Fourier Neural Operator">
+  <data key="d0">keywords</data>
+</node>
+<node id="Hybrid Quantum-Classical Computing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Penalizing Infeasible Actions and Reward Scaling in Reinforcement Learning with Offline Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Potential science with GW250114 -the loudest binary black hole merger detected to date">
+  <data key="d0">papers</data>
+</node>
+<node id="Predicting mutational effects on protein binding from folding energy">
+  <data key="d0">papers</data>
+</node>
+<node id="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer">
+  <data key="d0">papers</data>
+</node>
+<node id="Motion prediction">
+  <data key="d0">keywords</data>
+</node>
+<node id="intention prediction">
+  <data key="d0">keywords</data>
+</node>
+<node id="lane change prediction">
+  <data key="d0">keywords</data>
+</node>
+<node id="motion planning">
+  <data key="d0">keywords</data>
+</node>
+<node id="decision making">
+  <data key="d0">keywords</data>
+</node>
+<node id="automated driving">
+  <data key="d0">keywords</data>
+</node>
+<node id="autonomous driving">
+  <data key="d0">keywords</data>
+</node>
+<node id="artificial intelligence">
+  <data key="d0">keywords</data>
+</node>
+<node id="PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Probing aqueous interfaces with spin defects">
+  <data key="d0">papers</data>
+</node>
+<node id="Probing electron spin dynamics in single telecom InAs(P)/InP quantum dots using the Hanle effect">
+  <data key="d0">papers</data>
+</node>
+<node id="PromotionGo at SemEval-2025 Task 11: A Feature-Centric Framework for Cross-Lingual Multi-Emotion Detection in Short Texts">
+  <data key="d0">papers</data>
+</node>
+<node id="Pseudo-likelihood produces associative memories able to generalize, even for asymmetric couplings">
+  <data key="d0">papers</data>
+</node>
+<node id="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects">
+  <data key="d0">papers</data>
+</node>
+<node id="iot lpwan lorawan sigfox nbiot 0000-0002-6098-7172 (W. Bezerra)">
+  <data key="d0">keywords</data>
+</node>
+<node id="0000-0003-3331-7277 (L. Bezerra)">
+  <data key="d0">keywords</data>
+</node>
+<node id="0002-5391-7942 (C.B. Westphall)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds">
+  <data key="d0">papers</data>
+</node>
+<node id="Multilayer perceptron">
+  <data key="d0">keywords</data>
+</node>
+<node id="Rank Set Sampling">
+  <data key="d0">keywords</data>
+</node>
+<node id="Variance of Generalization">
+  <data key="d0">keywords</data>
+</node>
+<node id="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting">
+  <data key="d0">papers</data>
+</node>
+<node id="transcranial focused ultrasound (tFUS)">
+  <data key="d0">keywords</data>
+</node>
+<node id="synthetic CT">
+  <data key="d0">keywords</data>
+</node>
+<node id="angular spectrum method">
+  <data key="d0">keywords</data>
+</node>
+<node id="Rayleigh-Sommerfeld">
+  <data key="d0">keywords</data>
+</node>
+<node id="neuromodulation">
+  <data key="d0">keywords</data>
+</node>
+<node id="deep learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems">
+  <data key="d0">papers</data>
+</node>
+<node id="nucleosynthesis">
+  <data key="d0">keywords</data>
+</node>
+<node id="r-process">
+  <data key="d0">keywords</data>
+</node>
+<node id="neutron capture processes">
+  <data key="d0">keywords</data>
+</node>
+<node id="metal-poor stars">
+  <data key="d0">keywords</data>
+</node>
+<node id="chemical abundances">
+  <data key="d0">keywords</data>
+</node>
+<node id="globular clusters">
+  <data key="d0">keywords</data>
+</node>
+<node id="dwarf galaxies">
+  <data key="d0">keywords</data>
+</node>
+<node id="core-collapse supernovae">
+  <data key="d0">keywords</data>
+</node>
+<node id="neutron star mergers">
+  <data key="d0">keywords</data>
+</node>
+<node id="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="generative AI">
+  <data key="d0">keywords</data>
+</node>
+<node id="BERT">
+  <data key="d0">keywords</data>
+</node>
+<node id="large language models">
+  <data key="d0">keywords</data>
+</node>
+<node id="small language models">
+  <data key="d0">keywords</data>
+</node>
+<node id="active learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="information entropy">
+  <data key="d0">keywords</data>
+</node>
+<node id="regulatory interactions">
+  <data key="d0">keywords</data>
+</node>
+<node id="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances">
+  <data key="d0">papers</data>
+</node>
+<node id="UAV swarm">
+  <data key="d0">keywords</data>
+</node>
+<node id="collaborative beamforming">
+  <data key="d0">keywords</data>
+</node>
+<node id="position perturbation">
+  <data key="d0">keywords</data>
+</node>
+<node id="deep reinforcement learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting">
+  <data key="d0">papers</data>
+</node>
+<node id="3D gaussian splatting">
+  <data key="d0">keywords</data>
+</node>
+<node id="3D reconstruction">
+  <data key="d0">keywords</data>
+</node>
+<node id="3D scene inpainting">
+  <data key="d0">keywords</data>
+</node>
+<node id="radiance field">
+  <data key="d0">keywords</data>
+</node>
+<node id="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures">
+  <data key="d0">papers</data>
+</node>
+<node id="representation">
+  <data key="d0">keywords</data>
+</node>
+<node id="neural network">
+  <data key="d0">keywords</data>
+</node>
+<node id="feature space">
+  <data key="d0">keywords</data>
+</node>
+<node id="decomposition">
+  <data key="d0">keywords</data>
+</node>
+<node id="filter">
+  <data key="d0">keywords</data>
+</node>
+<node id="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT">
+  <data key="d0">papers</data>
+</node>
+<node id="：3D Reconstruction">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multi-View Stereo">
+  <data key="d0">keywords</data>
+</node>
+<node id="Feed-forward Model">
+  <data key="d0">keywords</data>
+</node>
+<node id="Roadmap for using large language models (LLMs) to accelerate cross-disciplinary research with an example from computational biology">
+  <data key="d0">papers</data>
+</node>
+<node id="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer">
+  <data key="d0">papers</data>
+</node>
+<node id="Calibration">
+  <data key="d0">keywords</data>
+</node>
+<node id="Humanoid robot">
+  <data key="d0">keywords</data>
+</node>
+<node id="Inverse kinematics">
+  <data key="d0">keywords</data>
+</node>
+<node id="Haptic feedback">
+  <data key="d0">keywords</data>
+</node>
+<node id="Robust Contextual State Estimation with Limited Measurement Data">
+  <data key="d0">papers</data>
+</node>
+<node id="Real-time observability">
+  <data key="d0">keywords</data>
+</node>
+<node id="active distribution networks">
+  <data key="d0">keywords</data>
+</node>
+<node id="distribution system state estimation">
+  <data key="d0">keywords</data>
+</node>
+<node id="robust estimation">
+  <data key="d0">keywords</data>
+</node>
+<node id="contextual stochastic optimization">
+  <data key="d0">keywords</data>
+</node>
+<node id="Robust inference under Benford's law">
+  <data key="d0">papers</data>
+</node>
+<node id="Benford hypothesis">
+  <data key="d0">keywords</data>
+</node>
+<node id="digit contamination">
+  <data key="d0">keywords</data>
+</node>
+<node id="anomaly detection">
+  <data key="d0">keywords</data>
+</node>
+<node id="adversarial testing">
+  <data key="d0">keywords</data>
+</node>
+<node id="trade transactions">
+  <data key="d0">keywords</data>
+</node>
+<node id="Routing Quantum Control of Causal Order">
+  <data key="d0">papers</data>
+</node>
+<node id="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees">
+  <data key="d0">papers</data>
+</node>
+<node id="Wireless networked control systems (WNCS)">
+  <data key="d0">keywords</data>
+</node>
+<node id="ultra-reliable low latency communication (URLLC)">
+  <data key="d0">keywords</data>
+</node>
+<node id="finite blocklength (FBL)">
+  <data key="d0">keywords</data>
+</node>
+<node id="optimization theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="safe deep reinforcement learning (DRL)">
+  <data key="d0">keywords</data>
+</node>
+<node id="teacher student framework">
+  <data key="d0">keywords</data>
+</node>
+<node id="Peak Age of Information (PAoI) violation probability">
+  <data key="d0">keywords</data>
+</node>
+<node id="Scaling Attention to Very Long Sequences in Linear Time with Wavelet-Enhanced Random Spectral Attention (WERSA)">
+  <data key="d0">papers</data>
+</node>
+<node id="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis">
+  <data key="d0">papers</data>
+</node>
+<node id="Beyond the Standard Model">
+  <data key="d0">keywords</data>
+</node>
+<node id="Einstein-Cartan theory">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dark gauge boson">
+  <data key="d0">keywords</data>
+</node>
+<node id="Dark matter">
+  <data key="d0">keywords</data>
+</node>
+<node id="Multivariate analysis">
+  <data key="d0">keywords</data>
+</node>
+<node id="The International Linear Collider (ILC)">
+  <data key="d0">keywords</data>
+</node>
+<node id="Secrecy Offloading Analysis of UAV-assisted NOMA-MEC Incorporating WPT in IoT Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="SGPMIL: Sparse Gaussian Process Multiple Instance Learning">
+  <data key="d0">papers</data>
+</node>
+<node id="Sparse Autoencoders Reveal Interpretable Structure in Small Gene Language Models">
+  <data key="d0">papers</data>
+</node>
+<node id="SPATIA: Multimodal Model for Prediction and Generation of Spatial Cell Phenotypes">
+  <data key="d0">papers</data>
+</node>
+<node id="SPINT: Spatial Permutation-Invariant Neural Transformer for Consistent Intracortical Motor Decoding">
+  <data key="d0">papers</data>
+</node>
+<node id="SPLASH! Sample-efficient Preference-based inverse reinforcement learning for Long-horizon Adversarial tasks from Suboptimal Hierarchical demonstrations">
+  <data key="d0">papers</data>
+</node>
+<node id="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost">
+  <data key="d0">papers</data>
+</node>
+<node id="Satellite Networks">
+  <data key="d0">keywords</data>
+</node>
+<node id="Inter-Shell Routing">
+  <data key="d0">keywords</data>
+</node>
+<node id="Low-Orbit Mega-Constellation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Starlink">
+  <data key="d0">keywords</data>
+</node>
+<node id="OneWeb">
+  <data key="d0">keywords</data>
+</node>
+<node id="Statistical Analysis of Early Spectra in Type II and IIb Supernovae">
+  <data key="d0">papers</data>
+</node>
+<node id="Stochastic size control of self-assembled filaments">
+  <data key="d0">papers</data>
+</node>
+<node id="Structure from Noise: Confirmation Bias in Particle Picking in Structural Biology">
+  <data key="d0">papers</data>
+</node>
+<node id="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction">
+  <data key="d0">papers</data>
+</node>
+<node id="Chemical Reaction Prediction">
+  <data key="d0">keywords</data>
+</node>
+<node id="Artificial Intelligence">
+  <data key="d0">keywords</data>
+</node>
+<node id="Generative Model">
+  <data key="d0">keywords</data>
+</node>
+<node id="Graph Generation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Discrete Flow Matching">
+  <data key="d0">keywords</data>
+</node>
+<node id="The Atacama Cosmology Telescope: High-redshift measurement of structure growth from the cross-correlation of Quaia quasars and CMB lensing from ACT DR6 and Planck PR4">
+  <data key="d0">papers</data>
+</node>
+<node id="The Effective Field Theory of Large Scale Structure for Mixed Dark Matter Scenarios">
+  <data key="d0">papers</data>
+</node>
+<node id="The Impact of Automatic Speech Transcription on Speaker Attribution">
+  <data key="d0">papers</data>
+</node>
+<node id="The Non-Linear Representation Dilemma: Is Causal Abstraction Enough for Mechanistic Interpretability?">
+  <data key="d0">papers</data>
+</node>
+<node id="The stability of bi-polarization on dynamical directed graphs: an emergent game perspective">
+  <data key="d0">papers</data>
+</node>
+<node id="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12">
+  <data key="d0">papers</data>
+</node>
+<node id="galaxies">
+  <data key="d0">keywords</data>
+</node>
+<node id="high-redshift -galaxies">
+  <data key="d0">keywords</data>
+</node>
+<node id="abundances -galaxies">
+  <data key="d0">keywords</data>
+</node>
+<node id="ISM -ISM">
+  <data key="d0">keywords</data>
+</node>
+<node id="lines and bands -ISM">
+  <data key="d0">keywords</data>
+</node>
+<node id="structure -radiative transfer">
+  <data key="d0">keywords</data>
+</node>
+<node id="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization">
+  <data key="d0">papers</data>
+</node>
+<node id="AI-Native RAN">
+  <data key="d0">keywords</data>
+</node>
+<node id="standardization">
+  <data key="d0">keywords</data>
+</node>
+<node id="6G">
+  <data key="d0">keywords</data>
+</node>
+<node id="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift">
+  <data key="d0">papers</data>
+</node>
+<node id="federated learning">
+  <data key="d0">keywords</data>
+</node>
+<node id="collaborative fairness">
+  <data key="d0">keywords</data>
+</node>
+<node id="covariate shift">
+  <data key="d0">keywords</data>
+</node>
+<node id="knowledge distillation">
+  <data key="d0">keywords</data>
+</node>
+<node id="imbalanced data">
+  <data key="d0">keywords</data>
+</node>
+<node id="To buy or not to buy: deterministic rent-or-buy problems on node-weighted graphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Transcranial Focused Ultrasound for Identifying the Neural Substrate of Conscious Perception">
+  <data key="d0">papers</data>
+</node>
+<node id="Tree-Structured Parzen Estimator Can Solve Black-Box Combinatorial Optimization More Efficiently">
+  <data key="d0">papers</data>
+</node>
+<node id="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?">
+  <data key="d0">papers</data>
+</node>
+<node id="galaxy evolution -AGN">
+  <data key="d0">keywords</data>
+</node>
+<node id="AGN feedback -stars">
+  <data key="d0">keywords</data>
+</node>
+<node id="star formation">
+  <data key="d0">keywords</data>
+</node>
+<node id="Uncovering High-Order Cohesive Structures: Efficient (𝑘, 𝑔)-Core Computation and Decomposition for Large Hypergraphs">
+  <data key="d0">papers</data>
+</node>
+<node id="Unified People Tracking with Graph Neural Networks">
+  <data key="d0">papers</data>
+</node>
+<node id="Update on the intermediate arrival-direction analyses of the Pierre Auger Observatory">
+  <data key="d0">papers</data>
+</node>
+<node id="Wheeler-DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases">
+  <data key="d0">papers</data>
+</node>
+<node id="When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking">
+  <data key="d0">papers</data>
+</node>
+<node id="Word-Representability of Split Graphs with Independent Set of Size 4">
+  <data key="d0">papers</data>
+</node>
+<node id="semi-transitive orientation">
+  <data key="d0">keywords</data>
+</node>
+<node id="split graph">
+  <data key="d0">keywords</data>
+</node>
+<node id="minimal forbidden subgraph">
+  <data key="d0">keywords</data>
+</node>
+<node id="word-representable graph">
+  <data key="d0">keywords</data>
+</node>
+<node id="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB">
+  <data key="d0">papers</data>
+</node>
+<node id="XPPAUT">
+  <data key="d0">keywords</data>
+</node>
+<node id="AUTO">
+  <data key="d0">keywords</data>
+</node>
+<node id="numerical continuation">
+  <data key="d0">keywords</data>
+</node>
+<node id="ODE">
+  <data key="d0">keywords</data>
+</node>
+<node id="bifurcation diagram">
+  <data key="d0">keywords</data>
+</node>
+<node id="xpSHACL: Explainable SHACL Validation using Retrieval-Augmented Generation and Large Language Models">
+  <data key="d0">papers</data>
+</node>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="cosmology">
+  <data key="d1">1</data>
+</edge>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="observations -cosmology">
+  <data key="d1">1</data>
+</edge>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="dark energy -supernovae">
+  <data key="d1">1</data>
+</edge>
+<edge source="THE COMPLETE LIGHT-CURVE SAMPLE OF SPECTROSCOPICALLY CONFIRMED TYPE IA SUPERNOVAE FROM PAN-STARRS1 AND COSMOLOGICAL CONSTRAINTS FROM THE COMBINED PANTHEON SAMPLE" target="general">
+  <data key="d1">1</data>
+</edge>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="public transport">
+  <data key="d1">1</data>
+</edge>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="accessibility">
+  <data key="d1">1</data>
+</edge>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="network science">
+  <data key="d1">1</data>
+</edge>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="metro network">
+  <data key="d1">1</data>
+</edge>
+<edge source="Access graph: a novel graph representation of public transport networks for accessibility analysis" target="equity">
+  <data key="d1">1</data>
+</edge>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Ambient Intelligence">
+  <data key="d1">1</data>
+</edge>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Physical Rehabilitation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="Vision Language Models">
+  <data key="d1">1</data>
+</edge>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="AI framework">
+  <data key="d1">1</data>
+</edge>
+<edge source="Adaptive Framework for Ambient Intelligence in Rehabilitation Assistance" target="3D Reconstruction">
+  <data key="d1">1</data>
+</edge>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="malware detection">
+  <data key="d1">1</data>
+</edge>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="concept drift">
+  <data key="d1">1</data>
+</edge>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="semisupervised learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="ADAPT: A Pseudo-labeling Approach to Combat Concept Drift in Malware Detection" target="pseudo-labeling">
+  <data key="d1">1</data>
+</edge>
+<edge source="concept drift" target="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="Age of information">
+  <data key="d1">1</data>
+</edge>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="laser-powered UAV systems">
+  <data key="d1">1</data>
+</edge>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="multi-agent reinforcement learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Age of Information Optimization in Laser-charged UAV-assisted IoT Networks: A Multi-agent Deep Reinforcement Learning Method" target="and IoT data collection">
+  <data key="d1">1</data>
+</edge>
+<edge source="A cautionary tale of model misspecification and identifiability" target="misspecification">
+  <data key="d1">1</data>
+</edge>
+<edge source="A cautionary tale of model misspecification and identifiability" target="identifiability">
+  <data key="d1">1</data>
+</edge>
+<edge source="A cautionary tale of model misspecification and identifiability" target="Gaussian processes">
+  <data key="d1">1</data>
+</edge>
+<edge source="A cautionary tale of model misspecification and identifiability" target="logistic growth">
+  <data key="d1">1</data>
+</edge>
+<edge source="A cautionary tale of model misspecification and identifiability" target="inference">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Cloud computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Variable sized-quantum neural network">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Comprehensive architectural optimization">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Comprehensively Adaptive Architectural Optimization-Ingrained Quantum Neural Network Model for Cloud Workloads Prediction" target="Resource">
+  <data key="d1">1</data>
+</edge>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Argument mining">
+  <data key="d1">1</data>
+</edge>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Transformers">
+  <data key="d1">1</data>
+</edge>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Large Language Models">
+  <data key="d1">1</data>
+</edge>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="Cognitive intelligence">
+  <data key="d1">1</data>
+</edge>
+<edge source="A COMPREHENSIVE STUDY OF LLM-BASED ARGUMENT CLASSIFICATION: FROM LLAMA THROUGH GPT-4O TO DEEPSEEK-R1 A PREPRINT" target="NLP">
+  <data key="d1">1</data>
+</edge>
+<edge source="Transformers" target="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes">
+  <data key="d1">1</data>
+</edge>
+<edge source="Large Language Models" target="LLMCup: Ranking-Enhanced Comment Updating with LLMs">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="Scaled relative graphs">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="Stability theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="switching controllers">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dissipativity Framework for Constructing Scaled Graphs" target="linear matrix inequalities">
+  <data key="d1">1</data>
+</edge>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="End-to-end document transcription">
+  <data key="d1">1</data>
+</edge>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="learnable symbol assembly">
+  <data key="d1">1</data>
+</edge>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="engineering drawing recognition">
+  <data key="d1">1</data>
+</edge>
+<edge source="A document is worth a structured record: Principled inductive bias design for document recognition" target="document foundation models">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Neuromodulation">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Brainstem Function">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Brain State Transitions">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Dopamine">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Serotonin">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Mathematical Neuroscience">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Sleep">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Parkinson's Disease">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Seizures">
+  <data key="d1">1</data>
+</edge>
+<edge source="A Dopamine-Serotonin Theory of Consciousness" target="Death">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Rare disease diagnosis">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Knowledge graph">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Medical large language models">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Medical concept matching">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Multi-granularity concept sparse activation">
+  <data key="d1">1</data>
+</edge>
+<edge source="A MULTI-GRANULARITY CONCEPT SPARSE ACTIVATION AND HIERARCHICAL KNOWLEDGE GRAPH FUSION FRAMEWORK FOR RARE DISEASE DIAGNOSIS *" target="Hierarchical knowledge representation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beer Path Problems in Temporal Graphs" target="phrases Beer path">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beer Path Problems in Temporal Graphs" target="Shortest paths">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beer Path Problems in Temporal Graphs" target="Dynamic graph queries">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beer Path Problems in Temporal Graphs" target="Temporal graphs">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beer Path Problems in Temporal Graphs" target="Graph algorithms">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Lipocalin superfamily">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Olfactory sense">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Hydrophobic ligand transport">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Protein function and classification">
+  <data key="d1">1</data>
+</edge>
+<edge source="Beyond Olfaction: New Insights into Human Odorant Binding Proteins" target="Differential gene expression">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="Melanoma">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="bluish veil">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="dermoscopic image">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="DCNN">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bluish Veil Detection and Lesion Classification using Custom Deep Learnable Layers with Explainable Artificial Intelligence (XAI)" target="LIME">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="isolating set">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="isolation game">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="paths and cycles">
+  <data key="d1">1</data>
+</edge>
+<edge source="Bounds on the game isolation number and exact values for paths and cycles" target="trees AMS Subj. Class. (2020): 05C57">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Clustering Algorithm">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Lowest Time Complexity">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="K-Means Clustering">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Density Based">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Local Structure">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Gap Statistics">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Silhouette Score">
+  <data key="d1">1</data>
+</edge>
+<edge source="CAS -Condensed and Accelerated Silhouette: An Efficient Method for Determining the Optimal K in K-Means Clustering" target="Optimal K Value">
+  <data key="d1">1</data>
+</edge>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="RTL simulation">
+  <data key="d1">1</data>
+</edge>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Accelerator">
+  <data key="d1">1</data>
+</edge>
+<edge source="CCSS: Hardware-Accelerated RTL Simulation with Fast Combinational Logic Computing and Sequential Logic Synchronization" target="Graph Partition">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Splicing">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Genomics">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Circular RNA Prediction">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Mixture of Experts">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Multi-label Task">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Deep Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="CircFormerMoE: An End-to-End Deep Learning Framework for Circular RNA Splice Site Detection and Pairing in Plant Genomes" target="Machine Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Learning" target="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT">
+  <data key="d1">1</data>
+</edge>
+<edge source="Machine Learning" target="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study">
+  <data key="d1">1</data>
+</edge>
+<edge source="Machine Learning" target="Machine Learning for Evolutionary Graph Theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Smoothed Dissipative Particle Dynamics (SDPD)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Multiphase flows">
+  <data key="d1">1</data>
+</edge>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Liquid-Liquid Phase Separation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Computational Modelling of Thixotropic Multiphase Fluids" target="Thixotropy">
+  <data key="d1">1</data>
+</edge>
+<edge source="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval" target="Graph-based RAG">
+  <data key="d1">1</data>
+</edge>
+<edge source="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval" target="Multi-Partite Graph">
+  <data key="d1">1</data>
+</edge>
+<edge source="CUE-RAG: Towards Accurate and Cost-Efficient Graph-Based RAG via Multi-Partite Graph and Query-Driven Iterative Retrieval" target="Query-Driven Iterative Retrieval">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Learning to Hash">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Hash Center">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Quantization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Representation Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Deep Hashing with Semantic Hash Centers for Image Retrieval" target="Image Retrieval">
+  <data key="d1">1</data>
+</edge>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Variational Autoencoders">
+  <data key="d1">1</data>
+</edge>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Multimodality">
+  <data key="d1">1</data>
+</edge>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Survival Analysis">
+  <data key="d1">1</data>
+</edge>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Competing Risks">
+  <data key="d1">1</data>
+</edge>
+<edge source="DEEP SURVIVAL ANALYSIS IN MULTIMODAL MEDICAL DATA: A PARAMETRIC AND PROBABILISTIC APPROACH WITH COMPETING RISKS" target="Personalized Medicine">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="Monomial ideal">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="edge ideal">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="depth">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="3-path ideal">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="square of a path graph. 2020 Mathematics Subject Classification. 05E40">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="13D02">
+  <data key="d1">1</data>
+</edge>
+<edge source="Depth of the 3-path Ideal of Square of a Path" target="13F55">
+  <data key="d1">1</data>
+</edge>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Discontinuous solutions">
+  <data key="d1">1</data>
+</edge>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Kolmogorov-Arnold network">
+  <data key="d1">1</data>
+</edge>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Physics-informed neural network">
+  <data key="d1">1</data>
+</edge>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Artificial viscosity">
+  <data key="d1">1</data>
+</edge>
+<edge source="Discontinuity-aware KAN-based physics-informed neural networks" target="Shock modeling">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="Electroencephalography">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="synchronization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="brain rhythm">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="functional network">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="Alzheimer's disease">
+  <data key="d1">1</data>
+</edge>
+<edge source="Distinct neurodynamics of functional brain networks in Alzheimer's disease and frontotemporal dementia as revealed by EEG" target="frontotemporal dementia">
+  <data key="d1">1</data>
+</edge>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Data-centric Operation Excellence">
+  <data key="d1">1</data>
+</edge>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="AI Adoption">
+  <data key="d1">1</data>
+</edge>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="Gas Power Plant">
+  <data key="d1">1</data>
+</edge>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="AI Guardrail">
+  <data key="d1">1</data>
+</edge>
+<edge source="DOMAIN-INFORMED OPERATION EXCELLENCE OF GAS TURBINE SYSTEM WITH MACHINE LEARNING" target="AI Safety">
+  <data key="d1">1</data>
+</edge>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="configuration performance modeling">
+  <data key="d1">1</data>
+</edge>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="online learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="performance engineering">
+  <data key="d1">1</data>
+</edge>
+<edge source="Dually Hierarchical Drift Adaptation for Online Configuration Performance Learning" target="configurable system">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="integrated photonics">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="ring resonators">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="Joule heating">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="thermo-optic effect">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="on-chip computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="reconfigurable photonic components">
+  <data key="d1">1</data>
+</edge>
+<edge source="Electrothermally Modulated Nanophotonic Waveguide-integrated Ring Resonator" target="silicon photonics">
+  <data key="d1">1</data>
+</edge>
+<edge source="Enhancing Parameter Control Policies with State Information" target="Parameter control">
+  <data key="d1">1</data>
+</edge>
+<edge source="Enhancing Parameter Control Policies with State Information" target="black-box optimization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Enhancing Parameter Control Policies with State Information" target="evolutionary computation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Enhancing Parameter Control Policies with State Information" target="local search">
+  <data key="d1">1</data>
+</edge>
+<edge source="Enhancing Parameter Control Policies with State Information" target="algorithm configuration">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="xxxxx">
+  <data key="d1">2</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="xxxx Deep Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="PET-CT">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Skeletal Metastases">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Spectral Total-Variation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ensemble of Weak Spectral Total Variation Learners: a PET-CT Case Study" target="Radiomics">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="quantum computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="machine learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="quantum machine learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="IT security">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="threat modeling">
+  <data key="d1">1</data>
+</edge>
+<edge source="Entangled Threats: A Unified Kill Chain Model for Quantum Machine Learning Security" target="kill chain">
+  <data key="d1">1</data>
+</edge>
+<edge source="machine learning" target="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling">
+  <data key="d1">1</data>
+</edge>
+<edge source="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge" target="one-class">
+  <data key="d1">1</data>
+</edge>
+<edge source="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge" target="fluid sensor">
+  <data key="d1">1</data>
+</edge>
+<edge source="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge" target="auto-encoder">
+  <data key="d1">1</data>
+</edge>
+<edge source="Fast Re-Trainable Attention Autoencoder for Liquid Sensor Anomaly Detection at the Edge" target="attention-">
+  <data key="d1">1</data>
+</edge>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Membrane fluidity">
+  <data key="d1">1</data>
+</edge>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Fluorescence anisotropy">
+  <data key="d1">1</data>
+</edge>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Bending rigidity">
+  <data key="d1">1</data>
+</edge>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Freeze tolerance">
+  <data key="d1">1</data>
+</edge>
+<edge source="Membrane properties of Enchytraeus albidus originating from contrasting environments: a comparative analysis" target="Invertebrates Communicated by I.D. Hume">
+  <data key="d1">1</data>
+</edge>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Overfitting">
+  <data key="d1">1</data>
+</edge>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Double Descent">
+  <data key="d1">1</data>
+</edge>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Knowledge Distillation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Noisy Labels">
+  <data key="d1">1</data>
+</edge>
+<edge source="Forget Me Not: Fighting Local Overfitting with Knowledge Fusion and Distillation" target="Ensemble Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Road Lane Detection">
+  <data key="d1">1</data>
+</edge>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Federated Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Meta Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Geo-ORBIT: A Federated Digital Twin Framework for Scene-Adaptive Lane Geometry Detection" target="Digital Twin">
+  <data key="d1">1</data>
+</edge>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Distributed Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Low-Rank Compression">
+  <data key="d1">1</data>
+</edge>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Communication-Efficient Optimization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Greedy Low-Rank Gradient Compression for Distributed Learning with Convergence Guarantees" target="Error Feedback">
+  <data key="d1">1</data>
+</edge>
+<edge source="Image Translation with Kernel Prediction Networks for Semantic Segmentation" target="Image Translation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Image Translation with Kernel Prediction Networks for Semantic Segmentation" target="Semantic Segmentation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Image Translation with Kernel Prediction Networks for Semantic Segmentation" target="Kernel Prediction Networks">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="AI diagnosis">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="canine heart disease">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="heart sound classification">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="label noise reduction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="XGBoost">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="veterinary cardiology">
+  <data key="d1">1</data>
+</edge>
+<edge source="Improving AI-Based Canine Heart Disease Diagnosis with Expert-Consensus Auscultation Labeling" target="MMVD">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Lightweight Aluminium Alloys">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Eutectic Alloys">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="High-Temperature Strength">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Plasticity">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Dislocation Walls">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Scanning Transmission Electron Microscopy">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interfacially ordered phase states enable high-strength ductile eutectic Al alloys" target="Atom Probe Tomography">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Model Pruning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Model Compression">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Explainable AI (XAI)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="Trustworthy AI in Healthcare">
+  <data key="d1">1</data>
+</edge>
+<edge source="Interpretability-Aware Pruning for Efficient Medical Image Analysis" target="AI Alignment">
+  <data key="d1">1</data>
+</edge>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Knowledge-Graphs (KGs)">
+  <data key="d1">1</data>
+</edge>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Retrieval-Augmented Generation (RAG)">
+  <data key="d1">1</data>
+</edge>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Explainability">
+  <data key="d1">1</data>
+</edge>
+<edge source="KGRAG-Ex: Explainable Retrieval-Augmented Generation with Knowledge Graph-based Perturbations" target="Large Language Model (LLMs)">
+  <data key="d1">1</data>
+</edge>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Light Detection &amp; Ranging (LiDAR)">
+  <data key="d1">1</data>
+</edge>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Point Cloud">
+  <data key="d1">1</data>
+</edge>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Global Navigation Satellite System">
+  <data key="d1">1</data>
+</edge>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="Inertial Measurement Unit">
+  <data key="d1">1</data>
+</edge>
+<edge source="LiDAR, GNSS and IMU Sensor Alignment through Dynamic Time Warping to Construct 3D City Maps" target="3D City Mapping">
+  <data key="d1">1</data>
+</edge>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Automatic Comment Updating">
+  <data key="d1">1</data>
+</edge>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Automatic Comment Generation">
+  <data key="d1">1</data>
+</edge>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Code-Comment Co-Evolution">
+  <data key="d1">1</data>
+</edge>
+<edge source="LLMCup: Ranking-Enhanced Comment Updating with LLMs" target="Comment Ranking">
+  <data key="d1">1</data>
+</edge>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Evolutionary Graph Theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Early Warnings">
+  <data key="d1">1</data>
+</edge>
+<edge source="Machine Learning for Evolutionary Graph Theory" target="Evolutionary Game Theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="MCP">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="database">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="web server">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="GEO">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="API">
+  <data key="d1">1</data>
+</edge>
+<edge source="MCPmed: A Call for MCP-Enabled Bioinformatics Web Services for LLM-Driven Discovery" target="LLM">
+  <data key="d1">1</data>
+</edge>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="Automata processing">
+  <data key="d1">1</data>
+</edge>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="pattern matching">
+  <data key="d1">1</data>
+</edge>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="random forest">
+  <data key="d1">1</data>
+</edge>
+<edge source="ML-Based Automata Simplification for Symbolic Accelerators" target="accelerator">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Scientific machine learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Data assimilation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Spatiotemporal dynamical systems">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Computational mechanics">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Uncertainty quantification">
+  <data key="d1">1</data>
+</edge>
+<edge source="Modeling Partially Observed Nonlinear Dynamical Systems and Efficient Data Assimilation via Discrete-Time Conditional Gaussian Koopman Network" target="Koopman theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Loco-Manipulation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Multi-critic Reinforcement Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-critic Learning for Whole-body End-effector Twist Tracking" target="Whole-Body Control">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="Protoplanetary discs -Planets and satellites">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="formation -Stars">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="individual">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="CI Tauri -Radiative transfer -Methods">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="data analysis -Techniques">
+  <data key="d1">1</data>
+</edge>
+<edge source="Multi-frequency analysis of the ALMA and VLA high resolution continuum observations of the substructured disc around CI Tau Preference for sub-mm-sized low-porosity amorphous carbonaceous grains" target="interferometric">
+  <data key="d1">1</data>
+</edge>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="Neuromorphic Computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="Event-Driven Asynchronous Optimisation">
+  <data key="d1">1</data>
+</edge>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="Neuromorphic Metaheuristics">
+  <data key="d1">1</data>
+</edge>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="Spiking Neural Networks">
+  <data key="d1">1</data>
+</edge>
+<edge source="NEUROPTIMISATION: THE SPIKING WAY TO EVOLVE PREPRINT" target="Evolutionary Algorithms">
+  <data key="d1">1</data>
+</edge>
+<edge source="Neuromorphic Computing" target="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Spiking Neural Networks" target="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates" target="Automatic information extraction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates" target="Handwritten text recognition">
+  <data key="d1">1</data>
+</edge>
+<edge source="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates" target="Birth certificates transcription">
+  <data key="d1">1</data>
+</edge>
+<edge source="Normalized vs Diplomatic Annotation: A Case Study of Automatic Information Extraction from Handwritten Uruguayan Birth Certificates" target="Normalized and diplomatic annotation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing" target="Split Computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing" target="Optical Inter-Satellite Links">
+  <data key="d1">1</data>
+</edge>
+<edge source="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing" target="Remote Sensing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Onboard Neuromorphic Split Computing via Optical Links for LEO Remote Sensing" target="Energy Efficiency">
+  <data key="d1">1</data>
+</edge>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="3D Perception">
+  <data key="d1">1</data>
+</edge>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Camera-based Perception">
+  <data key="d1">1</data>
+</edge>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="BEV Perception 3D Object Detection">
+  <data key="d1">1</data>
+</edge>
+<edge source="OnlineBEV: Recurrent Temporal Fusion in Bird's Eye View Representations for Multi-Camera 3D Perception" target="Recurrent Temporal Fusion">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="k-multiset antidimension">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="k-multiset antiresolving sets">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="(k, ℓ)-multiset anonymity">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the (k, ℓ)-multiset anonymity measure for social graphs" target="k-metric antidimension">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Quantum Computing Architecture">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Quantum Communication">
+  <data key="d1">1</data>
+</edge>
+<edge source="On the Impact of Classical and Quantum Communication Networks Upon Modular Quantum Computing Architecture System Performance" target="Distributed Quantum Computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Quantum Scientific Machine Learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Quantum Neural Networks">
+  <data key="d1">1</data>
+</edge>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Quantum Fourier Neural Operator">
+  <data key="d1">1</data>
+</edge>
+<edge source="Partitioned Hybrid Quantum Fourier Neural Operators for Scientific Quantum Machine Learning" target="Hybrid Quantum-Classical Computing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="Motion prediction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="intention prediction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="lane change prediction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="motion planning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="decision making">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="automated driving">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="autonomous driving">
+  <data key="d1">1</data>
+</edge>
+<edge source="Prediction of Lane Change Intentions of Human Drivers using an LSTM, a CNN and a Transformer" target="artificial intelligence">
+  <data key="d1">1</data>
+</edge>
+<edge source="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects" target="iot lpwan lorawan sigfox nbiot 0000-0002-6098-7172 (W. Bezerra)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects" target="0000-0003-3331-7277 (L. Bezerra)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Qualitative Assessment of Low Power Wide Area Network Protocols and their Security Aspects" target="0002-5391-7942 (C.B. Westphall)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Multilayer perceptron">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Rank Set Sampling">
+  <data key="d1">1</data>
+</edge>
+<edge source="Ranked Set Sampling-Based Multilayer Perceptron: Improving Generalization via Variance-Based Bounds" target="Variance of Generalization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="transcranial focused ultrasound (tFUS)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="synthetic CT">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="angular spectrum method">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="Rayleigh-Sommerfeld">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="neuromodulation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Rapid MRI-Based Synthetic CT Simulations for Precise tFUS Targeting" target="deep learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="nucleosynthesis">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="r-process">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="neutron capture processes">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="metal-poor stars">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="chemical abundances">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="globular clusters">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="dwarf galaxies">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="core-collapse supernovae">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recent Advances in Understanding R-Process Nucleosynthesis in Metal-Poor Stars and Stellar Systems" target="neutron star mergers">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="generative AI">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="BERT">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="large language models">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="small language models">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="active learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="information entropy">
+  <data key="d1">1</data>
+</edge>
+<edge source="Reconstructing Biological Pathways by Applying Selective Incremental Learning to (Very) Small Language Models" target="regulatory interactions">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="UAV swarm">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="collaborative beamforming">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="position perturbation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Recovery of UAV Swarm-enabled Collaborative Beamforming in Low-altitude Wireless Networks under Wind Field Disturbances" target="deep reinforcement learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="3D gaussian splatting">
+  <data key="d1">1</data>
+</edge>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="3D reconstruction">
+  <data key="d1">1</data>
+</edge>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="3D scene inpainting">
+  <data key="d1">1</data>
+</edge>
+<edge source="RePaintGS: Reference-Guided Gaussian Splatting for Realistic and View-Consistent 3D Scene Inpainting" target="radiance field">
+  <data key="d1">1</data>
+</edge>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="representation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="neural network">
+  <data key="d1">1</data>
+</edge>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="feature space">
+  <data key="d1">1</data>
+</edge>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="decomposition">
+  <data key="d1">1</data>
+</edge>
+<edge source="Representation Theory of U T 3 (F 3 ) and its Applications to Equivariant Decomposition in Neural Architectures" target="filter">
+  <data key="d1">1</data>
+</edge>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="：3D Reconstruction">
+  <data key="d1">1</data>
+</edge>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Multi-View Stereo">
+  <data key="d1">1</data>
+</edge>
+<edge source="Review of Feed-forward 3D Reconstruction: From DUSt3R to VGGT" target="Feed-forward Model">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Calibration">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Humanoid robot">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Inverse kinematics">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robotic Calibration Based on Haptic Feedback Improves Sim-to-Real Transfer" target="Haptic feedback">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="Real-time observability">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="active distribution networks">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="distribution system state estimation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="robust estimation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust Contextual State Estimation with Limited Measurement Data" target="contextual stochastic optimization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust inference under Benford's law" target="Benford hypothesis">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust inference under Benford's law" target="digit contamination">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust inference under Benford's law" target="anomaly detection">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust inference under Benford's law" target="adversarial testing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Robust inference under Benford's law" target="trade transactions">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="Wireless networked control systems (WNCS)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="ultra-reliable low latency communication (URLLC)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="finite blocklength (FBL)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="optimization theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="safe deep reinforcement learning (DRL)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="teacher student framework">
+  <data key="d1">1</data>
+</edge>
+<edge source="Safe Deep Reinforcement Learning for Resource Allocation with Peak Age of Information Violation Guarantees" target="Peak Age of Information (PAoI) violation probability">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Beyond the Standard Model">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Einstein-Cartan theory">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Dark gauge boson">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Dark matter">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="Multivariate analysis">
+  <data key="d1">1</data>
+</edge>
+<edge source="Search for a Dark Gauge Boson Within Einstein-Cartan Theory at the ILC Using Multivariate Analysis" target="The International Linear Collider (ILC)">
+  <data key="d1">1</data>
+</edge>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Satellite Networks">
+  <data key="d1">1</data>
+</edge>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Inter-Shell Routing">
+  <data key="d1">1</data>
+</edge>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Low-Orbit Mega-Constellation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="Starlink">
+  <data key="d1">1</data>
+</edge>
+<edge source="Stabilizing and Optimizing Inter-Shell Routing in LEO Networks with Integrated Routing Cost" target="OneWeb">
+  <data key="d1">1</data>
+</edge>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Chemical Reaction Prediction">
+  <data key="d1">1</data>
+</edge>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Artificial Intelligence">
+  <data key="d1">1</data>
+</edge>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Generative Model">
+  <data key="d1">1</data>
+</edge>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Graph Generation">
+  <data key="d1">1</data>
+</edge>
+<edge source="SynBridge: Bridging Reaction States via Discrete Flow for Bidirectional Reaction Prediction" target="Discrete Flow Matching">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="galaxies">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="high-redshift -galaxies">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="abundances -galaxies">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="ISM -ISM">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="lines and bands -ISM">
+  <data key="d1">1</data>
+</edge>
+<edge source="The thesan-zoom project: Mystery N/O more -uncovering the origin of peculiar chemical abundances and a not-so-fundamental metallicity relation at 3 &lt; 𝑧 &lt; 12" target="structure -radiative transfer">
+  <data key="d1">1</data>
+</edge>
+<edge source="galaxies" target="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="AI-Native RAN">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="standardization">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards AI-Native RAN: An Operator's Perspective of 6G Day 1 Standardization" target="6G">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="federated learning">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="collaborative fairness">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="covariate shift">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="knowledge distillation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Towards Collaborative Fairness in Federated Learning Under Imbalanced Covariate Shift" target="imbalanced data">
+  <data key="d1">1</data>
+</edge>
+<edge source="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?" target="galaxy evolution -AGN">
+  <data key="d1">1</data>
+</edge>
+<edge source="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?" target="AGN feedback -stars">
+  <data key="d1">1</data>
+</edge>
+<edge source="Triggering and quenching in the shadow of AGN: How does AGN proximity affect star formation in the EAGLE simulation?" target="star formation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Word-Representability of Split Graphs with Independent Set of Size 4" target="semi-transitive orientation">
+  <data key="d1">1</data>
+</edge>
+<edge source="Word-Representability of Split Graphs with Independent Set of Size 4" target="split graph">
+  <data key="d1">1</data>
+</edge>
+<edge source="Word-Representability of Split Graphs with Independent Set of Size 4" target="minimal forbidden subgraph">
+  <data key="d1">1</data>
+</edge>
+<edge source="Word-Representability of Split Graphs with Independent Set of Size 4" target="word-representable graph">
+  <data key="d1">1</data>
+</edge>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="XPPAUT">
+  <data key="d1">1</data>
+</edge>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="AUTO">
+  <data key="d1">1</data>
+</edge>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="numerical continuation">
+  <data key="d1">1</data>
+</edge>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="ODE">
+  <data key="d1">1</data>
+</edge>
+<edge source="XPPLORE: Import, visualize, and analyze XPPAUT data in MATLAB" target="bifurcation diagram">
+  <data key="d1">1</data>
+</edge>
+</graph></graphml>

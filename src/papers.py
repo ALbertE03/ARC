@@ -1,13 +1,15 @@
 import networkx as nx
 import streamlit as st
 import pandas as pd 
-from src.utils import load_article_grap,_centrality
+from src.utils import load_article_grap
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
 from networkx.algorithms import community
 from collections import defaultdict
 import json
+from itertools import combinations
+
 def calculate_centrality(_g):
     """Calcula un diccionario con diferentes métricas de centralidad."""
     if _g is None:
@@ -23,15 +25,12 @@ def detect_author_communities(_g):
     if _g is None:
         return {}
     
-    # Crear un grafo que solo contenga autores
     author_nodes = {n for n, d in _g.nodes(data=True) if d.get('type') == 'author'}
     author_graph = nx.Graph()
     
-    # Conectar autores si comparten un artículo
     for paper_node, data in _g.nodes(data=True):
         if data.get('type') == 'papers':
             authors_of_paper = [n for n in _g.neighbors(paper_node) if n in author_nodes]
-            # Añadir aristas entre todos los autores del paper
             for i in range(len(authors_of_paper)):
                 for j in range(i + 1, len(authors_of_paper)):
                     u, v = authors_of_paper[i], authors_of_paper[j]
@@ -40,11 +39,18 @@ def detect_author_communities(_g):
                     else:
                         author_graph.add_edge(u, v, weight=1)
 
-    # Detectar comunidades en el grafo de autores
     communities_list = list(community.louvain_communities(author_graph, weight='weight'))
-    # Crear un mapeo de autor -> id de comunidad
     author_to_community = {author: i for i, comm in enumerate(communities_list) for author in comm}
     return author_to_community
+
+@st.cache_data
+def load_article_key():
+    try:
+        return nx.read_graphml('./graph/article_keywords_graph.graphml')
+    except:
+        st.error("ruta incorrecta")
+        st.stop()
+
 
 @st.cache_data
 def load_pdf():
@@ -61,7 +67,9 @@ def load_key_autor():
     except:
         st.error("ruta incorrecta")
         st.stop()
-
+def get_node_name(graph, node_id, default_prefix="ID:"):
+    node_data = graph.nodes.get(node_id, {})
+    return node_data.get('name', node_id)
 
 def render_papers_page(author_graph,keyword_graph):
     G_article = load_article_grap('./graph/articles_graph.graphml')
@@ -72,7 +80,8 @@ def render_papers_page(author_graph,keyword_graph):
     pdf_data = load_pdf()
     key_autor = load_key_autor()
     communities1 = list(community.louvain_communities(key_autor, weight='weight', seed=42))
-    author_community_map = {author: i for i, comm in enumerate(communities1) for author in comm}
+    author_community_map1 = {author: i for i, comm in enumerate(communities1) for author in comm}
+    article_key_graph = load_article_key()
 
     with st.expander("Filtros"):
             col1,col2 = st.columns(2)
@@ -108,8 +117,6 @@ def render_papers_page(author_graph,keyword_graph):
                     node_colors.append(1) 
                     node_sizes.append(20) 
                 node_labels[node] = node 
-
-
 
             edge_x = []
             edge_y = []
@@ -163,82 +170,77 @@ def render_papers_page(author_graph,keyword_graph):
 
             st.plotly_chart(fig, use_container_width=True)
     
-    with st.expander("Distribución de Autores por Artículo"):
-        author_counts = [G_article.degree(p) for p in paper_nodes]
-        df_counts = pd.DataFrame(author_counts, columns=['Nº de Autores'])
-        
-        fig = px.histogram(df_counts, x="Nº de Autores",
-                           title="Frecuencia del Número de Autores por Artículo",
-                           labels={'x': 'Número de Autores', 'y': 'Cantidad de Artículos'},
-                           nbins=max(author_counts))
-        st.plotly_chart(fig, use_container_width=True)
-        col1,col2,col3 = st.columns(3)
-        with col1:
-            st.metric("Promedio de autores por artículo:",round(df_counts['Nº de Autores'].mean()))
-        with col2:
-            st.metric("Máximo de autores:",round(df_counts['Nº de Autores'].max(),2))
-        with col3:
-            st.metric("Artículos con un solo autor:",len(df_counts[df_counts['Nº de Autores'] == 1]))
-
-    with st.expander("Artículos Clave"):
-        tabs = st.tabs(["Puentes entre Comunidades", "Más Autores", "Más Temas"])
+    with st.expander("Artículos Clave: Análisis por Autores y Temas", expanded=False):
+        tabs = st.tabs(["Ranking por N° de Autores", "Ranking por N° de Temas"])
 
         with tabs[0]:
-            paper_bridges = defaultdict(set)
-            for author_id, comm_idx in author_community_map.items():
-                author_id = author_id.replace("author_", "").strip()
-                papers = author_graph.nodes[author_id].get('papers', [])
-                for paper in papers:
-                    paper_bridges[paper].add(comm_idx)
 
-            if paper_bridges:
-                df_bridge = pd.DataFrame({
-                    'ID Artículo': paper_bridges.keys(),
-                    'Comunidades Conectadas': [len(v) for v in paper_bridges.values()]
-                }).sort_values('Comunidades Conectadas', ascending=False)
+            paper_authors_map = defaultdict(list)
+            paper_nodes_social = [n for n, d in G_article.nodes(data=True) if d.get('type') == 'papers']
+            for paper_id in paper_nodes_social:
+                authors = [get_node_name(G_article, author_id) for author_id in G_article.neighbors(paper_id)]
+                paper_authors_map[paper_id] = authors
 
-                df_bridge['Título'] = df_bridge['ID Artículo'].apply(
-                    lambda x: pdf_data.get(x, {}).get('title', ['Desconocido'])[0] if pdf_data.get(x).get('title') else 'Desconocido'
+            if paper_authors_map:
+                df_authors = pd.DataFrame({
+                    'ID Artículo': paper_authors_map.keys(),
+                    'Cantidad de Autores': [len(v) for v in paper_authors_map.values()]
+                }).sort_values('Cantidad de Autores', ascending=False).reset_index(drop=True)
+                df_authors['Título'] = df_authors['ID Artículo'] 
+
+                df_display = df_authors[['Título', 'Cantidad de Autores']]
+                df_display.insert(0, "Seleccionar", False)
+
+                st.markdown("**Tabla de artículos ordenados por cantidad de autores**")
+                edited_df = st.data_editor(
+                    df_display,
+                    column_config={"Seleccionar": st.column_config.CheckboxColumn(required=True)},
+                    use_container_width=True, hide_index=True, key="authors_editor"
                 )
 
-                st.dataframe(df_bridge[['Título', 'Comunidades Conectadas']].head(10), hide_index=True)
+                selected_rows = edited_df[edited_df['Seleccionar']]
+                if not selected_rows.empty:
+                    st.subheader("Detalles de los Artículos Seleccionados")
+                    for index, row in selected_rows.iterrows():
+                        paper_id = df_authors.iloc[index]['ID Artículo']
+                        with st.expander(f"Autores de: {row['Título']}"):
+                            cols = st.columns(3)
+                            for o, author_name in enumerate(paper_authors_map.get(paper_id, [])):
+
+                                with cols[o % 3]:
+                                    st.markdown(f" • {author_name}")
 
         with tabs[1]:
-            paper_authors = defaultdict(set)
-            for node in author_graph.nodes:
-                for paper in author_graph.nodes[node].get('papers', []):
-                    paper_authors[paper].add(node)
+            paper_keywords_map = defaultdict(list)
+            paper_nodes_thematic = [n for n, d in article_key_graph.nodes(data=True) if d.get('type') == 'papers']
+            for paper_id in paper_nodes_thematic:
+                keywords = [get_node_name(article_key_graph, kw_id) for kw_id in article_key_graph.neighbors(paper_id)]
+                paper_keywords_map[paper_id] = keywords
 
-            if paper_authors:
-                df_authors = pd.DataFrame({
-                    'ID Artículo': paper_authors.keys(),
-                    'Cantidad de Autores': [len(v) for v in paper_authors.values()]
-                }).sort_values('Cantidad de Autores', ascending=False)
+            if paper_keywords_map:
+                df_topics = pd.DataFrame({
+                    'ID Artículo': paper_keywords_map.keys(),
+                    'Cantidad de Temas': [len(v) for v in paper_keywords_map.values()]
+                }).sort_values('Cantidad de Temas', ascending=False).reset_index(drop=True)
+                df_topics['Título'] = df_topics['ID Artículo'] 
 
-                df_authors['Título'] = df_authors['ID Artículo'].apply(
-                    lambda x: pdf_data.get(x, {}).get('title', ['Desconocido'])[0] if pdf_data.get(x).get('title') else 'Desconocido'
+                df_display_topics = df_topics[['Título', 'Cantidad de Temas']]
+                df_display_topics.insert(0, "Seleccionar", False)
+
+                st.markdown("**Tabla de artículos ordenados por cantidad de temas**")
+                edited_df_topics = st.data_editor(
+                    df_display_topics,
+                    column_config={"Seleccionar": st.column_config.CheckboxColumn(required=True)},
+                    use_container_width=True, hide_index=True, key="topics_editor"
                 )
 
-                st.dataframe(df_authors[['Título', 'Cantidad de Autores']].head(10), hide_index=True)
-
-        with tabs[2]:
-            if pdf_data:
-                df_topics = []
-                for paper_id, metadata in pdf_data.items():
-                    keywords = metadata.get('keywords', [])
-                    num_keywords = len(keywords)
-                    title = metadata.get('title', ['Desconocido'])[0] if pdf_data.get(paper_id).get('title') else 'Desconocido'
-                    df_topics.append({
-                        'ID Artículo': paper_id,
-                        'Título': title,
-                        'Cantidad de Temas': num_keywords
-                    })
-
-                df_topics = pd.DataFrame(df_topics).sort_values('Cantidad de Temas', ascending=False)
-                st.dataframe(df_topics[['Título', 'Cantidad de Temas']].head(10), hide_index=True)
-            else:
-                st.info("No hay información de temas disponible.")
-
-
-
-    
+                selected_rows_topics = edited_df_topics[edited_df_topics['Seleccionar']]
+                if not selected_rows_topics.empty:
+                    st.subheader("Detalles de los Artículos Seleccionados")
+                    for index, row in selected_rows_topics.iterrows():
+                        paper_id = df_topics.iloc[index]['ID Artículo']
+                        with st.expander(f"Temas de: {row['Título']}"):
+                            cols2 = st.columns(3)   
+                            for r, keyword in enumerate(paper_keywords_map.get(paper_id, [])):
+                                with cols2[r % 3]:
+                                    st.markdown(f" • {keyword.capitalize()}")
