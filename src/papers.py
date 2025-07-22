@@ -170,7 +170,7 @@ def render_papers_page(author_graph,keyword_graph):
 
             st.plotly_chart(fig, use_container_width=True)
     
-    with st.expander("Artículos Clave: Análisis por Autores y Temas", expanded=False):
+    with st.expander("Artículos Clave", expanded=False):
         tabs = st.tabs(["Ranking por N° de Autores", "Ranking por N° de Temas"])
 
         with tabs[0]:
@@ -244,3 +244,64 @@ def render_papers_page(author_graph,keyword_graph):
                             for r, keyword in enumerate(paper_keywords_map.get(paper_id, [])):
                                 with cols2[r % 3]:
                                     st.markdown(f" • {keyword.capitalize()}")
+
+            
+    with st.expander("Artículos solitarios", expanded=False):
+        paper_nodes = [n for n, d in G_article.nodes(data=True) if d.get('type') == 'papers']
+        isolated_papers = [n for n in paper_nodes if G_article.degree(n) == 1]
+
+        total_papers = len(paper_nodes)
+        num_isolated = len(isolated_papers)
+        num_connected = total_papers - num_isolated
+
+        st.subheader("Proporción de artículos aislados")
+        df_pie = pd.DataFrame({
+            "Tipo": ["Aislados", "Conectados"],
+            "Cantidad": [num_isolated, num_connected]
+        })
+
+        fig = px.pie(
+            df_pie,
+            values='Cantidad',
+            names='Tipo',
+            title='Artículos Aislados vs Conectados en la Red',
+            color_discrete_sequence=['#ff7f0e', '#1f77b4']
+        )
+        fig.update_traces(textinfo='percent+label')
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        if isolated_papers:
+
+            with st.expander("**Listado de artículos con una conexión :**",expanded=False):
+                qqqq= st.slider("Cantidad de artículos aislados a mostrar", min_value=0, max_value=len(isolated_papers), value=min(5, len(isolated_papers)//2))
+                for paper_id in isolated_papers[:qqqq]:
+                    with st.expander(f"**{get_node_name(G_article, paper_id)}**"):
+                        for i in list(G_article.neighbors(paper_id)):
+                            st.markdown(f" • {get_node_name(G_article, i)}")
+        else:
+            st.markdown("No hay artículos aislados en la red.")
+
+    with st.expander("Artículos con conexiones entre comunidades de autores", expanded=False):
+        paper_community_links = []
+        for paper_id in paper_nodes:
+            authors = [a for a in G_article.neighbors(paper_id) if G_article.nodes[a].get("type") == "author"]
+            communities = {author_community_map.get(a) for a in authors if a in author_community_map}
+            if len(communities) > 1:
+                paper_community_links.append({
+                    "ID": paper_id,
+                    "Título": get_node_name(G_article, paper_id),
+                    "Comunidades conectadas": len(communities),
+                    "N° Autores": len(authors)
+                })
+
+        if paper_community_links:
+            df_bridge = pd.DataFrame(paper_community_links).sort_values("Comunidades conectadas", ascending=False)
+            st.markdown("**Ranking de artículos que vinculan comunidades de autores**")
+            top_n = st.slider("Top N artículos conectores", 1, len(df_bridge), 5, key="bridge_slider")
+            for i, row in df_bridge.head(top_n).iterrows():
+                with st.expander(f"{row['Título']}"):
+                    st.markdown(f"• Comunidades conectadas: `{row['Comunidades conectadas']}`")
+                    st.markdown(f"• Número de autores: `{row['N° Autores']}`")
+        else:
+            st.info("No se detectaron artículos que conecten comunidades distintas de autores.")

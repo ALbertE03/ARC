@@ -53,12 +53,15 @@ def process_niche_topics(_keyword_graph):
     return df, specialist_to_topics
 
 @st.cache_data
-def load_key_autor():
+def load_key_autor(path='./graph/author_collaboration_graph_keywords.graphml'):
     try:
-        return nx.read_graphml('./graph/author_collaboration_graph_keywords.graphml')
+        return nx.read_graphml(path)
     except:
         st.error("ruta incorrecta")
         st.stop()
+def get_node_name(graph, node_id, default_prefix="ID:"):
+    node_data = graph.nodes.get(node_id, {})
+    return node_data.get('name', node_id)
 
 
 def render_authors_page(author_analytics, keyword_graph):
@@ -72,7 +75,7 @@ def render_authors_page(author_analytics, keyword_graph):
     pdf_data = load_pdf()
     if pdf_data is None:
         return
-
+    G_article = load_key_autor(path='./graph/articles_graph.graphml')
     master_df = author_analytics['master_table']
     communities = author_analytics.get('communities', [])
     author_graph = st.session_state.get('author_graph')
@@ -652,24 +655,27 @@ def render_authors_page(author_analytics, keyword_graph):
 
     with st.expander("Colaboraciones Exclusivas", expanded=False):
         if author_graph is not None:
-          
             total_edges = len(author_graph.edges())
             exclusive_pairs = []
-            
+
             for node in author_graph.nodes():
                 neighbors = list(author_graph.neighbors(node))
                 if len(neighbors) == 1:
                     collaborator = neighbors[0]
-                    edge_data = author_graph.get_edge_data(node, collaborator)
-                    weight = edge_data.get('weight', 1)
-                    percentage = (weight / total_edges) * 100 if total_edges > 0 else 0
-                    
-                    exclusive_pairs.append({
-                        'author1': author_graph.nodes[node].get('name', node),
-                        'author2': author_graph.nodes[collaborator].get('name', collaborator),
-                        'collaborations': weight,
-                        'percentage': percentage
-                    })
+                    col_neigh = list(author_graph.neighbors(collaborator))
+                    if len(col_neigh) == 1:
+                        edge_data = author_graph.get_edge_data(node, collaborator)
+                        weight = edge_data.get('weight', 1)
+                        percentage = (weight / total_edges) * 100 if total_edges > 0 else 0
+
+                        exclusive_pairs.append({
+                            'author1': author_graph.nodes[node].get('name', node),
+                            'author2': author_graph.nodes[collaborator].get('name', collaborator),
+                            'id1': node,
+                            'id2': collaborator,
+                            'collaborations': weight,
+                            'percentage': percentage
+                        })
 
             if exclusive_pairs:
                 st.subheader("Relaciones de Colaboración Única")
@@ -677,45 +683,58 @@ def render_authors_page(author_analytics, keyword_graph):
                 cols[0].metric("Pares exclusivos", len(exclusive_pairs))
                 cols[1].metric("Colaboraciones totales", total_edges)
                 cols[2].metric("Representación", f"{sum(p['percentage'] for p in exclusive_pairs):.1f}%")
+
                 st.subheader("Distribución en la red")
-                  
                 fig = px.pie(
-                        names=["Exclusivas", "Otras"],
-                        values=[sum(p['percentage'] for p in exclusive_pairs), 
+                    names=["Exclusivas", "Otras"],
+                    values=[sum(p['percentage'] for p in exclusive_pairs),
                             100 - sum(p['percentage'] for p in exclusive_pairs)],
-                        hole=0.5,
-                        color_discrete_sequence=['#FF6B00', '#DDDDDD']
-                    )
-                fig.update_traces(textinfo='percent+label', 
-                                    marker=dict(line=dict(color='#FFFFFF', width=2)))
+                    hole=0.5,
+                    color_discrete_sequence=['#FF6B00', '#DDDDDD']
+                )
+                fig.update_traces(textinfo='percent+label',
+                                marker=dict(line=dict(color='#FFFFFF', width=2)))
                 st.plotly_chart(fig, use_container_width=True)
-                with st.expander("Principales colaboraciones exclusivas",expanded=False):
+
+                with st.expander("Principales colaboraciones exclusivas", expanded=False):
                     k = st.slider("Mostrar el Top N de Colaboraciones Exclusivas:", 1, len(exclusive_pairs), 5, key="exclusive_pairs_slider")
                     top_pairs = sorted(exclusive_pairs, key=lambda x: x['collaborations'], reverse=True)[:k]
 
-                    for pair in top_pairs:           
-                        col1, col2, col3 = st.columns([1,2,1])
+                    for pair in top_pairs:
+                        col1, col2, col3 = st.columns([1, 2, 1])
                         with col1:
                             st.markdown(f"### {pair['author1']}")
                             st.caption("Autor principal")
-                        
                         with col2:
                             st.markdown(f"<div style='text-align: center; margin: 15px 0;'>"
-                                    f"<h2 style='color: #FF6B00;'>⇄ {pair['collaborations']} colaboraciones</h2>"
-                                    f"<small>Relación exclusiva</small></div>", 
-                                    unsafe_allow_html=True)
-                        
+                                        f"<h2 style='color: #FF6B00;'>⇄ {pair['collaborations']} colaboraciones</h2>"
+                                        f"<small>Relación exclusiva</small></div>",
+                                        unsafe_allow_html=True)
                         with col3:
                             st.markdown(f"### {pair['author2']}")
                             st.caption("Único colaborador")
 
-                        st.write("")
+                        if G_article:
+                            papers1 = set(G_article.neighbors(pair['author1']))
+                            papers2 = set(G_article.neighbors(pair['author2']))
+                            shared_papers = papers1 & papers2
 
-                
+                            if shared_papers:
+                                st.markdown("**Artículo compartido:**")
+                                for paper in shared_papers:
+                                    paper_title = get_node_name(G_article, paper)
+                                    st.markdown(f"• {paper_title}")
+                            else:
+                                st.markdown("_No se encontraron artículos compartidos explícitos en el grafo de artículos._")
+                        else:
+                            st.warning("No se encuentra el grafo de artículos (G_article).")
+
+                        st.markdown("---")
             else:
                 st.info("No se encontraron relaciones de colaboración exclusiva", icon="ℹ️")
         else:
             st.warning("Red de colaboración no disponible", icon="⚠️")
+
 
 
     
@@ -816,7 +835,11 @@ def render_authors_page(author_analytics, keyword_graph):
 
                 st.markdown(f"### Temas únicos asociados a **{selected_triad}**")
                 if unique_topics:
-                    st.write(sorted(unique_topics))
+                    e= st.columns(3)
+                    for j,i in enumerate(sorted(unique_topics)):
+                        with e[j%3]:
+                            st.markdown(f"• {i.capitalize()}")
+
                 else:
                     st.info("No se encontraron temas asociados.")
 
